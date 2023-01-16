@@ -1,0 +1,117 @@
+@import "props";
+@import "typography";
+@import "colours";
+@import "header";
+@import "footer";
+@import "buttons";
+@import "blog";
+@import "careers";
+@import "forms";
+@import "blocks/blocks";
+
+main {
+    // padding-top: 65px;
+    // @media (min-width:992px) {
+    //     padding-top: 95px;
+    // }
+    margin-top: 98px;
+    @media (min-width:992px) {
+        margin-top: 95px;
+    }
+}
+
+.alignwide {
+    @extend .container;
+}
+
+a.noline {
+    text-decoration: none;
+}
+
+// .overlay {
+//     position: absolute;
+//     top: 0; right: 0; bottom: 0; left: 0;
+//     background-color: black;
+//     opacity: 0.4;
+//     z-index: -1;
+// }
+
+.content {
+    max-width: 100ch;
+}
+
+.author {
+    background-color: var(--grey-100-tx);
+}
+
+ul.nopad {
+    padding-inline-start: 0;
+    list-style: none;
+}
+
+@media (min-width:992px) {
+    .cols-lg-2 {
+        columns: 2;
+    }
+    .cols-lg-3 {
+        columns: 3;
+    }
+}
+
+@media (max-width:768px) {
+    .wp-block-image {
+        figure.alignright {
+            float: none !important;
+            margin: auto !important;
+        }
+    }
+}
+
+.share-icons {
+    padding-top: 1rem;
+    a:not(:last-of-type) {
+        margin-right: 0.5rem;
+    }
+}
+
+:not(.share-icons,.social-icons,figure,.app__card) > a[target="_blank"]:not(.btn,.mas-widget-logo-link)::after {
+    content: "\f08e";
+    font-family: "Font Awesome 6 Free";
+    margin-left: 0.5rem;
+    display: inline-block;
+}
+
+
+#breadcrumbs {
+    font-size: 0.889rem;
+}
+
+.excerpt_part {
+    strong {
+        background-color: var(--rbf-blue-300);
+    }
+}
+
+// show stuff that overflows horizontally
+// * {
+//     outline: 1px solid #f00 !important;
+// }
+// show stuff that overflows horizontally via console JS
+/*
+var all = document.getElementsByTagName("*"), i = 0, rect, docWidth = document.documentElement.offsetWidth;
+for (; i < all.length; i++) {
+    rect = all[i].getBoundingClientRect();
+    if (rect.right > docWidth || rect.left < 0){
+        console.log(all[i]);
+        all[i].style.borderTop = '1px solid red';
+    }
+}
+*/
+
+// @mixin fluid-type($min-vw, $max-vw, $min-value, $max-value) {
+// 	$factor: 1 / ($max-vw - $min-vw) * ($max-value - $min-value);
+// 	$calc-value: unquote('#{ $min-value - ($min-vw * $factor) } + #{ 100vw * $factor }');
+
+// 	font-size: $min-value; // Fallback for older browsers
+// 	font-size: clamp(#{if($min-value > $max-value, $max-value, $min-value)}, #{$calc-value}, #{if($min-value > $max-value, $min-value, $max-value)});
+// }

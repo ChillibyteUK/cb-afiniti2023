@@ -1,0 +1,92 @@
+.career {
+    position: relative;
+    padding-top: 1rem;
+    .overlay {
+        position: absolute;
+        z-index: -1;
+        top: 0;
+        right: 0;
+        left: -3rem;
+        height: 1rem;
+        @media (min-width:992px) {
+            // top: 2rem;
+            left: -5rem;
+        }
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: left;
+        background-color: var(--rbf-blue-900);
+        background-image: url(../img/bottom--default.svg);
+    }
+
+    h2, h3 {
+        @extend .has-default-color;
+    }
+}
+
+.joblisting {
+    border: 1px solid var(--grey-100);
+    position: relative;
+    a {
+        text-decoration: none;
+    }
+    .job {
+        padding: 0.5rem;
+    }
+    .job-title {
+        font-weight: 500;
+        font-size: 1.556rem;
+        font-size: clamp(1.556rem, 1.3672rem + 0.944vw, 2.5rem);    
+    }
+    .job-description, .job-posted, .job-meta, .job-salary {
+        color: black;
+    }
+    .job-meta {
+        display: flex;
+        justify-content: space-between;
+    }
+    .job-posted {
+        font-size: 0.899rem;
+    }
+
+    .job__link {
+        display: flex;
+        margin: 0.5rem 0 1.5rem 0;
+        justify-content: flex-end;
+        position: relative;
+        padding-right: 3rem;
+        color: var(--rbf-blue-900);
+        font-weight: 700;
+        overflow: hidden;
+        flex: 1;
+        align-items: flex-end;
+    }
+    .job__link::after {
+        content: "";
+        position: absolute;
+        right: -1px;
+        bottom: 3px;
+        width: 40px;
+        height: 20px;
+        background-position: center right;
+        background-repeat: no-repeat;
+        transition: all 0.3s ease;
+        background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg id='Layer_2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 45.18 22'%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill:%23004a89;%7D.cls-2%7Bfill:none;stroke:%23004a89;stroke-miterlimit:10;stroke-width:2px;%7D%3C/style%3E%3C/defs%3E%3Cg id='Desktop'%3E%3Cg%3E%3Ccircle class='cls-2' cx='11' cy='11' r='10'/%3E%3Cline class='cls-2' x1='21' y1='11' x2='45.18' y2='11'/%3E%3Ccircle class='cls-1' cx='11' cy='11' r='5'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    &::after {
+        position: absolute;
+        content: "";
+        background-image: url("../img/bottom--default.svg");
+        height: 1rem;
+        width: 100%;
+        bottom: 0;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    
+    &:hover .job__link::after {
+        right: -10px;
+    }
+
+}

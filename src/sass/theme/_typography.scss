@@ -1,0 +1,65 @@
+/* noto-sans-regular - latin */
+@font-face {
+    font-family: 'Noto Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local(''),
+        url('../fonts/noto-sans-v27-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+        url('../fonts/noto-sans-v27-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* noto-sans-700 - latin */
+@font-face {
+    font-family: 'Noto Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: local(''),
+        url('../fonts/noto-sans-v27-latin-700.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+        url('../fonts/noto-sans-v27-latin-700.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+:root {
+    font-variant-ligatures: none;
+}
+
+html {
+    font-size: 18px;
+}
+
+body {
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1rem;
+    line-height: 1.556;
+    color: black;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, .h99 {
+    font-family: 'Ubuntu', sans-serif;
+    font-style: normal;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+h1, .h1 {
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+h2, .h2 {
+    font-weight: 700;
+    font-size: 1.556rem;
+    font-size: clamp(1.556rem, 1.3672rem + 0.944vw, 2.5rem);
+}
+
+.fs-7 {
+    font-size: 0.889rem;
+}
+
+strong, b {
+    font-weight: 700;
+}

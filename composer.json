@@ -1,0 +1,12 @@
+{
+    "name": "holger1411/cb-afiniti",
+    "description": "Basic Child Theme for Understrap Theme Framework",
+    "type": "library",
+    "license": "GPL-2.0",
+    "minimum-stability": "stable",
+    "require": {
+        "smalot/pdfparser": "^2.2"
+    },
+    "keywords": ["wordpress","theme","bootstrap"],
+    "homepage": "https://github.com/holger1411/cb-afiniti"
+}

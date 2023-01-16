@@ -1,0 +1,56 @@
+.text--white {
+    color: $white;
+}
+
+.bg--light {
+    background-color: white;
+}
+
+
+
+
+.has-default-color {
+    color: var(--rbf-blue-900) !important;
+}
+.has-default-background-color {
+    background-color: var(--rbf-blue-900) !important;
+}
+.has-donate-color {
+    color: var(--rbf-purple-900) !important;
+}
+.has-donate-background-color {
+    background-color: var(--rbf-purple-900) !important;
+}
+.has-support-color {
+    color: var(--rbf-green-900) !important;
+}
+.has-support-background-color {
+    background-color: var(--rbf-green-900) !important;
+}
+.has-grey-color {
+    color: var(--rbf-grey) !important;
+}
+.has-grey-background-color {
+    background-color: var(--rbf-grey) !important;
+}
+
+.theme--default {
+    h3 {
+        color: var(--rbf-blue-900) !important;
+    }
+}
+.theme--donate {
+    h3 {
+        color: var(--rbf-purple-900) !important;
+    }
+}
+.theme--support {
+    h3 {
+        color: var(--rbf-green-900) !important;
+    }
+}
+.theme--grey {
+    h3 {
+        color: var(--rbf-grey) !important;
+    }
+}

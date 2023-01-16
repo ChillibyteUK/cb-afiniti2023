@@ -1,0 +1,100 @@
+.hero {
+    color: white;
+    background-size: cover;
+    background-position: left;
+    background-repeat: repeat-x;
+    min-height: 300px;
+    @media (min-width:992px) {
+        height: 450px;
+    }
+    position: relative;
+    z-index: 0;
+
+    margin-bottom: 2rem;
+
+    h1 {
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        font-size: 2.5rem;
+    }
+
+    &.front {
+        margin-bottom: 0;
+        h1 {
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            font-size: 2.5rem;
+            font-size: clamp(2.5rem, 2rem + 2.5vw, 5rem);
+        }
+    }
+    &__inner {
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    // .carousel-indicators {
+    //     bottom: 130px;
+    // }
+
+    .overlay {
+        position: absolute;
+        z-index: -1;
+
+        top: calc(300px + 2rem);
+        bottom: 2rem;
+        right: 0;
+        left: -3rem;
+        @media (min-width:992px) {
+            top: 2rem;
+            left: -5rem;
+        }
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: left;
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        @media (min-width:992px) {
+            width: 50%;
+        }
+        bottom: 0;
+        left: 0;
+        height: 1rem;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        z-index: 10;
+    }
+    &--default {
+        background-color: var(--rbf-blue-900);
+        &::after {
+            background-image: url(../img/bottom--default.svg);
+        }
+    }
+    &--support {
+        background-color: var(--rbf-green-900);
+        &::after {
+            background-image: url(../img/bottom--support.svg);
+        }
+    }
+    &--donate {
+        background-color: var(--rbf-purple-900);
+        &::after {
+            background-image: url(../img/bottom--donate.svg);
+        }
+    }
+    &__image {
+        background-size: cover;
+        background-repeat: no-repeat;
+        min-height: 300px;
+        background-position: top;
+        @media(min-width:992px) {
+            background-position: center;
+        }
+    }
+}
+
