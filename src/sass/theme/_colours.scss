@@ -6,51 +6,82 @@
     background-color: white;
 }
 
-
-
-
-.has-default-color {
-    color: var(--rbf-blue-900) !important;
+.has-green-500-color,
+.text--green {
+    color: var(--col-green-500);
 }
-.has-default-background-color {
-    background-color: var(--rbf-blue-900) !important;
+.has-purple-500-color,
+.text--purple {
+    color: var(--col-purple-500);
 }
-.has-donate-color {
-    color: var(--rbf-purple-900) !important;
+.has-orange-500-color,
+.text--orange {
+    color: var(--col-orange-500);
 }
-.has-donate-background-color {
-    background-color: var(--rbf-purple-900) !important;
-}
-.has-support-color {
-    color: var(--rbf-green-900) !important;
-}
-.has-support-background-color {
-    background-color: var(--rbf-green-900) !important;
-}
-.has-grey-color {
-    color: var(--rbf-grey) !important;
-}
-.has-grey-background-color {
-    background-color: var(--rbf-grey) !important;
+.has-grey-500-color,
+.text--grey {
+    color: var(--col-grey-500);
 }
 
-.theme--default {
-    h3 {
-        color: var(--rbf-blue-900) !important;
-    }
+
+.has-orange-500-background-color,
+.bg--orange,
+.bg--orange-500 {
+    background: var(--col-orange-500) !important;
+    color: white !important;
 }
-.theme--donate {
-    h3 {
-        color: var(--rbf-purple-900) !important;
-    }
+.bg--orange-300 {
+    background: var(--col-orange-300) !important;
+    color: white !important;
 }
-.theme--support {
-    h3 {
-        color: var(--rbf-green-900) !important;
-    }
+.bg--orange-700 {
+    background: var(--col-orange-700) !important;
+    color: white !important;
 }
-.theme--grey {
-    h3 {
-        color: var(--rbf-grey) !important;
-    }
+
+.has-green-500-background-color,
+.bg--green,
+.bg--green-500 {
+    background: var(--col-green-500) !important;
+    color: white !important;
 }
+.bg--green-300 {
+    background: var(--col-green-300) !important;
+    color: white !important;
+}
+.bg--green-700 {
+    background: var(--col-green-700) !important;
+    color: white !important;
+}
+
+.has-purple-500-background-color,
+.bg--purple,
+.bg--purple-500 {
+    background: var(--col-purple-500) !important;
+    color: white !important;
+}
+.bg--purple-300 {
+    background: var(--col-purple-300) !important;
+    color: white !important;
+}
+.bg--purple-700 {
+    background: var(--col-purple-700) !important;
+    color: white !important;
+}
+
+.has-grey-500-background-color,
+.bg--grey,
+.bg--grey-500 {
+    background: var(--col-grey-500) !important;
+    color: white !important;
+}
+.bg--grey-300 {
+    background: var(--col-grey-300) !important;
+    color: white !important;
+}
+.bg--grey-700 {
+    background: var(--col-grey-700) !important;
+    color: white !important;
+}
+
+

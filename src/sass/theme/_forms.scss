@@ -4,15 +4,15 @@
 // }
 .gform_fields {
     list-style-type: none;
-    margin-right: -15px;
-    margin-left: -15px;
+    // margin-right: -15px;
+    // margin-left: -15px;
     padding: 0;
 }
 
 .gfield {
-    margin-bottom: 15px;
-    padding-right: 15px;
-    padding-left: 15px;
+    // margin-bottom: 15px;
+    padding-right: 0;
+    padding-left: 0;
 }
 
 .gform_wrapper.gravity-theme input[type=text],
@@ -20,22 +20,10 @@
 .gform_wrapper.gravity-theme input[type=tel],
 .gform_wrapper.gravity-theme textarea {
     @extend .form-control;
-    // display: block;
-    // width: 100%;
-    // // height: 34px;
-    // // padding: 6px 12px;
-    // font-size: 1rem !important;
-    // line-height: 1.42857143;
-    // color: #555;
-    // background-color: #fff;
-    // background-image: none;
-    // border: 1px solid #ccc;
-    // border-radius: 4px;
-    // -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-    // box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-    // -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
-    // -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-    // transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+.gform_wrapper.gravity-theme .gfield input.medium, .gform_wrapper.gravity-theme .gfield select.medium {
+    width: 100% !important;
 }
 
 .gform_wrapper select {
@@ -71,12 +59,20 @@
 
 body .gform_wrapper .gform_footer button {
     @extend .btn;
-    @extend .btn-primary;
-    @extend .btn-default;
+    @extend .btn--green;
 }
 
-.gfield_checkbox,
-.gfield_radio {
-    display: flex;
-    justify-content: space-around;
+// .gfield_checkbox,
+// .gfield_radio {
+//     display: flex;
+//     justify-content: space-around;
+// }
+
+.gchoice {
+   display: flex;
+   gap: 1rem;
+   align-items: flex-start;
+}
+.gform_wrapper.gravity-theme .gfield-choice-input {
+    margin-top: 0.25rem !important;
 }

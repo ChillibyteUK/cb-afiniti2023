@@ -1,0 +1,11 @@
+#contact-icon {
+    width: 140px;
+    height: auto;
+    position: absolute;
+    top: -40px;
+    left: 0;
+      
+    @media screen and (max-width: 768px) {
+        left: 60px; 
+    }
+}

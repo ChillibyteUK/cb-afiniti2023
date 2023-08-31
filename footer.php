@@ -8,14 +8,14 @@ defined('ABSPATH') || exit;
         <div class="row">
             <div class="col-lg-3">
                 <div class="mb-4">
-                    <img src="<?=get_stylesheet_directory_uri()?>/img/afiniti-logo--wo.svg" class="footer-logo" alt="Afiniti Logo">
+                    <img src="<?=get_stylesheet_directory_uri()?>/img/afiniti-logo-v1.png" width=500 height=134 class="footer-logo" alt="Afiniti Logo">
                 </div>
                 <div>Using our creative and innovative approach to delivering change, we enable and equip your people to progress through every step of the change journey.</div>
             </div>
             <div class="col-lg-3">
                 <div class="footer__heading">Contact us</div>
                 <ul class="fa-ul mb-4">
-                    <li><span class="fa-li"><i class="fa-solid fa-phone"></i></span> <a href="tel:<?=parse_phone(get_field('phone','options'))?>"><?=get_field('phone','options')?></a></li>
+                    <li class="mb-2"><span class="fa-li"><i class="fa-solid fa-map-marker-alt"></i></span> <?=get_field('address','options')?></li>
                     <li><span class="fa-li"><i class="fa-solid fa-envelope"></i></span> <a href="mailto:<?=get_field('email','options')?>"><?=get_field('email','options')?></a></li>
                 </ul>
             </div>
@@ -28,30 +28,31 @@ defined('ABSPATH') || exit;
                 <div class="social-icons mb-2">
                     <?php
                     $social = get_field('social', 'options');
-                    if ($social['twitter_url']) {
-                        ?>
-                    <a href="<?=$social['twitter_url']?>" target="_blank"><i class="fa-brands fa-twitter"></i></a>
-                    <?php
-                    }
-                    if ($social['linkedin_url']) {
-                        ?>
-                    <a href="<?=$social['linkedin_url']?>" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
-                    <?php
-                    }
-                    if ($social['facebook_url']) {
-                        ?>
-                    <a href="<?=$social['facebook_url']?>" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
-                    <?php
-                    }
-                    if ($social['youtube_url']) {
-                        ?>
-                    <a href="<?=$social['youtube_url']?>" target="_blank"><i class="fa-brands fa-youtube"></i></a>
-                    <?php
+                    if ($social) {
+                        if ($social['twitter_url'] ?? null) {
+                            ?>
+                        <a href="<?=$social['twitter_url']?>" target="_blank" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                        <?php
+                        }
+                        if ($social['linkedin_url'] ?? null) {
+                            ?>
+                        <a href="<?=$social['linkedin_url']?>" target="_blank" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <?php
+                        }
+                        if ($social['facebook_url'] ?? null) {
+                            ?>
+                        <a href="<?=$social['facebook_url']?>" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                        <?php
+                        }
+                        if ($social['youtube_url'] ?? null) {
+                            ?>
+                        <a href="<?=$social['youtube_url']?>" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                        <?php
+                        }
                     }
                     ?>
                 </div>
-                <div class="footer__heading">Afiniti Newsletter</div>
-                    MC form here
+                <a href="/newsletter-signup/" class="btn btn--orange">Afiniti Newsletter</a>
             </div>
         </div>
     </div>
@@ -63,8 +64,8 @@ defined('ABSPATH') || exit;
                 &copy; <?=date('Y')?> Afiniti
             </div>
             <div class="col-md-4 d-flex align-items-center justify-content-end">
-                <div class="link"><a href="/privacy-policy/">Privacy & Cookies</a></div>
-                <div class="link"><a href="/terms/">Refunds &amp; Cancellations</a></div>
+                <div class="link"><a href="/privacy-policy/">Privacy Policy</a></div>
+                <div class="link"><a href="/cookie-policy/">Cookie Policy</a></div>
                 <a href="https://www.chillibyte.co.uk/" rel="nofollow noopener" target="_blank" class="cb" title="Digital Marketing by Chillibyte"></a>
             </div>
         </div>

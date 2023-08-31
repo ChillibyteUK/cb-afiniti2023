@@ -1,0 +1,51 @@
+.tab_divider {
+    display: flex;
+    align-items: flex-start;
+    box-sizing: border-box;
+    &__image {
+        overflow: hidden;
+        width: 8rem;
+        aspect-ratio: 1 / 1;
+        border: 2px dashed var(--col-grey-500);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+            width: 120%;
+        }
+    }
+    &__middle {
+        flex: 1;
+        height: 2rem;
+        margin-top: 2rem;
+        border-bottom: 2px dashed var(--col-grey-500);
+        &--right {
+            border-left: 2px dashed var(--col-grey-500);
+            border-bottom-left-radius: 1rem;
+        }
+        &--left {
+            border-right: 2px dashed var(--col-grey-500);
+            border-bottom-right-radius: 1rem;
+        }
+    }
+    &__tab {
+        height: 2rem;
+        margin-top: 1rem;
+        flex: 1;
+        border-top:  2px dashed var(--col-grey-500);
+        border-right:  2px dashed var(--col-grey-500);
+        border-left:  2px dashed var(--col-grey-500);
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+        text-align: center;
+        padding: 1rem 0.5rem;
+        @extend .h3;
+        &--right {
+            margin-right: -2px;
+        }
+        &--left {
+            margin-left: -2px;
+        }
+    }
+}

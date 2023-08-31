@@ -1,6 +1,7 @@
-@import "props";
+
 @import "typography";
 @import "colours";
+@import "borders";
 @import "header";
 @import "footer";
 @import "buttons";
@@ -8,16 +9,12 @@
 @import "careers";
 @import "forms";
 @import "blocks/blocks";
+@import "single-person";
+@import "contact-page";
 
-main {
-    // padding-top: 65px;
-    // @media (min-width:992px) {
-    //     padding-top: 95px;
-    // }
-    margin-top: 98px;
-    @media (min-width:992px) {
-        margin-top: 95px;
-    }
+
+body {
+    overflow-x: auto;
 }
 
 .alignwide {
@@ -26,6 +23,18 @@ main {
 
 a.noline {
     text-decoration: none;
+}
+
+.only-mobile {
+    display: none;
+}
+@media screen and (max-width: 992px) {
+    .no-mobile {
+        display: none;
+    }
+    .only-mobile {
+        display: block;
+    }
 }
 
 // .overlay {
@@ -74,11 +83,23 @@ ul.nopad {
     }
 }
 
-:not(.share-icons,.social-icons,figure,.app__card) > a[target="_blank"]:not(.btn,.mas-widget-logo-link)::after {
+:not(.share-icons,.social-icons,figure,.halfcircle-content) > a[target="_blank"]:not(.btn,.linkedin-circle)::after {
     content: "\f08e";
     font-family: "Font Awesome 6 Free";
     margin-left: 0.5rem;
     display: inline-block;
+}
+
+.social-icons__sidebar {
+    --fa-inverse: var(--col-green-500);
+    font-size: 1.2rem;
+    a {
+        color: white;
+        transition: opacity 0.3s ease-out;
+        &:hover {
+            opacity: 0.8;
+        }
+    }
 }
 
 
@@ -89,6 +110,68 @@ ul.nopad {
 .excerpt_part {
     strong {
         background-color: var(--rbf-blue-300);
+    }
+}
+
+.breakout {
+    width: calc(100vw - 0.6rem);
+    position: relative;
+    left: calc(-1 * (100vw - 100%) / 2);
+    // max-width: calc(100% + 0.5rem);
+    overflow: hidden;
+}
+@media (min-width:992px) {
+    .breakout-lg {
+        width: calc(100vw - 0.6rem);
+        position: relative;
+        left: calc(-1 * (100vw - 100%) / 2);
+        overflow: hidden;
+    }
+}
+
+.arrow {
+    display: inline-block;
+    border-right-width: 2px;
+    border-right-style: dashed;
+    border-bottom-width: 2px;
+    border-bottom-style: dashed;
+    width: 20px;
+    height: 20px;
+    transform: rotate(-45deg);
+    position: relative;
+    top: 5px;
+    left: 0;
+    transition: all .3s ease-out;
+}
+
+.current_opportunities {
+    a {
+        text-decoration: none;
+        display: block;
+        &:hover {
+            .arrow {
+                left: 1.2rem;
+            }
+        }
+    }
+}
+
+.single_insight_image {
+    aspect-ratio: 2 / 1;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.featured-image-container {
+    overflow: hidden;
+    height: 583px;
+    position: relative;
+    .featured-image {
+        background-size: cover;
+        background-position: center;
+        height: 100%;
     }
 }
 

@@ -10,7 +10,7 @@
   var direction = 0;
   var prevDirection = 0;
 
-  var header = document.getElementById('wrapper-navbar');
+  var header = document.getElementById('navbar');
 
   var checkScroll = function() {
 
@@ -51,7 +51,22 @@
     }
   };
 
-  // window.addEventListener('scroll', checkScroll);
+  window.addEventListener('scroll', checkScroll);
+
+    // header background
+
+  $(document).on('scroll', function () {
+    var $nav = $("#navbar");
+    // $nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height() );
+    if (!$('#primaryNav').hasClass('show')) {
+      $nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height() );
+    }
+  });
+
+  $('#navToggle').on('click', function(){
+    var $nav = $("#navbar");
+    $nav.toggleClass('navdark');
+  });
 
     // $('#searchTrigger').on('click',function(e) {
     //     e.stopPropagation();

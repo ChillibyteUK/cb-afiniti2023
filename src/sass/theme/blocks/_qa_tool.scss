@@ -1,0 +1,75 @@
+.tab-buttons {
+    display: grid;
+    gap: 1rem;
+    @media (min-width:576px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    @media (min-width:992px) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .tab-link {
+        @extend .btn;
+        @extend .btn-outline-primary;
+        margin-right: 0.5rem;
+        border: none;
+        width: 100%;
+        min-height: 66px;
+        display: grid;
+        grid-template-columns: 1fr 5fr;
+        align-content: center;
+        gap: 0.5rem;
+        p {
+            text-align: start;
+            align-self: center;
+            margin-bottom: 0;
+        }
+    }
+}
+
+.qa {
+    *:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(21, 156, 228, 0.4);
+    }
+
+    &__question {
+        border-bottom: 1px dashed var(--col-grey-400);
+        padding: 1rem 0;
+    }
+
+    &__intro {
+        display: grid;
+        grid-template-columns: 1fr 8fr;
+        gap: 1rem;
+    }
+
+    &__section {
+        font-weight: 600;
+    }
+
+    &__button {
+        width: 100%;
+        text-align: left;
+        border: 0;
+        background-color: transparent;
+        color: var(--col-grey-500);
+        padding: 0;
+        position: relative;
+        font-weight: 600;
+        font-size: 1.2rem;
+        // color: var(--col-purple-500);
+        &::after {
+            position: absolute;
+            right: 1rem;
+            content: "\f106";
+            font-family: "Font Awesome 6 Free";
+        }
+        &.collapsed::after {
+            content: "\f107";
+        }
+    }
+    .accordion-body {
+        padding: 1rem 0 0 0;
+    }
+}

@@ -1,0 +1,11 @@
+.text_icon {
+    &__icon {
+        width: 100px;
+        height: 100px;
+        aspect-ratio: 1 / 1;
+        border-color: var(--col-green-500);
+        border-radius: 50%;
+        border-style: dashed;
+        border-width: 2px;
+    }
+}

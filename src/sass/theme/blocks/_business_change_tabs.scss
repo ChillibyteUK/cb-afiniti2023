@@ -1,0 +1,65 @@
+.responsive-tabs {
+    padding: 1rem;
+    .nav-tabs {
+        display: none;
+    }
+
+    @media (min-width: 992px) {
+        .nav-tabs {
+            display: flex;
+        }
+
+        .card {
+            border: none;
+        }
+
+        .card .card-header {
+            display: none;
+        }
+
+        .card .collapse {
+            display: block;
+        }
+    }
+
+    @media (max-width: 991px) {
+        .tab-pane {
+            display: block !important;
+            opacity: 1;
+        }
+    }
+
+    .card-header a {
+        color: white;
+        text-decoration: none;
+    }
+
+    .card-body {
+        padding: 0;
+    }
+
+    .only-mobile a.text-white {
+        text-decoration: none;
+    }
+
+    .nav-link {
+        border: none;
+    }
+
+    .card-header a {
+        display: block;
+    }
+
+    .col-12 {
+        position: relative;
+    }
+
+}
+
+.bc-img {
+    position: relative;
+    z-index: 99;
+    height: 230px;
+    max-height: 240px;
+    width: auto;
+}

@@ -1,0 +1,63 @@
+.halfcircle-container {
+    margin-bottom: 60px;
+    z-index: 0;
+    position: relative;
+
+    .halfcircle-green::before {
+        background-color: var(--col-green-500);
+    }
+    .halfcircle-orange::before {
+        background-color: var(--col-orange-500);
+    }
+    .halfcircle-purple::before {
+        background-color: var(--col-purple-500);
+    }
+    .halfcircle-grey::before {
+        background-color: var(--col-grey-500);
+    }
+
+    .ss-halfcircle {
+        &::before {
+            left: 50%;
+            width: 250px;
+            height: 125px;
+            border-bottom-left-radius: 250px;
+            border-bottom-right-radius: 250px;
+            transform: translateX(-50%);
+            bottom: -25px;
+            z-index: -1;
+        }
+        .halfcircle-content {
+            margin: 0 20%;
+            border-top: 2px dashed #fff;
+            padding-top: 20px;
+            position: relative;
+            min-height: 50px;
+            a {
+                display: block;
+                color: white;
+                text-decoration: none;
+                .arrow {
+                    display: block;
+                    margin: auto;
+                }
+                &:hover {
+                    .arrow {
+                        transform: rotate(45deg);
+                    }
+                }
+            }
+        }
+        .halfcircle-content--noborder {
+            border: none;
+        }
+    }
+
+    .div-rounded {
+        &::before {
+            position: absolute;
+            content: '';
+            pointer-events: none;
+        }
+    }
+}

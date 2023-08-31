@@ -1,27 +1,39 @@
+$col-green-300: hsl(89, 42%, 76%); // my hsl(102, 37%, 66%);
+$col-green-500: hsl(89, 42%, 67%); // my hsl(102, 37%, 59%);
+$col-green-700: hsl(105, 35%, 60%); // my hsl(102, 37%, 52%);
+
+
+$col-orange-300: hsl(28, 88%, 66%);
+$col-orange-500: hsl(28, 88%, 59%);
+$col-orange-700: hsl(28, 88%, 52%);
+
+$col-purple-300: hsl(245, 17%, 47%);
+$col-purple-500: hsl(245, 17%, 40%);
+$col-purple-700: hsl(245, 17%, 33%);
+
+$col-grey-300: hsl(270, 1%, 70%);
+$col-grey-400: hsl(270, 1%, 54%);
+$col-grey-500: hsl(270, 1%, 38%);
+$col-grey-700: hsl(270, 1%, 22%);
+
+
 :root {
-    --rbf-blue-900: #004a89;
-    --rbf-blue-700: #5275a5;
-    --rbf-blue-500: #8ba1c2;
-    --rbf-blue-300: #c4d0e0;
 
-    --rbf-green-900: #3f9370;
-    --rbf-green-700: #6eae93;
-    --rbf-green-500: #9dc8b5;
-    --rbf-green-300: #cde3d9;
+    --col-green-300: hsl(89, 42%, 76%);
+    --col-green-500: hsl(89, 42%, 67%);
+    --col-green-700: hsl(105, 35%, 60%);
 
-    --rbf-purple-900: #65005c;
-    --rbf-purple-700: #8b4181;
-    --rbf-purple-500: #b17eaa;
-    --rbf-purple-300: #d7bdd4;
-
-    --rbf-grey: #575757;
-
-    --grey-50: #fafafa;
-    --grey-100: #e9e9e9;
-    --grey-100-tx: #e9e9e97a;
-    --grey-200: #c9c9c9;
-    --grey-300: #a1a19f;
-    --grey-350: #7c8892;
-    --grey-400: #3c3c3c;
-    --grey-700: #1a1a1a;
+    --col-orange-300: hsl(28, 88%, 66%);
+    --col-orange-500: hsl(28, 88%, 59%);
+    --col-orange-700: hsl(28, 88%, 52%);
+    
+    --col-purple-300: hsl(245, 17%, 47%);
+    --col-purple-500: hsl(245, 17%, 40%);
+    --col-purple-700: hsl(245, 17%, 33%);
+    
+    --col-grey-300: hsl(270, 1%, 70%);
+    --col-grey-400: hsl(270, 1%, 54%);
+    --col-grey-500: hsl(270, 1%, 38%);
+    --col-grey-700: hsl(270, 1%, 22%);
+    
 }

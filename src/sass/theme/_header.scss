@@ -1,146 +1,84 @@
-#wrapper-navbar {
+nav.navbar {
+    background: linear-gradient(to bottom,rgba(0,0,0,.5) 1%,rgba(255,255,255,0) 100%);
     font-size: 16px;
-    background-color: white;
-    @media (min-width:992px) {
-        background-color: transparent;
-    }
-
     transition: all .3s ease;
 
     &.hide {
         top: -140px;
     }
 
-    &.scrolled {
-        background-color: white;
-    }
-    .navbar-brand img {
-        width: 100%;
-        max-width: 150px;
-        @media (min-width:992px) {
-            max-width: 150px;
+    &.scrolled,
+    &.navdark {
+        background: none;
+        background-color: #fff;
+        .logo {
+            background-image: url(../img/afiniti-logo-v2--dark.png);
         }
-        @media (min-width:1200px) {
-            max-width: 185px;
+        a.nav-link {
+            color: var(--col-grey-500);
         }
-    }
-
-    #top-nav {
-        font-size: 0.875rem;
-    }
-    #main-menu {
-        li {
-            font-weight: 500;
-            font-size: 0.875rem;
-        }
-
-        .nav-link {
-            // margin-right: 1rem;
-            @media (min-width:1400px) {
-                margin-left: 1rem;
-            }
-            padding-left: 0 !important;
-            padding-right: 0 !important;
-            margin-bottom: 2px;
-            padding-bottom: 2px;
-        }
-        .current-menu-ancestor>a {
-            color: var(--rbf-grey);
-        }
-        .current-menu-item {
-            a {
-                font-weight: 500;
-                // border-bottom: 2px solid $primary;
-            }
-        }
-
-    }
-    a {
-        color: var(--rbf-blue-900);
-        &:hover {
-            color: var(--rbf-blue-700);
+        .navbar-toggler {
+            color: var(--col-grey-500);
         }
     }
 
     .navbar-toggler {
-        // margin-right: 1rem;
         border: none;
-        color: var(--rbf-blue-900);
+        color: white;
         &:focus {
             box-shadow: none;
         }
     }
-    .navbar-toggler .close-icon,
-    .navbar-toggler.collapsed .close-icon {
-        display: none !important;
-    }
-  
-    .navbar-toggler:not(.collapsed) .close-icon {
-        display: inline !important;
-    }
-    .navbar-toggler:not(.collapsed) .navbar-icon {
-        display: none !important;
+    .navbar-toggler[aria-expanded="true"] {
+        color: var(--col-grey-500);
     }
 
     .btn {
         font-size: 16px;
     }
 
-    // expat above
-
+    .dropdown-menu {
+        font-size: 16px;
+    }
+    
     @media (max-width:991px) {
         .dropdown-menu {
             border: none;
             border-radius: 0;
-
         }
     }
 
-    @media (min-width:992px) {
-        ul#main-menu li:not(:last-child) {
-            margin-right: 2rem;
-            text-align: left;
-        }
-        #main-menu ul.dropdown-menu li {
-            margin-right: 0;
-            padding-left: 0;
-            text-align: left;
-        }
-    }
-
-    input[type=text] {
-        width: 1.5rem;
-        border: none;
-        border-bottom: 1px solid transparent;
-        transition: all 0.3s ease-in-out;
-        background-color: transparent;
+    a.nav-link {
         color: white;
-        cursor: pointer;
-        &:focus {
-            width: 15rem;
-            border-bottom: 1px solid var(--rbf-blue-700);
-            outline: 0;
-            color: var(--rbf-blue-700);
-            cursor: text;
-        }
-    }
-    #search {
-        position: relative;
-        &::after {
-            position: absolute;
-            content: "\f002";
-            font-family: "Font Awesome 6 Free";
-            color: var(--rbf-blue-900);
-            right: 0.25rem;
-            pointer-events: none;
-        }
     }
 
+    .btn a {
+        display: inline;
+    }
 
+    // @media (min-width:992px) {
+    //     ul#main-menu li:not(:last-child) {
+    //         margin-right: 2rem;
+    //         text-align: left;
+    //     }
+    //     #main-menu ul.dropdown-menu li {
+    //         margin-right: 0;
+    //         padding-left: 0;
+    //         text-align: left;
+    //     }
+    // }
+
+    // <img class="logo" src="<?=get_stylesheet_directory_uri()?>/img/afiniti-logo-v2.png" width=348 height=121>
     .logo {
+        background-image: url(../img/afiniti-logo-v2.png);
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
         width: 80px;
+        height: 25px;
         @media (min-width:576px) {
-            min-width: 150px;
+            width: 150px;
+            height: 52px;
         }
     }
 

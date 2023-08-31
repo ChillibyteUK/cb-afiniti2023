@@ -1,7 +1,7 @@
 .footer {
-    background-color: var(--rbf-blue-900);
+    background-color: var(--col-grey-500);
     color: white;
-    font-size: 0.889rem;
+    font-size: 0.75rem;
 
     &__heading {
         font-size: 1rem;
@@ -22,13 +22,13 @@
         color: white;
         transition: all .3s ease;
         &:hover {
-            color: var(--grey-300);
+            opacity: 0.8;
         }
     }
     a.btn {
         color: white;
         &:hover {
-            color: var(--grey-200);
+            opacity: 0.8;
         }
     }
     .social-icons {
@@ -39,7 +39,7 @@
             color: white;
             transition: all .3s ease;
             &:hover {
-                color: var(--grey-300);
+                opacity: 0.8;
             }
         }
     }
@@ -52,7 +52,7 @@
     }
 }
 .colophon {
-    background-color: var(--rbf-blue-700);
+    background-color: var(--col-grey-500);
     color: white;
     font-size: 0.778rem;
     a {
@@ -60,7 +60,7 @@
         color: white;
         transition: all .3s ease;
         &:hover {
-            color: var(--grey-300);
+            opacity: 0.8;
         }
     }
     .link {
@@ -68,7 +68,7 @@
         margin-bottom: 0;
         border-bottom: none;
         &:not(:last-of-type) {
-            border-right: 1px solid var(--grey-300);
+            border-right: 1px solid var(--col-grey-300);
         }
     }
     .cb {

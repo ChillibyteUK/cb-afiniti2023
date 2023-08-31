@@ -1,0 +1,13 @@
+.accreditation {
+    img {
+        transition: all .5s ease-out;
+        filter: grayscale(100%);
+        opacity: .4;
+        display: flex;
+        margin: auto;
+        &:hover {
+            filter: none;
+            opacity: 1;
+        }
+    }
+}

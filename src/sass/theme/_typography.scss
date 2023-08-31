@@ -24,7 +24,7 @@
 }
 
 html {
-    font-size: 18px;
+    font-size: 16px;
 }
 
 body {
@@ -33,31 +33,51 @@ body {
     font-style: normal;
     font-size: 1rem;
     line-height: 1.556;
-    color: black;
+    color: var(--col-grey-500);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
 h1, .h1, h2, .h2, h3, .h3, h4, .h4, .h99 {
-    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Noto Sans', sans-serif;
     font-style: normal;
     margin-bottom: 0.5rem;
-    font-weight: 700;
+    font-weight: 400;
+    span {
+        font-weight: 700;
+    }
 }
 
-h1, .h1 {
-    font-weight: 700;
-    letter-spacing: 1px;
-}
+// h1, .h1 {
+//     font-size: 1.375rem;
+//     font-size: calc(1.375rem + 1.5vw);
+// }
 
 h2, .h2 {
+    // font-size: 32px;
+    // font-size: 1.556rem;
+    // font-size: clamp(1.556rem, 1.3672rem + 0.944vw, 2.5rem);
+    font-size: 24px;
     font-weight: 700;
-    font-size: 1.556rem;
-    font-size: clamp(1.556rem, 1.3672rem + 0.944vw, 2.5rem);
+}
+h3, .h3 {
+    font-size: 24px;
+    // font-size: 1.556rem;
+    // font-size: clamp(1.556rem, 1.3672rem + 0.944vw, 2.5rem);
 }
 
 .fs-7 {
     font-size: 0.889rem;
+}
+
+.has-large-font-size {
+    font-size: 1.4rem ;
+}
+.has-medium-font-size {
+    font-size: 1.125rem;
+}
+.has-small-font-size {
+    font-size: 0.875rem;
 }
 
 strong, b {

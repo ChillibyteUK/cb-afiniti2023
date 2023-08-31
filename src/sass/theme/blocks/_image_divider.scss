@@ -1,0 +1,16 @@
+.image_divider {
+    &__h-60 {
+        height: 60px;
+        z-index: -1;
+    }
+    &__icon {
+        width: 130px;
+        height: auto;
+        z-index: 1;
+        margin-bottom: -20px;
+    }
+    &__title {
+        margin-top: -2rem;
+        text-align: center;
+    }
+}
