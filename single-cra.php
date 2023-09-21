@@ -36,6 +36,16 @@ $levers = array('Leadership','Drivers','Culture','Engagement','Capability','Meth
     .fa-ul {
         margin-left: 1.5rem;
     }
+    .post-image-flag {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: var(--col-green-700);
+        color: white;
+        padding: 0.25rem 0.5rem;
+        z-index: 9999;
+        font-size: 0.8rem;
+    }
 </style>
 <main id="main">
     <section id="hero" class="hero d-flex align-items-start pt-lg-0 align-items-lg-center">
@@ -129,9 +139,11 @@ include get_stylesheet_directory() . '/page-templates/anim/business-change.php';
             </div>
 
             <?php
+    $pcts = array();
     foreach ($levers as $l) {
         // $theScore = getPercentOfNumber($scores[$l],30);
         $theScore = round(($scores[$l] / 30) * 100);
+        $pcts[$l] = $theScore;
         ?>
             <div class="results__grid">
                 <div class="d-flex justify-content-between">
@@ -167,24 +179,43 @@ include get_stylesheet_directory() . '/page-templates/anim/business-change.php';
     <!-- latest_insights -->
     <section class="latest_news py-5 <?=$classes?>">
         <div class="container">
-            <h2 class="mb-4">Latest <span>Insights</span></h2>
+            <h2 class="mb-4">Related <span>Insights</span></h2>
             <div class="slider mb-4">
-                <?php
-            $q = new WP_Query(array(
-                'post_type' => 'post',
-                'posts_per_page' => '6',
-                'post_status' => 'publish',
-                'tax_query' => array(
-                    array(
-                        'taxonomy' => 'category',
-                        'field'    => 'slug',
-                        'terms'    => 'team-insight',
-                        'operator' => 'NOT IN'
-                    )
-                ),
-            ));
-while ($q->have_posts()) {
-    $q->the_post();
+
+    <?php
+asort($pcts);
+$keys = array_slice(array_keys($pcts), 0, 2);
+
+/*  two from lowest $keys[0] */
+/*  one from second lowest $keys[1] */
+/*  three of the latest */
+
+$maxcount = 6;
+$postcount = 0;
+$theIDs = array();
+
+$lowest = new WP_Query(array(
+    'post_type' => 'post',
+    'posts_per_page' => 2,
+    'post_status' => 'publish',
+    'tax_query' => array(
+        'relation' => 'AND',
+        array(
+            'taxonomy' => 'category',
+            'field'    => 'slug',
+            'terms'    => 'team-insight',
+            'operator' => 'NOT IN'
+        ),
+        array(
+            'taxonomy' => 'lever',
+            'field'    => 'name',
+            'terms'    => array($keys[0]),
+        )
+    ),
+));
+
+while ($lowest->have_posts()) {
+    $lowest->the_post();
 
     $img = get_the_post_thumbnail_url(get_the_ID(), 'large');
     if (!$img) {
@@ -192,29 +223,137 @@ while ($q->have_posts()) {
     }
 
     ?>
-                <div class="slider__item insight px-3">
-                    <a href="<?=get_the_permalink()?>">
-                        <div class="post-image-container">
-                            <div class="post-image mb-2"
-                                style="background-image:url('<?=$img?>')">
-                                <div class="img-overlay">
-                                    <div class="middle"><span class="arrow arrow-block arrow-white"></span></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="article-title mt-2">
-                            <?=get_the_title()?>
-                        </div>
-                        <div class="article-excerpt">
-                            <?=wp_trim_words(get_the_content(), 20)?>
-                        </div>
-                        <div class="fw-bold py-2 arrow-link">
-                            <div class="anim-arrow--slide">Read more <span class="arrow arrow-green"></span></div>
-                        </div>
-                    </a>
+    <div class="slider__item insight px-3">
+        <a href="<?=get_the_permalink()?>">
+            <div class="post-image-container">
+                <div class="post-image-flag"><?=$keys[0]?></div>
+                <div class="post-image mb-2"
+                    style="background-image:url('<?=$img?>')">
+                    <div class="img-overlay">
+                        <div class="middle"><span class="arrow arrow-block arrow-white"></span></div>
+                    </div>
                 </div>
-                <?php
+            </div>
+            <div class="article-title mt-2">
+                <?=get_the_title()?>
+            </div>
+            <div class="article-excerpt">
+                <?=wp_trim_words(get_the_content(), 20)?>
+            </div>
+            <div class="fw-bold py-2 arrow-link">
+                <div class="anim-arrow--slide">Read more <span class="arrow arrow-green"></span></div>
+            </div>
+        </a>
+    </div>
+    <?php
 }
+
+$second = new WP_Query(array(
+    'post_type' => 'post',
+    'posts_per_page' => 1,
+    'post_status' => 'publish',
+    'tax_query' => array(
+        'relation' => 'AND',
+        array(
+            'taxonomy' => 'category',
+            'field'    => 'slug',
+            'terms'    => 'team-insight',
+            'operator' => 'NOT IN'
+        ),
+        array(
+            'taxonomy' => 'lever',
+            'field'    => 'name',
+            'terms'    => array($keys[1]),
+        )
+    ),
+));
+
+while ($second->have_posts()) {
+    $second->the_post();
+
+    $img = get_the_post_thumbnail_url(get_the_ID(), 'large');
+    if (!$img) {
+        $img = get_stylesheet_directory_uri() . '/img/default-blog.jpg';
+    }
+
+    ?>
+    <div class="slider__item insight px-3">
+        <a href="<?=get_the_permalink()?>">
+            <div class="post-image-container">
+                <div class="post-image-flag"><?=$keys[1]?></div>
+                <div class="post-image mb-2"
+                    style="background-image:url('<?=$img?>')">
+                    <div class="img-overlay">
+                        <div class="middle"><span class="arrow arrow-block arrow-white"></span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="article-title mt-2">
+                <?=get_the_title()?>
+            </div>
+            <div class="article-excerpt">
+                <?=wp_trim_words(get_the_content(), 20)?>
+            </div>
+            <div class="fw-bold py-2 arrow-link">
+                <div class="anim-arrow--slide">Read more <span class="arrow arrow-green"></span></div>
+            </div>
+        </a>
+    </div>
+    <?php
+}
+
+$remaining = $postcount - $maxcount;
+
+$other = new WP_Query(array(
+    'post_type' => 'post',
+    'posts_per_page' => $remaining,
+    'post_status' => 'publish',
+    'post__not_in' => $theIDs,
+    'tax_query' => array(
+        array(
+            'taxonomy' => 'category',
+            'field'    => 'slug',
+            'terms'    => 'team-insight',
+            'operator' => 'NOT IN'
+        )
+    ),
+));
+
+while ($other->have_posts()) {
+    $other->the_post();
+
+    $img = get_the_post_thumbnail_url(get_the_ID(), 'large');
+    if (!$img) {
+        $img = get_stylesheet_directory_uri() . '/img/default-blog.jpg';
+    }
+
+    ?>
+    <div class="slider__item insight px-3">
+        <a href="<?=get_the_permalink()?>">
+            <div class="post-image-container">
+                <div class="post-image mb-2"
+                    style="background-image:url('<?=$img?>')">
+                    <div class="img-overlay">
+                        <div class="middle"><span class="arrow arrow-block arrow-white"></span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="article-title mt-2">
+                <?=get_the_title()?>
+            </div>
+            <div class="article-excerpt">
+                <?=wp_trim_words(get_the_content(), 20)?>
+            </div>
+            <div class="fw-bold py-2 arrow-link">
+                <div class="anim-arrow--slide">Read more <span class="arrow arrow-green"></span></div>
+            </div>
+        </a>
+    </div>
+    <?php
+}
+
+
+
 ?>
             </div>
             <div class="text-center"><a href="/insights/" class="btn btn--green">Read more</a></div>
