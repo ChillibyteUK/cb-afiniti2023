@@ -261,7 +261,7 @@ add_action( 'send_headers', 'enable_strict_transport_security_hsts_header' );
 
 function cb_list($field) {
     ob_start();
-    $field = strip_tags($field, '<br />');
+    $field = strip_tags($field, '<a><br />');
     $bullets = preg_split("/\r\n|\n|\r/", $field);
     foreach ($bullets as $b) {
         if ($b == '') { continue; }

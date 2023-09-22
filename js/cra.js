@@ -4,9 +4,13 @@ var scores = { 'Culture': 0, 'Leadership': 0, 'Method': 0, 'Engagement': 0, 'Dri
 // show first step
 
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('form1').style.display = 'block';
+    document.getElementById('form0').style.display = 'block';
 })
 
+document.getElementById('step0').addEventListener('click',function(){
+    document.getElementById('form0').style.display = 'none';
+    document.getElementById('form1').style.display = 'block';
+});
 
 //---------------------------------------------------------------------- step 2
 // validate step 1
@@ -37,6 +41,12 @@ document.getElementById('step1').addEventListener('click',function(){
 
         document.getElementById('form1').style.display = 'none';
         document.getElementById('form2').style.display = 'block';
+
+        console.log('pushing event to dataLayer');
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            'event': 'cra_contact_submit'
+        });
 
         // console.log(data);
     }
