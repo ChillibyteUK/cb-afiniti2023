@@ -150,7 +150,7 @@ label[for="consent"] input[type="checkbox"] {
                 </div>
             </div>
             <div id="changeDetailContainer" class="form_grid my-3">
-                <label for="changeDetail">Please provide details</label>
+                <label for="changeDetail">Please briefly outline this change</label>
                 <div>
                     <textarea name="changeDetail" id="changeDetail" class="form-control"></textarea>
                     <div class="alert alert-danger" id="changeDetailWarn">Please tell us about your current/planned change.</div>
