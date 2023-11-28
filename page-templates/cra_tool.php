@@ -92,7 +92,11 @@ label[for="consent"] input[type="checkbox"] {
     </div>
 </section>
 <div class="container-xl">
-
+    <section class="stepCard" id="form0">
+        <?php
+        the_content();
+        ?>
+    </section>
     <section class="stepCard" id="form1">
         <h2>Step 1 - Contact Details</h2>
         <div class="progress">
@@ -152,7 +156,8 @@ label[for="consent"] input[type="checkbox"] {
             <div id="changeDetailContainer" class="form_grid my-3">
                 <label for="changeDetail">Please briefly outline this change</label>
                 <div>
-                    <textarea name="changeDetail" id="changeDetail" class="form-control"></textarea>
+                    <textarea name="changeDetail" id="changeDetail" class="form-control" placeholder="For example, implementing a new technology or system, creating a new operating model, digital transformation, culture change, regulatory changes.
+"></textarea>
                     <div class="alert alert-danger" id="changeDetailWarn">Please tell us about your current/planned change.</div>
                 </div>
             </div>

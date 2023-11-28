@@ -36,6 +36,7 @@ $levers = array('Leadership','Drivers','Culture','Engagement','Capability','Meth
     .fa-ul {
         margin-left: 1.5rem;
     }
+
     .post-image-flag {
         position: absolute;
         top: 0;
@@ -45,6 +46,13 @@ $levers = array('Leadership','Drivers','Culture','Engagement','Capability','Meth
         padding: 0.25rem 0.5rem;
         z-index: 9999;
         font-size: 0.8rem;
+    }
+
+    .slick-next::before, .slick-prev::before {
+        color: var(--col-green-700) !important;
+    }
+    a[target=_blank]::after {
+        content: "" !important;
     }
 </style>
 <main id="main">
@@ -176,13 +184,18 @@ include get_stylesheet_directory() . '/page-templates/anim/business-change.php';
     </div>
     </section>
 
+    <section>
+        <div class="container-xl">
+        This online version of the Afiniti 6Lever<sup>TM</sup> diagnostic tool provides a general overview of your change readiness strengths and weaknesses. Our consultants regularly conduct the full change readiness assessment across our clients' organisations, which allows them to deliver specific, tailored analysis and recommendations for your specific change projects, as well as help implementing these. Please <a href="/contact-us/">get in touch</a> if you'd like to know more.  
+        </div>
+    </section>
+
     <!-- latest_insights -->
     <section class="latest_news py-5 <?=$classes?>">
         <div class="container">
             <h2 class="mb-4">Related <span>Insights</span></h2>
             <div class="slider mb-4">
-
-    <?php
+                <?php
 asort($pcts);
 $keys = array_slice(array_keys($pcts), 0, 2);
 
@@ -190,7 +203,7 @@ $keys = array_slice(array_keys($pcts), 0, 2);
 /*  one from second lowest $keys[1] */
 /*  three of the latest */
 
-$maxcount = 6;
+$maxcount = 3;
 $postcount = 0;
 $theIDs = array();
 
@@ -216,6 +229,8 @@ $lowest = new WP_Query(array(
 
 while ($lowest->have_posts()) {
     $lowest->the_post();
+    $postcount++;
+    $theIDs[] = get_the_ID();
 
     $img = get_the_post_thumbnail_url(get_the_ID(), 'large');
     if (!$img) {
@@ -270,6 +285,8 @@ $second = new WP_Query(array(
 
 while ($second->have_posts()) {
     $second->the_post();
+    $postcount++;
+    $theIDs[] = get_the_ID();
 
     $img = get_the_post_thumbnail_url(get_the_ID(), 'large');
     if (!$img) {
@@ -304,56 +321,56 @@ while ($second->have_posts()) {
 
 $remaining = $postcount - $maxcount;
 
-$other = new WP_Query(array(
-    'post_type' => 'post',
-    'posts_per_page' => $remaining,
-    'post_status' => 'publish',
-    'post__not_in' => $theIDs,
-    'tax_query' => array(
-        array(
-            'taxonomy' => 'category',
-            'field'    => 'slug',
-            'terms'    => 'team-insight',
-            'operator' => 'NOT IN'
-        )
-    ),
-));
+if ($remaining > 0) {
 
-while ($other->have_posts()) {
-    $other->the_post();
+    $other = new WP_Query(array(
+        'post_type' => 'post',
+        'posts_per_page' => $remaining,
+        'post_status' => 'publish',
+        'post__not_in' => $theIDs,
+        'tax_query' => array(
+            array(
+                'taxonomy' => 'category',
+                'field'    => 'slug',
+                'terms'    => 'team-insight',
+                'operator' => 'NOT IN'
+            )
+        ),
+    ));
 
-    $img = get_the_post_thumbnail_url(get_the_ID(), 'large');
-    if (!$img) {
-        $img = get_stylesheet_directory_uri() . '/img/default-blog.jpg';
-    }
+    while ($other->have_posts()) {
+        $other->the_post();
 
-    ?>
-    <div class="slider__item insight px-3">
-        <a href="<?=get_the_permalink()?>">
-            <div class="post-image-container">
-                <div class="post-image mb-2"
-                    style="background-image:url('<?=$img?>')">
-                    <div class="img-overlay">
-                        <div class="middle"><span class="arrow arrow-block arrow-white"></span></div>
+        $img = get_the_post_thumbnail_url(get_the_ID(), 'large');
+        if (!$img) {
+            $img = get_stylesheet_directory_uri() . '/img/default-blog.jpg';
+        }
+
+        ?>
+        <div class="slider__item insight px-3">
+            <a href="<?=get_the_permalink()?>">
+                <div class="post-image-container">
+                    <div class="post-image mb-2"
+                        style="background-image:url('<?=$img?>')">
+                        <div class="img-overlay">
+                            <div class="middle"><span class="arrow arrow-block arrow-white"></span></div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="article-title mt-2">
-                <?=get_the_title()?>
-            </div>
-            <div class="article-excerpt">
-                <?=wp_trim_words(get_the_content(), 20)?>
-            </div>
-            <div class="fw-bold py-2 arrow-link">
-                <div class="anim-arrow--slide">Read more <span class="arrow arrow-green"></span></div>
-            </div>
-        </a>
-    </div>
-    <?php
+                <div class="article-title mt-2">
+                    <?=get_the_title()?>
+                </div>
+                <div class="article-excerpt">
+                    <?=wp_trim_words(get_the_content(), 20)?>
+                </div>
+                <div class="fw-bold py-2 arrow-link">
+                    <div class="anim-arrow--slide">Read more <span class="arrow arrow-green"></span></div>
+                </div>
+            </a>
+        </div>
+        <?php
+    }
 }
-
-
-
 ?>
             </div>
             <div class="text-center"><a href="/insights/" class="btn btn--green">Read more</a></div>
