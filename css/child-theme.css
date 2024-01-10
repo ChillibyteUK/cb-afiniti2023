@@ -22895,6 +22895,14 @@ nav.navbar .logo {
   background-color: #a4cd93;
 }
 
+.btn--purple {
+  color: white;
+  background-color: var(--col-purple-500);
+}
+.btn--purple:hover {
+  background-color: #6d6a95;
+}
+
 input.quicksearch {
   margin-bottom: 0.5em;
   width: 88%;
