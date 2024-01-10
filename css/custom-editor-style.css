@@ -1,8 +1,8 @@
 @charset "UTF-8";
 :root {
-  --col-green-300: hsl(89, 42%, 76%);
-  --col-green-500: hsl(89, 42%, 67%);
-  --col-green-700: hsl(105, 35%, 60%);
+  --col-green-300: hsl(102, 37%, 66%);
+  --col-green-500: hsl(102, 37%, 59%);
+  --col-green-700: hsl(102, 37%, 52%);
   --col-orange-300: hsl(28, 88%, 66%);
   --col-orange-500: hsl(28, 88%, 59%);
   --col-orange-700: hsl(28, 88%, 52%);

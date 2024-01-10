@@ -1,6 +1,9 @@
-$col-green-300: hsl(89, 42%, 76%); // my hsl(102, 37%, 66%);
-$col-green-500: hsl(89, 42%, 67%); // my hsl(102, 37%, 59%);
-$col-green-700: hsl(105, 35%, 60%); // my hsl(102, 37%, 52%);
+// $col-green-300: hsl(89, 42%, 76%); // my hsl(102, 37%, 66%);
+// $col-green-500: hsl(89, 42%, 67%); // my hsl(102, 37%, 59%);
+// $col-green-700: hsl(105, 35%, 60%); // my hsl(102, 37%, 52%);
+$col-green-300: hsl(102, 37%, 66%);
+$col-green-500: hsl(102, 37%, 59%);
+$col-green-700: hsl(102, 37%, 52%);
 
 
 $col-orange-300: hsl(28, 88%, 66%);
@@ -19,9 +22,13 @@ $col-grey-700: hsl(270, 1%, 22%);
 
 :root {
 
-    --col-green-300: hsl(89, 42%, 76%);
-    --col-green-500: hsl(89, 42%, 67%);
-    --col-green-700: hsl(105, 35%, 60%);
+    // --col-green-300: hsl(89, 42%, 76%);
+    // --col-green-500: hsl(89, 42%, 67%);
+    // --col-green-700: hsl(105, 35%, 60%);
+
+    --col-green-300: hsl(102, 37%, 66%);
+    --col-green-500: hsl(102, 37%, 59%);
+    --col-green-700: hsl(102, 37%, 52%);
 
     --col-orange-300: hsl(28, 88%, 66%);
     --col-orange-500: hsl(28, 88%, 59%);
