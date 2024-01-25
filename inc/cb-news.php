@@ -10,7 +10,7 @@ function single_sidebar() {
   <div class="fs-4 fw-bold pb-2"><?=$git['title']?></div>
   <div class="py-2"><?=$git['body']?></div>
   <div class="text-center py-2">
-    <a href="<?=$git['link']?>" target="_blank" class="btn btn--white">Newsletter Sign Up</a>
+    <a href="<?=$git['link']?>" class="btn btn--white">Newsletter Sign Up</a>
   </div>
   <?php
   /*
@@ -36,7 +36,7 @@ function single_sidebar() {
 <div class="col-8 offset-2 text-center halfcircle-container">
   <div class="div-rounded ss-halfcircle halfcircle-green">
     <div class="halfcircle-content fw-bold">
-      <a href="<?=get_field('linkedin_url','options')?>" target="_blank">Follow Afiniti on LinkedIn <span class="arrow arrow-block mt-2"></span></a>
+      <a href="<?=get_field('social','options')['linkedin_url']?>" target="_blank">Follow Afiniti on LinkedIn <span class="arrow arrow-block mt-2"></span></a>
     </div>
   </div>
 </div>
