@@ -24,3 +24,10 @@
         background-color: lighten($col-purple-500,10%);
     }
 }
+.btn--white {
+    color: var(--col-green-500);
+    background-color: white;
+    &:hover {
+        background-color: #ffffff42;
+    }
+}

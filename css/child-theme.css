@@ -22903,6 +22903,14 @@ nav.navbar .logo {
   background-color: #6d6a95;
 }
 
+.btn--white {
+  color: var(--col-green-500);
+  background-color: white;
+}
+.btn--white:hover {
+  background-color: #ffffff42;
+}
+
 input.quicksearch {
   margin-bottom: 0.5em;
   width: 88%;

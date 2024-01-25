@@ -9,6 +9,11 @@ function single_sidebar() {
 <div class="bg--green-500 px-5 py-4">
   <div class="fs-4 fw-bold pb-2"><?=$git['title']?></div>
   <div class="py-2"><?=$git['body']?></div>
+  <div class="text-center py-2">
+    <a href="<?=$git['link']?>" target="_blank" class="btn btn--white">Newsletter Sign Up</a>
+  </div>
+  <?php
+  /*
   <div class="social-icons social-icons__sidebar  text-center pt-2 pb-4">
     <?php
         if (in_array('Facebook', $git['social'])) {
@@ -25,11 +30,13 @@ function single_sidebar() {
         }
     ?>
   </div>
+  */
+  ?>
 </div>
 <div class="col-8 offset-2 text-center halfcircle-container">
   <div class="div-rounded ss-halfcircle halfcircle-green">
     <div class="halfcircle-content fw-bold">
-      <a href="<?=$git['link']?>"><?=$git['link_title']?> <span class="arrow arrow-block mt-2"></span></a>
+      <a href="<?=get_field('linkedin_url','options')?>" target="_blank">Follow Afiniti on LinkedIn <span class="arrow arrow-block mt-2"></span></a>
     </div>
   </div>
 </div>
