@@ -30,7 +30,7 @@ $results = "http" . (isset($_SERVER['HTTPS']) ? 's' : '') . "://$_SERVER[HTTP_HO
 $to = $data['contactEmail'];
 $subject = "Afiniti Change Readiness Assessment Tool Results";
 $message = <<<EOT
-<p>Dear, {$data['contactName']}</p>
+<p>Dear {$data['contactName']},</p>
 <p>Thank you for completing the online Afiniti Change Readiness Assessment. You can view and share your results at any time here: <a href="{$results}">{$results}</a>.</p>
 <p>If you would like to speak with our team about your change programme, just reply to this email or complete our <a href="http://www.afiniti.co.uk/contact-us/">online enquiry form</a> and we will get back to you.</p>
 <p>Best regards,</p>
