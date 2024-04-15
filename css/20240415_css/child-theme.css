@@ -22911,14 +22911,6 @@ nav.navbar .logo {
   background-color: #ffffff42;
 }
 
-.btn--grey {
-  color: white;
-  background-color: var(--col-grey-500);
-}
-.btn--grey:hover {
-  background-color: #7a797c;
-}
-
 input.quicksearch {
   margin-bottom: 0.5em;
   width: 88%;
