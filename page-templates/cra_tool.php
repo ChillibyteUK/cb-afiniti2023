@@ -83,7 +83,15 @@ label[for="consent"] input[type="checkbox"] {
 .mobLabels div {
     text-align: center;
 }
-
+.ohnohoney{
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 0;
+    width: 0;
+    z-index: -1;
+}
 </style>
 <main id="main">
 <section id="hero" class="hero d-flex align-items-start pt-lg-0 align-items-lg-center">
@@ -328,6 +336,7 @@ label[for="consent"] input[type="checkbox"] {
                     <input type="hidden" name="scores" id="scores" value="">
                     <input type="hidden" name="pageID" id="pageID" value="<?=get_the_ID()?>">
                     <input type="submit" id="step5" class="btn btn-primary" value="View Results">
+                    <input class="ohnohoney" autocomplete="off" type="email" id="emailaddress" name="emailaddress" placeholder="Your e-mail here">
                 </form>
             </div>
         </div>

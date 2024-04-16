@@ -5,6 +5,13 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/wp-load.php");
 $data = $_REQUEST['data'];
 $scores = $_REQUEST['scores'];
 
+$test = $_REQUEST['emailaddress'];
+if ($test != '') {
+    $results = "http" . (isset($_SERVER['HTTPS']) ? 's' : '') . "://$_SERVER[HTTP_HOST]/";
+    header("Location: $results");
+    exit();
+}
+
 // SANITIZE INPUT!!!!
 
 $data = json_decode(stripslashes($data), true);
