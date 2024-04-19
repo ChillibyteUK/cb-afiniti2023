@@ -91,7 +91,7 @@
             "label": "Author",
             "name": "author",
             "aria-label": "",
-            "type": "user",
+            "type": "relationship",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -101,24 +101,18 @@
                 "id": ""
             },
             "relevanssi_exclude": 0,
-            "role": [
-                "administrator",
-                "editor",
-                "author",
-                "contributor",
-                "subscriber",
-                "wpseo_manager",
-                "wpseo_editor"
+            "post_type": [
+                "people"
             ],
-            "return_format": "array",
-            "multiple": 1,
+            "post_status": "",
+            "taxonomy": "",
+            "filters": [
+                "search"
+            ],
+            "return_format": "id",
             "min": "",
-            "max": "",
-            "acfe_bidirectional": {
-                "acfe_bidirectional_enabled": "0"
-            },
-            "allow_null": 0,
-            "acfe_field_group_condition": 0,
+            "max": 1,
+            "elements": "",
             "bidirectional": 0,
             "bidirectional_target": []
         }
@@ -138,28 +132,21 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": [
-        "author",
-        "categories",
-        "comments",
-        "discussion",
         "excerpt",
-        "featured_image",
+        "discussion",
+        "comments",
+        "revisions",
+        "slug",
+        "author",
         "format",
         "page_attributes",
-        "revisions",
-        "send-trackbacks",
-        "slug",
-        "tags"
+        "featured_image",
+        "categories",
+        "tags",
+        "send-trackbacks"
     ],
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "acfe_autosync": [
-        "json"
-    ],
-    "acfe_form": 0,
-    "acfe_display_title": "",
-    "acfe_meta": "",
-    "acfe_note": "",
-    "modified": 1713530014
+    "modified": 1713538834
 }
