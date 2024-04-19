@@ -1,5 +1,5 @@
 <?php
-$colour = 'text--' . get_field('title_colour');
+$colour = get_field('title_colour');
 $parts = preg_split('/-/', $colour);
 $colour = $parts[0];
 
