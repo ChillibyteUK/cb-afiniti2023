@@ -16,7 +16,7 @@ $classes = $block['className'] ?? null;
             <div class="col-6 border-dash-top-left image_divider__h-60"></div>
             <div class="col-6 border-dash-top-right image_divider__h-60"></div>
             <div class="col-12 image_divider__title">
-                <h2 class="h3 fw-bold <?=$colour?>">
+                <h2 class="h3 fw-bold text--<?=$colour?>">
                     <?=get_field('title')?>
                 </h2>
             </div>
