@@ -39,7 +39,7 @@ $colours = array(
         $show = 'show';
         while (have_rows('tabs')) {
             the_row();
-            $link = get_sub_field('cta_link');
+            $link = get_sub_field('cta_link') ?: null;
             ?>
         <div id="pane-<?=$c?>" class="card tab-pane <?=$show?> <?=$active?>" role="tabpanel" aria-labelledby="tab-<?=$c?>">
 
@@ -57,7 +57,18 @@ $colours = array(
                         <div class="container py-4">
                             <div class="row">
                                 <div class="col-12 col-lg-9 order-2 order-lg-1 text-white">
-                                    <h2 class="py-3"><strong><?=get_sub_field('tab_title')?></strong> <?=get_sub_field('tab_subtitle')?></h2>
+                                    <?php
+                                    if (get_sub_field('alt_content_title')) {
+                                        ?>
+                                    <h2 class="py-3"><strong><?=get_sub_field('alt_content_title')?></strong></h2>
+                                        <?php
+                                    }
+                                    else {
+                                        ?>
+                                    <h2 class="py-3"><strong><?=get_sub_field('tab_title')?></strong></h2>
+                                        <?php
+                                    }
+                                    ?>
                                 </div>
                             </div>
                             <div class="row">
@@ -71,13 +82,22 @@ $colours = array(
                                     <div class="border-circle-bg"></div>
                                 </div>
                             </div>
+                            <?php
+                            if ($link) {
+                                ?>
                             <div class="only-mobile pt-4">
                                 <a href="<?=$link['url']?>"
                                     class="text-white">Find
                                     out more <span class="arrow arrow-white"></span></a>
                             </div>
+                                <?php
+                            }
+                            ?>
                         </div>
                     </div>
+                    <?php
+                    if ($link) {
+                        ?>
                     <div class="container no-mobile">
                         <div class="row">
                             <div class="col-12 col-lg-4 offset-lg-4 text-center halfcircle-container">
@@ -93,6 +113,9 @@ $colours = array(
                             </div>
                         </div>
                     </div>
+                        <?php
+                    }
+                    ?>
                 </div>
             </div>
         </div>

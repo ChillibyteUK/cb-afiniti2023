@@ -42,6 +42,7 @@
 }
 .popup__popup .gform_wrapper .gform_footer button {
     background-color: var(--col-orange-500) !important;
+    width: 100%;
 }
 .popup__popup .gform_wrapper .gform_footer button:hover {
     background-color: #f6ab6a !important;
@@ -57,9 +58,9 @@
 <div class="popup">
     <div class="popup__popup" id="popupPopup">
         <div id="close"><i class="fa-regular fa-times"></i></div>
-        <div class="h3">Want to speak with a change specialist?</div>
-        <p>Let us know how we can help and we’ll be in touch.</p>
-        <?=do_shortcode('[gravityform id="5" title="false" ajax="true"]')?>
+        <div class="h3 fw-bold">Want to speak with a change specialist?</div>
+        <p>Let us know how we can help and we’ll be in touch within one working day.</p>
+        <?=do_shortcode('[gravityform id="' . get_field('form_id') . '" title="false" ajax="true"]')?>
     </div>
     <div class="popup__button" id="popupButton">
         <i class="fa-solid fa-message"></i>

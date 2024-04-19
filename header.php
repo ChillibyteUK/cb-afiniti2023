@@ -50,7 +50,7 @@ if (get_field('bing_site_verification','options')) {
 }
 
 $current_url = explode("?", $_SERVER['REQUEST_URI']);
-echo '<link rel="canonical" href="' . $current_url[0] . '" />';
+echo '<link rel="canonical" href="https://' . $_SERVER['HTTP_HOST'] . $current_url[0] . '" />';
 
 wp_head();
 ?>

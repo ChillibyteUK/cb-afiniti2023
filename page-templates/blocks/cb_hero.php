@@ -29,6 +29,13 @@ $front = is_front_page() ? 'front' : 'mb-4';
             <a class="btn btn--<?=$colour?>" href="<?=$cta['url']?>" target="<?=$cta['target']?>"><?=$cta['title']?></a>
             <?php
         }
+        if (get_field('cta3')) {
+            $cta = get_field('cta3');
+            $colour = strtolower(get_field('cta3_colour'));
+            ?>
+            <a class="btn btn--<?=$colour?>" href="<?=$cta['url']?>" target="<?=$cta['target']?>"><?=$cta['title']?></a>
+            <?php
+        }
         ?>
         </div>
     </div>

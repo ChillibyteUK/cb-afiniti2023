@@ -396,6 +396,10 @@ add_action('wp_footer', function () {
     ?>
 <script src="https://www.google.com/recaptcha/api.js?render=6LeKUsApAAAAAD9wCXHTKx5BaujLUJVE8BdMQlLY"></script>
 <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var submitButton = document.getElementById('step5');
+        submitButton.addEventListener('click', onClick, false);
+    });
     function onClick(e) {
         console.log('submitting');
         e.preventDefault();

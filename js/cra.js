@@ -81,21 +81,21 @@ document.getElementById('step2').addEventListener('click',function(){
         return true;
     })
 
-    if (document.getElementById('changeInProgress').value == 'Yes') {
-        if (validate('changeDetail') == true) {
-            isValid.push(true);
-        }
-        else {
-            isValid.push(false);
-        }
-    }
+    // if (document.getElementById('changeInProgress').value == 'Yes') {
+    //     if (validate('changeDetail') == true) {
+    //         isValid.push(true);
+    //     }
+    //     else {
+    //         isValid.push(false);
+    //     }
+    // }
 
     // console.log('isValid ' + isValid);
 
     if (isValid.every(Boolean)) {
 
         data.changeInProgress = document.getElementById('changeInProgress').value;
-        data.changeDetail = document.getElementById('changeDetail').value;
+        // data.changeDetail = document.getElementById('changeDetail').value;
         data.changeRole = document.getElementById('changeRole').value;
 
         document.getElementById('form2').style.display = 'none';

@@ -13,7 +13,7 @@ $classes = $block['className'] ?? null;
 if ($r->have_posts()) {
     ?>
 <div class="container-xl py-4 <?=$classes?>">
-    <h2 class="mb-4">Related <span>Case Studies</span></h2>
+    <h3 class="mb-4">Related <span>Case Studies</span></h3>
     <div class="row g-4">
         <?php
     while ($r->have_posts()) {

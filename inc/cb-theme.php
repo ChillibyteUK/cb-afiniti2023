@@ -569,7 +569,7 @@ function cra_download_callback()
 <?php
 }
 
-add_shortcode('org_name',function() {
+add_shortcode('org_name', function () {
     global $data;
     return $data['orgName'];
 });

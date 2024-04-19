@@ -3,6 +3,32 @@
 defined('ABSPATH') || exit;
 get_header();
 ?>
+<style>
+    .catflash {
+        position: absolute;
+        top: 0;
+        left: 0;
+        font-size: .875rem;
+        padding: 0.25rem 0.5rem;
+        color: white;
+    }
+
+    .afiniti-insight .catflash {
+        background-color: var(--col-green-500);
+    }
+
+    .team-insight .catflash {
+        background-color: var(--col-purple-500);
+    }
+
+    .change-101 .catflash {
+        background-color: var(--col-orange-500);
+    }
+
+    .news .catflash {
+        background-color: var(--col-grey-500);
+    }
+</style>
 <main id="main">
     <!-- hero -->
     <section id="hero" class="hero d-flex align-items-start pt-lg-0 align-items-lg-center">
@@ -32,12 +58,12 @@ $page_for_posts = get_option('page_for_posts');
             <div class="col-lg-4 filters">
                 <?php
     $terms = get_terms(
-    array(
-        'taxonomy'   => 'category',
-        'hide_empty' => true,
-        'order' => 'DESC',
-    )
-);
+        array(
+                        'taxonomy'   => 'category',
+                        'hide_empty' => true,
+                        'order' => 'DESC',
+                    )
+    );
 
 echo '<select class="filters-select form-select" value-group="category">';
 echo '<option value="" disabled selected>Filter by category</option>';
@@ -53,12 +79,12 @@ foreach ($terms as $term) {
             <div class="col-lg-4 filters">
                 <?php
     $terms = get_terms(
-    array(
-        'taxonomy'   => 'insight-type',
-        'hide_empty' => true,
-        'order' => 'DESC',
-    )
-);
+        array(
+                        'taxonomy'   => 'insight-type',
+                        'hide_empty' => true,
+                        'order' => 'DESC',
+                    )
+    );
 
 echo '<select class="filters-select form-select" value-group="type">';
 echo '<option value="" disabled selected>Filter by type</option>';
@@ -120,6 +146,7 @@ foreach ($terms as $term) {
                 }
             }
             
+            $catflash = $cats[0]->name;
 
             ?>
             <div class="<?=$catclass?> insight col-12 col-lg-4 mb-4">
@@ -131,6 +158,7 @@ foreach ($terms as $term) {
                                 <div class="middle"><span class="arrow arrow-block arrow-white"></span></div>
                             </div>
                         </div>
+                        <div class="catflash"><?=$catflash?></div>
                         <div class="flash"><?=$flash?></div>
                     </div>
                     <div class="article-title mt-2">
@@ -169,25 +197,27 @@ add_action('wp_footer', function () {
         // store filter for each group
         var filters = {};
 
-        $('.filters').on( 'change', function( event ) {
+        $('.filters').on('change', function(event) {
             console.log('changed');
-            var $select = $( event.target );
+            var $select = $(event.target);
             // get group key
             var filterGroup = $select.attr('value-group');
             // set filter for group
-            filters[ filterGroup ] = event.target.value;
+            filters[filterGroup] = event.target.value;
             // combine filters
-            var filterValue = concatValues( filters );
+            var filterValue = concatValues(filters);
             // set filter for Isotope
-            $grid.isotope({ filter: filterValue });
+            $grid.isotope({
+                filter: filterValue
+            });
             updateFilterCount();
         });
 
         // flatten object by concatting values
-        function concatValues( obj ) {
+        function concatValues(obj) {
             var value = '';
-            for ( var prop in obj ) {
-                value += obj[ prop ];
+            for (var prop in obj) {
+                value += obj[prop];
             }
             console.log(value);
             return value;
