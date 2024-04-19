@@ -1,5 +1,7 @@
 <?php
 $colour = strtolower(get_field('theme'));
+$parts = preg_split('/-/', $colour);
+$colour = $parts[0];
 $breakout = '';
 $background = '';
 if ($colour != '') {

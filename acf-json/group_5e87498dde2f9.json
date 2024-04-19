@@ -1,0 +1,294 @@
+{
+    "key": "group_5e87498dde2f9",
+    "title": "CPT Careers",
+    "fields": [
+        {
+            "key": "field_5e8749b40689c",
+            "label": "Job Description",
+            "name": "description",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "ABC Company Inc. seeks a full-time mid-level software engineer to develop in-house tools.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "acfe_textarea_code": 0,
+            "required_message": "",
+            "maxlength": "",
+            "rows": "",
+            "placeholder": "",
+            "new_lines": "br",
+            "acfe_field_group_condition": 0
+        },
+        {
+            "key": "field_5e8749c50689d",
+            "label": "Employment Type",
+            "name": "employmenttype",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "Full-time",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "FULL_TIME": "Full-time",
+                "PART_TIME": "Part-time",
+                "CONTRACTOR": "Contractor",
+                "TEMPORARY": "Temporary",
+                "INTERN": "Intern",
+                "VOLUNTEER": "Volunteer",
+                "PER_DIEM": "Per diem",
+                "OTHER": "Other"
+            },
+            "default_value": "FULL_TIME",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": "",
+            "allow_custom": 0,
+            "search_placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": ""
+        },
+        {
+            "key": "field_63ca9f3b71201",
+            "label": "Job Location",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "new_lines": "wpautop",
+            "esc_html": 0,
+            "acfe_field_group_condition": 0
+        },
+        {
+            "key": "field_6411a36c087be",
+            "label": "Location-based or Remote",
+            "name": "location-based_or_remote",
+            "aria-label": "",
+            "type": "radio",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "relevanssi_exclude": 0,
+            "choices": {
+                "Office-based": "Office-based",
+                "Remote": "Remote"
+            },
+            "default_value": "Remote",
+            "return_format": "value",
+            "allow_null": 0,
+            "other_choice": 0,
+            "layout": "vertical",
+            "acfe_field_group_condition": 0,
+            "save_other_choice": 0
+        },
+        {
+            "key": "field_5e874a9d068a1",
+            "label": "Street Address",
+            "name": "streetaddress",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "14-16 Dowgate Hill",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6411a36c087be",
+                        "operator": "==",
+                        "value": "Office-based"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "relevanssi_exclude": 0,
+            "default_value": "14-16 Dowgate Hill",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "acfe_field_group_condition": 0
+        },
+        {
+            "key": "field_5e874aad068a2",
+            "label": "Address Region",
+            "name": "addressregion",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "London",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6411a36c087be",
+                        "operator": "==",
+                        "value": "Office-based"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "relevanssi_exclude": 0,
+            "default_value": "London",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "acfe_field_group_condition": 0
+        },
+        {
+            "key": "field_5e874abb068a3",
+            "label": "Postal Code",
+            "name": "postalcode",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "EC4R 2SU",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6411a36c087be",
+                        "operator": "==",
+                        "value": "Office-based"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "relevanssi_exclude": 0,
+            "default_value": "EC4R 2SU",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "acfe_field_group_condition": 0
+        },
+        {
+            "key": "field_63ca9f5071202",
+            "label": "Salary",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "new_lines": "wpautop",
+            "esc_html": 0,
+            "acfe_field_group_condition": 0
+        },
+        {
+            "key": "field_621dffd0ac5a0",
+            "label": "Minimum Salary",
+            "name": "minimum_salary",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": "",
+            "max": "",
+            "placeholder": "",
+            "step": "",
+            "prepend": "£",
+            "append": "",
+            "acfe_field_group_condition": 0
+        },
+        {
+            "key": "field_621dffdbac5a1",
+            "label": "Maximum Salary",
+            "name": "maximum_salary",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": "",
+            "max": "",
+            "placeholder": "",
+            "step": "",
+            "prepend": "£",
+            "append": "",
+            "acfe_field_group_condition": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "careers"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "acfe_autosync": [
+        "json"
+    ],
+    "acfe_form": 0,
+    "acfe_display_title": "",
+    "acfe_meta": "",
+    "acfe_note": "",
+    "modified": 1713530005
+}

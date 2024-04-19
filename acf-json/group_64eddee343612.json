@@ -1,10 +1,10 @@
 {
-    "key": "group_63cfb5b50b33f",
-    "title": "CB Popup",
+    "key": "group_64eddee343612",
+    "title": "CB Related Insights",
     "fields": [
         {
-            "key": "field_63b33fb78663b",
-            "label": "CB Popup",
+            "key": "field_64eddee4714e0",
+            "label": "CB Related Insights",
             "name": "",
             "aria-label": "",
             "type": "message",
@@ -16,16 +16,18 @@
                 "class": "",
                 "id": ""
             },
+            "relevanssi_exclude": 0,
             "message": "",
             "new_lines": "wpautop",
-            "esc_html": 0
+            "esc_html": 0,
+            "acfe_field_group_condition": 0
         },
         {
-            "key": "field_65ca3a5956a14",
-            "label": "Form ID",
-            "name": "form_id",
+            "key": "field_64eddf00714e1",
+            "label": "Insights",
+            "name": "insights",
             "aria-label": "",
-            "type": "text",
+            "type": "relationship",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -35,11 +37,24 @@
                 "id": ""
             },
             "relevanssi_exclude": 0,
-            "default_value": "",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
+            "post_type": "",
+            "post_status": "",
+            "taxonomy": "",
+            "filters": [
+                "search"
+            ],
+            "return_format": "id",
+            "acfe_add_post": 0,
+            "acfe_edit_post": 0,
+            "acfe_bidirectional": {
+                "acfe_bidirectional_enabled": "0",
+                "acfe_bidirectional_related": ""
+            },
+            "acfe_field_group_condition": 0,
+            "min": 0,
+            "max": 0,
+            "elements": [],
+            "bidirectional_target": []
         }
     ],
     "location": [
@@ -47,7 +62,7 @@
             {
                 "param": "block",
                 "operator": "==",
-                "value": "acf\/cb-popup"
+                "value": "acf\/cb-related-insights"
             }
         ]
     ],
@@ -67,5 +82,5 @@
     "acfe_display_title": "",
     "acfe_meta": "",
     "acfe_note": "",
-    "modified": 1713529952
+    "modified": 1713529975
 }

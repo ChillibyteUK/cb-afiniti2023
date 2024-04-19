@@ -13,16 +13,22 @@ while (have_rows('section')) {
     the_row();
     $s = acf_slugify(get_sub_field('section_title'));
     $theme = strtolower(get_sub_field('theme'));
+    $parts = preg_split('/-/', $theme);
+    $theme = $parts[0];
+
     ?>
         <li class="nav-item" role="presentation">
-            <button class="tab-link <?=$active?> bg--<?=$theme?>-700"
+            <button
+                class="tab-link <?=$active?> bg--<?=$theme?>-700"
                 id="<?=$s?>-tab" data-bs-toggle="tab"
                 data-bs-target="#<?=$s?>-tab-pane" type="button"
                 role="tab" aria-controls="<?=$s?>-tab-pane"
                 aria-selected="<?=$selected?>">
-                <img src="<?=wp_get_attachment_image_url(get_sub_field('icon'),'full')?>" alt="">
-                <p><?=get_sub_field('section_title')?></p>
-            </a>
+                <img src="<?=wp_get_attachment_image_url(get_sub_field('icon'), 'full')?>"
+                    alt="">
+                <p><?=get_sub_field('section_title')?>
+                </p>
+                </a>
         </li>
         <?php
     $active = '';
@@ -41,19 +47,25 @@ while (have_rows('section')) {
     the_row();
     $s = acf_slugify(get_sub_field('section_title'));
     $theme = strtolower(get_sub_field('theme'));
+    $parts = preg_split('/-/', $theme);
+    $theme = $parts[0];
+
     ?>
         <div class="tab-pane fade <?=$state?>"
             id="<?=$s?>-tab-pane" role="tabpanel"
             aria-labelledby="<?=$s?>-tab"
             tabindex="<?=$ti?>">
 
-            <div class="bg--<?=$theme?>-700 p-4 rounded qa__intro mb-4">
-                <img src="<?=wp_get_attachment_image_url(get_sub_field('icon'),'full')?>" alt="">
+            <div
+                class="bg--<?=$theme?>-700 p-4 rounded qa__intro mb-4">
+                <img src="<?=wp_get_attachment_image_url(get_sub_field('icon'), 'full')?>"
+                    alt="">
                 <div>
                     <h2 class="qa__section">
                         <?=get_sub_field('section_title')?>
                     </h2>
-                    <p><?=get_sub_field('section_intro')?></p>
+                    <p><?=get_sub_field('section_intro')?>
+                    </p>
                 </div>
             </div>
             <div class="accordion" id="accordion<?=$ti?>">

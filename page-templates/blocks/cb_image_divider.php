@@ -1,5 +1,7 @@
 <?php
 $colour = 'text--' . strtolower(get_field('title_colour'));
+$parts = preg_split('/-/', $colour);
+$colour = $parts[0];
 
 $classes = $block['className'] ?? null;
 

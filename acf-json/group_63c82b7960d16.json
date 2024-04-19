@@ -95,7 +95,8 @@
                     "preview_size": "medium",
                     "acfe_field_group_condition": 0,
                     "library": "all",
-                    "parent_repeater": "field_63c82b8c623f9"
+                    "parent_repeater": "field_63c82b8c623f9",
+                    "upload_folder": ""
                 },
                 {
                     "key": "field_63c82d8cfb9dc",
@@ -193,5 +194,5 @@
     "acfe_display_title": "",
     "acfe_meta": "",
     "acfe_note": "",
-    "modified": 1687428091
+    "modified": 1713529879
 }

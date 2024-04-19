@@ -1,11 +1,11 @@
 {
-    "key": "group_5e70b29537f6f",
-    "title": "CPT Person",
+    "key": "group_5e78b08c44ad1",
+    "title": "TEMPLATE Contact Us",
     "fields": [
         {
-            "key": "field_5e70b2a0165c9",
-            "label": "Job Title",
-            "name": "job_title",
+            "key": "field_5e78b09cb9eb1",
+            "label": "Intro Title",
+            "name": "intro_title",
             "aria-label": "",
             "type": "text",
             "instructions": "",
@@ -23,112 +23,96 @@
             "maxlength": ""
         },
         {
-            "key": "field_5e70b2a9165ca",
-            "label": "LinkedIn URL",
-            "name": "linkedin_url",
+            "key": "field_5e78b0a5b9eb2",
+            "label": "Intro Body",
+            "name": "intro_body",
             "aria-label": "",
-            "type": "url",
+            "type": "textarea",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "50",
+                "width": "",
                 "class": "",
                 "id": ""
             },
             "default_value": "",
-            "placeholder": ""
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 2,
+            "new_lines": "wpautop",
+            "acfe_textarea_code": 0
         },
         {
-            "key": "field_5e70b46523553",
-            "label": "Twitter URL",
-            "name": "twitter_url",
+            "key": "field_5e78b0c3b9eb3",
+            "label": "Contact Form ID",
+            "name": "contact_form_id",
             "aria-label": "",
-            "type": "url",
+            "type": "number",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "50",
+                "width": "",
                 "class": "",
                 "id": ""
             },
             "default_value": "",
-            "placeholder": ""
-        },
-        {
-            "key": "field_5e70b2c0165cb",
-            "label": "Photo",
-            "name": "photo",
-            "aria-label": "",
-            "type": "image",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "relevanssi_exclude": 0,
-            "uploader": "",
-            "return_format": "id",
-            "upload_folder": "",
-            "acfe_thumbnail": 0,
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": "jpg",
-            "preview_size": "medium",
-            "acfe_field_group_condition": 0,
-            "library": "all"
-        },
-        {
-            "key": "field_66225df07ca02",
-            "label": "Author",
-            "name": "author",
-            "aria-label": "",
-            "type": "user",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "relevanssi_exclude": 0,
-            "role": [
-                "administrator",
-                "editor",
-                "author",
-                "contributor",
-                "subscriber",
-                "wpseo_manager",
-                "wpseo_editor"
-            ],
-            "return_format": "array",
-            "multiple": 1,
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
             "min": "",
             "max": "",
-            "acfe_bidirectional": {
-                "acfe_bidirectional_enabled": "0"
+            "step": ""
+        },
+        {
+            "key": "field_5f35473f7dad2",
+            "label": "Sidebar Title",
+            "name": "sidebar_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
             },
-            "allow_null": 0,
-            "acfe_field_group_condition": 0,
-            "bidirectional": 0,
-            "bidirectional_target": []
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5e78b0cbb9eb4",
+            "label": "Address Block",
+            "name": "address_block",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": "",
+            "new_lines": "wpautop",
+            "acfe_textarea_code": 0
         }
     ],
     "location": [
         [
             {
-                "param": "post_type",
+                "param": "page_template",
                 "operator": "==",
-                "value": "people"
+                "value": "page-templates\/contact-page.php"
             }
         ]
     ],
@@ -141,11 +125,13 @@
         "author",
         "categories",
         "comments",
+        "the_content",
         "discussion",
         "excerpt",
         "featured_image",
         "format",
         "page_attributes",
+        "permalink",
         "revisions",
         "send-trackbacks",
         "slug",
@@ -161,5 +147,5 @@
     "acfe_display_title": "",
     "acfe_meta": "",
     "acfe_note": "",
-    "modified": 1713530014
+    "modified": 1713530020
 }

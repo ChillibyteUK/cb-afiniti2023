@@ -1,10 +1,10 @@
 {
-    "key": "group_63cfb5b50b33f",
-    "title": "CB Popup",
+    "key": "group_63cfc91debf0d",
+    "title": "CB Team Insights",
     "fields": [
         {
-            "key": "field_63b33fb78663b",
-            "label": "CB Popup",
+            "key": "field_63cfc91e0ee49",
+            "label": "CB Team Insights",
             "name": "",
             "aria-label": "",
             "type": "message",
@@ -18,28 +18,8 @@
             },
             "message": "",
             "new_lines": "wpautop",
-            "esc_html": 0
-        },
-        {
-            "key": "field_65ca3a5956a14",
-            "label": "Form ID",
-            "name": "form_id",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "relevanssi_exclude": 0,
-            "default_value": "",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
+            "esc_html": 0,
+            "acfe_field_group_condition": 0
         }
     ],
     "location": [
@@ -47,7 +27,7 @@
             {
                 "param": "block",
                 "operator": "==",
-                "value": "acf\/cb-popup"
+                "value": "acf\/cb-team-insights"
             }
         ]
     ],
@@ -67,5 +47,5 @@
     "acfe_display_title": "",
     "acfe_meta": "",
     "acfe_note": "",
-    "modified": 1713529952
+    "modified": 1713529984
 }

@@ -1,10 +1,10 @@
 {
-    "key": "group_63cfb5b50b33f",
-    "title": "CB Popup",
+    "key": "group_63cffc250ea0f",
+    "title": "CB Related Case Studies",
     "fields": [
         {
-            "key": "field_63b33fb78663b",
-            "label": "CB Popup",
+            "key": "field_63cffc2767711",
+            "label": "CB Related Case Studies",
             "name": "",
             "aria-label": "",
             "type": "message",
@@ -18,14 +18,15 @@
             },
             "message": "",
             "new_lines": "wpautop",
-            "esc_html": 0
+            "esc_html": 0,
+            "acfe_field_group_condition": 0
         },
         {
-            "key": "field_65ca3a5956a14",
-            "label": "Form ID",
-            "name": "form_id",
+            "key": "field_63cffceab190a",
+            "label": "Case Studies",
+            "name": "case_studies",
             "aria-label": "",
-            "type": "text",
+            "type": "relationship",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -34,12 +35,25 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 0,
-            "default_value": "",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
+            "post_type": [
+                "case-studies"
+            ],
+            "taxonomy": "",
+            "filters": [
+                "search"
+            ],
+            "return_format": "id",
+            "acfe_add_post": 0,
+            "acfe_edit_post": 0,
+            "acfe_bidirectional": {
+                "acfe_bidirectional_enabled": "0",
+                "acfe_bidirectional_related": ""
+            },
+            "min": "",
+            "max": 3,
+            "elements": "",
+            "acfe_field_group_condition": 0,
+            "bidirectional_target": []
         }
     ],
     "location": [
@@ -47,7 +61,7 @@
             {
                 "param": "block",
                 "operator": "==",
-                "value": "acf\/cb-popup"
+                "value": "acf\/cb-related-case-studies"
             }
         ]
     ],
@@ -67,5 +81,5 @@
     "acfe_display_title": "",
     "acfe_meta": "",
     "acfe_note": "",
-    "modified": 1713529952
+    "modified": 1713529972
 }

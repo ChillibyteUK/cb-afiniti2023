@@ -1,6 +1,10 @@
 <?php
 $left_theme = strtolower(get_field('left_theme'));
+$parts = preg_split('/-/', $left_theme);
+$left_theme = $parts[0];
 $right_theme = strtolower(get_field('right_theme'));
+$parts = preg_split('/-/', $right_theme);
+$right_theme = $parts[0];
 
 $classes = $block['className'] ?? null;
 
