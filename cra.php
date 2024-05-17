@@ -1,5 +1,4 @@
 <?php
-
 require_once($_SERVER['DOCUMENT_ROOT'] . "/wp-load.php");
 
 $data = $_REQUEST['data'];
@@ -16,6 +15,13 @@ if ($test != '') {
 
 $data = json_decode(stripslashes($data), true);
 $scores = json_decode(stripslashes($scores), true);
+
+
+if (!isset($data['contactEmail']) || empty($data['contactEmail'])) {
+    $home = "http" . (isset($_SERVER['HTTPS']) ? 's' : '') . "://$_SERVER[HTTP_HOST]/";
+    header("Location: $home");
+    exit();
+}
 
 $post_title = random_str(32);
 
