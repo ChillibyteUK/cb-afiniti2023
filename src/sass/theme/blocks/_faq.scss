@@ -1,0 +1,48 @@
+.faq_block {
+    padding: 1rem 0 1rem 0;
+    .accordion-item {
+        width: 100%;
+        position: relative;
+        // padding: 0 1rem;
+        margin-bottom: 10px;
+    }
+
+    .accordion-head {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) min-content;
+        position: relative;
+        padding: 0.5rem 0;
+        cursor: pointer;
+        font-weight: 500;
+        font-size: 1.2rem;
+    }
+
+    .accordion-head>div {
+        align-self: center;
+    }
+
+    .accordion-head::after {
+        content: "\f107";
+        display: block;
+        position: relative;
+        align-self: center;
+        transition: all 0.3s ease;
+        font-family: "Font Awesome 6 Free";
+        font-weight: 600;
+        color: inherit;
+    }
+
+    .accordion-collapse.collapsed.accordion-head::after {
+        transform: rotate(-90deg);
+    }
+
+    .accordion-head .title-block {
+        margin: 0;
+    }
+
+    .accordion-body {
+        display: none;
+        font-size: 0.889rem;
+        padding-bottom: max(2.5vw, 20px);
+    }
+}

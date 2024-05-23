@@ -23695,6 +23695,49 @@ button.search.clear::after {
   padding: 1rem 0 0 0;
 }
 
+.faq_block {
+  padding: 1rem 0 1rem 0;
+}
+.faq_block .accordion-item {
+  width: 100%;
+  position: relative;
+  margin-bottom: 10px;
+}
+.faq_block .accordion-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) -webkit-min-content;
+  grid-template-columns: minmax(0, 1fr) min-content;
+  position: relative;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+.faq_block .accordion-head > div {
+  align-self: center;
+}
+.faq_block .accordion-head::after {
+  content: "\f107";
+  display: block;
+  position: relative;
+  align-self: center;
+  transition: all 0.3s ease;
+  font-family: "Font Awesome 6 Free";
+  font-weight: 600;
+  color: inherit;
+}
+.faq_block .accordion-collapse.collapsed.accordion-head::after {
+  transform: rotate(-90deg);
+}
+.faq_block .accordion-head .title-block {
+  margin: 0;
+}
+.faq_block .accordion-body {
+  display: none;
+  font-size: 0.889rem;
+  padding-bottom: max(2.5vw, 20px);
+}
+
 .wp-block-quote--cb {
   position: relative;
   z-index: 0;
