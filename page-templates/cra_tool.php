@@ -396,6 +396,15 @@ add_action('wp_footer', function () {
     ?>
 <script src="https://www.google.com/recaptcha/api.js?render=6LeKUsApAAAAAD9wCXHTKx5BaujLUJVE8BdMQlLY"></script>
 <script>
+
+    window.addEventListener('pageshow', function(event) {
+        if (event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+          document.querySelectorAll('input[type="radio"]').forEach(function(radio) {
+            radio.checked = false;
+            });
+        }
+    });
+
     document.addEventListener('DOMContentLoaded', function () {
         var submitButton = document.getElementById('step5');
         submitButton.addEventListener('click', onClick, false);
