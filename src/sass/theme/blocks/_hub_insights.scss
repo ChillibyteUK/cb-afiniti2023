@@ -1,0 +1,103 @@
+.hub_insights {
+    &__grid {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: 1fr;
+    }
+
+    &__card {
+        display: grid;
+        grid-template-rows: 2fr 1fr;
+        text-decoration: none;
+        &:hover {
+            .img-overlay {
+                opacity: 1;
+            }
+            .anim-arrow--slide {
+                color: var(--col-orange-500);
+                .arrow {
+                    left: 20px;
+                }
+            }
+        }
+    }
+    &__img {
+        position: relative;
+    }
+    .anim-arrow--slide {
+        transition: all 0.3s ease-out;
+        color: var(--col-green-500);
+    }
+    .img-overlay {
+        opacity: 0;
+        height: 100%;
+        background-color: #ffffff66;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        transition: .5s ease;
+        backface-visibility: hidden;
+        position: absolute;
+        inset: 0;
+        .middle {
+            transition: all .3s ease-out;
+            opacity: 1;
+            text-align: center;
+            .arrow {
+                border-right-width: 4px;
+                border-bottom-width: 4px;
+                width: 40px;
+                height: 40px;
+                border-color: white;
+            }
+        }
+    }
+    &__image {
+        width: 100%;
+        height: 100% !important;
+        object-fit: cover;
+    }
+    &__inner {
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+    }
+
+    @media (min-width: 768px) {
+        &__grid {
+            grid-template-columns: 1fr 1fr;
+        }
+        &__card:nth-child(1) {
+            grid-column: span 2;
+        }
+    }
+    @media (min-width: 992px) {
+        &__grid {
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: auto auto;
+        }
+        &__card:nth-child(1) {
+            grid-column: 1 / span 1;
+            grid-row: 1 / span 2;
+
+            display: grid;
+            grid-template-rows: 3fr 1fr;
+        }
+        &__card:nth-child(2) {
+            grid-column: 2 / span 1;
+            grid-row: 1 / span 1;
+        }
+        &__card:nth-child(3) {
+            grid-column: 2 / span 1;
+            grid-row: 2 / span 1;
+        }
+        &__card:nth-child(4) {
+            grid-column: 3 / span 1;
+            grid-row: 1 / span 1;
+        }
+        &__card:nth-child(5) {
+            grid-column: 3 / span 1;
+            grid-row: 2 / span 1;
+        }
+    }
+}

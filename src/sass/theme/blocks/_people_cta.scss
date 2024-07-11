@@ -1,0 +1,57 @@
+.people_cta {
+    background-color: var(--col-grey-100);
+
+    &__grid {
+        display: grid;
+        gap: 1rem;
+        @media (min-width:768px) {
+            grid-template-columns: 1fr 3fr;
+        }
+    }
+
+    .swiper {
+        width: 100%;
+        // height: 500px; /* Set a fixed height for testing */
+    }
+
+    .swiper-slide {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        text-align: center;
+    }
+
+    .people_cta__image {
+        width: 180px;
+        border-radius: 100%;
+        display: block;
+        aspect-ratio: 1;
+        object-fit: cover;
+        margin: 0 auto;
+        margin-bottom: 0.5rem;
+    }
+
+    // .swiper {
+    //     height: 100%; // Ensure Swiper takes full height of its container
+    // }
+    // .swiper-wrapper {
+    //     display: flex;
+    //     overflow: hidden;
+    // }
+    // .swiper-slide {
+    //     display: flex; // Ensure slides are using flexbox for alignment
+    //     align-items: center; // Center items vertically
+    //     justify-content: center; // Center items horizontally
+    // }
+
+
+    // &__image {
+    //     width: 180px;
+    //     border-radius: 100%;
+    //     display: block;
+    //     aspect-ratio: 1;
+    //     object-fit: cover;
+    //     margin: 0 auto;
+    // }
+}

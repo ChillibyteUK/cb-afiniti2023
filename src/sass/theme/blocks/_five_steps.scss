@@ -1,0 +1,104 @@
+.five_steps {
+    .container-xl {
+        display: flex;
+        justify-content: center;
+    }
+    &__flow {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: stretch;
+        gap: 1rem;
+    }
+    &__card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        @media (max-width: 575.98px) {
+            flex: 1 1 100%;
+        }
+        @media (min-width: 576px) and (max-width: 767.98px) {
+            flex: 1 1 calc(50% - 1rem);
+        }
+        @media (min-width: 768px) and (max-width: 991.98px) {
+            flex: 1 1 calc(33.333% - 1rem);
+        }
+        @media (min-width: 992px) {
+            flex: 1 1 calc(20% - 1rem);
+        }
+    }
+
+    &__inner {
+        border: 1px solid var(--_background);
+        background-color: var(--_background-light);
+        color: var(--_text);
+        text-align: center;
+        text-wrap: balance;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        height: 100%;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+    }
+    &__title {
+        grid-row: 1;
+        font-weight: 700;
+        font-size: 1.125rem;
+        padding: 1rem 0.5rem;
+        background-color: var(--_background);
+        color: var(--_text);
+    }
+    &__content {
+        grid-row: 2;
+        align-self: start;
+        padding-inline: 1rem; 
+    }
+    &__strap {
+        grid-row: 3;
+        font-weight: 700;
+        font-style: italic;
+        align-self: end;
+        padding-inline: 1rem;
+        padding-bottom: 1rem;
+    }
+    &__step {
+        background-color: var(--_background);
+        color: var(--_text);
+        font-weight: 700;
+        font-size: 1.125rem;
+        text-transform: uppercase;
+        padding: 1rem 1.5rem 1rem 0;
+        text-align: center;
+        position: relative;
+        clip-path: polygon(0 0, calc(100% - 1.5rem) 0, 100% 50%, calc(100% - 1.5rem) 100%, 0 100%);
+    }
+
+    &--green-500 {
+        --_background: var(--col-green-500);
+        --_background-light: var(--col-green-300);
+        --_text: white;
+    }
+    &--orange-500 {
+        --_background: var(--col-orange-500);
+        --_background-light: var(--col-orange-300);
+        --_text: white;
+    }
+    &--purple-500 {
+        --_background: var(--col-purple-500);
+        --_background-light: var(--col-purple-300);
+        --_text: white;
+    }
+    &--grey-500 {
+        --_background: var(--col-grey-500);
+        --_background-light: var(--col-grey-300);
+        --_text: white;
+    }
+    &--white {
+        --_background: var(--col-grey-400);
+        --_text: var(--col-grey-500);
+        .five_steps__step,
+        .five_steps__title {
+            color: white;
+        }
+    }
+}

@@ -34,7 +34,8 @@ button.search {
         text-decoration: none;
         &:hover {
             .post-image,
-            .featured-image {
+            .featured-image,
+            .hub_insights__img {
                 filter: grayscale(100%);
                 .img-overlay {
                     opacity: 1;
