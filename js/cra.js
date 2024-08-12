@@ -11,6 +11,12 @@ document.getElementById('step0').addEventListener('click',function(){
     document.getElementById('form0').style.display = 'none';
     document.getElementById('form1').style.display = 'block';
 });
+document.querySelectorAll('.start').forEach(function(button) {
+    button.addEventListener('click', function(){
+        document.getElementById('form0').style.display = 'none';
+        document.getElementById('form1').style.display = 'block';
+    });
+});
 
 //---------------------------------------------------------------------- step 2
 // validate step 1
