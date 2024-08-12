@@ -154,7 +154,8 @@ get_header();
                         <div class="alert alert-danger" id="consentWarn">Please consent to the terms.</div>
                     </div>
                 </div>
-                <div class="form_buttons text-end">
+                <div class="form_buttons justify-content-between">
+                    <a href="/change-readiness-assessment-tool/" class="btn btn-primary">Back</a>
                     <button id="step1" class="btn btn-primary">Next</button>
                 </div>
             </div>

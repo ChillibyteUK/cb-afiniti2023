@@ -17,6 +17,12 @@ document.querySelectorAll('.start').forEach(function(button) {
         document.getElementById('form1').style.display = 'block';
     });
 });
+document.querySelectorAll('.reset').forEach(function(button) {
+    button.addEventListener('click', function(){
+        document.getElementById('form0').style.display = 'block';
+        document.getElementById('form1').style.display = 'none';
+    });
+});
 
 //---------------------------------------------------------------------- step 2
 // validate step 1
