@@ -105,6 +105,21 @@ function widgets_init()
                 'color' => '#575b8a',
             ),
             array(
+                'name'  => 'Blue',
+                'slug'  => 'blue-500',
+                'color' => '#00a0df',
+            ),
+            array(
+                'name'  => 'Purple',
+                'slug'  => 'purple-500',
+                'color' => '#a25eb5',
+            ),
+            array(
+                'name'  => 'Red',
+                'slug'  => 'red-500',
+                'color' => '#8a2432',
+            ),
+            array(
                 'name'  => 'Grey',
                 'slug'  => 'grey-500',
                 'color' => '#474747',

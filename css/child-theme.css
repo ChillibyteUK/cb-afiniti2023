@@ -15,6 +15,9 @@
   --col-grey-400: hsl(270, 1%, 54%);
   --col-grey-500: hsl(270, 1%, 38%);
   --col-grey-700: hsl(270, 1%, 22%);
+  --col-blue-500: #00a0df;
+  --col-purple-500: #a25eb5;
+  --col-red-500: #a92432;
 }
 
 /*!
@@ -22571,6 +22574,21 @@ strong, b {
   color: var(--col-orange-500);
 }
 
+.has-blue-500-color,
+.text--blue {
+  color: var(--col-blue-500);
+}
+
+.has-purple-500-color,
+.text--purple {
+  color: var(--col-purple-500);
+}
+
+.has-red-500-color,
+.text--red {
+  color: var(--col-red-500);
+}
+
 .has-grey-500-color,
 .text--grey {
   color: var(--col-grey-500);
@@ -22641,6 +22659,27 @@ strong, b {
 
 .bg--grey-700 {
   background: var(--col-grey-700) !important;
+  color: white !important;
+}
+
+.has-blue-500-background-color,
+.bg--blue,
+.bg--blue-500 {
+  background: var(--col-blue-500) !important;
+  color: white !important;
+}
+
+.has-purple-500-background-color,
+.bg--purple,
+.bg--purple-500 {
+  background: var(--col-purple-500) !important;
+  color: white !important;
+}
+
+.has-red-500-background-color,
+.bg--red,
+.bg--red-500 {
+  background: var(--col-red-500) !important;
   color: white !important;
 }
 
