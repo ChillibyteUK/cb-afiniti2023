@@ -15,8 +15,10 @@
   --col-grey-400: hsl(270, 1%, 54%);
   --col-grey-500: hsl(270, 1%, 38%);
   --col-grey-700: hsl(270, 1%, 22%);
-  --col-blue-500: #00a0df;
-  --col-red-500: #a92432;
+  --col-blue-300: hsl(197, 100%, 51%);
+  --col-blue-500: hsl(197, 100%, 44%);
+  --col-red-300: hsl(354, 65%, 47%);
+  --col-red-500: hsl(354, 65%, 40%);
 }
 
 /*!
@@ -22668,10 +22670,20 @@ strong, b {
   color: white !important;
 }
 
+.bg--blue-300 {
+  background: var(--col-blue-300) !important;
+  color: white !important;
+}
+
 .has-red-500-background-color,
 .bg--red,
 .bg--red-500 {
   background: var(--col-red-500) !important;
+  color: white !important;
+}
+
+.bg--red-300 {
+  background: var(--col-red-300) !important;
   color: white !important;
 }
 
@@ -23867,6 +23879,16 @@ button.search.clear::after {
 .five_steps--purple-500 {
   --_background: var(--col-purple-500);
   --_background-light: var(--col-purple-300);
+  --_text: white;
+}
+.five_steps--blue-500 {
+  --_background: var(--col-blue-500);
+  --_background-light: var(--col-blue-300);
+  --_text: white;
+}
+.five_steps--red-500 {
+  --_background: var(--col-red-500);
+  --_background-light: var(--col-red-300);
   --_text: white;
 }
 .five_steps--grey-500 {

@@ -88,6 +88,16 @@
         --_background-light: var(--col-purple-300);
         --_text: white;
     }
+    &--blue-500 {
+        --_background: var(--col-blue-500);
+        --_background-light: var(--col-blue-300);
+        --_text: white;
+    }
+    &--red-500 {
+        --_background: var(--col-red-500);
+        --_background-light: var(--col-red-300);
+        --_text: white;
+    }
     &--grey-500 {
         --_background: var(--col-grey-500);
         --_background-light: var(--col-grey-300);
