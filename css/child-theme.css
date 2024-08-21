@@ -16,7 +16,6 @@
   --col-grey-500: hsl(270, 1%, 38%);
   --col-grey-700: hsl(270, 1%, 22%);
   --col-blue-500: #00a0df;
-  --col-purple-500: #a25eb5;
   --col-red-500: #a92432;
 }
 
@@ -22666,13 +22665,6 @@ strong, b {
 .bg--blue,
 .bg--blue-500 {
   background: var(--col-blue-500) !important;
-  color: white !important;
-}
-
-.has-purple-500-background-color,
-.bg--purple,
-.bg--purple-500 {
-  background: var(--col-purple-500) !important;
   color: white !important;
 }
 
