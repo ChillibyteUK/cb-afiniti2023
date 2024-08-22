@@ -14,6 +14,11 @@
 .text--purple {
     color: var(--col-purple-500);
 }
+.has-dk-purple-500-color,
+.text--dk-purple {
+    color: var(--col-dk-purple-500);
+}
+
 .has-orange-500-color,
 .text--orange {
     color: var(--col-orange-500);
@@ -90,6 +95,10 @@
 .bg--grey-300 {
     background: var(--col-grey-300) !important;
     color: white !important;
+}
+.bg--grey-100 {
+    background: var(--col-grey-100) !important;
+    color: black !important;
 }
 .bg--grey-700 {
     background: var(--col-grey-700) !important;
