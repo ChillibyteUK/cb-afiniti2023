@@ -1,4 +1,7 @@
-<section class="faq_block py-5">
+<?php
+$id = $block['anchor'] ?? null;
+?>
+<section class="faq_block py-5" id="<?=$id?>">
     <div class="container-xl">
         <?php
         if (get_field('faq_title') ?? null) {
