@@ -234,7 +234,7 @@ function acf_blocks()
             'icon'				=> 'cover-image',
             'render_template'	=> 'page-templates/blocks/cb_faq.php',
             'mode'	=> 'edit',
-            'supports' => array('mode' => false),
+            'supports' => array('mode' => false, 'anchor' => true),
         ));
         acf_register_block_type(array(
             'name'				=> 'cb_five_steps',
