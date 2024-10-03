@@ -93,8 +93,9 @@ if (get_field('author') ?? null) {
     }
 
 }
+else {
 
-if ($counter == 0 && get_field('author') == null ) {
+// if ($counter == 0 ) {
     $i = new WP_Query(array(
         'post_status' => 'publish',
         'posts_per_page' => 3,
