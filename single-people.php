@@ -89,17 +89,12 @@ if (get_field('author') ?? null) {
                     // echo '<pre>' . $authorID . ' : ' . $postAuthor . '</pre>';
                 }
             }
-            //     continue;
-            // }
-            // echo '<pre>' . var_dump($peeps) . '</pre>';
-            // echo '<pre>' . var_dump($postAuthor) . '</pre><hr>';
-
         }
     }
 
 }
 
-if ($counter == 0) {
+if ($counter == 0 && is_null(get_field('author')) ) {
     $i = new WP_Query(array(
         'post_status' => 'publish',
         'posts_per_page' => 3,
