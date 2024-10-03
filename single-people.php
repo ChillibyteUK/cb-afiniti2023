@@ -90,6 +90,11 @@ if (get_field('author') ?? null) {
                 }
             }
         }
+        if ($counter == 0) {
+            ?>
+<div class="py-5"></div>
+            <?php
+        }
     }
 
 }
