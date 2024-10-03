@@ -40,6 +40,10 @@ include get_stylesheet_directory() . '/page-templates/anim/' . $anim . '.php';
 ?>
             </div>
         </div>
+        <div class="d-none d-lg-block col-lg-1 offset-lg-7 border-dash-bottom-right h-30px"></div>
+        <div class="d-none d-lg-block col-lg-1 offset-lg-6 border-dash-top-left mt-minus-2 h-30px"></div>
+        <h2 class="text-center mb-4"><span>Insights</span></h2>
+        <div class="row g-4">
             <?php
 $counter = 0;
 
@@ -54,12 +58,6 @@ if (get_field('author') ?? null) {
     $query = new WP_Query($args);
 
     if ($query->have_posts()) {
-        ?>
-        <div class="d-none d-lg-block col-lg-1 offset-lg-7 border-dash-bottom-right h-30px"></div>
-        <div class="d-none d-lg-block col-lg-1 offset-lg-6 border-dash-top-left mt-minus-2 h-30px"></div>
-        <h2 class="text-center mb-4"><span>Insights</span></h2>
-        <div class="row g-4">
-        <?php
         while ($query->have_posts()) {
             $query->the_post();
             $peeps = get_field('person', get_the_ID()) ?? null;
@@ -96,12 +94,6 @@ if (get_field('author') ?? null) {
 
 }
 else {
-    ?>
-        <div class="d-none d-lg-block col-lg-1 offset-lg-7 border-dash-bottom-right h-30px"></div>
-        <div class="d-none d-lg-block col-lg-1 offset-lg-6 border-dash-top-left mt-minus-2 h-30px"></div>
-        <h2 class="text-center mb-4"><span>Insights</span></h2>
-        <div class="row g-4">
-    <?php
 // if ($counter == 0 ) {
     $i = new WP_Query(array(
         'post_status' => 'publish',
