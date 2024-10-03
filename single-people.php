@@ -90,16 +90,10 @@ if (get_field('author') ?? null) {
                 }
             }
         }
-        if ($counter == 0) {
-            ?>
-<div class="py-5"></div>
-            <?php
-        }
     }
 
 }
-else {
-// if ($counter == 0 ) {
+if ($counter == 0 ) {
     $i = new WP_Query(array(
         'post_status' => 'publish',
         'posts_per_page' => 3,
