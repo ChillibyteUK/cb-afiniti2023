@@ -24048,6 +24048,16 @@ button.search.clear::after {
   margin-bottom: 0.5rem;
 }
 
+.dt_diagram__card {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 0.5rem;
+}
+.dt_diagram__icon {
+  width: 100px;
+  height: 100px;
+}
+
 .wp-block-quote--cb {
   position: relative;
   z-index: 0;
