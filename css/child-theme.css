@@ -24050,12 +24050,12 @@ button.search.clear::after {
 
 .dt_diagram__card {
   display: grid;
-  grid-template-columns: 100px 1fr;
+  grid-template-columns: 60px 1fr;
   gap: 0.5rem;
 }
 .dt_diagram__icon {
-  width: 100px;
-  height: 100px;
+  width: 60px;
+  height: 60px;
 }
 
 .wp-block-quote--cb {
