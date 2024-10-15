@@ -9,7 +9,7 @@
                     <?=wp_get_attachment_image(get_field('strategy_icon'),'large',false,array('class' => 'dt_diagram__icon'))?>
                     <div class="dt_diagram__inner">
                         <h3 class="text--green">Digital Strategy</h3>
-                        <p><?=get_field('strategy_description')?></p>
+                        <p class="mb-2"><?=get_field('strategy_description')?></p>
                         <p class="mb-0"><em><?=get_field('strategy_strap')?></em></p>
                     </div>
                 </div>
@@ -17,7 +17,7 @@
                     <?=wp_get_attachment_image(get_field('data_icon'),'large',false,array('class' => 'dt_diagram__icon'))?>
                     <div class="dt_diagram__inner">
                         <h3 class="text--dk-purple">Data</h3>
-                        <p><?=get_field('data_description')?></p>
+                        <p class="mb-2"><?=get_field('data_description')?></p>
                         <p class="mb-0"><em><?=get_field('data_strap')?></em></p>
                     </div>
                 </div>
@@ -25,7 +25,7 @@
                     <?=wp_get_attachment_image(get_field('people_icon'),'large',false,array('class' => 'dt_diagram__icon'))?>
                     <div class="dt_diagram__inner">
                         <h3 class="text--purple">People</h3>
-                        <p><?=get_field('people_description')?></p>
+                        <p class="mb-2"><?=get_field('people_description')?></p>
                         <p class="mb-0"><em><?=get_field('people_strap')?></em></p>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                     <?=wp_get_attachment_image(get_field('process_icon'),'large',false,array('class' => 'dt_diagram__icon'))?>
                     <div class="dt_diagram__inner">
                         <h3 class="text--blue">Process</h3>
-                        <p><?=get_field('process_description')?></p>
+                        <p class="mb-2"><?=get_field('process_description')?></p>
                         <p class="mb-0"><em><?=get_field('process_strap')?></em></p>
                     </div>
                 </div>
@@ -41,7 +41,7 @@
                     <?=wp_get_attachment_image(get_field('system_icon'),'large',false,array('class' => 'dt_diagram__icon'))?>
                     <div class="dt_diagram__inner">
                         <h3 class="text--orange">Systems</h3>
-                        <p><?=get_field('system_description')?></p>
+                        <p class="mb-2"><?=get_field('system_description')?></p>
                         <p class="mb-0"><em><?=get_field('system_strap')?></em></p>
                     </div>
                 </div>
