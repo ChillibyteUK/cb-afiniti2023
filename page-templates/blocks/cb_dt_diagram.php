@@ -1,10 +1,10 @@
 <section class="dt_diagram py-5">
     <div class="container-xl">
-        <div class="row g-2">
-            <div class="col-lg-5 my-auto text-center">
+        <div class="row g-4">
+            <div class="col-lg-6 my-auto text-center">
                 <?=wp_get_attachment_image(get_field('diagram'),'full',null)?>
             </div>
-            <div class="col-lg-7 d-flex flex-column justify-content-around gap-2">
+            <div class="col-lg-6 d-flex flex-column justify-content-around gap-2">
                 <div class="bg--grey-100 p-2 dt_diagram__card">
                     <?=wp_get_attachment_image(get_field('strategy_icon'),'large',false,array('class' => 'dt_diagram__icon'))?>
                     <div class="dt_diagram__inner">
