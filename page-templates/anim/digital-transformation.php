@@ -26,9 +26,9 @@
 }
 #bc-clouds-2 {
     position: relative;
-    top: -170px;
+    top: -190px;
     height: 80px;
-    left: -80px;
+    left: -110px;
     animation-name: slideInRight;
     animation-duration: 1s;
     animation-timing-function: ease-in-out;
