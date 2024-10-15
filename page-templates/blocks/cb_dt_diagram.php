@@ -1,10 +1,10 @@
 <section class="dt_diagram py-5">
     <div class="container-xl">
         <div class="row g-2">
-            <div class="col-lg-4 order-lg-2 my-auto">
+            <div class="col-lg-4 my-auto">
                 <?=wp_get_attachment_image(get_field('diagram'),'full',null)?>
             </div>
-            <div class="col-lg-4 d-flex flex-column justify-content-around order-lg-1 gap-2">
+            <div class="col-lg-8 d-flex flex-column justify-content-around gap-2">
                 <div class="bg--grey-100 p-2 dt_diagram__card">
                     <?=wp_get_attachment_image(get_field('strategy_icon'),'large',false,array('class' => 'dt_diagram__icon'))?>
                     <div class="dt_diagram__inner">
@@ -21,8 +21,6 @@
                         <p><em><?=get_field('data_strap')?></em></p>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-4 d-flex flex-column justify-content-around order-lg-3 gap-2">
                 <div class="bg--grey-100 p-2 dt_diagram__card">
                     <?=wp_get_attachment_image(get_field('people_icon'),'large',false,array('class' => 'dt_diagram__icon'))?>
                     <div class="dt_diagram__inner">
