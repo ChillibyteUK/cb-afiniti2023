@@ -47,7 +47,8 @@
                 "change-readiness": "change-readiness",
                 "pocket-watch": "pocket-watch",
                 "rowers": "rowers",
-                "digital-transformation": "digital-transformation"
+                "digital-transformation": "digital-transformation",
+                "contact": "contact"
             },
             "default_value": false,
             "return_format": "value",
@@ -76,5 +77,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1728983867
+    "modified": 1729067543
 }

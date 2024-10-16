@@ -21,6 +21,9 @@ the_post();
         <h1><?=get_the_title()?></h1>
     </div>
 </section>
+<?php
+include get_stylesheet_directory() . '/page-templates/anim/contact.php';
+?>
 <div class="container-xl pb-4">
   <div class="row">
     <div class="col-lg-8 pb-2">
