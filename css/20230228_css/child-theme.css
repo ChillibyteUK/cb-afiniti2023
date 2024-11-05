@@ -23383,6 +23383,12 @@ a.searchResult:hover .anim-arrow--slide .arrow {
 .halfcircle-container .halfcircle-grey::before {
   background-color: var(--col-grey-500);
 }
+.halfcircle-container .halfcircle-blue::before {
+  background-color: var(--col-blue-500);
+}
+.halfcircle-container .halfcircle-red::before {
+  background-color: var(--col-red-500);
+}
 .halfcircle-container .ss-halfcircle::before {
   left: 50%;
   width: 250px;

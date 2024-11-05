@@ -42,7 +42,9 @@
 
 // Contextual colors
 
-.text-white { color: $white !important; }
+.text-white {
+  color: $white !important;
+}
 
 @each $color, $value in $theme-colors {
   @include text-emphasis-variant(".text-#{$color}", $value, true);

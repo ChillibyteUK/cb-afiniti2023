@@ -15,6 +15,12 @@
     .halfcircle-grey::before {
         background-color: var(--col-grey-500);
     }
+    .halfcircle-blue::before {
+        background-color: var(--col-blue-500);
+      }
+    .halfcircle-red::before {
+        background-color: var(--col-red-500);
+    }
 
     .ss-halfcircle {
         &::before {

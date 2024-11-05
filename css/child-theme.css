@@ -17,9 +17,11 @@
   --col-grey-700: hsl(270, 1%, 22%);
   --col-blue-300: hsl(197, 100%, 51%);
   --col-blue-500: hsl(197, 100%, 44%);
+  --col-blue-700: hsl(197, 100%, 34%);
   --col-dk-purple-500: hsl(248, 49%, 19%);
   --col-red-300: hsl(354, 65%, 47%);
   --col-red-500: hsl(354, 65%, 40%);
+  --col-red-700: hsl(354, 65%, 32%);
 }
 
 /*!
@@ -22553,8 +22555,13 @@ strong, b {
   font-weight: 700;
 }
 
-.text--white {
+.text--white,
+.text-white {
   color: #fff;
+}
+.text--white a,
+.text-white a {
+  color: #fff !important;
 }
 
 .bg--light {
@@ -22674,6 +22681,12 @@ strong, b {
   color: white !important;
 }
 
+.has-blue-700-background-color,
+.bg--blue-700 {
+  background: var(--col-blue-700) !important;
+  color: white !important;
+}
+
 .has-blue-500-background-color,
 .bg--blue,
 .bg--blue-500 {
@@ -22683,6 +22696,12 @@ strong, b {
 
 .bg--blue-300 {
   background: var(--col-blue-300) !important;
+  color: white !important;
+}
+
+.has-red-700-background-color,
+.bg--red-700 {
+  background: var(--col-red-700) !important;
   color: white !important;
 }
 
@@ -23450,6 +23469,12 @@ button.search.clear::after {
 }
 .halfcircle-container .halfcircle-grey::before {
   background-color: var(--col-grey-500);
+}
+.halfcircle-container .halfcircle-blue::before {
+  background-color: var(--col-blue-500);
+}
+.halfcircle-container .halfcircle-red::before {
+  background-color: var(--col-red-500);
 }
 .halfcircle-container .ss-halfcircle::before {
   left: 50%;
