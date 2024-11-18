@@ -584,4 +584,14 @@ add_shortcode('org_name', function () {
     return $data['orgName'];
 });
 
+add_filter('acf/update_value', 'cb_acf_save_revisions', 10, 3);
+function cb_acf_save_revisions($value, $post_id, $field) {
+    // Trigger a revision save.
+    if (get_post_type($post_id) !== 'acf-field-group') {
+        wp_save_post_revision($post_id);
+    }
+    return $value;
+}
+
+
 ?>
