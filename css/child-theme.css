@@ -23513,6 +23513,9 @@ button.search.clear::after {
   content: "";
   pointer-events: none;
 }
+.halfcircle-container .halfcircle- .halfcircle-content a {
+  color: var(--col-grey-500);
+}
 
 .quote {
   position: relative;
