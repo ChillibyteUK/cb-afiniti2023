@@ -17,6 +17,13 @@
         background-color: lighten($col-green-500,10%);
     }
 }
+.btn--blue {
+    color: white;
+    background-color: var(--col-blue-500);
+    &:hover {
+        background-color: lighten($col-blue-500,10%);
+    }
+}
 .btn--purple {
     color: white;
     background-color: var(--col-purple-500);

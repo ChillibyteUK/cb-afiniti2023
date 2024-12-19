@@ -22970,6 +22970,14 @@ nav.navbar .logo {
   background-color: #a4cd93;
 }
 
+.btn--blue {
+  color: white;
+  background-color: var(--col-blue-500);
+}
+.btn--blue:hover {
+  background-color: #14bdff;
+}
+
 .btn--purple {
   color: white;
   background-color: var(--col-purple-500);
