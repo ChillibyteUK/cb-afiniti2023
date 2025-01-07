@@ -259,6 +259,37 @@ function getVal(field) {
     return [lever, answer];
 }
 
+// function checkAllRadioGroups(container) {
+//     var divElement = document.getElementById(container);
+//     var radioGroups = divElement.querySelectorAll('input[type="radio"]');
+//     var radioGroupNames = new Set();
+
+//     // Collect unique radio group names
+//     radioGroups.forEach(function(radio) {
+//         radioGroupNames.add(radio.name);
+//     });
+
+//     // Check if all radio groups have a selected value
+//     for (var name of radioGroupNames) {
+//         var radios = document.getElementsByName(name);
+//         var hasValidValue = Array.from(radios).some(radio => radio.checked && !isNaN(Number(radio.value)));
+
+//         for (var i = 0; i < radios.length; i++) {
+//             if (radios[i].checked) {
+//                 hasSelectedValue = true;
+//                 break;
+//             }
+//         }
+
+//         if (!hasSelectedValue) {
+//             return false; // At least one radio group doesn't have a value
+//         }
+//     }
+
+//     return true; // All radio groups have a value
+// }
+
+// 20250107 stricter validation
 function checkAllRadioGroups(container) {
     var divElement = document.getElementById(container);
     var radioGroups = divElement.querySelectorAll('input[type="radio"]');
@@ -269,33 +300,39 @@ function checkAllRadioGroups(container) {
         radioGroupNames.add(radio.name);
     });
 
-    // Check if all radio groups have a selected value
+    // Check if all radio groups have a valid selected value
     for (var name of radioGroupNames) {
         var radios = document.getElementsByName(name);
-        var hasSelectedValue = false;
+        var hasValidValue = Array.from(radios).some(radio => radio.checked && !isNaN(Number(radio.value)));
 
-        for (var i = 0; i < radios.length; i++) {
-            if (radios[i].checked) {
-                hasSelectedValue = true;
-                break;
-            }
-        }
-
-        if (!hasSelectedValue) {
-            return false; // At least one radio group doesn't have a value
+        if (!hasValidValue) {
+            return false;
         }
     }
-
-    return true; // All radio groups have a value
+    return true;
 }
+
 
 function UpdateScores(form) {
     // console.log(scores);
-    for (i = 1; i <= 6; i++) {
-        var [lever,ans] = getVal( document.getElementsByName('form'+form+'_answers_' + i) );
-        let curr = scores[lever];
-        // console.log('curr '+lever+': '+curr);
-        scores[lever] = Number(curr) + Number(ans);
+    // for (i = 1; i <= 6; i++) {
+    //     var [lever,ans] = getVal( document.getElementsByName('form'+form+'_answers_' + i) );
+    //     let curr = scores[lever];
+    //     // console.log('curr '+lever+': '+curr);
+    //     scores[lever] = Number(curr) + Number(ans);
+    // }
+
+    // 20250107 validate the presence of fields before processing
+    for (let i = 1; i <= 6; i++) {
+        const elements = document.getElementsByName('form' + form + '_answers_' + i);
+        if (elements.length > 0) {
+            var [lever, ans] = getVal(elements);
+            if (lever && ans) {
+                let curr = scores[lever] || 0;
+                scores[lever] = Number(curr) + Number(ans);
+            }
+        }
     }
+
     return;
 }
