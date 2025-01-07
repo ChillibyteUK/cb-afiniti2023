@@ -45,7 +45,22 @@ include get_stylesheet_directory() . '/page-templates/anim/' . $anim . '.php';
     <h1 class="fw-bold mb-4"><?=get_the_title()?></h1>
     <div class="row g-4">
         <div class="col-lg-8">
-            <div class="single_insight_image mb-4" style="background-image:url(<?=get_the_post_thumbnail_url( get_the_ID(), 'full' )?>)"></div>
+            <?php
+            $image = '';
+            if ( get_the_post_thumbnail_url( get_the_ID(), 'full' ) ?? null ) {
+                $image = '<div class="single_insight_image mb-4" style="background-image:url(' . get_the_post_thumbnail_url( get_the_ID(), 'full' ) . ')"></div>';
+            }
+            // get type
+            $types = get_the_terms(get_the_ID(), 'insight-type');
+            $type_slugs = wp_list_pluck($types, 'slug');
+            if (!empty($types) && !is_wp_error($types)) {
+                if (in_array('video', $type_slugs, true)) {
+                    $image = '<div class="ratio ratio-16x9 mb-4"><iframe src="https://player.vimeo.com/video/' . get_field('video_id') . '?badge=0&amp;autopause=0&amp;player_id=0" allowfullscreen></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>';
+                }
+            }
+
+            echo $image;
+            ?>
             <?php the_content(); ?>
             <div class="row">
                 <div class="col-lg-6">

@@ -1,0 +1,51 @@
+{
+    "key": "group_677d41e98ee2b",
+    "title": "Video Insight",
+    "fields": [
+        {
+            "key": "field_677d4228049a5",
+            "label": "Vimeo ID",
+            "name": "video_id",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "https:\/\/player.vimeo.com\/video\/THIS_IS_THE_ID",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "relevanssi_exclude": 0,
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_taxonomy",
+                "operator": "==",
+                "value": "insight-type:video"
+            },
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1736263651
+}

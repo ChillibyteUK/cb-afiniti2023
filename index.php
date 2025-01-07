@@ -137,6 +137,7 @@ foreach ($terms as $term) {
                         break;
                     case 'video':
                         $flash = '<i class="fa-solid fa-video"></i>';
+                        $img = get_vimeo_data_from_id(get_field('video_id',$post->ID),'thumbnail_url');
                         break;
                     case 'podcast':
                         $flash = '<i class="fa-solid fa-podcast"></i>';
