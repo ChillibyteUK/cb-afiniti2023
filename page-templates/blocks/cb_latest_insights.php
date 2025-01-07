@@ -28,11 +28,11 @@ while ($q->have_posts()) {
         $img = get_stylesheet_directory_uri() . '/img/default-blog.jpg';
     }
 
-    $types = get_the_terms($q->ID, 'insight-type');
+    $types = get_the_terms(get_the_ID(), 'insight-type');
     $type_slugs = wp_list_pluck($types, 'slug');
     if (!empty($types) && !is_wp_error($types)) {
         if (in_array('video', $type_slugs, true)) {
-            $img = get_vimeo_data_from_id(get_field('video_id',$post->ID),'thumbnail_url');
+            $img = get_vimeo_data_from_id(get_field('video_id',get_the_ID()),'thumbnail_url');
         }
     }
 
