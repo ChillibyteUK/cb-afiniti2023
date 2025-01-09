@@ -53,8 +53,9 @@ $current_url = explode("?", $_SERVER['REQUEST_URI']);
 echo '<link rel="canonical" href="https://' . $_SERVER['HTTP_HOST'] . $current_url[0] . '" />';
 
 wp_head();
-?>
-	
+
+if (is_front_page() || is_page('contact-us') ) {
+    ?>
 <script type="application/ld+json">
 {
   "@context": "http://www.schema.org",
@@ -88,7 +89,9 @@ wp_head();
    ]
 }
 </script>
-	
+    <?php
+}
+?>	
 </head>
 
 <body <?php body_class(); ?> <?php understrap_body_attributes(); ?>>
