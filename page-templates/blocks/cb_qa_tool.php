@@ -68,12 +68,12 @@ while (have_rows('section')) {
                     </p>
                 </div>
             </div>
-            <div class="accordion" id="accordion<?=$ti?>">
+            <div class="accordion" id="accordion<?=$ti?>" itemscope itemtype="https://schema.org/FAQPage">
                 <?php
     while (have_rows('questions')) {
         the_row();
         ?>
-                <div class="qa__question">
+                <div class="qa__question" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
                     <button class="qa__button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#collapse<?=$qq?>"
                         id="heading<?=$qq?>">
@@ -81,8 +81,9 @@ while (have_rows('section')) {
                     </button>
                     <div id="collapse<?=$qq?>"
                         class="accordion-collapse collapse"
+                        itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"
                         data-bs-parent="#accordion<?=$ti?>">
-                        <div class="accordion-body">
+                        <div class="accordion-body" itemprop="text">
                             <div class="pb-4">
                                 <?=get_sub_field('answer')?>
                             </div>
