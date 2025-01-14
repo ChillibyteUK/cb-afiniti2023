@@ -17,15 +17,6 @@ while (have_rows('section')) {
     $parts = preg_split('/-/', $theme);
     $theme = $parts[0];
 
-    // Collect FAQ data for schema
-    $faq_items[] = [
-        "@type" => "Question",
-        "name" => get_sub_field('question'),
-        "acceptedAnswer" => [
-            "@type" => "Answer",
-            "text" => get_sub_field('answer')
-        ]
-    ];
     ?>
         <li class="nav-item" role="presentation">
             <button
@@ -86,13 +77,13 @@ while (have_rows('section')) {
         $question = get_sub_field('question') ?? null;
         $answer = get_sub_field('answer') ?? null;
 
-        if (empty($question) || empty($answer)) {
-            echo '<pre>' . "Missing FAQ data: " . json_encode([
-                'section_title' => get_sub_field('section_title'),
-                'question' => $question,
-                'answer' => $answer
-            ]) . '</pre>';
-        }
+        // if (empty($question) || empty($answer)) {
+        //     echo '<pre>' . "Missing FAQ data: " . json_encode([
+        //         'section_title' => get_sub_field('section_title'),
+        //         'question' => $question,
+        //         'answer' => $answer
+        //     ]) . '</pre>';
+        // }
 
         if (!empty($question) && !empty($answer)) {
             $faq_items[] = [
