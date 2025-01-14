@@ -83,14 +83,27 @@ while (have_rows('section')) {
     while (have_rows('questions')) {
         the_row();
 
-        $faq_items[] = [
-            "@type" => "Question",
-            "name" => get_sub_field('question'),
-            "acceptedAnswer" => [
-                "@type" => "Answer",
-                "text" => get_sub_field('answer')
-            ]
-        ];
+
+        if (empty($question) || empty($answer)) {
+            error_log("Missing FAQ data: " . json_encode([
+                'section_title' => get_sub_field('section_title'),
+                'question' => $question,
+                'answer' => $answer
+            ]));
+        }
+        $question = get_sub_field('question');
+        $answer = get_sub_field('answer');
+
+        if (!empty($question) && !empty($answer)) {
+            $faq_items[] = [
+                "@type" => "Question",
+                "name" => $question,
+                "acceptedAnswer" => [
+                    "@type" => "Answer",
+                    "text" => $answer
+                ]
+            ];
+        }
         ?>
                 <div class="qa__question">
                     <button class="qa__button collapsed" type="button" data-bs-toggle="collapse"
