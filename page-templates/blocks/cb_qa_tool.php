@@ -91,8 +91,8 @@ while (have_rows('section')) {
                 'answer' => $answer
             ]) . '</pre>';
         }
-        $question = get_sub_field('question');
-        $answer = get_sub_field('answer');
+        $question = get_sub_field('question') ?? null;
+        $answer = get_sub_field('answer') ?? null;
 
         if (!empty($question) && !empty($answer)) {
             $faq_items[] = [
