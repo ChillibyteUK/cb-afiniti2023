@@ -5,6 +5,7 @@ $classes = $block['className'] ?? null;
 <div class="container-xl pb-5 <?=$classes?>">
     <ul class="nav tab-buttons mb-3" id="qaTabs" role="tablist">
         <?php
+        $faq_items = [];
 // $active = 'active';
 $active = '';
 // $selected = 'true';
@@ -16,6 +17,15 @@ while (have_rows('section')) {
     $parts = preg_split('/-/', $theme);
     $theme = $parts[0];
 
+    // Collect FAQ data for schema
+    $faq_items[] = [
+        "@type" => "Question",
+        "name" => get_sub_field('question'),
+        "acceptedAnswer" => [
+            "@type" => "Answer",
+            "text" => get_sub_field('answer')
+        ]
+    ];
     ?>
         <li class="nav-item" role="presentation">
             <button
@@ -68,12 +78,21 @@ while (have_rows('section')) {
                     </p>
                 </div>
             </div>
-            <div class="accordion" id="accordion<?=$ti?>" itemscope itemtype="https://schema.org/FAQPage">
+            <div class="accordion" id="accordion<?=$ti?>">
                 <?php
     while (have_rows('questions')) {
         the_row();
+
+        $faq_items[] = [
+            "@type" => "Question",
+            "name" => get_sub_field('question'),
+            "acceptedAnswer" => [
+                "@type" => "Answer",
+                "text" => get_sub_field('answer')
+            ]
+        ];
         ?>
-                <div class="qa__question" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                <div class="qa__question">
                     <button class="qa__button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#collapse<?=$qq?>"
                         id="heading<?=$qq?>">
@@ -81,7 +100,6 @@ while (have_rows('section')) {
                     </button>
                     <div id="collapse<?=$qq?>"
                         class="accordion-collapse collapse"
-                        itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"
                         data-bs-parent="#accordion<?=$ti?>">
                         <div class="accordion-body" itemprop="text">
                             <div class="pb-4">
@@ -136,3 +154,12 @@ while (have_rows('section')) {
 ?>
     </div>
 </div>
+<?php
+if (!empty($faq_items)) {
+    $faq_schema = [
+        "@context" => "https://schema.org",
+        "@type" => "FAQPage",
+        "mainEntity" => $faq_items
+    ];
+    echo '<script type="application/ld+json">' . json_encode($faq_schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) . '</script>';
+}
