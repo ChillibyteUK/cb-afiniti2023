@@ -85,11 +85,11 @@ while (have_rows('section')) {
 
 
         if (empty($question) || empty($answer)) {
-            error_log("Missing FAQ data: " . json_encode([
+            echo '<pre>' . "Missing FAQ data: " . json_encode([
                 'section_title' => get_sub_field('section_title'),
                 'question' => $question,
                 'answer' => $answer
-            ]));
+            ]) . '</pre>';
         }
         $question = get_sub_field('question');
         $answer = get_sub_field('answer');
