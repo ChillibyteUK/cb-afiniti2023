@@ -175,6 +175,18 @@ ul.nopad {
     }
 }
 
+.video_carousel,
+.video_feature {
+    .insight {
+        a {
+            color: inherit;
+        }
+        .article-title {
+            min-height: max-content;
+        }
+    }
+}
+
 // show stuff that overflows horizontally
 // * {
 //     outline: 1px solid #f00 !important;

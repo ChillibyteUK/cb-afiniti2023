@@ -24361,6 +24361,17 @@ ul.nopad {
   height: 100%;
 }
 
+.video_carousel .insight a,
+.video_feature .insight a {
+  color: inherit;
+}
+.video_carousel .insight .article-title,
+.video_feature .insight .article-title {
+  min-height: -webkit-max-content;
+  min-height: -moz-max-content;
+  min-height: max-content;
+}
+
 /*
 var all = document.getElementsByTagName("*"), i = 0, rect, docWidth = document.documentElement.offsetWidth;
 for (; i < all.length; i++) {
