@@ -23,10 +23,23 @@ if (!isset($data['contactEmail']) || empty($data['contactEmail'])) {
     exit();
 }
 
-$post_title = random_str(32);
+// Extract company and email from the POST data
+$company = '';
+$email = '';
+
+if ($data['contactEmail']) {
+    $email = $data['contactEmail'];
+}
+if ($data['company']) {
+    $company = $data['company'];
+}
+
+$post_title = trim($company . ' | ' . $email);
+$post_slug = random_str(32);
 
 $post_data = array(
     'post_title'  => $post_title,
+    'post_name'   => $post_slug,
     'post_type'   => 'cra',
     'post_status' => 'publish'
 );
