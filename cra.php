@@ -30,8 +30,8 @@ $email = '';
 if ($data['contactEmail']) {
     $email = $data['contactEmail'];
 }
-if ($data['company']) {
-    $company = $data['company'];
+if ($data['orgName']) {
+    $company = $data['orgName'];
 }
 
 $post_title = trim($company . ' | ' . $email);
@@ -51,7 +51,7 @@ $scoresField = 'field_649564f0c6785';
 update_field($dataField, $data, $post_id);
 update_field($scoresField, $scores, $post_id);
 
-$results = "http" . (isset($_SERVER['HTTPS']) ? 's' : '') . "://$_SERVER[HTTP_HOST]/cra/$post_title/";
+$results = "http" . (isset($_SERVER['HTTPS']) ? 's' : '') . "://$_SERVER[HTTP_HOST]/cra/$post_slug/";
 
 $to = $data['contactEmail'];
 $subject = "Afiniti Change Readiness Assessment Tool Results";
