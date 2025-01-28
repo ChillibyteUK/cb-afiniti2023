@@ -19,7 +19,8 @@ defined('ABSPATH') || exit;
     <link rel="preload" href="<?php echo get_stylesheet_directory_uri(); ?>/fonts/noto-sans-v27-latin-regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
     <link rel="preload" href="<?php echo get_stylesheet_directory_uri(); ?>/fonts/noto-sans-v27-latin-700.woff2" as="font" type="font/woff2" crossorigin="anonymous">
 <?php
-if (get_field('ga_property', 'options')) { 
+if (!is_user_logged_in()) {
+    if (get_field('ga_property', 'options')) { 
     ?>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=<?=get_field('ga_property','options')?>"></script>
@@ -30,8 +31,8 @@ if (get_field('ga_property', 'options')) {
   gtag('config', '<?=get_field('ga_property','options')?>');
 </script>
     <?php
-}
-if (get_field('gtm_property', 'options')) {
+    }
+    if (get_field('gtm_property', 'options')) {
     ?>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -41,6 +42,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','<?=get_field('gtm_property','options')?>');</script>
 <!-- End Google Tag Manager -->
     <?php
+    }
 }
 if (get_field('google_site_verification','options')) {
     echo '<meta name="google-site-verification" content="' . get_field('google_site_verification','options') . '" />';
