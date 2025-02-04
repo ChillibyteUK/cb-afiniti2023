@@ -101,6 +101,10 @@ include get_stylesheet_directory() . '/page-templates/anim/business-change.php';
                         <li><span class="fa-li"><i class="fa-solid fa-envelope"></i></span> <a
                                 href="mailto:?subject=Afiniti Change Readiness Assessment&body=<?=get_the_permalink()?>"
                                 class="text-white">Share via email</a></li>
+                        <li><span class="fa-li"><i class="fa-solid fa-star"></i></span> <a
+                                href="https://g.page/r/Cfn508DiV5pLEAI/review"
+                                target="_blank"
+                                class="text-white">Found your results useful? Help others by leaving a review</a></li>
                     </ul>
                 </div>
             </div>
