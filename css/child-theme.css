@@ -23300,6 +23300,10 @@ button.search.clear::after {
   margin-top: 0.25rem !important;
 }
 
+#field_5_7 {
+  display: none !important;
+}
+
 .hero {
   background-image: url(../img/afiniti-hero.jpg);
   color: white;
@@ -24432,6 +24436,10 @@ for (; i < all.length; i++) {
 
 .gform_wrapper.gravity-theme .gfield-choice-input {
   margin-top: 0.25rem !important;
+}
+
+#field_5_7 {
+  display: none !important;
 }
 
 .has-blue-color,

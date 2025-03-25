@@ -594,4 +594,23 @@ function cb_acf_save_revisions($value, $post_id, $field) {
 }
 
 
-?>
+// Honeytrap
+add_filter('gform_validation_5', function($validation_result) {
+    $form = $validation_result['form'];
+
+    foreach ($form['fields'] as &$field) {
+        if ($field->label === 'Referral Code') {
+            $value = rgpost("input_{$field->id}");
+
+            // If the field has a value, mark as spam
+            if (!empty($value)) {
+                $field->failed_validation = true;
+                $field->validation_message = 'Spam detected.';
+                $validation_result['is_valid'] = false;
+            }
+        }
+    }
+
+    $validation_result['form'] = $form;
+    return $validation_result;
+});
