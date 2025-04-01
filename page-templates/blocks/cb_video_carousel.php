@@ -11,6 +11,8 @@
 $colour     = strtolower( get_field( 'background' ) ) ?? null;
 $background = 'bg--' . $colour;
 
+$bg_size = get_field( 'bg_size' ) ?? null;
+
 $bg_inner = '';
 $bg_outer = '';
 
