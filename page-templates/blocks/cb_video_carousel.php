@@ -18,7 +18,7 @@ $bg_outer = '';
 
 echo '<!-- ' . esc_attr( $bg_size ) . ' -->';
 
-if ( 'Full Width' === $bg_size ) {
+if ( 'Full Width' === $bg_size || 'full' === $bg_size ) {
 	$bg_outer = $background;
 } else {
 	$bg_inner = $background;
