@@ -18,7 +18,7 @@ echo '<h1>' . esc_html( $bg_size ) . '</h1>';
 $bg_inner = '';
 $bg_outer = '';
 
-if ( 'full' === $bg_size ) {
+if ( 'Full Width' === $bg_size ) {
 	$bg_outer = $background;
 } else {
 	$bg_inner = $background;
