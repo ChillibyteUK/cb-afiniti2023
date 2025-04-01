@@ -13,8 +13,6 @@ $background = 'bg--' . $colour;
 
 $bg_size = get_field( 'bg_size' ) ?? null;
 
-echo '<h1>' . esc_html( $bg_size ) . '</h1>';
-
 $bg_inner = '';
 $bg_outer = '';
 
