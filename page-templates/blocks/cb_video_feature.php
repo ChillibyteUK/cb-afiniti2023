@@ -13,6 +13,8 @@ $bg_size = get_field( 'bg_size' ) ?? null;
 $bg_inner = '';
 $bg_outer = '';
 
+echo '<!-- ' . esc_attr( $bg_size ) . ' -->';
+
 if ( 'Full Width' === $bg_size ) {
 	$bg_outer = $background;
 } else {
