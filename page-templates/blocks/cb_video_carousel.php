@@ -10,9 +10,19 @@
 
 $colour     = strtolower( get_field( 'background' ) ) ?? null;
 $background = 'bg--' . $colour;
+
+$bg_inner = '';
+$bg_outer = '';
+
+if ( 'Full Width' === $bg_size ) {
+	$bg_outer = $background;
+} else {
+	$bg_inner = $background;
+}
+
 ?>
-<section class="video_carousel <?= esc_attr( $background ); ?> py-4">
-    <div class="container-xl py-4">
+<section class="video_carousel <?= esc_attr( $bg_outer ); ?> py-4">
+    <div class="container-xl <?= esc_attr( $bg_inner ); ?> py-4">
         <?php
         if ( get_field( 'title' ) ?? null ) {
             ?>

@@ -8,12 +8,21 @@
 $colour     = strtolower( get_field( 'background' ) ) ?? null;
 $background = 'bg--' . $colour;
 
+$bg_inner = '';
+$bg_outer = '';
+
+if ( 'Full Width' === $bg_size ) {
+	$bg_outer = $background;
+} else {
+	$bg_inner = $background;
+}
+
 $featured_video = get_field( 'video_id', get_field( 'featured_video' ) );
 $featured_img   = get_vimeo_data_from_id( $featured_video, 'thumbnail_url' );
 
 ?>
-<section class="video_feature <?= esc_attr( $background ); ?> py-4">
-    <div class="container-xl p-4">
+<section class="video_feature <?= esc_attr( $bg_outer ); ?> py-4">
+    <div class="container-xl <?= esc_attr( $bg_inner ); ?> p-4">
         <div class="row">
             <div class="col-md-6">
                 <img src="<?= esc_url( $featured_img ); ?>">
