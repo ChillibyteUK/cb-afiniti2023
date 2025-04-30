@@ -23470,22 +23470,28 @@ button.search.clear::after {
   z-index: 0;
   position: relative;
 }
-.halfcircle-container .halfcircle-green::before {
+.halfcircle-container .halfcircle-green::before,
+.halfcircle-container .halfcircle-green-500::before {
   background-color: var(--col-green-500);
 }
-.halfcircle-container .halfcircle-orange::before {
+.halfcircle-container .halfcircle-orange::before,
+.halfcircle-container .halfcircle-orange-500::before {
   background-color: var(--col-orange-500);
 }
-.halfcircle-container .halfcircle-purple::before {
+.halfcircle-container .halfcircle-purple::before,
+.halfcircle-container .halfcircle-purple-500::before {
   background-color: var(--col-purple-500);
 }
-.halfcircle-container .halfcircle-grey::before {
+.halfcircle-container .halfcircle-grey::before,
+.halfcircle-container .halfcircle-grey-500::before {
   background-color: var(--col-grey-500);
 }
-.halfcircle-container .halfcircle-blue::before {
+.halfcircle-container .halfcircle-blue::before,
+.halfcircle-container .halfcircle-blue-500::before {
   background-color: var(--col-blue-500);
 }
-.halfcircle-container .halfcircle-red::before {
+.halfcircle-container .halfcircle-red::before,
+.halfcircle-container .halfcircle-red-500::before {
   background-color: var(--col-red-500);
 }
 .halfcircle-container .ss-halfcircle::before {

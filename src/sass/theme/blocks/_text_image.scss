@@ -3,22 +3,28 @@
     z-index: 0;
     position: relative;
 
-    .halfcircle-green::before {
+    .halfcircle-green::before,
+    .halfcircle-green-500::before {
         background-color: var(--col-green-500);
     }
-    .halfcircle-orange::before {
+    .halfcircle-orange::before,
+    .halfcircle-orange-500::before {
         background-color: var(--col-orange-500);
     }
-    .halfcircle-purple::before {
+    .halfcircle-purple::before,
+    .halfcircle-purple-500::before {
         background-color: var(--col-purple-500);
     }
-    .halfcircle-grey::before {
+    .halfcircle-grey::before,
+    .halfcircle-grey-500::before {
         background-color: var(--col-grey-500);
     }
-    .halfcircle-blue::before {
+    .halfcircle-blue::before,
+    .halfcircle-blue-500::before {
         background-color: var(--col-blue-500);
       }
-    .halfcircle-red::before {
+    .halfcircle-red::before,
+    .halfcircle-red-500::before {
         background-color: var(--col-red-500);
     }
 
