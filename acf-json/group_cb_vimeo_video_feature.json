@@ -23,7 +23,7 @@
         },
         {
             "key": "field_685c1d66e5657",
-            "label": "Vimeo Video Embed URL",
+            "label": "Featured Video ID",
             "name": "featured_video_id",
             "aria-label": "",
             "type": "text",
@@ -104,6 +104,33 @@
             "allowed_colors": "",
             "exclude_colors": "",
             "return_format": "slug"
+        },
+        {
+            "key": "field_685c21b872623",
+            "label": "Order",
+            "name": "order",
+            "aria-label": "",
+            "type": "radio",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "relevanssi_exclude": 0,
+            "choices": {
+                "Video Text": "Video Text",
+                "Text Video": "Text Video"
+            },
+            "default_value": "Video Text",
+            "return_format": "value",
+            "allow_null": 0,
+            "other_choice": 0,
+            "allow_in_bindings": 0,
+            "layout": "vertical",
+            "save_other_choice": 0
         }
     ],
     "location": [
