@@ -95,7 +95,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
@@ -103,7 +103,8 @@
             "default_value": "",
             "allowed_colors": "",
             "exclude_colors": "",
-            "return_format": "slug"
+            "return_format": "slug",
+            "allow_in_bindings": 1
         },
         {
             "key": "field_685c21b872623",
@@ -115,7 +116,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
