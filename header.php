@@ -44,15 +44,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <?php
     }
 }
-if (get_field('google_site_verification','options')) {
-    echo '<meta name="google-site-verification" content="' . get_field('google_site_verification','options') . '" />';
+if ( get_field( 'google_site_verification', 'options' ) ) {
+    echo '<meta name="google-site-verification" content="' . esc_attr( get_field( 'google_site_verification', 'options' ) ) . '" />';
 }
-if (get_field('bing_site_verification','options')) {
-    echo '<meta name="msvalidate.01" content="' . get_field('bing_site_verification','options') . '" />';
+if ( get_field( 'bing_site_verification', 'options' ) ) {
+    echo '<meta name="msvalidate.01" content="' . esc_attr( get_field( 'bing_site_verification', 'options' ) ) . '" />';
 }
 
-$current_url = explode("?", $_SERVER['REQUEST_URI']);
-echo '<link rel="canonical" href="https://' . $_SERVER['HTTP_HOST'] . $current_url[0] . '" />';
+$current_url = explode( '?', $_SERVER['REQUEST_URI'] );
+echo '<link rel="canonical" href="' . esc_url( 'https://' . $_SERVER['HTTP_HOST'] . $current_url[0] ) . '" />';
 
 wp_head();
 

@@ -2,6 +2,26 @@
 function acf_blocks()
 {
     if (function_exists('acf_register_block_type')) {
+
+		// INSERT NEW BLOCKS HERE.
+
+        acf_register_block_type(
+            array(
+                'name'            => 'cb_vimeo_video_feature',
+                'title'           => __( 'CB Vimeo Video Feature' ),
+                'category'        => 'layout',
+                'icon'            => 'cover-image',
+                'render_template' => 'page-templates/blocks/cb-vimeo-video-feature.php',
+                'mode'            => 'edit',
+                'supports'        => array(
+                    'mode'      => false,
+                    'anchor'    => true,
+                    'className' => true,
+                    'align'     => true,
+                ),
+            )
+        );
+
         acf_register_block_type(array(
             'name'				=> 'cb_hero',
             'title'				=> __('CB Hero'),
