@@ -21,12 +21,12 @@ if ( 'Full Width' === $bg_size ) {
 	$bg_inner = $background;
 }
 
-$orderText = 'order-2 order-md-1';
-$orderImage = 'order-1 order-md-2';
+$orderText = 'order-2 order-md-2';
+$orderImage = 'order-1 order-md-1';
 
 if (get_field('order') == 'Image Text') {
-    $orderText = 'order-2 order-md-2';
-    $orderImage = 'order-1 order-md-1';
+    $orderText = 'order-2 order-md-1';
+    $orderImage = 'order-1 order-md-2';
 }
 
 
