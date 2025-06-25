@@ -23,7 +23,7 @@
         },
         {
             "key": "field_685c1d66e5657",
-            "label": "Featured Video ID",
+            "label": "Vimeo Video Embed URL",
             "name": "featured_video_id",
             "aria-label": "",
             "type": "text",
