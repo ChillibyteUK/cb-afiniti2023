@@ -39,7 +39,7 @@ $featured_img   = get_vimeo_data_from_id( $featured_video, 'thumbnail_url' );
 <section class="video_feature <?= esc_attr( $bg_outer ); ?> py-4">
     <div class="container-xl <?= esc_attr( $bg_inner ); ?> p-4">
         <div class="row">
-            <div class="col-md-6" <?= esc_attr( $orderImage ); ?>>
+            <div class="col-md-6 <?= esc_attr( $orderImage ); ?>"">
 				<div class="ratio ratio-16x9">
             		<iframe height=400 allowfullscreen="allowfullscreen" src="<?= esc_url( $embed_url ); ?>"></iframe>
         		</div>
