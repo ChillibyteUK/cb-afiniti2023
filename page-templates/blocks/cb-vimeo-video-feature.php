@@ -46,7 +46,7 @@ $featured_img   = get_vimeo_data_from_id( $featured_video, 'thumbnail_url' );
             </div>
             <div class="col-md-6 <?= esc_attr( $orderText ); ?>">
                 <h2><?= esc_html( get_field( 'feature_title' ) ); ?></h2>
-                <p><?= esc_html( get_field( 'feature_description' ) ); ?></p>
+                <p><?= wp_kses_post( get_field( 'feature_description' ) ); ?></p>
             </div>
         </div>
     </div>
