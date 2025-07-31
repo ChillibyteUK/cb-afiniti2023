@@ -427,7 +427,7 @@ add_action('wp_footer', function () {
         });
     }
 </script>
-<script src="<?=get_stylesheet_directory_uri()?>/js/cra.js"></script>
+<script src="<?=get_stylesheet_directory_uri()?>/js/cra.js?v=1"></script>
 <?php
 });
 get_footer();
