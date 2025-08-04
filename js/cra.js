@@ -44,7 +44,7 @@ document.getElementById('step3back').addEventListener('click',function(){
 // validate step 1
 
 document.getElementById('step1').addEventListener('click',function(){
-    const requiredFields = ['contactName','orgName','contactEmail','consent'];
+    const requiredFields = ['contactName','orgName','contactEmail','consent','contactHowHear'];
 
     const isValid = [];
     requiredFields.every((x) => {
@@ -65,6 +65,7 @@ document.getElementById('step1').addEventListener('click',function(){
         data.contactPhone = document.getElementById('contactPhone').value;
         data.contactMobile = document.getElementById('contactMobile').value;
         data.contactEmail = document.getElementById('contactEmail').value;
+        data.contactHowHear = document.getElementById('contactHowHear').value;
         data.consent = document.getElementById('consent').value;
 
         document.getElementById('form1').style.display = 'none';

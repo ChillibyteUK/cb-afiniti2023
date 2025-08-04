@@ -147,7 +147,21 @@ get_header();
                         <input type="email" name="contactEmail" id="contactEmail" class="form-control" required>
                         <div class="alert alert-danger" id="contactEmailWarn">Please enter your email address</div>
                     </div>
-                    <div>&nbsp;</div>
+
+                    <label for="contactHowHear">How did you hear about Afiniti?<sup>*</sup></label>
+                    <div>
+                        <select name="contactHowHear" id="contactHowHear" class="form-select" required>
+                            <option value="" disabled selected>Select</option>
+                            <option value="Web Search">Web Search</option>
+                            <option value="LinkedIn">LinkedIn</option>
+                            <option value="Email">Email</option>
+                            <option value="Existing Client">Existing Client</option>
+                            <option value="External Referral">External Referral</option>
+                            <option value="Internal Referral">Internal Referral</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <div class="alert alert-danger" id="contactHowHearWarn">Please select an option</div>
+                    </div>
                     <div>
                         <label for="consent"><input type="checkbox" name="consent" id="consent" value="true">
                             <div>I consent to the terms of the <a href="/privacy-policy/" target="_blank">privacy
@@ -427,7 +441,7 @@ add_action('wp_footer', function () {
         });
     }
 </script>
-<script src="<?=get_stylesheet_directory_uri()?>/js/cra.js?v=1"></script>
+<script src="<?=get_stylesheet_directory_uri()?>/js/cra.js?v=1.1"></script>
 <?php
 });
 get_footer();
