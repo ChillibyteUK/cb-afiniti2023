@@ -26,8 +26,7 @@ defined('ABSPATH') || exit;
 <link rel="alternate" href="<?= esc_url( 'https://www.afiniticonsultants.com' . $current_path ); ?>" hreflang="en-US" /> 
 <link rel="alternate" href="<?= esc_url( 'https://www.afiniti.co.uk' . $current_path ); ?>" hreflang="en-GB" />
 <link rel="alternate" href="<?= esc_url( $canonical_url ); ?>" hreflang="x-default"/>
-    <?php
-    
+
 <?php
 if (!is_user_logged_in()) {
     if (get_field('ga_property', 'options')) { 
