@@ -130,6 +130,48 @@
                     "acfe_field_group_condition": 0
                 },
                 {
+                    "key": "field_64955f25c6780a",
+                    "label": "Contact Mobile",
+                    "name": "contactMobile",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "acfe_field_group_condition": 0
+                },
+                {
+                    "key": "field_64955f30c6780b",
+                    "label": "Contact How Hear",
+                    "name": "contactHowHear",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "acfe_field_group_condition": 0
+                },
+                {
                     "key": "field_64955f33c6781",
                     "label": "Consent",
                     "name": "consent",
