@@ -26,7 +26,7 @@ $image = get_field( 'image' ) ? wp_get_attachment_image_url( get_field( 'image' 
     <div class="row">
         <div class="col-lg-5">
             <h2 class="h1 text--<?= esc_attr( $left_theme ); ?> fw-bold">
-                <?= esc_html( get_field( 'left_title' ) ); ?>
+                <?= wp_kses_post( get_field( 'left_title' ) ); ?>
             </h2>
             <div><?= wp_kses_post( get_field( 'left_content' ) ); ?>
             </div>
@@ -44,7 +44,7 @@ $image = get_field( 'image' ) ? wp_get_attachment_image_url( get_field( 'image' 
         </div>
         <div class="col-lg-5">
             <h2 class="h1 text--<?= esc_attr( $right_theme ); ?> fw-bold">
-                <?= esc_html( get_field( 'right_title' ) ); ?>
+                <?= wp_kses_post( get_field( 'right_title' ) ); ?>
             </h2>
             <div><?= wp_kses_post( get_field( 'right_content' ) ); ?>
             </div>
