@@ -38,7 +38,8 @@
             "placement": "top",
             "endpoint": 0,
             "no_preference": 0,
-            "acfe_field_group_condition": 0
+            "acfe_field_group_condition": 0,
+            "selected": 0
         },
         {
             "key": "field_66226759b6847",
@@ -134,7 +135,8 @@
             "placement": "top",
             "endpoint": 0,
             "no_preference": 0,
-            "acfe_field_group_condition": 0
+            "acfe_field_group_condition": 0,
+            "selected": 0
         },
         {
             "key": "field_66226775b6848",
@@ -212,6 +214,52 @@
             "acfe_wysiwyg_auto_init": 0,
             "acfe_wysiwyg_min_height": 300,
             "acfe_wysiwyg_toolbar_buttons": []
+        },
+        {
+            "key": "field_691b4564e55d8",
+            "label": "Image",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "relevanssi_exclude": 0,
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_691b456de55d9",
+            "label": "Image",
+            "name": "image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Transparent PNG 300x300 (1:1 aspect ratio). Defaults to flag-bearer.png",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "relevanssi_exclude": 0,
+            "return_format": "id",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "allow_in_bindings": 0,
+            "preview_size": "thumbnail"
         }
     ],
     "location": [
@@ -232,5 +280,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1713530761
+    "display_title": ""
 }
