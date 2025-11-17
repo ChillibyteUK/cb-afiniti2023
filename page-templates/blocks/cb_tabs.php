@@ -98,7 +98,7 @@ $colours = array(
                             </div>
                             <div class="row">
                                 <div class="col-12 col-lg-8 order-2 order-lg-1 text-white div-235">
-                                    <?= esc_html( get_sub_field( 'content' ) ); ?>
+                                    <?= wp_kses_post( get_sub_field( 'content' ) ); ?>
                                 </div>
                                 <div class="col-12 col-lg-4 order-1 order-lg-2 text-center">
 
