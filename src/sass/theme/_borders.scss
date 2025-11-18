@@ -43,6 +43,16 @@
         border-bottom-right-radius: 10px;
     }
 
+    .border-circle-bg {
+        border: 2px dashed #fff;
+        border-radius: 50%;
+        width: 250px;
+        height: 250px;
+        position: absolute;
+        top: -15%;
+        left: 15%;
+    }
+
     .image-with-circle-border {
         position: relative;
         display: flex;

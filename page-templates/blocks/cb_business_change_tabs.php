@@ -1,15 +1,25 @@
 <?php
-$shaping_link = get_field('shaping_link');
-$readiness_link = get_field('readiness_link');
-$delivering_link = get_field('delivering_link');
-$embedding_link = get_field('embedding_link');
+/**
+ * Block Name: Business Change Tabs
+ *
+ * This is the template that displays the business change tabs block.
+ * 
+ * @package cb-afiniti2023
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+$shaping_link    = get_field( 'shaping_link' );
+$readiness_link  = get_field( 'readiness_link' );
+$delivering_link = get_field( 'delivering_link' );
+$embedding_link  = get_field( 'embedding_link' );
 
 $classes = $block['className'] ?? null;
 
 ?>
 <!-- business_change_tabs -->
 <!-- tab content  -->
-<div class="container-xl responsive-tabs <?=$classes?>">
+<div class="container-xl responsive-tabs <?= esc_attr( $classes ); ?>">
     <ul class="row nav nav-tabs" role="tablist">
         <li class="col-lg-3 nav-item">
             <a id="shaping-tab" href="#pane-shaping" class="bg--green px-3 py-3 nav-link active" data-bs-toggle="tab"
@@ -74,10 +84,10 @@ $classes = $block['className'] ?? null;
                             </div>
                             <div class="row">
                                 <div class="col-12 col-lg-8 order-2 order-lg-1 text-white div-235">
-                                    <?=get_field('shaping_content')?>
+                                    <?= wp_kses_post( get_field( 'shaping_content' ) ); ?>
                                 </div>
                                 <div class="col-12 col-lg-4 order-1 order-lg-2 text-center">
-                                    <img src="<?=get_stylesheet_directory_uri()?>/img/illustrations/Flag_bearer_full.png"
+                                    <img src="<?= esc_url( get_stylesheet_directory_uri() . '/img/illustrations/Flag_bearer_full.png' ); ?>"
                                         style="left:50px;" class="bc-img img-fluid wow animated fadeIn">
                                     <div class="border-circle-bg"></div>
                                 </div>
