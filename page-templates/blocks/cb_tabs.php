@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.NotHyphenatedLowercase
 /**
  * Block Name: Tabs
  *
@@ -101,10 +101,10 @@ $colours = array(
                                     <?= wp_kses_post( get_sub_field( 'content' ) ); ?>
                                 </div>
                                 <div class="col-12 col-lg-4 order-1 order-lg-2 text-center">
-
-                                    <img src="<?= esc_url( wp_get_attachment_image_url( get_sub_field( 'image' ), 'full' ) ); ?>"
-                                        class="bc-img img-fluid wow animated fadeIn">
-                                    <div class="border-circle-bg"></div>
+                                    <div class="image-with-circle-border mb-5">
+                                        <img src="<?= esc_url( wp_get_attachment_image_url( get_sub_field( 'image' ), 'full' ) ); ?>"
+                                            class="bc-img img-fluid wow animated fadeIn">
+                                    </div>
                                 </div>
                             </div>
                             <?php
