@@ -161,27 +161,30 @@ if ( is_front_page() ) {
 </div>
 <script>
     var modal = document.querySelector("#countryModal");
-    var container = modal.querySelector(".modalContainer");
+    if (modal) {
+        var container = modal.querySelector(".modalContainer");
 
-    <?php
-    $client_ip    = $_SERVER['REMOTE_ADDR'];
-    $response     = wp_remote_get( 'http://ip-api.com/json/' . $client_ip );
-    $country_data = json_decode( wp_remote_retrieve_body( $response ) );
-    echo "console.log('IP: {$client_ip}');";
-    echo "console.log('CC: {$country_data->countryCode}');";
-    if ( 'US' === $country_data->countryCode || 'CA' === $country_data->countryCode ) {
-        echo "modal.classList.remove('hidden');";
-    }
-    ?>
-    document.querySelector("#countryModalDismiss").addEventListener("click", function(e) {
-        modal.classList.add("hidden");
-    });
-    document.querySelector("#countryModal").addEventListener("click", function(e) {
-        if (e.target !== modal && e.target !== container) {
-            return;
+        <?php
+        $client_ip    = $_SERVER['REMOTE_ADDR'];
+        $response     = wp_remote_get( 'http://ip-api.com/json/' . $client_ip );
+        $country_data = json_decode( wp_remote_retrieve_body( $response ) );
+        echo "console.log('IP: {$client_ip}');";
+        if ( isset( $country_data->countryCode ) ) {
+            echo "console.log('CC: {$country_data->countryCode}');";
+            if ( 'US' === $country_data->countryCode || 'CA' === $country_data->countryCode ) {
+                echo "modal.classList.remove('hidden');";
+            }
         }
-        modal.classList.add("hidden");
-    });
+        ?>
+        document.querySelector("#countryModalDismiss").addEventListener("click", function(e) {
+            modal.classList.add("hidden");
+        });
+        modal.addEventListener("click", function(e) {
+            if (e.target === modal) {
+                modal.classList.add("hidden");
+            }
+        });
+    }
 </script>
 	<?php
 }
