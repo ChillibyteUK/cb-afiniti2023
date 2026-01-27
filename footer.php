@@ -1,6 +1,12 @@
 <?php
-// Exit if accessed directly.
-defined('ABSPATH') || exit;
+/**
+ * The template for displaying the footer
+ *
+ * @package cb-afinti2023
+ */
+
+defined( 'ABSPATH' ) || exit;
+
 ?>
 <div id="footer-top"></div>
 <div class="footer pt-5 pb-3">
@@ -8,46 +14,46 @@ defined('ABSPATH') || exit;
         <div class="row">
             <div class="col-lg-3">
                 <div class="mb-4">
-                    <img src="<?=get_stylesheet_directory_uri()?>/img/afiniti-logo-v1.png" width=500 height=134 class="footer-logo" alt="Afiniti Logo">
+                    <img src="<?= esc_url( get_stylesheet_directory_uri() . '/img/afiniti-logo-v1.png' ); ?>" width=500 height=134 class="footer-logo" alt="Afiniti Logo">
                 </div>
                 <div>Using our creative and innovative approach to delivering change, we enable and equip your people to progress through every step of the change journey.</div>
             </div>
             <div class="col-lg-3">
                 <div class="footer__heading">Contact us</div>
                 <ul class="fa-ul mb-4">
-                    <li class="mb-2"><span class="fa-li"><i class="fa-solid fa-map-marker-alt"></i></span> <?=get_field('address','options')?></li>
-                    <li><span class="fa-li"><i class="fa-solid fa-envelope"></i></span> <a href="mailto:<?=get_field('email','options')?>"><?=get_field('email','options')?></a></li>
+                    <li class="mb-2"><span class="fa-li"><i class="fa-solid fa-map-marker-alt"></i></span> <?= esc_html( get_field( 'address', 'options' ) ); ?></li>
+                    <li><span class="fa-li"><i class="fa-solid fa-envelope"></i></span> <a href="mailto:<?= esc_html( antispambot( get_field( 'email', 'options' ) ) ); ?>"><?= esc_html( antispambot( get_field( 'email', 'options' ) ) ); ?></a></li>
                 </ul>
             </div>
             <div class="col-lg-3">
                 <div class="footer__heading">Downloads</div>
-                <?=wp_nav_menu( array('theme_location' => 'footer_menu1') )?>
+                <?= wp_nav_menu( array( 'theme_location' => 'footer_menu1' ) ); ?>
             </div>
             <div class="col-lg-3">
                 <div class="footer__heading">Connect</div>
                 <div class="social-icons mb-2">
                     <?php
-                    $social = get_field('social', 'options');
-                    if ($social) {
-                        if ($social['twitter_url'] ?? null) {
+                    $social = get_field( 'social', 'options' );
+                    if ( $social ) {
+                        if ( $social['twitter_url'] ?? null ) {
                             ?>
-                        <a href="<?=$social['twitter_url']?>" target="_blank" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
-                        <?php
+                        <a href="<?= esc_url( $social['twitter_url'] ); ?>" target="_blank" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                        	<?php
                         }
-                        if ($social['linkedin_url'] ?? null) {
+                        if ( $social['linkedin_url'] ?? null ) {
                             ?>
-                        <a href="<?=$social['linkedin_url']?>" target="_blank" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-                        <?php
+                        <a href="<?= esc_url( $social['linkedin_url'] ); ?>" target="_blank" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                        	<?php
                         }
-                        if ($social['facebook_url'] ?? null) {
+                        if ( $social['facebook_url'] ?? null ) {
                             ?>
-                        <a href="<?=$social['facebook_url']?>" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                        <?php
+                        <a href="<?= esc_url( $social['facebook_url'] ); ?>" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                        	<?php
                         }
-                        if ($social['youtube_url'] ?? null) {
+                        if ( $social['youtube_url'] ?? null ) {
                             ?>
-                        <a href="<?=$social['youtube_url']?>" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
-                        <?php
+                        <a href="<?= esc_url( $social['youtube_url'] ); ?>" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                        	<?php
                         }
                     }
                     ?>
@@ -61,7 +67,7 @@ defined('ABSPATH') || exit;
     <div class="container py-2">
         <div class="d-flex flex-wrap justify-content-between">
             <div class="col-md-8 text-center text-md-start">
-                &copy; <?=date('Y')?> Afiniti
+                &copy; <?= esc_html( gmdate( 'Y' ) ); ?> Afiniti
             </div>
             <div class="col-md-4 d-flex align-items-center justify-content-end">
                 <div class="link"><a href="/privacy-policy/">Privacy Policy</a></div>
@@ -84,11 +90,106 @@ defined('ABSPATH') || exit;
 <?php
 */
 
+if ( is_front_page() ) {
+    ?>
+<style>
+    .countryModal {
+        background-color: rgba(0, 0, 0, 0.4);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: table;
+        z-index: 999;
+    }
+
+    .countryModal.hidden {
+        display: none;
+    }
+
+    .countryModal .modalContainer {
+        display: table-cell;
+        text-align: center;
+        vertical-align: middle;
+        width: min(300px, 90vw);
+    }
+
+    .countryModal .body {
+        display: inline-block;
+        background-color: white;
+        border: 1px solid black;
+        padding: 1rem;
+    }
+
+    .countryModal .buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .countryModal .button {
+        border: 2px solid black;
+        padding: 0.5rem 1rem;
+        text-decoration: none;
+        color: black;
+        font-weight: bold;
+        width: 290px;
+        cursor: pointer;
+        transition: background-color 300ms ease-in;
+    }
+
+    .countryModal .button:hover {
+        background-color: #ffa63a;
+    }
+</style>
+<div id="countryModal" class="countryModal hidden">
+    <div class="modalContainer">
+        <div class="body">
+            <div class="h4">It looks like you are visiting from North America</div>
+            <p>Would you like to visit our North American site, <strong>Afiniti Consultants</strong>?</p>
+            <p class="buttons">
+                <a href="https://www.afiniticonsultants.com/" class="button">
+                    Visit our North America site
+                </a>
+                <span id="countryModalDismiss" class="button">
+                    Continue to the UK site
+                </span>
+            </p>
+        </div>
+    </div>
+</div>
+<script>
+    var modal = document.querySelector("#countryModal");
+    var container = modal.querySelector(".modalContainer");
+
+    <?php
+    $client_ip    = $_SERVER['REMOTE_ADDR'];
+    $response     = wp_remote_get( 'http://ip-api.com/json/' . $client_ip );
+    $country_data = json_decode( wp_remote_retrieve_body( $response ) );
+    echo "console.log('{$country_data->countryCode}');";
+    if ( 'US' === $country_data->countryCode || 'CA' === $country_data->countryCode ) {
+        echo "modal.classList.remove('hidden');";
+    }
+    ?>
+    document.querySelector("#countryModalDismiss").addEventListener("click", function(e) {
+        modal.classList.add("hidden");
+    });
+    document.querySelector("#countryModal").addEventListener("click", function(e) {
+        if (e.target !== modal && e.target !== container) {
+            return;
+        }
+        modal.classList.add("hidden");
+    });
+</script>
+	<?php
+}
+
 wp_footer();
-if (get_field('gtm_property', 'options')) {
+if ( get_field( 'gtm_property', 'options' ) ) {
     ?>
 <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<?=get_field('gtm_property', 'options')?>" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<?= esc_html( get_field( 'gtm_property', 'options' ) ); ?>" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
     <?php
 }
