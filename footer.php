@@ -21,7 +21,7 @@ defined( 'ABSPATH' ) || exit;
             <div class="col-lg-3">
                 <div class="footer__heading">Contact us</div>
                 <ul class="fa-ul mb-4">
-                    <li class="mb-2"><span class="fa-li"><i class="fa-solid fa-map-marker-alt"></i></span> <?= esc_html( get_field( 'address', 'options' ) ); ?></li>
+                    <li class="mb-2"><span class="fa-li"><i class="fa-solid fa-map-marker-alt"></i></span> <?= wp_kses_post( get_field( 'address', 'options' ) ); ?></li>
                     <li><span class="fa-li"><i class="fa-solid fa-envelope"></i></span> <a href="mailto:<?= esc_html( antispambot( get_field( 'email', 'options' ) ) ); ?>"><?= esc_html( antispambot( get_field( 'email', 'options' ) ) ); ?></a></li>
                 </ul>
             </div>
