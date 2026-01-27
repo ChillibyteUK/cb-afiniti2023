@@ -167,7 +167,8 @@ if ( is_front_page() ) {
     $client_ip    = $_SERVER['REMOTE_ADDR'];
     $response     = wp_remote_get( 'http://ip-api.com/json/' . $client_ip );
     $country_data = json_decode( wp_remote_retrieve_body( $response ) );
-    echo "console.log('{$country_data->countryCode}');";
+    echo "console.log('IP: {$client_ip}');";
+    echo "console.log('CC: {$country_data->countryCode}');";
     if ( 'US' === $country_data->countryCode || 'CA' === $country_data->countryCode ) {
         echo "modal.classList.remove('hidden');";
     }
