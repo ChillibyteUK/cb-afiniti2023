@@ -165,7 +165,17 @@ if ( is_front_page() ) {
         var container = modal.querySelector(".modalContainer");
 
         <?php
-        $client_ip    = $_SERVER['REMOTE_ADDR'];
+        // Get client IP, accounting for proxies/CDNs.
+        $client_ip = $_SERVER['REMOTE_ADDR'];
+        if ( ! empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
+            $ip_list   = explode( ',', $_SERVER['HTTP_X_FORWARDED_FOR'] );
+            $client_ip = trim( $ip_list[0] );
+        } elseif ( ! empty( $_SERVER['HTTP_X_REAL_IP'] ) ) {
+            $client_ip = $_SERVER['HTTP_X_REAL_IP'];
+        } elseif ( ! empty( $_SERVER['HTTP_CF_CONNECTING_IP'] ) ) {
+            $client_ip = $_SERVER['HTTP_CF_CONNECTING_IP'];
+        }
+
         $response     = wp_remote_get( 'http://ip-api.com/json/' . $client_ip );
         $country_data = json_decode( wp_remote_retrieve_body( $response ) );
         echo "console.log('IP: {$client_ip}');";
