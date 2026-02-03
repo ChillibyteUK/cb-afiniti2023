@@ -101,7 +101,7 @@ if ( is_front_page() ) {
         width: 100%;
         height: 100%;
         display: table;
-        z-index: 999;
+        z-index: 9999;
     }
 
     .countryModal.hidden {
