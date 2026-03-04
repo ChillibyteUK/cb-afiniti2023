@@ -616,14 +616,16 @@ add_filter('gform_validation_5', function($validation_result) {
 });
 
 // Stop ACF WYSIWYG from stealing focus on load
-add_filter('acf/fields/wysiwyg/toolbars', function ($toolbars) {
-    return $toolbars;
-});
+add_action('enqueue_block_editor_assets', 'cb_editor_fix');
 
-add_filter('acf/fields/wysiwyg/tinymce_settings', function ($settings) {
+function cb_editor_fix() {
 
-    $settings['auto_focus'] = false;
+    wp_enqueue_script(
+        'cb-editor-fix',
+        get_template_directory_uri() . '/js/cb-editor-fix.js',
+        array('acf-input'),
+        '1.0',
+        true
+    );
 
-    return $settings;
-
-});
+}
