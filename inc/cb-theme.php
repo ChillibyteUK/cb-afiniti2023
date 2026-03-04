@@ -614,3 +614,17 @@ add_filter('gform_validation_5', function($validation_result) {
     $validation_result['form'] = $form;
     return $validation_result;
 });
+
+// Stop ACF WYSIWYG from stealing focus on load
+add_filter('acf/fields/wysiwyg/toolbars', function ($toolbars) {
+    return $toolbars;
+});
+
+add_filter('tiny_mce_before_init', function ($settings) {
+
+    $settings['auto_focus'] = false;
+    $settings['focus'] = false;
+
+    return $settings;
+
+});
