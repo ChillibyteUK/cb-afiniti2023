@@ -620,13 +620,10 @@ add_filter('acf/fields/wysiwyg/toolbars', function ($toolbars) {
     return $toolbars;
 });
 
-add_filter('tiny_mce_before_init', function ($settings) {
+add_filter('acf/fields/wysiwyg/tinymce_settings', function ($settings) {
 
     $settings['auto_focus'] = false;
-    $settings['focus'] = false;
 
     return $settings;
 
 });
-
-add_filter('acf/fields/wysiwyg/delay_init', '__return_false');

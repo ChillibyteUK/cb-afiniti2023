@@ -18,6 +18,7 @@ function acf_blocks()
                     'anchor'    => true,
                     'className' => true,
                     'align'     => true,
+					'jsx'       => true,
                 ),
             )
         );
@@ -47,7 +48,7 @@ function acf_blocks()
             'icon'				=> 'cover-image',
             'render_template'	=> 'page-templates/blocks/cb_intro_block.php',
             'mode'	=> 'edit',
-            'supports' => array('mode' => false),
+            'supports' => array('mode' => false, 'jsx' => true ),
         ));
         acf_register_block_type(array(
             'name'				=> 'cb_page_intro_block',
@@ -56,7 +57,7 @@ function acf_blocks()
             'icon'				=> 'cover-image',
             'render_template'	=> 'page-templates/blocks/cb_page_intro_block.php',
             'mode'	=> 'edit',
-            'supports' => array('mode' => false),
+            'supports' => array('mode' => false, 'jsx' => true ),
         ));
         acf_register_block_type(array(
             'name'				=> 'cb_vimeo',
@@ -101,7 +102,7 @@ function acf_blocks()
             'icon'				=> 'cover-image',
             'render_template'	=> 'page-templates/blocks/cb_text_image.php',
             'mode'	=> 'edit',
-            'supports' => array('mode' => false),
+            'supports' => array('mode' => false, 'jsx' => true ),
         ));
         acf_register_block_type(array(
             'name'				=> 'cb_quote',
@@ -146,7 +147,7 @@ function acf_blocks()
             'icon'				=> 'cover-image',
             'render_template'	=> 'page-templates/blocks/cb_business_change_tabs.php',
             'mode'	=> 'edit',
-            'supports' => array('mode' => false),
+            'supports' => array('mode' => false, 'jsx' => true ),
         ));
         acf_register_block_type(array(
             'name'				=> 'cb_two_col_img_text',
@@ -209,7 +210,7 @@ function acf_blocks()
             'icon'				=> 'cover-image',
             'render_template'	=> 'page-templates/blocks/cb_qa_tool.php',
             'mode'	=> 'edit',
-            'supports' => array('mode' => false),
+            'supports' => array('mode' => false, 'jsx' => true ),
         ));
         acf_register_block_type(array(
             'name'				=> 'cb_related_case_studies',
@@ -236,7 +237,7 @@ function acf_blocks()
             'icon'				=> 'cover-image',
             'render_template'	=> 'page-templates/blocks/cb_tabs.php',
             'mode'	=> 'edit',
-            'supports' => array('mode' => false),
+            'supports' => array('mode' => false, 'jsx' => true),
         ));
         acf_register_block_type(array(
             'name'				=> 'cb_popup',
@@ -254,7 +255,7 @@ function acf_blocks()
             'icon'				=> 'cover-image',
             'render_template'	=> 'page-templates/blocks/cb_faq.php',
             'mode'	=> 'edit',
-            'supports' => array('mode' => false, 'anchor' => true),
+            'supports' => array('mode' => false, 'anchor' => true, 'jsx' => true ),
         ));
         acf_register_block_type(array(
             'name'				=> 'cb_five_steps',
