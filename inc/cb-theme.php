@@ -628,3 +628,5 @@ add_filter('tiny_mce_before_init', function ($settings) {
     return $settings;
 
 });
+
+add_filter('acf/fields/wysiwyg/delay_init', '__return_false');
