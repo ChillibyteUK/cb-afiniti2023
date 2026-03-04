@@ -614,18 +614,3 @@ add_filter('gform_validation_5', function($validation_result) {
     $validation_result['form'] = $form;
     return $validation_result;
 });
-
-// Stop ACF WYSIWYG from stealing focus on load
-add_action('enqueue_block_editor_assets', 'cb_editor_fix');
-
-function cb_editor_fix() {
-
-    wp_enqueue_script(
-        'cb-editor-fix',
-        get_template_directory_uri() . '/js/cb-editor-fix.js',
-        array('acf-input'),
-        '1.0',
-        true
-    );
-
-}

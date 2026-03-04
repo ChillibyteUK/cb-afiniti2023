@@ -65,8 +65,7 @@ while (have_rows('section')) {
                     <h2 class="qa__section">
                         <?=get_sub_field('section_title')?>
                     </h2>
-                    <p><?=get_sub_field('section_intro')?>
-                    </p>
+                    <?=wp_kses_post(get_sub_field('section_intro'))?>
                 </div>
             </div>
             <div class="accordion" id="accordion<?=$ti?>">
@@ -91,7 +90,7 @@ while (have_rows('section')) {
                 "name" => $question,
                 "acceptedAnswer" => [
                     "@type" => "Answer",
-                    "text" => $answer
+                    "text" => wp_strip_all_tags($answer)
                 ]
             ];
         }
@@ -107,7 +106,7 @@ while (have_rows('section')) {
                         data-bs-parent="#accordion<?=$ti?>">
                         <div class="accordion-body" itemprop="text">
                             <div class="pb-4">
-                                <?=get_sub_field('answer')?>
+                                <?=wp_kses_post(get_sub_field('answer'))?>
                             </div>
                             <?php
                     $related = get_sub_field('related');

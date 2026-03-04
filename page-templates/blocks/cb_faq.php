@@ -28,7 +28,7 @@ $id = $block['anchor'] ?? null;
                 </div>
                 <div class="collapse <?=$show?>" itemscope="" itemprop="acceptedAnswer" itemtype="https://schema.org/Answer" id="c<?=$ac?>" aria-labelledby="heading_<?=$ac?>" data-bs-parent="#accordion<?=$accordion?>">
                     <div itemprop="text" class="faq__answer mb-4">
-                        <p><?=get_sub_field('answer')?></p>
+                        <?=wp_kses_post(get_sub_field('answer'))?>
                     </div>
                 </div>
             </div>
