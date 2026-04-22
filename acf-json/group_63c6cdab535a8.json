@@ -22,11 +22,11 @@
             "acfe_field_group_condition": 0
         },
         {
-            "key": "field_63c6cdb9b7a45",
-            "label": "Quote",
-            "name": "quote",
+            "key": "field_63c6cdab_quotes",
+            "label": "Quotes",
+            "name": "quotes",
             "aria-label": "",
-            "type": "text",
+            "type": "repeater",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -35,83 +35,110 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
+            "layout": "block",
+            "min": 0,
+            "max": 0,
+            "collapsed": "field_63c6cdb9b7a45",
+            "button_label": "Add Quote",
+            "sub_fields": [
+                {
+                    "key": "field_63c6cdb9b7a45",
+                    "label": "Quote",
+                    "name": "quote",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "rows": 4,
+                    "new_lines": "",
+                    "acfe_field_group_condition": 0,
+                    "parent_repeater": "field_63c6cdab_quotes"
+                },
+                {
+                    "key": "field_63c6cdc0b7a46",
+                    "label": "Name",
+                    "name": "name",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "acfe_field_group_condition": 0,
+                    "parent_repeater": "field_63c6cdab_quotes"
+                },
+                {
+                    "key": "field_63c6cdc8b7a47",
+                    "label": "Role",
+                    "name": "role",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "acfe_field_group_condition": 0,
+                    "parent_repeater": "field_63c6cdab_quotes"
+                },
+                {
+                    "key": "field_63c6cdd0b7a48",
+                    "label": "Image",
+                    "name": "image",
+                    "aria-label": "",
+                    "type": "image",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "uploader": "",
+                    "acfe_thumbnail": 0,
+                    "return_format": "url",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": "",
+                    "preview_size": "medium",
+                    "acfe_field_group_condition": 0,
+                    "library": "all",
+                    "upload_folder": "",
+                    "parent_repeater": "field_63c6cdab_quotes"
+                }
+            ],
             "acfe_field_group_condition": 0
-        },
-        {
-            "key": "field_63c6cdc0b7a46",
-            "label": "Name",
-            "name": "name",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "acfe_field_group_condition": 0
-        },
-        {
-            "key": "field_63c6cdc8b7a47",
-            "label": "Role",
-            "name": "role",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "acfe_field_group_condition": 0
-        },
-        {
-            "key": "field_63c6cdd0b7a48",
-            "label": "Image",
-            "name": "image",
-            "aria-label": "",
-            "type": "image",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "uploader": "",
-            "acfe_thumbnail": 0,
-            "return_format": "url",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": "",
-            "preview_size": "medium",
-            "acfe_field_group_condition": 0,
-            "library": "all",
-            "upload_folder": ""
         }
     ],
     "location": [
@@ -119,7 +146,7 @@
             {
                 "param": "block",
                 "operator": "==",
-                "value": "acf\/cb-quote"
+                "value": "acf\/cb_quote"
             }
         ]
     ],
@@ -139,5 +166,5 @@
     "acfe_display_title": "",
     "acfe_meta": "",
     "acfe_note": "",
-    "modified": 1713529968
+    "modified": 1745280000
 }
