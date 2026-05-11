@@ -24208,6 +24208,7 @@ button.search.clear::after {
 }
 .cb-stat-spinner__link {
   text-decoration: none;
+  font-style: italic;
 }
 .cb-stat-spinner__link, .cb-stat-spinner__after-text a {
   font-weight: 700;
