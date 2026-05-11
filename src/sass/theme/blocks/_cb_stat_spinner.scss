@@ -1,0 +1,24 @@
+.cb-stat-spinner {
+    &__stat {
+        font-size: 100px;
+        font-weight: 700;
+    }
+    &__link {
+        text-decoration: none;
+    }
+    &__link,
+    &__after-text a {
+        font-weight: 700;
+        color: var(--col-grey-500) !important;
+
+        .anim-arrow--slide {
+            transition: all .3s ease-out;
+        }
+
+        &:hover {
+            .anim-arrow--slide .arrow {
+                left: 20px;
+            }
+        }
+    }
+}

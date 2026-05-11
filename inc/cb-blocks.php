@@ -7,6 +7,27 @@ function acf_blocks()
 
         acf_register_block_type(
             array(
+                'name'            => 'cb_stat_spinner',
+                'title'           => __( 'CB Stat Spinner' ),
+                'category'        => 'layout',
+                'icon'            => 'cover-image',
+                'render_template' => 'page-templates/blocks/cb-stat-spinner.php',
+                'mode'            => 'edit',
+                'supports'        => array(
+                    'mode'      => false,
+                    'anchor'    => true,
+                    'className' => true,
+                    'align'     => true,
+					'color'     => array(
+						'background' => false,
+						'text'       => true,
+					),
+                ),
+            )
+        );
+
+        acf_register_block_type(
+            array(
                 'name'            => 'cb_vimeo_video_feature',
                 'title'           => __( 'CB Vimeo Video Feature' ),
                 'category'        => 'layout',
