@@ -9370,6 +9370,48 @@
 	  // });
 	})();
 
+	// Contact-person modal: update title and set the hidden recipient_pid field
+	// when Bootstrap fires show.bs.modal. Uses event.relatedTarget (the trigger
+	// link) to read the person's post ID, first name, and full name.
+	document.addEventListener('DOMContentLoaded', function () {
+	  var modalEl = document.getElementById('modal-contact-person');
+	  if (!modalEl) return;
+	  var formId = modalEl.dataset.gfFormId;
+	  var recipientField = modalEl.dataset.gfRecipientField;
+	  modalEl.addEventListener('show.bs.modal', function (event) {
+	    var trigger = event.relatedTarget;
+	    if (!trigger) return;
+	    var pid = trigger.dataset.personId || '';
+	    var firstName = trigger.dataset.personFirstname || '';
+
+	    // Update the modal title.
+	    var title = modalEl.querySelector('#modal-contact-person-title');
+	    if (title) {
+	      title.textContent = firstName ? 'Contact ' + firstName : 'Contact';
+	    }
+
+	    // Set the GF hidden recipient_pid field value (two targets as GF renders
+	    // both an id-based and a name-based input for hidden fields).
+	    if (formId && recipientField) {
+	      var byId = modalEl.querySelector('#input_' + formId + '_' + recipientField);
+	      var byName = modalEl.querySelector("input[name='input_" + recipientField + "']");
+	      if (byId) byId.value = pid;
+	      if (byName) byName.value = pid;
+
+	      // Also update gform_field_values so GF's AJAX submission path picks up
+	      // the value.
+	      var fieldValues = modalEl.querySelector("input[name='gform_field_values']");
+	      if (fieldValues) {
+	        var current = fieldValues.value || '';
+	        var updated = current.split('&').filter(function (p) {
+	          return p.indexOf('recipient_pid=') !== 0;
+	        }).concat('recipient_pid=' + encodeURIComponent(pid)).join('&');
+	        fieldValues.value = updated;
+	      }
+	    }
+	  });
+	});
+
 	exports.Alert = alert;
 	exports.Button = button;
 	exports.Carousel = carousel;
