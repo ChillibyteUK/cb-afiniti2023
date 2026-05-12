@@ -6,17 +6,17 @@
  */
 
 // Exit if accessed directly.
-defined('ABSPATH') || exit;
+defined( 'ABSPATH' ) || exit;
 
 get_header();
 
-$bg = get_the_post_thumbnail_url( get_the_ID(), 'full' ) ? get_the_post_thumbnail_url( get_the_ID(), 'full' ) : wp_get_attachment_image_url( get_field('hero_image','options'), 'full' );
+$bg = get_the_post_thumbnail_url( get_the_ID(), 'full' ) ? get_the_post_thumbnail_url( get_the_ID(), 'full' ) : wp_get_attachment_image_url( get_field( 'hero_image', 'options' ), 'full' );
 
-$date = get_the_date('jS F, Y');
+$date       = get_the_date( 'jS F, Y' );
 $categories = get_the_category();
-$type;
+$type       = '';
 if ( ! empty( $categories ) ) {
-	$type = esc_html( $categories[0]->name );	
+	$type = esc_html( $categories[0]->name );
 }
 ?>
 <main id="main">
@@ -32,17 +32,17 @@ if ( ! empty( $categories ) ) {
 </section>
 <?php
 $anim = 'insights';
-include get_stylesheet_directory() . '/page-templates/anim/' . $anim . '.php';
+require get_stylesheet_directory() . '/page-templates/anim/' . $anim . '.php';
 ?>
 <section class="breadcrumbs container-xl">
     <?php
-    if (function_exists('yoast_breadcrumb')) {
-        yoast_breadcrumb('<p id="breadcrumbs">', '</p>');
+    if ( function_exists( 'yoast_breadcrumb' ) ) {
+        yoast_breadcrumb( '<p id="breadcrumbs">', '</p>' );
     }
     ?>
 </section>
 <div class="container-xl pb-5">
-    <h1 class="fw-bold mb-4"><?=get_the_title()?></h1>
+    <h1 class="fw-bold mb-4"><?= wp_kses_post( get_the_title() ); ?></h1>
     <div class="row g-4">
         <div class="col-lg-8">
             <?php
@@ -50,16 +50,16 @@ include get_stylesheet_directory() . '/page-templates/anim/' . $anim . '.php';
             if ( get_the_post_thumbnail_url( get_the_ID(), 'full' ) ?? null ) {
                 $image = '<div class="single_insight_image mb-4" style="background-image:url(' . get_the_post_thumbnail_url( get_the_ID(), 'full' ) . ')"></div>';
             }
-            // get type
-            $types = get_the_terms(get_the_ID(), 'insight-type');
-            $type_slugs = wp_list_pluck($types, 'slug');
-            if (!empty($types) && !is_wp_error($types)) {
-                if (in_array('video', $type_slugs, true)) {
-                    $image = '<div class="ratio ratio-16x9 mb-4"><iframe src="https://player.vimeo.com/video/' . get_field('video_id') . '?badge=0&amp;autopause=0&amp;player_id=0" allowfullscreen></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>';
+            // get type.
+            $types      = get_the_terms( get_the_ID(), 'insight-type' );
+            $type_slugs = wp_list_pluck( $types, 'slug' );
+            if ( ! empty( $types ) && ! is_wp_error( $types ) ) {
+                if ( in_array( 'video', $type_slugs, true ) ) {
+                    $image = '<div class="ratio ratio-16x9 mb-4"><iframe src="https://player.vimeo.com/video/' . get_field( 'video_id' ) . '?badge=0&amp;autopause=0&amp;player_id=0" allowfullscreen></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>';
                 }
             }
 
-            echo $image;
+            echo $image; 
             ?>
             <?php the_content(); ?>
             <div class="row">
@@ -68,38 +68,38 @@ include get_stylesheet_directory() . '/page-templates/anim/' . $anim . '.php';
                         <?php
                             $url = get_permalink();
                         ?>
-                        <a target="_blank" href="mailto:?subject=I%27d%20like%20to%20share%20a%20link%20with%20you&body=<?=$url?>"><i class="fa-solid fa-envelope"></i></a>
-                        <a target="_blank" href="https://twitter.com/share?url=<?=$url?>"><i class="fa-brands fa-twitter"></i></a>
-                        <a target="_blank" href="http://www.facebook.com/sharer.php?u=<?=$url?>"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a target="_blank" href="http://www.linkedin.com/shareArticle?url=<?=$url?>"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <a target="_blank" href="mailto:?subject=I%27d%20like%20to%20share%20a%20link%20with%20you&body=<?= esc_url( $url ); ?>"><i class="fa-solid fa-envelope"></i></a>
+                        <a target="_blank" href="https://twitter.com/share?url=<?= esc_url( $url ); ?>"><i class="fa-brands fa-twitter"></i></a>
+                        <a target="_blank" href="http://www.facebook.com/sharer.php?u=<?= esc_url( $url ); ?>"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a target="_blank" href="http://www.linkedin.com/shareArticle?url=<?= esc_url( $url ); ?>"><i class="fa-brands fa-linkedin-in"></i></a>
                     </div>
                 </div>
             </div>
             <?php
-            if (get_field('person')) {
-                $p = get_field('person')[0];
+            if ( get_field( 'person' ) ) {
+                $p = get_field( 'person' )[0];
                 ?>
             <div class="author_block mt-4">
                 <div class="row g-4">
                     <div class="col-md-2 text-center">
-                        <img src="<?=wp_get_attachment_image_url(get_field('photo',$p),'large')?>" alt="<?=get_the_title($p)?>" class="w-75 w-md-100">
+                        <img src="<?= esc_url( wp_get_attachment_image_url( get_field( 'photo', $p ), 'large' ) ); ?>" alt="<?= esc_attr( get_the_title( $p ) ); ?>" class="w-75 w-md-100">
                     </div>
                     <div class="col-md-10">
                         <div class="author-title">
                             <div class="author-name">
-                                <div class="h2 mb-0"><?=get_the_title($p)?></div>
-                                <div class="title mb-2"><?=get_field('job_title',$p)?></div>
+                                <div class="h2 mb-0"><?= wp_kses_post( get_the_title( $p ) ); ?></div>
+                                <div class="title mb-2"><?= wp_kses_post( get_field( 'job_title', $p ) ); ?></div>
                             </div>
                             <div class="author-social">
                                 <?php
-                                if (get_field('linkedin_url',$p)) {
+                                if ( get_field( 'linkedin_url', $p ) ) {
                                     ?>
-                                    <a href="<?=get_field('linkedin_url',$p)?>" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
+                                    <a href="<?= esc_url( get_field( 'linkedin_url', $p ) ); ?>" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
                                     <?php
                                 }
-                                if (get_field('twitter_url',$p)) {
+                                if ( get_field( 'twitter_url', $p ) ) {
                                     ?>
-                                    <a href="<?=get_field('twitter_url',$p)?>" target="_blank"><i class="fa-brands fa-twitter"></i></a>
+                                    <a href="<?= esc_url( get_field( 'twitter_url', $p ) ); ?>" target="_blank"><i class="fa-brands fa-twitter"></i></a>
                                     <?php
                                 }
                                 ?>
@@ -107,13 +107,13 @@ include get_stylesheet_directory() . '/page-templates/anim/' . $anim . '.php';
                         </div>
                         <div class="bio">
                             <?php
-                            $blocks = parse_blocks( get_the_content(null, false, $p) );
-                            $first = render_block( $blocks[0] );
-                            $str = strip_tags($first);
-                            echo $str;
+                            $blocks = parse_blocks( get_the_content( null, false, $p ) );
+                            $first  = render_block( $blocks[0] );
+                            $str    = wp_strip_all_tags( $first );
+                            echo esc_html( $str );
                             ?>
                         </div>
-                        <div class="fw-bold py-2 arrow-link"><a href="<?=get_the_permalink($p)?>" class="anim-arrow--slide">Read more <span class="arrow arrow-green"></span></a></div>
+                        <div class="fw-bold py-2 arrow-link"><a href="<?= esc_url( get_the_permalink( $p ) ); ?>" class="anim-arrow--slide">Read more <span class="arrow arrow-green"></span></a></div>
                     </div>
                 </div>
             </div>
@@ -122,92 +122,54 @@ include get_stylesheet_directory() . '/page-templates/anim/' . $anim . '.php';
             ?>
         </div>
         <div class="col-lg-4">
-            <?=single_sidebar()?>
+            <?= wp_kses_post( single_sidebar() ); ?>
         </div>
     </div>
     <?php
-    $r = new WP_Query(array(
-        'posts_per_page' => 3,
-        'post__not_in' => array(get_the_ID()),
-        'orderby' => 'rand',
-        'tax_query' => array(
-            array(
-                'taxonomy' => 'category',
-                'field'    => 'name',
-                'terms'    => $type,
-                ),
-            ),
-    ));
-    if ($r->have_posts()) {
+    $r = new WP_Query(
+        array(
+			'posts_per_page' => 3,
+			'post__not_in'   => array( get_the_ID() ),
+			'orderby'        => 'rand',
+			'tax_query'      => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+				array(
+					'taxonomy' => 'category',
+					'field'    => 'name',
+					'terms'    => $type,
+				),
+			),
+        )
+    );
+    if ( $r->have_posts() ) {
         ?>
         <hr class="my-4">
         <h2 class="mb-4">Related <span>Insights</span></h2>
         <div class="row g-4">
             <?php
-        while ($r->have_posts()) {
-            $r->the_post();
-            $img = get_the_post_thumbnail_url( get_the_ID(), 'large' );
-            ?>
+			while ( $r->have_posts() ) {
+				$r->the_post();
+				$img = get_the_post_thumbnail_url( get_the_ID(), 'large' );
+				?>
             <div class="insight col-12 col-lg-4 mb-4">
-                <a href="<?=get_the_permalink()?>">
+                <a href="<?= esc_url( get_the_permalink() ); ?>">
                     <div class="post-image-container">
-                        <div class="post-image mb-2" style="background-image:url('<?=$img?>')">
+                        <div class="post-image mb-2" style="background-image:url('<?= esc_url( $img ); ?>')">
                             <div class="img-overlay">
                                 <div class="middle"><span class="arrow arrow-block arrow-white"></span></div>
                             </div>
                         </div>
                     </div>
-                    <div class="article-title mt-2"><?=get_the_title()?></div>
-                    <div class="article-excerpt"><?=wp_trim_words(get_the_content(), 20)?></div>
+                    <div class="article-title mt-2"><?= wp_kses_post( get_the_title() ); ?></div>
+                    <div class="article-excerpt"><?= wp_kses_post( wp_trim_words( get_the_content(), 20 ) ); ?></div>
                     <div class="fw-bold py-2 arrow-link"><div class="anim-arrow--slide">Read more <span class="arrow arrow-green"></span></div></div>
                 </a>
             </div>
-            <?php
-        }
-        echo '</div>';
+				<?php
+			}
+			echo '</div>';
     }
     ?>
 </div>
-<?php
-/*
-global $post;
-$author_id = $post->post_author;
-$authorID = get_the_author_meta('ID',$author_id);
-$authPerson = get_field('person', 'user_'.$authorID)[0];
-if ($authPerson) {
-    $authName = get_the_title($authPerson);
-    $authRole = get_field('role',$authPerson);
-    $authBio = get_field('bio',$authPerson);
-    $authImage = get_the_post_thumbnail_url($authPerson,'thumbnail');
-    $authLinkedIn = get_field('linkedin',$authPerson);
-    ?>
-<section class="author">
-    <div class="container-xl">
-        <div class="content">
-            <div class="row">
-                <div class="col-sm-2 text-center mb-4">
-                    <img src="<?=$authImage?>" alt="<?=$authName?>" class="rounded-circle">
-                </div>
-                <div class="col-sm-10">
-                    <div class="d-flex justify-content-between">
-                        <h3><?=$authName?></h3>
-                        <?php
-                        if ($authLinkedIn) {
-                            echo '<a href="' . $authLinkedIn . '" target="_blank"><i class="fs-5 fa-brands fa-linkedin-in"></i></a>';
-                        }
-                        ?>
-                    </div>
-                    <h4 class="fs-5"><?=$authRole?></h4>
-                    <div class="fs-7"><?=$authBio?></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-    <?php
-}
-*/
-?>
 </main>
 <?php
 get_footer();
