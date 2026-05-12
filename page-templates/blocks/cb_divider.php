@@ -42,6 +42,27 @@ if ($col2 == 'across') {
     $row2_col2_style = '';
 }
 
+if ($col2 == 'vertical-centre') {
+    $row1_col2_style = 'border-dash-centre-vertical h-30px';
+    $row2_col2_style = 'border-dash-centre-vertical mt-minus-2 h-30px';
+}
+if ($col2 == 'across-centre-down') {
+    $row1_col2_style = '';
+    $row2_col2_style = 'border-dash-top-centre mt-minus-2 h-30px';
+}
+if ($col2 == 'down-centre-across') {
+    $row1_col2_style = 'border-dash-centre-bottom h-30px';
+    $row2_col2_style = '';
+}
+if ($col2 == 'across-centre-up') {
+    $row1_col2_style = 'border-dash-bottom-centre h-30px';
+    $row2_col2_style = '';
+}
+if ($col2 == 'up-centre-across') {
+    $row1_col2_style = '';
+    $row2_col2_style = 'border-dash-centre-top mt-minus-2 h-30px';
+}
+
 
 if ($col3 == 'across-up') {
     $row1_col3_style = 'border-dash-bottom-right h-30px';

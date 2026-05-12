@@ -43,6 +43,92 @@
         border-bottom-right-radius: 10px;
     }
 
+    // Centre-turn variants for cb_divider col2.
+    // Pseudo-elements are used so the corner/vertical lands at 50% of the cell
+    // rather than at its left or right edge.
+
+    // Straight vertical at the horizontal centre of the cell.
+    .border-dash-centre-vertical {
+        position: relative;
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: calc(50% - 1px);
+            width: 0;
+            height: 100%;
+            border-left: 2px dashed var(--col-grey-400);
+        }
+    }
+
+    // Enter from left (top), turn DOWN at centre.
+    // Mirrors border-dash-top-right but corner at 50% instead of right edge.
+    .border-dash-top-centre {
+        position: relative;
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            border-top: 2px dashed var(--col-grey-400);
+            border-right: 2px dashed var(--col-grey-400);
+            border-top-right-radius: 10px;
+        }
+    }
+
+    // Enter from left (bottom), turn UP at centre.
+    // Mirrors border-dash-bottom-right but corner at 50% instead of right edge.
+    .border-dash-bottom-centre {
+        position: relative;
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            border-bottom: 2px dashed var(--col-grey-400);
+            border-right: 2px dashed var(--col-grey-400);
+            border-bottom-right-radius: 10px;
+        }
+    }
+
+    // Enter from top at centre, turn RIGHT along bottom.
+    // Mirrors border-dash-bottom-left but corner at 50% instead of left edge.
+    .border-dash-centre-bottom {
+        position: relative;
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 50%;
+            height: 100%;
+            border-left: 2px dashed var(--col-grey-400);
+            border-bottom: 2px dashed var(--col-grey-400);
+            border-bottom-left-radius: 10px;
+        }
+    }
+
+    // Enter from bottom at centre, turn RIGHT along top.
+    // Mirrors border-dash-top-left but corner at 50% instead of left edge.
+    .border-dash-centre-top {
+        position: relative;
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 50%;
+            height: 100%;
+            border-left: 2px dashed var(--col-grey-400);
+            border-top: 2px dashed var(--col-grey-400);
+            border-top-left-radius: 10px;
+        }
+    }
+
     .border-circle-bg {
         border: 2px dashed #fff;
         border-radius: 50%;

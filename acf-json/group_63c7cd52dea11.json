@@ -75,7 +75,12 @@
                 "down-across": "Down\/Across",
                 "across-up": "Across\/Up",
                 "up-across": "Up\/Across",
-                "across": "Across"
+                "across": "Across",
+                "vertical-centre": "Vertical (Centre)",
+                "across-centre-down": "Across\/Centre-Down",
+                "down-centre-across": "Down\/Centre-Across",
+                "across-centre-up": "Across\/Centre-Up",
+                "up-centre-across": "Up\/Centre-Across"
             },
             "default_value": false,
             "return_format": "value",

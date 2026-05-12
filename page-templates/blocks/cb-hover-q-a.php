@@ -61,9 +61,9 @@ if ( empty( $rows ) ) {
 }
 
 // First row = column titles.
-$titles    = array_shift( $rows );
-$q_title   = $titles['question'] ?? '';
-$a_title   = $titles['answer']   ?? '';
+$titles  = array_shift( $rows );
+$q_title = $titles['question'] ?? '';
+$a_title = $titles['answer'] ?? '';
 
 // Bail if no Q&A rows remain.
 if ( empty( $rows ) ) {
