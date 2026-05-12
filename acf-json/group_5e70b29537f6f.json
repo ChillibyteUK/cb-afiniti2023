@@ -148,5 +148,8 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1713538834
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1778591540
 }

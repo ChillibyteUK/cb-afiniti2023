@@ -19,7 +19,8 @@
             "placement": "top",
             "endpoint": 0,
             "no_preference": 0,
-            "acfe_field_group_condition": 0
+            "acfe_field_group_condition": 0,
+            "selected": 0
         },
         {
             "key": "field_63c67ddc5653f",
@@ -190,7 +191,8 @@
             "placement": "top",
             "endpoint": 0,
             "no_preference": 0,
-            "acfe_field_group_condition": 0
+            "acfe_field_group_condition": 0,
+            "selected": 0
         },
         {
             "key": "field_63c681ca8f615",
@@ -238,7 +240,8 @@
             "placement": "top",
             "endpoint": 0,
             "no_preference": 0,
-            "acfe_field_group_condition": 0
+            "acfe_field_group_condition": 0,
+            "selected": 0
         },
         {
             "key": "field_63c6a0c0d6aa7",
@@ -321,6 +324,9 @@
             "acfe_seamless_style": 0,
             "acfe_group_modal": 0,
             "acfe_field_group_condition": 0,
+            "acfe_group_modal_close": 0,
+            "acfe_group_modal_button": "",
+            "acfe_group_modal_size": "large",
             "sub_fields": [
                 {
                     "key": "field_63c6a17db0bbc",
@@ -364,10 +370,7 @@
                     "append": "",
                     "acfe_field_group_condition": 0
                 }
-            ],
-            "acfe_group_modal_close": 0,
-            "acfe_group_modal_button": "",
-            "acfe_group_modal_size": "large"
+            ]
         },
         {
             "key": "field_64f0522d69c14",
@@ -392,6 +395,48 @@
             "prepend": "",
             "append": "",
             "acfe_field_group_condition": 0
+        },
+        {
+            "key": "field_cb_contact_person_form_id",
+            "label": "Contact Person Form ID",
+            "name": "contact_person_form_id",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "Gravity Forms form ID for the person contact modal.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": "",
+            "max": "",
+            "placeholder": "",
+            "step": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_cb_contact_email",
+            "label": "Contact Person Form Email",
+            "name": "contact_email",
+            "aria-label": "",
+            "type": "email",
+            "instructions": "Site-wide email address that receives person contact form submissions.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "allow_in_bindings": 1,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
         },
         {
             "key": "field_6410404fef88a",
@@ -498,7 +543,8 @@
             "placement": "top",
             "endpoint": 0,
             "no_preference": 0,
-            "acfe_field_group_condition": 0
+            "acfe_field_group_condition": 0,
+            "selected": 0
         },
         {
             "key": "field_63caa248cc94c",
@@ -518,6 +564,9 @@
             "acfe_seamless_style": 0,
             "acfe_group_modal": 0,
             "acfe_field_group_condition": 0,
+            "acfe_group_modal_close": 0,
+            "acfe_group_modal_button": "",
+            "acfe_group_modal_size": "large",
             "sub_fields": [
                 {
                     "key": "field_63caa272cc94d",
@@ -624,10 +673,7 @@
                     "append": "",
                     "acfe_field_group_condition": 0
                 }
-            ],
-            "acfe_group_modal_close": 0,
-            "acfe_group_modal_button": "",
-            "acfe_group_modal_size": "large"
+            ]
         },
         {
             "key": "field_63ce7f3226118",
@@ -646,7 +692,8 @@
             "placement": "top",
             "endpoint": 0,
             "no_preference": 0,
-            "acfe_field_group_condition": 0
+            "acfe_field_group_condition": 0,
+            "selected": 0
         },
         {
             "key": "field_63ce7f4026119",
@@ -663,9 +710,6 @@
                 "id": ""
             },
             "layout": "block",
-            "acfe_seamless_style": 0,
-            "acfe_group_modal": 0,
-            "acfe_field_group_condition": 0,
             "sub_fields": [
                 {
                     "key": "field_63ce7f402611a",
@@ -712,37 +756,6 @@
                     "acfe_field_group_condition": 0
                 },
                 {
-                    "key": "field_63ce7f6a2611f",
-                    "label": "Social Icons",
-                    "name": "social",
-                    "aria-label": "",
-                    "type": "checkbox",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "choices": {
-                        "Facebook": "Facebook",
-                        "LinkedIn": "LinkedIn",
-                        "Twitter": "Twitter",
-                        "YouTube": "YouTube"
-                    },
-                    "default_value": [],
-                    "return_format": "value",
-                    "min": "",
-                    "max": "",
-                    "allow_custom": 0,
-                    "layout": "vertical",
-                    "toggle": 0,
-                    "acfe_field_group_condition": 0,
-                    "save_custom": 0,
-                    "custom_choice_button_text": "Add new choice"
-                },
-                {
                     "key": "field_63ce7f402611d",
                     "label": "Link",
                     "name": "link",
@@ -774,61 +787,18 @@
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
-                        "width": "51",
+                        "width": "50",
                         "class": "",
                         "id": ""
                     },
-                    "acfe_field_group_condition": 0,
-                    "required_message": "",
                     "default_value": "",
                     "maxlength": "",
+                    "allow_in_bindings": 1,
                     "placeholder": "",
                     "prepend": "",
                     "append": ""
                 }
-            ],
-            "acfe_group_modal_close": 0,
-            "acfe_group_modal_button": "",
-            "acfe_group_modal_size": "large"
-        },
-        {
-            "key": "field_cb_contact_person_form_id",
-            "label": "Contact Person Form ID",
-            "name": "contact_person_form_id",
-            "aria-label": "",
-            "type": "number",
-            "instructions": "Gravity Forms form ID for the person contact modal.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "min": "",
-            "max": "",
-            "placeholder": "",
-            "step": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_cb_contact_email",
-            "label": "Contact Email",
-            "name": "contact_email",
-            "aria-label": "",
-            "type": "email",
-            "instructions": "Site-wide email address that receives person contact form submissions.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": ""
+            ]
         }
     ],
     "location": [
@@ -849,12 +819,8 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "acfe_autosync": [
-        "json"
-    ],
-    "acfe_form": 0,
-    "acfe_display_title": "",
-    "acfe_meta": "",
-    "acfe_note": "",
-    "modified": 1747094400
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1778591332
 }
