@@ -4,14 +4,17 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    min-height:530px;
     @media (max-width:991px) {
-        padding-top: 100px;
+        padding-top: 80px;
     }
     position: relative;
     z-index: 0;
 
     margin-bottom: 2rem;
+
+    &__inner {
+        padding-block: 6rem 10rem;
+    }
 
     h1 {
         font-size: 54px;

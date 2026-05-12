@@ -24,7 +24,7 @@ if ( ! empty( $categories ) ) {
 <section id="hero" class="hero d-flex align-items-center hero--default">
     <div class="overlay"></div>
     <div class="hero__inner container-xl">
-        <div class="hero__content d-flex flex-column justify-content-center order-2 order-lg-1 pt-5"
+        <div class="hero__content d-flex flex-column justify-content-center order-2 order-lg-1"
                 data-aos="fade">
             <div class="h1 text-white text-center">Afiniti <span>Insights</span></div>
         </div>

@@ -17,7 +17,7 @@ $bg = get_the_post_thumbnail_url( get_the_ID(), 'full' ) ? get_the_post_thumbnai
     <section id="hero" class="hero d-flex align-items-center hero--default">
         <div class="overlay"></div>
         <div class="hero__inner container-xl">
-            <div class="hero__content d-flex flex-column justify-content-center order-2 order-lg-1 pt-5"
+            <div class="hero__content d-flex flex-column justify-content-center order-2 order-lg-1"
                 data-aos="fade">
                 <div class="h1 text-white text-center">Business Change <span>Case Studies</span></div>
             </div>
