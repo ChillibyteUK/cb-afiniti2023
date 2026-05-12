@@ -24402,6 +24402,20 @@ button.search.clear::after {
 .person-links .linkedin-circle:hover {
   color: var(--col-grey-300);
 }
+.person-links .cb-people__contact-link--contact {
+  display: inline-flex;
+  align-items: center;
+  color: var(--col-grey-500);
+  transition: color 0.3s ease-out;
+}
+.person-links .cb-people__contact-link--contact:hover {
+  color: var(--col-grey-300);
+}
+.person-links .cb-people__contact-link--contact svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: currentColor;
+}
 
 .person-photo-container {
   width: 100%;
