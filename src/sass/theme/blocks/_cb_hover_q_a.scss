@@ -1,0 +1,84 @@
+.cb-hover-q-a {
+    padding: 3rem 0;
+
+    &__inner {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+
+        @media (max-width: 767px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    &__col-title {
+        font-weight: 700;
+        font-size: 1.1rem;
+        padding-bottom: 0.75rem;
+        margin-bottom: 0.5rem;
+        border-bottom: 2px solid currentColor;
+        opacity: 0.6;
+    }
+
+    &__question-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    &__question {
+        padding: 0.75rem 1rem;
+        margin-bottom: 0.25rem;
+        cursor: pointer;
+        border-left: 3px solid transparent;
+        transition: border-color 0.2s ease, opacity 0.2s ease;
+        opacity: 0.65;
+        line-height: 1.4;
+
+        &:hover {
+            opacity: 1;
+        }
+
+        &.is-active {
+            border-left-color: currentColor;
+            opacity: 1;
+            font-weight: 600;
+        }
+
+        &:focus-visible {
+            outline: 2px solid currentColor;
+            outline-offset: 2px;
+        }
+    }
+
+    &__answers {
+        position: relative;
+    }
+
+    &__answer {
+        display: none;
+        animation: cbQaFadeIn 0.3s ease;
+        font-size: 1.25rem;
+        line-height: 1.6;
+        text-wrap: pretty;
+
+        &.is-active {
+            display: block;
+        }
+
+        p:first-child {
+            margin-top: 0;
+        }
+    }
+}
+
+@keyframes cbQaFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
