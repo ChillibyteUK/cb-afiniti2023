@@ -24392,6 +24392,9 @@ button.search.clear::after {
 
 .person-links {
   font-size: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
 }
 .person-links .more-circle,
 .person-links .linkedin-circle {
@@ -24412,8 +24415,8 @@ button.search.clear::after {
   color: var(--col-grey-300);
 }
 .person-links .cb-people__contact-link--contact svg {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 2rem;
+  height: 2rem;
   fill: currentColor;
 }
 

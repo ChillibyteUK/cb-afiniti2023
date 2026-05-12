@@ -10,6 +10,10 @@
 
 .person-links {
     font-size: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+
     .more-circle,
     .linkedin-circle {
         color: var(--col-grey-500);
@@ -27,8 +31,8 @@
             color: var(--col-grey-300);
         }
         svg {
-            width: 1.5rem;
-            height: 1.5rem;
+            width: 2rem;
+            height: 2rem;
             fill: currentColor;
         }
     }
