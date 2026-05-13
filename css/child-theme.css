@@ -24412,6 +24412,8 @@ button.search.clear::after {
   align-items: center;
   color: var(--col-grey-500);
   transition: color 0.3s ease-out;
+  text-decoration: none;
+  gap: 0.5rem;
 }
 .person-links .cb-people__contact-link--contact:hover {
   color: var(--col-grey-300);
@@ -24420,6 +24422,10 @@ button.search.clear::after {
   width: 2rem;
   height: 2rem;
   fill: currentColor;
+}
+.person-links .cb-people__contact-link--contact span {
+  font-size: 1.2rem;
+  font-weight: 700;
 }
 
 .person-photo-container {

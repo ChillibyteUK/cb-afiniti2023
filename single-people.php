@@ -5,7 +5,7 @@
  * @package cb-afiniti2023
  */
 
-defined('ABSPATH') || exit;
+defined( 'ABSPATH' ) || exit;
 
 get_header();
 ?>
@@ -24,13 +24,13 @@ get_header();
 		<div class="row g-4 mb-4">
 			<div class="col-lg-4">
 				<div class="single-person-photo"
-					style="background-image:url(<?= wp_get_attachment_image_url(get_field('photo'), 'medium'); ?>)">
+					style="background-image:url(<?= esc_url( wp_get_attachment_image_url( get_field( 'photo' ), 'medium' ) ); ?>)">
 				</div>
 				<h1 class="fs-4 fw-bold text--green mt-4">
-					<?= strtoupper(get_the_title()); ?>
+					<?= esc_html( strtoupper( get_the_title() ) ); ?>
 				</h1>
 				<div class="fs-5 text--green pb-2">
-					<?= get_field('job_title'); ?>
+					<?= esc_html( get_field( 'job_title' ) ); ?>
 				</div>
 			<?php
 			/*
@@ -60,6 +60,7 @@ get_header();
 					data-person-fullname="<?= esc_attr( $full_name ); ?>"
 					aria-label="Contact <?= esc_attr( $first_name ); ?>">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+					<span>Contact <?= esc_html( $first_name ); ?></span<
 				</a>
 			</div>
 				<?php
@@ -79,37 +80,37 @@ get_header();
 			<?php
 			$counter = 0;
 
-			if ( get_field('author') ?? null ) {
-				$authorID = get_field('author')[0];
-				$args     = array(
+			if ( get_field( 'author' ) ?? null ) {
+				$author_id = get_field( 'author' )[0];
+				$args      = array(
 					'post_type'      => 'post',
 					'posts_per_page' => -1,
 				);
 
-				$query = new WP_Query($args);
+				$query = new WP_Query( $args );
 
 				if ( $query->have_posts() ) {
 					while ( $query->have_posts() ) {
 						$query->the_post();
-						$peeps = get_field('person', get_the_ID()) ?? null;
-						if ( is_array($peeps) && isset($peeps[0]) ) {
-							$postAuthor = $peeps[0]->ID;
-							if ( $postAuthor === $authorID ) {
+						$peeps = get_field( 'person', get_the_ID() ) ?? null;
+						if ( is_array( $peeps ) && isset( $peeps[0] ) ) {
+							$post_author = $peeps[0]->ID;
+							if ( $post_author === $author_id ) {
 								++$counter;
-								$img = get_the_post_thumbnail_url($query->ID, 'large');
+								$img = get_the_post_thumbnail_url( $query->ID, 'large' );
 								?>
 			<div class="insight insight--short col-12 col-lg-4 mb-4">
-				<a href="<?= get_the_permalink(); ?>">
+				<a href="<?= esc_url( get_the_permalink() ); ?>">
 					<div class="post-image-container">
 						<div class="post-image mb-2"
-							style="background-image:url('<?= $img; ?>')">
+							style="background-image:url('<?= esc_url( $img ); ?>')">
 							<div class="img-overlay">
 								<div class="middle"><span class="arrow arrow-block arrow-white"></span></div>
 							</div>
 						</div>
 					</div>
 					<div class="article-title mt-2">
-								<?= get_the_title(); ?>
+								<?= esc_html( get_the_title() ); ?>
 					</div>
 					<div class="fw-bold py-2 arrow-link">
 						<div class="anim-arrow--slide">Read more <span class="arrow arrow-green"></span></div>
@@ -123,34 +124,36 @@ get_header();
 				}
 			}
 			if ( 0 === $counter ) {
-				$i = new WP_Query(array(
-					'post_status'    => 'publish',
-					'posts_per_page' => 3,
-					'orderby'        => 'rand',
-				));
+				$i = new WP_Query(
+					array(
+						'post_status'    => 'publish',
+						'posts_per_page' => 3,
+						'orderby'        => 'rand',
+					)
+				);
 				while ( $i->have_posts() ) {
 					$i->the_post();
-					$img = get_the_post_thumbnail_url(get_the_ID(), 'large');
+					$img = get_the_post_thumbnail_url( get_the_ID(), 'large' );
 					?>
 			<div class="insight insight--short col-12 col-lg-4 mb-4">
-				<a href="<?= get_the_permalink(); ?>">
+				<a href="<?= esc_url( get_the_permalink() ); ?>">
 					<div class="post-image-container">
 						<div class="post-image mb-2"
-							style="background-image:url('<?= $img; ?>')">
+							style="background-image:url('<?= esc_url( $img ); ?>')">
 							<div class="img-overlay">
 								<div class="middle"><span class="arrow arrow-block arrow-white"></span></div>
 							</div>
 						</div>
 					</div>
 					<div class="article-title mt-2">
-								<?= get_the_title(); ?>
+								<?= esc_html( get_the_title() ); ?>
 					</div>
 					<div class="fw-bold py-2 arrow-link">
 						<div class="anim-arrow--slide">Read more <span class="arrow arrow-green"></span></div>
 					</div>
 				</a>
 			</div>
-								<?php
+					<?php
 				}
 			}
 			?>

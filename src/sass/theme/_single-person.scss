@@ -27,6 +27,8 @@
         align-items: center;
         color: var(--col-grey-500);
         transition: color 0.3s ease-out;
+        text-decoration: none;
+        gap: 0.5rem;
         &:hover {
             color: var(--col-grey-300);
         }
@@ -34,6 +36,10 @@
             width: 2rem;
             height: 2rem;
             fill: currentColor;
+        }
+        span {
+            font-size: 1.2rem;
+            font-weight: 700;
         }
     }
 }
