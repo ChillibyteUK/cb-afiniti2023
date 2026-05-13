@@ -7,6 +7,23 @@ function acf_blocks()
 
         acf_register_block_type(
             array(
+                'name'            => 'cb_val_prop',
+                'title'           => __( 'CB Val Prop' ),
+                'category'        => 'layout',
+                'icon'            => 'cover-image',
+                'render_template' => 'page-templates/blocks/cb-val-prop.php',
+                'mode'            => 'edit',
+                'supports'        => array(
+                    'mode'      => false,
+                    'anchor'    => true,
+                    'className' => true,
+                    'align'     => true,
+                ),
+            )
+        );
+
+        acf_register_block_type(
+            array(
                 'name'            => 'cb_hover_q_a',
                 'title'           => __( 'CB Hover Q&A' ),
                 'category'        => 'layout',

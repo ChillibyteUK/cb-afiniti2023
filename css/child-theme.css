@@ -24382,6 +24382,286 @@ button.search.clear::after {
     transform: translateY(0);
   }
 }
+.val-prop {
+  position: relative;
+  width: 100%;
+}
+
+.val-prop__mobile img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.val-prop__desktop {
+  position: relative;
+  width: 100%;
+  padding-bottom: 58.96%;
+  height: 0;
+  overflow: visible;
+}
+
+.val-prop__svg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.val-prop__svg svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.val-prop__centre {
+  position: absolute;
+  left: 49.93%;
+  top: 49.89%;
+  transform: translate(-50%, -50%);
+  width: min(300px, 20vw);
+  z-index: 2;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.val-prop__centre-icon {
+  width: 20%;
+  margin: 0 auto 4%;
+}
+.val-prop__centre-icon img,
+.val-prop__centre-icon svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.val-prop__centre-text {
+  font-size: clamp(0.6rem, 1.1vw, 1rem);
+  font-weight: 700;
+  line-height: 1.35;
+  color: #333;
+  margin: 0;
+  text-align: center;
+}
+
+.val-prop__card {
+  position: absolute;
+  width: 38%;
+  height: 40%;
+  z-index: 1;
+  padding: 3% 4% 3% 4%;
+  box-sizing: border-box;
+  background: transparent;
+  cursor: default;
+}
+.val-prop__card--1 {
+  left: 0;
+  top: 0;
+}
+.val-prop__card--2 {
+  right: 0;
+  top: 0;
+}
+.val-prop__card--3 {
+  right: 0;
+  bottom: 0;
+}
+.val-prop__card--4 {
+  left: 0;
+  bottom: 0;
+}
+
+.val-prop__card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 6%;
+  margin-bottom: 4%;
+}
+
+.val-prop__card-icon {
+  flex: 0 0 22%;
+  max-width: 22%;
+  align-self: flex-start;
+}
+.val-prop__card-icon img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.val-prop__card-title {
+  font-size: clamp(1rem, 1.4vw, 1.25rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0;
+}
+.val-prop__card--green .val-prop__card-title {
+  color: #aac27f;
+}
+.val-prop__card--purple .val-prop__card-title {
+  color: #a25eb5;
+}
+.val-prop__card--orange .val-prop__card-title {
+  color: #f18a00;
+}
+.val-prop__card--grey .val-prop__card-title {
+  color: #808080;
+}
+
+.val-prop__card-desc {
+  font-size: clamp(0.8rem, 1.05vw, 1rem);
+  line-height: 1.4;
+  color: #333;
+  margin: 0;
+}
+
+.val-prop__popover {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  border-radius: 2rem;
+  padding: 7% 8%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5em;
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+.val-prop__card--green .val-prop__popover {
+  border: 6px solid #aac27f;
+  margin: 1.2rem 0 0 1.2rem;
+}
+.val-prop__card--purple .val-prop__popover {
+  border: 6px solid #a25eb5;
+  margin: 1.2rem 1.2rem 0 0;
+}
+.val-prop__card--orange .val-prop__popover {
+  border: 6px solid #f18a00;
+  margin: 0 1.2rem 1.2rem 0;
+}
+.val-prop__card--grey .val-prop__popover {
+  border: 6px solid #808080;
+  margin: 0 0 1.2rem 1.2rem;
+}
+
+.val-prop__card:hover .val-prop__popover {
+  opacity: 1;
+  visibility: visible;
+}
+
+.val-prop__popover-title {
+  font-size: clamp(1rem, 1.4vw, 1.25rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0;
+}
+.val-prop__popover--green .val-prop__popover-title {
+  color: #aac27f;
+}
+.val-prop__popover--purple .val-prop__popover-title {
+  color: #a25eb5;
+}
+.val-prop__popover--orange .val-prop__popover-title {
+  color: #f18a00;
+}
+.val-prop__popover--grey .val-prop__popover-title {
+  color: #808080;
+}
+
+.val-prop__popover-text {
+  font-size: clamp(0.6rem, 1vw, 0.875rem);
+  line-height: 1.45;
+  color: #333;
+  margin: 0 0 0.4em;
+}
+
+.val-prop__popover-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4em;
+}
+
+.val-prop__popover-video {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  font-size: clamp(0.6rem, 0.95vw, 0.85rem);
+  font-weight: 600;
+  padding: 0.3em 0.8em;
+  border-radius: 2em;
+  border: 2px solid currentColor;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.val-prop__card--green .val-prop__popover-video {
+  color: #aac27f;
+}
+.val-prop__card--purple .val-prop__popover-video {
+  color: #a25eb5;
+}
+.val-prop__card--orange .val-prop__popover-video {
+  color: #f18a00;
+}
+.val-prop__card--grey .val-prop__popover-video {
+  color: #808080;
+}
+.val-prop__card--green .val-prop__popover-video:hover {
+  background: #aac27f;
+  color: #fff;
+}
+.val-prop__card--purple .val-prop__popover-video:hover {
+  background: #a25eb5;
+  color: #fff;
+}
+.val-prop__card--orange .val-prop__popover-video:hover {
+  background: #f18a00;
+  color: #fff;
+}
+.val-prop__card--grey .val-prop__popover-video:hover {
+  background: #808080;
+  color: #fff;
+}
+
+.val-prop__popover-link {
+  font-size: clamp(0.6rem, 0.95vw, 0.85rem);
+  font-weight: 600;
+  text-decoration: underline;
+  transition: opacity 0.15s;
+}
+.val-prop__card--green .val-prop__popover-link {
+  color: #aac27f;
+}
+.val-prop__card--purple .val-prop__popover-link {
+  color: #a25eb5;
+}
+.val-prop__card--orange .val-prop__popover-link {
+  color: #f18a00;
+}
+.val-prop__card--grey .val-prop__popover-link {
+  color: #808080;
+}
+.val-prop__popover-link:hover {
+  opacity: 0.75;
+}
+
+.val-prop__modal .modal-content {
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+.val-prop__modal .modal-body {
+  padding-bottom: 1.25rem;
+}
+
 .single-person-photo {
   max-width: 210px;
   width: 100%;

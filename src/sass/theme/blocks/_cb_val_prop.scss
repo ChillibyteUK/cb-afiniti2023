@@ -1,0 +1,296 @@
+// =============================================================================
+// CB Val Prop — interactive diagram block
+// SVG viewBox: 2274 × 1340.78  →  aspect ratio 58.96%
+// Card positions derived from SVG path bounding boxes.
+// =============================================================================
+
+// Brand colours matching the SVG stroke colours.
+$vp-green:  #aac27f;
+$vp-purple: #a25eb5;
+$vp-orange: #f18a00;
+$vp-grey:   #808080;
+
+// Popover bg.
+$vp-popover-bg: #fff;
+
+.val-prop {
+	position: relative;
+	width: 100%;
+}
+
+// ── Mobile image ─────────────────────────────────────────────────────────────
+
+.val-prop__mobile {
+	img {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+}
+
+// ── Desktop wrapper ───────────────────────────────────────────────────────────
+
+.val-prop__desktop {
+	// Enforce the SVG's intrinsic aspect ratio so the absolute children scale
+	// correctly as the container resizes.
+	position: relative;
+	width: 100%;
+	padding-bottom: 58.96%; // 1340.78 / 2274 * 100
+	height: 0;
+	overflow: visible; // allow popovers to overflow if needed
+}
+
+// ── SVG lines layer ───────────────────────────────────────────────────────────
+
+.val-prop__svg {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	z-index: 0;
+
+	svg {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+}
+
+// ── Centre circle ─────────────────────────────────────────────────────────────
+// cx=1135.46 (49.93%), cy=668.87 (49.89%), r=302.75 (13.31% of width)
+
+.val-prop__centre {
+	position: absolute;
+	// Position at SVG circle centre, translate to truly centre the element.
+	left: 49.93%;
+	top: 49.89%;
+	transform: translate(-50%, -50%);
+	width: min(300px, 20vw); // diameter ≈ 2 × 13.31% with a touch of breathing room
+	z-index: 2;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	pointer-events: none;
+    
+}
+
+.val-prop__centre-icon {
+	width: 20%;
+	margin: 0 auto 4%;
+
+	img,
+	svg {
+		width: 100%;
+		height: auto;
+		display: block;
+	}
+}
+
+.val-prop__centre-text {
+	font-size: clamp(0.6rem, 1.1vw, 1rem);
+	font-weight: 700;
+	line-height: 1.35;
+	color: #333;
+	margin: 0;
+	text-align: center;
+}
+
+// ── Cards ─────────────────────────────────────────────────────────────────────
+// Each card sits over one of the four rounded-rect regions of the SVG.
+//
+// Regions (% of 2274 × 1340.78 viewBox):
+//   Top-left    x: 0–38.66%,  y: 0–42.52%
+//   Top-right   x: 61.38–100%, y: 0–42.52%
+//   Bottom-right x: 61.38–100%, y: 58.54–100%
+//   Bottom-left  x: 0–38.66%,  y: 58.54–100%
+
+.val-prop__card {
+	position: absolute;
+	width: 38%;
+	height: 40%;
+	z-index: 1;
+	padding: 3% 4% 3% 4%;
+	box-sizing: border-box;
+	// Cards are transparent/borderless — SVG provides the visual boundary.
+	background: transparent;
+	cursor: default;
+
+	// Card 1 — top-left (green)
+	&--1 {
+		left: 0;
+		top: 0;
+	}
+
+	// Card 2 — top-right (purple)
+	&--2 {
+		right: 0;
+		top: 0;
+	}
+
+	// Card 3 — bottom-right (orange)
+	&--3 {
+		right: 0;
+		bottom: 0;
+	}
+
+	// Card 4 — bottom-left (grey)
+	&--4 {
+		left: 0;
+		bottom: 0;
+	}
+}
+
+// ── Card header ──────────────────────────────────────────────────────────────
+
+.val-prop__card-header {
+	display: flex;
+	align-items: flex-start;
+	gap: 6%;
+	margin-bottom: 4%;
+}
+
+.val-prop__card-icon {
+	flex: 0 0 22%;
+	max-width: 22%;
+	align-self: flex-start;
+
+	img {
+		width: 100%;
+		height: auto;
+		display: block;
+	}
+}
+
+.val-prop__card-title {
+	font-size: clamp(1rem, 1.4vw, 1.25rem);
+	font-weight: 700;
+	line-height: 1.2;
+	margin: 0;
+
+	.val-prop__card--green  & { color: $vp-green; }
+	.val-prop__card--purple & { color: $vp-purple; }
+	.val-prop__card--orange & { color: $vp-orange; }
+	.val-prop__card--grey   & { color: $vp-grey; }
+}
+
+.val-prop__card-desc {
+	font-size: clamp(.8rem, 1.05vw, 1rem);
+	line-height: 1.4;
+	color: #333;
+	margin: 0;
+}
+
+// ── Popover ───────────────────────────────────────────────────────────────────
+
+.val-prop__popover {
+	position: absolute;
+	inset: 0; // covers the full card area
+	background: $vp-popover-bg;
+	border-radius: 2rem;
+	padding: 7% 8%;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 0.5em;
+	z-index: 100;
+
+	// Hidden by default — shown on card hover.
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.2s ease, visibility 0.2s ease;
+
+	// Colour border per card.
+	.val-prop__card--green  & { border: 6px solid $vp-green;  margin: 1.2rem 0 0 1.2rem; }
+	.val-prop__card--purple & { border: 6px solid $vp-purple; margin: 1.2rem 1.2rem 0 0; }
+	.val-prop__card--orange & { border: 6px solid $vp-orange; margin: 0 1.2rem 1.2rem 0; }
+	.val-prop__card--grey   & { border: 6px solid $vp-grey;   margin: 0 0 1.2rem 1.2rem; }
+}
+
+// Show on hover.
+.val-prop__card:hover .val-prop__popover {
+	opacity: 1;
+	visibility: visible;
+}
+
+.val-prop__popover-title {
+	font-size: clamp(1rem, 1.4vw, 1.25rem);
+	font-weight: 700;
+	line-height: 1.2;
+	margin: 0;
+
+    .val-prop__popover--green  & { color: $vp-green; }
+	.val-prop__popover--purple & { color: $vp-purple; }
+	.val-prop__popover--orange & { color: $vp-orange; }
+	.val-prop__popover--grey   & { color: $vp-grey; }
+}
+
+.val-prop__popover-text {
+	font-size: clamp(0.6rem, 1vw, 0.875rem);
+	line-height: 1.45;
+	color: #333;
+	margin: 0 0 0.4em;
+}
+
+.val-prop__popover-actions {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 0.4em;
+}
+
+.val-prop__popover-video {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4em;
+	font-size: clamp(0.6rem, 0.95vw, 0.85rem);
+	font-weight: 600;
+	padding: 0.3em 0.8em;
+	border-radius: 2em;
+	border: 2px solid currentColor;
+	background: transparent;
+	cursor: pointer;
+	transition: background 0.15s, color 0.15s;
+
+	.val-prop__card--green  & { color: $vp-green; }
+	.val-prop__card--purple & { color: $vp-purple; }
+	.val-prop__card--orange & { color: $vp-orange; }
+	.val-prop__card--grey   & { color: $vp-grey; }
+
+	&:hover {
+		.val-prop__card--green  & { background: $vp-green; color: #fff; }
+		.val-prop__card--purple & { background: $vp-purple; color: #fff; }
+		.val-prop__card--orange & { background: $vp-orange; color: #fff; }
+		.val-prop__card--grey   & { background: $vp-grey; color: #fff; }
+	}
+}
+
+.val-prop__popover-link {
+	font-size: clamp(0.6rem, 0.95vw, 0.85rem);
+	font-weight: 600;
+	text-decoration: underline;
+	transition: opacity 0.15s;
+
+	.val-prop__card--green  & { color: $vp-green; }
+	.val-prop__card--purple & { color: $vp-purple; }
+	.val-prop__card--orange & { color: $vp-orange; }
+	.val-prop__card--grey   & { color: $vp-grey; }
+
+	&:hover {
+		opacity: 0.75;
+	}
+}
+
+// ── Modal ─────────────────────────────────────────────────────────────────────
+
+.val-prop__modal {
+	.modal-content {
+		border-radius: 0.5rem;
+		overflow: hidden;
+	}
+
+	.modal-body {
+		padding-bottom: 1.25rem;
+	}
+}
