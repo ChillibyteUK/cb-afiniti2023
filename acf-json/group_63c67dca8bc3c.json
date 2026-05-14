@@ -797,6 +797,91 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": ""
+                },
+                {
+                    "key": "field_63ce7f402611f",
+                    "label": "Show Nubbin",
+                    "name": "show_nubbin",
+                    "aria-label": "",
+                    "type": "checkbox",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "Yes": "Yes"
+                    },
+                    "default_value": [],
+                    "return_format": "value",
+                    "allow_custom": 0,
+                    "layout": "vertical",
+                    "toggle": 0,
+                    "save_custom": 0,
+                    "acfe_field_group_condition": 0
+                },
+                {
+                    "key": "field_63ce7f4026120",
+                    "label": "Nubbin Link",
+                    "name": "nubbin_link",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_63ce7f402611f",
+                                "operator": "==",
+                                "value": "Yes"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "acfe_field_group_condition": 0,
+                    "required_message": "",
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": ""
+                },
+                {
+                    "key": "field_63ce7f4026121",
+                    "label": "Nubbin Link Title",
+                    "name": "nubbin_link_title",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_63ce7f402611f",
+                                "operator": "==",
+                                "value": "Yes"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "acfe_field_group_condition": 0,
+                    "required_message": "",
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": ""
                 }
             ]
         }
