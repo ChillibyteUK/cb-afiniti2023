@@ -88,7 +88,8 @@ $vp-popover-bg: #fff;
 }
 
 .val-prop__centre-text {
-	font-size: clamp(0.6rem, 1.1vw, 1rem);
+	// font-size: clamp(0.6rem, 1.1vw, 1rem);
+	font-size: clamp(1rem, 0.4286vw + 0.9143rem, 1.3rem);
 	font-weight: 700;
 	line-height: 1.35;
 	color: #333;
