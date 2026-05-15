@@ -110,7 +110,7 @@ $vp-popover-bg: #fff;
 	width: 38%;
 	height: 40%;
 	z-index: 1;
-	padding: 3% 4% 3% 4%;
+	padding: 2.5% 4% 3% 4%;
 	box-sizing: border-box;
 	// Cards are transparent/borderless — SVG provides the visual boundary.
 	background: transparent;
@@ -145,14 +145,15 @@ $vp-popover-bg: #fff;
 
 .val-prop__card-header {
 	display: flex;
-	align-items: flex-start;
-	gap: 6%;
+	align-items: center;
+	// gap: 6%;
 	margin-bottom: 4%;
+	max-width: 90%;
 }
 
 .val-prop__card-icon {
-	flex: 0 0 22%;
-	max-width: 22%;
+	flex: 0 0 28%;
+	max-width: 28%;
 	align-self: flex-start;
 
 	img {
@@ -163,9 +164,10 @@ $vp-popover-bg: #fff;
 }
 
 .val-prop__card-title {
-	font-size: clamp(1rem, 1.4vw, 1.25rem);
+	font-size: clamp(1.25rem, 0.7143vw + 1.1071rem, 1.75rem);
 	font-weight: 700;
 	line-height: 1.2;
+	text-wrap: pretty;
 	margin: 0;
 
 	.val-prop__card--green  & { color: $vp-green; }
@@ -175,7 +177,8 @@ $vp-popover-bg: #fff;
 }
 
 .val-prop__card-desc {
-	font-size: clamp(.8rem, 1.05vw, 1rem);
+	// font-size: clamp(.8rem, 1.05vw, 1rem);
+	font-size: clamp(0.9rem, 0.2857vw + 0.8429rem, 1.1rem);
 	line-height: 1.4;
 	color: #333;
 	margin: 0;

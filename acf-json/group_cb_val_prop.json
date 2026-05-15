@@ -1,353 +1,841 @@
 {
-  "key": "group_cb_val_prop",
-  "title": "CB Val Prop",
-  "fields": [
-    {
-      "key": "field_vp_message",
-      "label": "CB Value Proposition Diagram",
-      "name": "",
-      "type": "message",
-      "message": "Configure the interactive value proposition diagram. Card icons should be uploaded to the media library and selected below.",
-      "new_lines": "wpautop",
-      "esc_html": 0
-    },
-    {
-      "key": "field_vp_tab_general",
-      "label": "General",
-      "name": "",
-      "type": "tab",
-      "placement": "top",
-      "endpoint": 0
-    },
-    {
-      "key": "field_vp_centre_text",
-      "label": "Centre Text",
-      "name": "centre_text",
-      "type": "textarea",
-      "instructions": "Text displayed in the centre circle of the diagram.",
-      "required": 0,
-      "rows": 4,
-      "new_lines": "br",
-      "wrapper": { "width": "50", "class": "", "id": "" }
-    },
-    {
-      "key": "field_vp_centre_icon",
-      "label": "Centre Icon",
-      "name": "centre_icon",
-      "type": "image",
-      "instructions": "Icon displayed in the centre circle. Leave blank to use the default SVG.",
-      "required": 0,
-      "return_format": "array",
-      "preview_size": "thumbnail",
-      "wrapper": { "width": "50", "class": "", "id": "" }
-    },
-    {
-      "key": "field_vp_mobile_image",
-      "label": "Mobile Image",
-      "name": "mobile_image",
-      "type": "image",
-      "instructions": "Static image shown on mobile in place of the interactive diagram.",
-      "required": 0,
-      "return_format": "array",
-      "preview_size": "medium",
-      "wrapper": { "width": "", "class": "", "id": "" }
-    },
-    {
-      "key": "field_vp_tab_card1",
-      "label": "Shaping for Change",
-      "name": "",
-      "type": "tab",
-      "placement": "top",
-      "endpoint": 0
-    },
-    {
-      "key": "field_vp_card1_title",
-      "label": "Title",
-      "name": "card_1_title",
-      "type": "text",
-      "default_value": "Shaping for change",
-      "wrapper": { "width": "50", "class": "", "id": "" }
-    },
-    {
-      "key": "field_vp_card1_icon",
-      "label": "Icon",
-      "name": "card_1_icon",
-      "type": "image",
-      "return_format": "array",
-      "preview_size": "thumbnail",
-      "wrapper": { "width": "50", "class": "", "id": "" }
-    },
-    {
-      "key": "field_vp_card1_description",
-      "label": "Description",
-      "name": "card_1_description",
-      "type": "textarea",
-      "instructions": "The italic quote text shown on the card.",
-      "rows": 3,
-      "new_lines": "br",
-      "wrapper": { "width": "", "class": "", "id": "" }
-    },
-    {
-      "key": "field_vp_card1_popup_text",
-      "label": "Popup Text",
-      "name": "card_1_popup_text",
-      "type": "textarea",
-      "instructions": "Text shown in the hover popup.",
-      "rows": 3,
-      "new_lines": "br",
-      "wrapper": { "width": "", "class": "", "id": "" }
-    },
-    {
-      "key": "field_vp_card1_video_id",
-      "label": "Video ID (Vimeo)",
-      "name": "card_1_video_id",
-      "type": "text",
-      "instructions": "Vimeo video ID only, e.g. 123456789",
-      "placeholder": "123456789",
-      "wrapper": { "width": "34", "class": "", "id": "" }
-    },
-    {
-      "key": "field_vp_card1_link1",
-      "label": "Link 1",
-      "name": "card_1_link_1",
-      "type": "link",
-      "return_format": "array",
-      "wrapper": { "width": "33", "class": "", "id": "" }
-    },
-    {
-      "key": "field_vp_card1_link2",
-      "label": "Link 2",
-      "name": "card_1_link_2",
-      "type": "link",
-      "return_format": "array",
-      "wrapper": { "width": "33", "class": "", "id": "" }
-    },
-    {
-      "key": "field_vp_tab_card2",
-      "label": "Revealing Change Value",
-      "name": "",
-      "type": "tab",
-      "placement": "top",
-      "endpoint": 0
-    },
-    {
-      "key": "field_vp_card2_title",
-      "label": "Title",
-      "name": "card_2_title",
-      "type": "text",
-      "default_value": "Revealing change value",
-      "wrapper": { "width": "50", "class": "", "id": "" }
-    },
-    {
-      "key": "field_vp_card2_icon",
-      "label": "Icon",
-      "name": "card_2_icon",
-      "type": "image",
-      "return_format": "array",
-      "preview_size": "thumbnail",
-      "wrapper": { "width": "50", "class": "", "id": "" }
-    },
-    {
-      "key": "field_vp_card2_description",
-      "label": "Description",
-      "name": "card_2_description",
-      "type": "textarea",
-      "instructions": "The italic quote text shown on the card.",
-      "rows": 3,
-      "new_lines": "br",
-      "wrapper": { "width": "", "class": "", "id": "" }
-    },
-    {
-      "key": "field_vp_card2_popup_text",
-      "label": "Popup Text",
-      "name": "card_2_popup_text",
-      "type": "textarea",
-      "instructions": "Text shown in the hover popup.",
-      "rows": 3,
-      "new_lines": "br",
-      "wrapper": { "width": "", "class": "", "id": "" }
-    },
-    {
-      "key": "field_vp_card2_video_id",
-      "label": "Video ID (Vimeo)",
-      "name": "card_2_video_id",
-      "type": "text",
-      "instructions": "Vimeo video ID only, e.g. 123456789",
-      "placeholder": "123456789",
-      "wrapper": { "width": "34", "class": "", "id": "" }
-    },
-    {
-      "key": "field_vp_card2_link1",
-      "label": "Link 1",
-      "name": "card_2_link_1",
-      "type": "link",
-      "return_format": "array",
-      "wrapper": { "width": "33", "class": "", "id": "" }
-    },
-    {
-      "key": "field_vp_card2_link2",
-      "label": "Link 2",
-      "name": "card_2_link_2",
-      "type": "link",
-      "return_format": "array",
-      "wrapper": { "width": "33", "class": "", "id": "" }
-    },
-    {
-      "key": "field_vp_tab_card3",
-      "label": "Enabling Change Adoption",
-      "name": "",
-      "type": "tab",
-      "placement": "top",
-      "endpoint": 0
-    },
-    {
-      "key": "field_vp_card3_title",
-      "label": "Title",
-      "name": "card_3_title",
-      "type": "text",
-      "default_value": "Enabling change adoption",
-      "wrapper": { "width": "50", "class": "", "id": "" }
-    },
-    {
-      "key": "field_vp_card3_icon",
-      "label": "Icon",
-      "name": "card_3_icon",
-      "type": "image",
-      "return_format": "array",
-      "preview_size": "thumbnail",
-      "wrapper": { "width": "50", "class": "", "id": "" }
-    },
-    {
-      "key": "field_vp_card3_description",
-      "label": "Description",
-      "name": "card_3_description",
-      "type": "textarea",
-      "instructions": "The italic quote text shown on the card.",
-      "rows": 3,
-      "new_lines": "br",
-      "wrapper": { "width": "", "class": "", "id": "" }
-    },
-    {
-      "key": "field_vp_card3_popup_text",
-      "label": "Popup Text",
-      "name": "card_3_popup_text",
-      "type": "textarea",
-      "instructions": "Text shown in the hover popup.",
-      "rows": 3,
-      "new_lines": "br",
-      "wrapper": { "width": "", "class": "", "id": "" }
-    },
-    {
-      "key": "field_vp_card3_video_id",
-      "label": "Video ID (Vimeo)",
-      "name": "card_3_video_id",
-      "type": "text",
-      "instructions": "Vimeo video ID only, e.g. 123456789",
-      "placeholder": "123456789",
-      "wrapper": { "width": "34", "class": "", "id": "" }
-    },
-    {
-      "key": "field_vp_card3_link1",
-      "label": "Link 1",
-      "name": "card_3_link_1",
-      "type": "link",
-      "return_format": "array",
-      "wrapper": { "width": "33", "class": "", "id": "" }
-    },
-    {
-      "key": "field_vp_card3_link2",
-      "label": "Link 2",
-      "name": "card_3_link_2",
-      "type": "link",
-      "return_format": "array",
-      "wrapper": { "width": "33", "class": "", "id": "" }
-    },
-    {
-      "key": "field_vp_tab_card4",
-      "label": "Embedding Change Capability",
-      "name": "",
-      "type": "tab",
-      "placement": "top",
-      "endpoint": 0
-    },
-    {
-      "key": "field_vp_card4_title",
-      "label": "Title",
-      "name": "card_4_title",
-      "type": "text",
-      "default_value": "Embedding change capability",
-      "wrapper": { "width": "50", "class": "", "id": "" }
-    },
-    {
-      "key": "field_vp_card4_icon",
-      "label": "Icon",
-      "name": "card_4_icon",
-      "type": "image",
-      "return_format": "array",
-      "preview_size": "thumbnail",
-      "wrapper": { "width": "50", "class": "", "id": "" }
-    },
-    {
-      "key": "field_vp_card4_description",
-      "label": "Description",
-      "name": "card_4_description",
-      "type": "textarea",
-      "instructions": "The italic quote text shown on the card.",
-      "rows": 3,
-      "new_lines": "br",
-      "wrapper": { "width": "", "class": "", "id": "" }
-    },
-    {
-      "key": "field_vp_card4_popup_text",
-      "label": "Popup Text",
-      "name": "card_4_popup_text",
-      "type": "textarea",
-      "instructions": "Text shown in the hover popup.",
-      "rows": 3,
-      "new_lines": "br",
-      "wrapper": { "width": "", "class": "", "id": "" }
-    },
-    {
-      "key": "field_vp_card4_video_id",
-      "label": "Video ID (Vimeo)",
-      "name": "card_4_video_id",
-      "type": "text",
-      "instructions": "Vimeo video ID only, e.g. 123456789",
-      "placeholder": "123456789",
-      "wrapper": { "width": "34", "class": "", "id": "" }
-    },
-    {
-      "key": "field_vp_card4_link1",
-      "label": "Link 1",
-      "name": "card_4_link_1",
-      "type": "link",
-      "return_format": "array",
-      "wrapper": { "width": "33", "class": "", "id": "" }
-    },
-    {
-      "key": "field_vp_card4_link2",
-      "label": "Link 2",
-      "name": "card_4_link_2",
-      "type": "link",
-      "return_format": "array",
-      "wrapper": { "width": "33", "class": "", "id": "" }
-    }
-  ],
-  "location": [
-    [
-      {
-        "param": "block",
-        "operator": "==",
-        "value": "acf/cb-val-prop"
-      }
-    ]
-  ],
-  "menu_order": 0,
-  "position": "normal",
-  "style": "default",
-  "label_placement": "top",
-  "instruction_placement": "label",
-  "hide_on_screen": "",
-  "active": true,
-  "description": ""
+    "key": "group_cb_val_prop",
+    "title": "CB Val Prop",
+    "fields": [
+        {
+            "key": "field_vp_message",
+            "label": "CB Value Proposition Diagram",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "Configure the interactive value proposition diagram. Card icons should be uploaded to the media library and selected below.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_vp_tab_general",
+            "label": "General",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_vp_centre_text",
+            "label": "Centre Text",
+            "name": "centre_text",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Text displayed in the centre circle of the diagram.",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "rows": 4,
+            "new_lines": "br",
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_vp_centre_icon",
+            "label": "Centre Icon",
+            "name": "centre_icon",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Icon displayed in the centre circle. Leave blank to use the default SVG.",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "thumbnail",
+            "library": "all",
+            "min_width": 0,
+            "min_height": 0,
+            "min_size": 0,
+            "max_width": 0,
+            "max_height": 0,
+            "max_size": 0,
+            "mime_types": ""
+        },
+        {
+            "key": "field_vp_mobile_image",
+            "label": "Mobile Image",
+            "name": "mobile_image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Static image shown on mobile in place of the interactive diagram.",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "medium",
+            "library": "all",
+            "min_width": 0,
+            "min_height": 0,
+            "min_size": 0,
+            "max_width": 0,
+            "max_height": 0,
+            "max_size": 0,
+            "mime_types": ""
+        },
+        {
+            "key": "field_vp_tab_card1",
+            "label": "Shaping for Change",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_vp_card1_title",
+            "label": "Title",
+            "name": "card_1_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Shaping for change",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_vp_card1_icon",
+            "label": "Icon",
+            "name": "card_1_icon",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "thumbnail",
+            "library": "all",
+            "min_width": 0,
+            "min_height": 0,
+            "min_size": 0,
+            "max_width": 0,
+            "max_height": 0,
+            "max_size": 0,
+            "mime_types": ""
+        },
+        {
+            "key": "field_vp_card1_description",
+            "label": "Description",
+            "name": "card_1_description",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "The italic quote text shown on the card.",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 3,
+            "new_lines": "br",
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_vp_card1_popup_text",
+            "label": "Popup Text",
+            "name": "card_1_popup_text",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Text shown in the hover popup.",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 3,
+            "new_lines": "br",
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_vp_card1_video_id",
+            "label": "Video ID (Vimeo)",
+            "name": "card_1_video_id",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Vimeo video ID only, e.g. 123456789",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 1,
+            "placeholder": 123456789,
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_6a06f17d51969",
+            "label": "Video Link Title",
+            "name": "card_1_video_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Defaults to 'Watch video' if left blank.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 1,
+            "placeholder": "Watch Video",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_vp_card1_link1",
+            "label": "Link 1",
+            "name": "card_1_link_1",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "allow_in_bindings": 1
+        },
+        {
+            "key": "field_vp_card1_link2",
+            "label": "Link 2",
+            "name": "card_1_link_2",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "allow_in_bindings": 1
+        },
+        {
+            "key": "field_vp_tab_card2",
+            "label": "Revealing Change Value",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_vp_card2_title",
+            "label": "Title",
+            "name": "card_2_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Revealing change value",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_vp_card2_icon",
+            "label": "Icon",
+            "name": "card_2_icon",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "thumbnail",
+            "library": "all",
+            "min_width": 0,
+            "min_height": 0,
+            "min_size": 0,
+            "max_width": 0,
+            "max_height": 0,
+            "max_size": 0,
+            "mime_types": ""
+        },
+        {
+            "key": "field_vp_card2_description",
+            "label": "Description",
+            "name": "card_2_description",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "The italic quote text shown on the card.",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 3,
+            "new_lines": "br",
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_vp_card2_popup_text",
+            "label": "Popup Text",
+            "name": "card_2_popup_text",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Text shown in the hover popup.",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 3,
+            "new_lines": "br",
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_vp_card2_video_id",
+            "label": "Video ID (Vimeo)",
+            "name": "card_2_video_id",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Vimeo video ID only, e.g. 123456789",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": 123456789,
+            "default_value": "",
+            "maxlength": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_6a06f2272d387",
+            "label": "Video Link Title",
+            "name": "card_2_video_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Defaults to 'Watch video' if left blank.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 1,
+            "placeholder": "Watch Video",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_vp_card2_link1",
+            "label": "Link 1",
+            "name": "card_2_link_1",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
+            "key": "field_vp_card2_link2",
+            "label": "Link 2",
+            "name": "card_2_link_2",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
+            "key": "field_vp_tab_card3",
+            "label": "Enabling Change Adoption",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_vp_card3_title",
+            "label": "Title",
+            "name": "card_3_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Enabling change adoption",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_vp_card3_icon",
+            "label": "Icon",
+            "name": "card_3_icon",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "thumbnail",
+            "library": "all",
+            "min_width": 0,
+            "min_height": 0,
+            "min_size": 0,
+            "max_width": 0,
+            "max_height": 0,
+            "max_size": 0,
+            "mime_types": ""
+        },
+        {
+            "key": "field_vp_card3_description",
+            "label": "Description",
+            "name": "card_3_description",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "The italic quote text shown on the card.",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 3,
+            "new_lines": "br",
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_vp_card3_popup_text",
+            "label": "Popup Text",
+            "name": "card_3_popup_text",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Text shown in the hover popup.",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 3,
+            "new_lines": "br",
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_vp_card3_video_id",
+            "label": "Video ID (Vimeo)",
+            "name": "card_3_video_id",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Vimeo video ID only, e.g. 123456789",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": 123456789,
+            "default_value": "",
+            "maxlength": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_6a06f2382d388",
+            "label": "Video Link Title",
+            "name": "card_3_video_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Defaults to 'Watch video' if left blank.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 1,
+            "placeholder": "Watch Video",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_vp_card3_link1",
+            "label": "Link 1",
+            "name": "card_3_link_1",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
+            "key": "field_vp_card3_link2",
+            "label": "Link 2",
+            "name": "card_3_link_2",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
+            "key": "field_vp_tab_card4",
+            "label": "Embedding Change Capability",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_vp_card4_title",
+            "label": "Title",
+            "name": "card_4_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Embedding change capability",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_vp_card4_icon",
+            "label": "Icon",
+            "name": "card_4_icon",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "thumbnail",
+            "library": "all",
+            "min_width": 0,
+            "min_height": 0,
+            "min_size": 0,
+            "max_width": 0,
+            "max_height": 0,
+            "max_size": 0,
+            "mime_types": ""
+        },
+        {
+            "key": "field_vp_card4_description",
+            "label": "Description",
+            "name": "card_4_description",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "The italic quote text shown on the card.",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 3,
+            "new_lines": "br",
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_vp_card4_popup_text",
+            "label": "Popup Text",
+            "name": "card_4_popup_text",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Text shown in the hover popup.",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 3,
+            "new_lines": "br",
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_vp_card4_video_id",
+            "label": "Video ID (Vimeo)",
+            "name": "card_4_video_id",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Vimeo video ID only, e.g. 123456789",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": 123456789,
+            "default_value": "",
+            "maxlength": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_6a06f2492d389",
+            "label": "Video Link Title",
+            "name": "card_4_video_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Defaults to 'Watch video' if left blank.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 1,
+            "placeholder": "Watch Video",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_vp_card4_link1",
+            "label": "Link 1",
+            "name": "card_4_link_1",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
+            "key": "field_vp_card4_link2",
+            "label": "Link 2",
+            "name": "card_4_link_2",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf\/cb-val-prop"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1778840390
 }

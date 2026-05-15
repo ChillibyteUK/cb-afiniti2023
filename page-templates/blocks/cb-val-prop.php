@@ -22,44 +22,48 @@ $mobile_image = get_field( 'mobile_image' );
 // Card data — 1: top-left (green), 2: top-right (purple), 3: bottom-right (orange), 4: bottom-left (grey).
 $cards = array(
 	1 => array(
-		'colour'     => 'green',
-		'title'      => get_field( 'card_1_title' ),
-		'icon'       => get_field( 'card_1_icon' ),
-		'desc'       => get_field( 'card_1_description' ),
-		'popup_text' => get_field( 'card_1_popup_text' ),
-		'video_id'   => get_field( 'card_1_video_id' ),
-		'link_1'     => get_field( 'card_1_link_1' ),
-		'link_2'     => get_field( 'card_1_link_2' ),
+		'colour'      => 'green',
+		'title'       => get_field( 'card_1_title' ),
+		'icon'        => get_field( 'card_1_icon' ),
+		'desc'        => get_field( 'card_1_description' ),
+		'popup_text'  => get_field( 'card_1_popup_text' ),
+		'video_id'    => get_field( 'card_1_video_id' ),
+		'video_title' => get_field( 'card_1_video_title' ),
+		'link_1'      => get_field( 'card_1_link_1' ),
+		'link_2'      => get_field( 'card_1_link_2' ),
 	),
 	2 => array(
-		'colour'     => 'purple',
-		'title'      => get_field( 'card_2_title' ),
-		'icon'       => get_field( 'card_2_icon' ),
-		'desc'       => get_field( 'card_2_description' ),
-		'popup_text' => get_field( 'card_2_popup_text' ),
-		'video_id'   => get_field( 'card_2_video_id' ),
-		'link_1'     => get_field( 'card_2_link_1' ),
-		'link_2'     => get_field( 'card_2_link_2' ),
+		'colour'      => 'purple',
+		'title'       => get_field( 'card_2_title' ),
+		'icon'        => get_field( 'card_2_icon' ),
+		'desc'        => get_field( 'card_2_description' ),
+		'popup_text'  => get_field( 'card_2_popup_text' ),
+		'video_id'    => get_field( 'card_2_video_id' ),
+		'video_title' => get_field( 'card_2_video_title' ),
+		'link_1'      => get_field( 'card_2_link_1' ),
+		'link_2'      => get_field( 'card_2_link_2' ),
 	),
 	3 => array(
-		'colour'     => 'orange',
-		'title'      => get_field( 'card_3_title' ),
-		'icon'       => get_field( 'card_3_icon' ),
-		'desc'       => get_field( 'card_3_description' ),
-		'popup_text' => get_field( 'card_3_popup_text' ),
-		'video_id'   => get_field( 'card_3_video_id' ),
-		'link_1'     => get_field( 'card_3_link_1' ),
-		'link_2'     => get_field( 'card_3_link_2' ),
+		'colour'      => 'orange',
+		'title'       => get_field( 'card_3_title' ),
+		'icon'        => get_field( 'card_3_icon' ),
+		'desc'        => get_field( 'card_3_description' ),
+		'popup_text'  => get_field( 'card_3_popup_text' ),
+		'video_id'    => get_field( 'card_3_video_id' ),
+		'video_title' => get_field( 'card_3_video_title' ),
+		'link_1'      => get_field( 'card_3_link_1' ),
+		'link_2'      => get_field( 'card_3_link_2' ),
 	),
 	4 => array(
-		'colour'     => 'grey',
-		'title'      => get_field( 'card_4_title' ),
-		'icon'       => get_field( 'card_4_icon' ),
-		'desc'       => get_field( 'card_4_description' ),
-		'popup_text' => get_field( 'card_4_popup_text' ),
-		'video_id'   => get_field( 'card_4_video_id' ),
-		'link_1'     => get_field( 'card_4_link_1' ),
-		'link_2'     => get_field( 'card_4_link_2' ),
+		'colour'      => 'grey',
+		'title'       => get_field( 'card_4_title' ),
+		'icon'        => get_field( 'card_4_icon' ),
+		'desc'        => get_field( 'card_4_description' ),
+		'popup_text'  => get_field( 'card_4_popup_text' ),
+		'video_id'    => get_field( 'card_4_video_id' ),
+		'video_title' => get_field( 'card_4_video_title' ),
+		'link_1'      => get_field( 'card_4_link_1' ),
+		'link_2'      => get_field( 'card_4_link_2' ),
 	),
 );
 
@@ -143,7 +147,7 @@ $svg_centre = file_get_contents( get_stylesheet_directory() . '/img/valprop/val-
 						data-bs-target="#<?= esc_attr( $modal_id ); ?>"
 						aria-label="<?= esc_attr( 'Watch video: ' . $card['title'] ); ?>"
 					>
-						<span aria-hidden="true">&#9654;</span> Watch video
+						<span aria-hidden="true">&#9654;</span> <?= esc_attr( $card['video_title'] ? $card['video_title'] : 'Watch Video' ); ?>
 					</button>
 					<?php endif; ?>
 
