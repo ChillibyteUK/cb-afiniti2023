@@ -169,6 +169,94 @@ function cb_people_modal_emitted() {
 }
 
 /**
+ * Render the shared contact modal (HTML + binding script) once per request.
+ *
+ * Safe to call from multiple templates / shortcodes; subsequent calls no-op.
+ *
+ * @param int $form_id  Gravity Forms form ID.
+ * @param int $field_id Hidden recipient field ID within that form.
+ * @return void
+ */
+function cb_people_render_contact_modal( $form_id, $field_id ) {
+	$form_id  = (int) $form_id;
+	$field_id = (int) $field_id;
+	if ( ! $form_id || cb_people_modal_emitted() ) {
+		return;
+	}
+	?>
+<div class="modal fade"
+	id="modal-contact-person"
+	tabindex="-1"
+	role="dialog"
+	aria-labelledby="modal-contact-person-title"
+	aria-hidden="true"
+	data-gf-form-id="<?= esc_attr( $form_id ); ?>"
+	data-gf-recipient-field="<?= esc_attr( $field_id ); ?>">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header border-0 pb-0">
+				<h5 class="modal-title" id="modal-contact-person-title">Contact</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body pt-2">
+				<?php
+				gravity_form(
+					$form_id,
+					/* display_title    */ false,
+					/* display_desc     */ false,
+					/* display_inactive */ false,
+					/* field_values     */ array( 'recipient_pid' => 0 ),
+					/* ajax             */ true
+				);
+				?>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var modal = document.getElementById('modal-contact-person');
+	if (!modal) {
+		return;
+	}
+	var formId  = modal.dataset.gfFormId;
+	var fieldId = modal.dataset.gfRecipientField;
+
+	modal.addEventListener('show.bs.modal', function (event) {
+		var trigger = event.relatedTarget;
+		if (!trigger) {
+			return;
+		}
+		var pid       = trigger.dataset.personId || '';
+		var firstName = trigger.dataset.personFirstname || '';
+
+		var title = modal.querySelector('#modal-contact-person-title');
+		if (title) {
+			title.textContent = firstName ? 'Contact ' + firstName : 'Contact';
+		}
+
+		if (formId && fieldId) {
+			var byId   = modal.querySelector('#input_' + formId + '_' + fieldId);
+			var byName = modal.querySelector("input[name='input_" + fieldId + "']");
+			if (byId) { byId.value = pid; }
+			if (byName) { byName.value = pid; }
+
+			var values = modal.querySelector("input[name='gform_field_values']");
+			if (values) {
+				var pieces = (values.value || '').split('&').filter(function (s) {
+					return s.indexOf('recipient_pid=') !== 0;
+				});
+				pieces.push('recipient_pid=' + encodeURIComponent(pid));
+				values.value = pieces.join('&');
+			}
+		}
+	});
+});
+</script>
+	<?php
+}
+
+/**
  * Register GF filters scoped to the configured form ID.
  */
 function cb_people_register_gf_hooks() {

@@ -163,38 +163,8 @@ get_header();
 <?php
 // Render the shared contact modal once per page (guard works across shortcode
 // and single template if both appear on the same request).
-if ( isset( $contact_form_id ) && $contact_form_id && ! cb_people_modal_emitted() ) {
-	?>
-<div class="modal fade"
-	id="modal-contact-person"
-	tabindex="-1"
-	role="dialog"
-	aria-labelledby="modal-contact-person-title"
-	aria-hidden="true"
-	data-gf-form-id="<?= esc_attr( $contact_form_id ); ?>"
-	data-gf-recipient-field="<?= esc_attr( $recipient_field_id ); ?>">
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content">
-			<div class="modal-header border-0 pb-0">
-				<h5 class="modal-title" id="modal-contact-person-title">Contact</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body pt-2">
-				<?php
-				gravity_form(
-					$contact_form_id,
-					/* display_title    */ false,
-					/* display_desc     */ false,
-					/* display_inactive */ false,
-					/* field_values     */ array( 'recipient_pid' => 0 ),
-					/* ajax             */ true
-				);
-				?>
-			</div>
-		</div>
-	</div>
-</div>
-	<?php
+if ( isset( $contact_form_id ) && $contact_form_id ) {
+	cb_people_render_contact_modal( $contact_form_id, $recipient_field_id );
 }
 get_footer();
 ?>
