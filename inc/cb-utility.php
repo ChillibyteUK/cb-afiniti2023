@@ -366,44 +366,6 @@ add_action('init', function () {
     }
 });
 
-// Force all ACF blocks to always display in edit mode in the block editor.
-// The 'mode' registration key only sets the default for new blocks; existing blocks
-// have their mode persisted in the serialised HTML comment. This JS subscriber
-// watches the block store and resets any ACF block that drifts to preview/auto.
-add_action(
-	'enqueue_block_editor_assets',
-	function () {
-		wp_add_inline_script(
-			'wp-blocks',
-			"( function () {
-	var processed = {};
-	wp.data.subscribe( function () {
-		var select   = wp.data.select( 'core/block-editor' );
-		var dispatch = wp.data.dispatch( 'core/block-editor' );
-		if ( ! select || ! dispatch ) return;
-		var blocks = select.getBlocks();
-		( function walk( list ) {
-			list.forEach( function ( block ) {
-				if (
-					block.name &&
-					block.name.indexOf( 'acf/' ) === 0 &&
-					block.attributes &&
-					block.attributes.mode !== 'edit' &&
-					! processed[ block.clientId ]
-				) {
-					processed[ block.clientId ] = true;
-					dispatch.updateBlockAttributes( block.clientId, { mode: 'edit' } );
-				}
-				if ( block.innerBlocks && block.innerBlocks.length ) {
-					walk( block.innerBlocks );
-				}
-			} );
-		}( blocks ) );
-	} );
-}() );"
-		);
-	}
-);
 
 // disable RSS feeds
 // function cb_disable_feed() {
