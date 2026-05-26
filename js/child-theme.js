@@ -9367,12 +9367,12 @@
 
 	      new Swiper(element, {
 	        loop: true,
+	        autoplay: {
+	          delay: 4000,
+	          disableOnInteraction: false
+	        },
 	        speed: 600,
-	        spaceBetween: 24,
-	        pagination: {
-	          el: element.querySelector('.swiper-pagination'),
-	          clickable: true
-	        }
+	        spaceBetween: 24
 	      });
 	    });
 	    document.querySelectorAll('.people_cta__slider.swiper').forEach(function (element) {

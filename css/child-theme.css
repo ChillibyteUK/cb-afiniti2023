@@ -23644,14 +23644,21 @@ button.search.clear::after {
 .text_image__carousel {
   width: 100%;
 }
-.text_image__image {
-  display: block;
-  width: 100%;
+.text_image__carousel .swiper-wrapper {
+  align-items: center;
+}
+.text_image .swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: auto;
 }
-.text_image__pagination {
-  position: static;
-  margin-top: 1rem;
+.text_image__image {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
 }
 
 .quote {

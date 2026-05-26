@@ -85,16 +85,24 @@
 .text_image {
     &__carousel {
         width: 100%;
+
+        .swiper-wrapper {
+            align-items: center;
+        }
+    }
+
+    .swiper-slide {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: auto;
     }
 
     &__image {
         display: block;
-        width: 100%;
+        width: auto;
+        max-width: 100%;
         height: auto;
-    }
-
-    &__pagination {
-        position: static;
-        margin-top: 1rem;
+        margin: 0 auto;
     }
 }

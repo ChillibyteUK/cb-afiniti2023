@@ -10,19 +10,27 @@
 defined( 'ABSPATH' ) || exit;
 
 
-$legacy_image_id = get_field( 'image' );
-$gallery_images  = get_field( 'gallery' ) ?: array();
-$image_ids       = array();
+$legacy_image = get_field( 'image' );
+$gallery      = get_field( 'gallery' ) ?: array();
+$image_ids    = array();
 
-if ( $legacy_image_id ) {
-    $image_ids[] = (int) $legacy_image_id;
+if ( is_array( $legacy_image ) ) {
+    $legacy_image = $legacy_image['ID'] ?? null;
 }
 
-foreach ( $gallery_images as $gallery_image_id ) {
-    $gallery_image_id = (int) $gallery_image_id;
+if ( $legacy_image ) {
+    $image_ids[] = (int) $legacy_image;
+}
 
-    if ( $gallery_image_id ) {
-        $image_ids[] = $gallery_image_id;
+foreach ( $gallery as $gallery_image ) {
+    if ( is_array( $gallery_image ) ) {
+        $gallery_image = $gallery_image['ID'] ?? null;
+    }
+
+    $gallery_image = (int) $gallery_image;
+
+    if ( $gallery_image ) {
+        $image_ids[] = $gallery_image;
     }
 }
 
@@ -93,7 +101,6 @@ $classes = $block['className'] ?? null;
                         </div>
                         <?php endforeach; ?>
                     </div>
-                    <div class="swiper-pagination text_image__pagination"></div>
                 </div>
                 <?php elseif ( $display_image_id ) : ?>
                 <?= wp_get_attachment_image( $display_image_id, 'large', false, array( 'class' => 'wow text_image__image' ) ); ?>

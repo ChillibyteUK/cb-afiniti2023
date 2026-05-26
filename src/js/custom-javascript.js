@@ -80,12 +80,12 @@
 
       new Swiper(element, {
         loop: true,
+        autoplay: {
+          delay: 4000,
+          disableOnInteraction: false,
+        },
         speed: 600,
         spaceBetween: 24,
-        pagination: {
-          el: element.querySelector('.swiper-pagination'),
-          clickable: true,
-        },
       });
     });
 
