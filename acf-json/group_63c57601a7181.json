@@ -35,7 +35,6 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 0,
             "choices": {
                 "front-ship": "front-ship",
                 "business-change": "business-change",
@@ -48,15 +47,19 @@
                 "pocket-watch": "pocket-watch",
                 "rowers": "rowers",
                 "digital-transformation": "digital-transformation",
-                "contact": "contact"
+                "contact": "contact",
+                "bootcamp": "bootcamp"
             },
             "default_value": false,
             "return_format": "value",
             "multiple": 0,
             "allow_null": 0,
+            "allow_in_bindings": 1,
             "ui": 0,
             "ajax": 0,
-            "placeholder": ""
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0
         }
     ],
     "location": [
@@ -77,5 +80,8 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1729067543
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1779792667
 }
