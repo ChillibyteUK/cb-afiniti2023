@@ -9354,6 +9354,41 @@
 	  $('#navToggle').on('click', function () {
 	    var $nav = $("#navbar");
 	    $nav.toggleClass('navdark');
+	  });
+	  document.addEventListener('DOMContentLoaded', function () {
+	    if (typeof Swiper === 'undefined') {
+	      return;
+	    }
+
+	    document.querySelectorAll('.text_image__carousel.swiper').forEach(function (element) {
+	      if (element.classList.contains('swiper-initialized')) {
+	        return;
+	      }
+
+	      new Swiper(element, {
+	        loop: true,
+	        speed: 600,
+	        spaceBetween: 24,
+	        pagination: {
+	          el: element.querySelector('.swiper-pagination'),
+	          clickable: true
+	        }
+	      });
+	    });
+	    document.querySelectorAll('.people_cta__slider.swiper').forEach(function (element) {
+	      if (element.classList.contains('swiper-initialized')) {
+	        return;
+	      }
+
+	      new Swiper(element, {
+	        loop: true,
+	        autoplay: {
+	          delay: 4000
+	        },
+	        speed: 600,
+	        spaceBetween: 100
+	      });
+	    });
 	  }); // $('#searchTrigger').on('click',function(e) {
 	  //     e.stopPropagation();
 	  //     console.log('clunk');

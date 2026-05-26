@@ -224,6 +224,16 @@ function cb_theme_enqueue() {
 	// wp_enqueue_script('lightbox-scripts', get_stylesheet_directory_uri() . '/js/lightbox.min.js', array(), $the_theme->get('Version'), true);
 	wp_deregister_script('jquery');
 	wp_enqueue_script('jquery', 'https://code.jquery.com/jquery-3.6.3.min.js', array(), null, true);
+
+	if ( is_singular() ) {
+		$post_id = get_queried_object_id();
+		$has_swiper_block = has_block( 'acf/cb-text-image', $post_id ) || has_block( 'acf/cb-people-cta', $post_id );
+
+		if ( $has_swiper_block ) {
+			wp_enqueue_style( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css', array(), '11.2.10' );
+			wp_enqueue_script( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js', array(), '11.2.10', false );
+		}
+	}
 }
 add_action('wp_enqueue_scripts', 'cb_theme_enqueue');
 

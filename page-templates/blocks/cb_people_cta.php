@@ -54,22 +54,3 @@ $people = get_field('people');
         </div>
     </div>
 </section>
-<?php
-add_action('wp_footer', function(){
-    ?>
-<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const swiper = new Swiper('.swiper', {
-            loop: true,
-            autoplay: {
-                delay: 4000,
-            },
-            speed: 600,
-            spaceBetween: 100,
-        });
-    });
-</script>
-    <?php
-});

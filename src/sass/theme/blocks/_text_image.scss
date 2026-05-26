@@ -81,3 +81,20 @@
         }
     }
 }
+
+.text_image {
+    &__carousel {
+        width: 100%;
+    }
+
+    &__image {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    &__pagination {
+        position: static;
+        margin-top: 1rem;
+    }
+}

@@ -208,6 +208,35 @@
             "library": "all"
         },
         {
+            "key": "field_683449f3408f0",
+            "label": "Gallery",
+            "name": "gallery",
+            "aria-label": "",
+            "type": "gallery",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min": "",
+            "max": "",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "insert": "append",
+            "preview_size": "medium",
+            "acfe_field_group_condition": 0
+        },
+        {
             "key": "field_63c68f0d52f45",
             "label": "CTA",
             "name": "cta",
@@ -243,5 +272,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1713531022
+    "modified": 1779792000
 }
