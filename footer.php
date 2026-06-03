@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) || exit;
                 <div class="mb-4">
                     <img src="<?= esc_url( get_stylesheet_directory_uri() . '/img/afiniti-logo-v1.png' ); ?>" width=500 height=134 class="footer-logo" alt="Afiniti Logo">
                 </div>
-                <div>We ignite passion and capability in people to double the value of business change and materially decrease costs.<br>Afiniti is collaborating with Andersen Consulting.</div>
+                <div style="text-wrap:pretty">We ignite passion and capability in people to double the value of business change and materially decrease costs.<br>Afiniti is collaborating with Andersen Consulting.</div>
             </div>
             <div class="col-lg-3">
                 <div class="footer__heading">Contact us</div>
