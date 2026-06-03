@@ -15,9 +15,11 @@ $block_id = 'vp-' . ( $block['id'] ?? uniqid() );
 $classes  = $block['className'] ?? '';
 
 // General fields.
-$centre_text  = get_field( 'centre_text' );
-$centre_icon  = get_field( 'centre_icon' );
-$mobile_image = get_field( 'mobile_image' );
+$centre_text        = get_field( 'centre_text' );
+$centre_icon        = get_field( 'centre_icon' );
+$centre_video_id    = get_field( 'centre_video_id' );
+$centre_video_title = get_field( 'centre_video_title' );
+$mobile_image       = get_field( 'mobile_image' );
 
 // Card data — 1: top-left (green), 2: top-right (purple), 3: bottom-right (orange), 4: bottom-left (grey).
 $cards = array(
@@ -102,6 +104,16 @@ $svg_centre = file_get_contents( get_stylesheet_directory() . '/img/valprop/val-
 			</div>
 			<?php if ( $centre_text ) : ?>
 			<p class="val-prop__centre-text"><?= nl2br( esc_html( $centre_text ) ); ?></p>
+			<?php endif; ?>
+			<?php if ( ! empty( $centre_video_id ) ) : ?>
+			<button
+				class="val-prop__centre-video btn btn-sm mt-3"
+				data-bs-toggle="modal"
+				data-bs-target="#<?= esc_attr( $block_id . '-modal-centre' ); ?>"
+				aria-label="<?= esc_attr( 'Watch video: ' . ( $centre_video_title ? $centre_video_title : $centre_text ) ); ?>"
+			>
+				<span aria-hidden="true">&#9654;</span> <?= esc_html( $centre_video_title ? $centre_video_title : 'Watch Video' ); ?>
+			</button>
 			<?php endif; ?>
 		</div>
 
@@ -217,6 +229,38 @@ $svg_centre = file_get_contents( get_stylesheet_directory() . '/img/valprop/val-
 		</div>
 	</div>
 	<?php endforeach; ?>
+
+	<?php if ( ! empty( $centre_video_id ) ) : ?>
+	<?php $centre_embed_url = 'https://player.vimeo.com/video/' . rawurlencode( $centre_video_id ) . '?autoplay=1&title=0&byline=0&portrait=0&badge=0'; ?>
+	<div
+		class="modal fade val-prop__modal"
+		id="<?= esc_attr( $block_id . '-modal-centre' ); ?>"
+		tabindex="-1"
+		aria-label="<?= esc_attr( ( $centre_video_title ? $centre_video_title : $centre_text ) . ' video' ); ?>"
+		aria-hidden="true"
+		data-vp-embed="<?= esc_url( $centre_embed_url ); ?>"
+	>
+		<div class="modal-dialog modal-dialog-centered modal-lg">
+			<div class="modal-content bg-dark border-0">
+				<div class="modal-header border-0 pb-0">
+					<!-- <h5 class="modal-title text-white"><?= esc_html( $centre_video_title ? $centre_video_title : 'Watch Video' ); ?></h5> -->
+					<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body pt-1">
+					<div class="ratio ratio-16x9">
+						<iframe
+							class="val-prop__modal-iframe"
+							src=""
+							allow="autoplay; fullscreen; picture-in-picture"
+							allowfullscreen
+							title="<?= esc_attr( $centre_video_title ? $centre_video_title : $centre_text ); ?>"
+						></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<?php endif; ?>
 	</div>
 </section>
 <?php /* end .val-prop */ ?>

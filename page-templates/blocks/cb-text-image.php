@@ -11,7 +11,7 @@ defined( 'ABSPATH' ) || exit;
 
 
 $legacy_image = get_field( 'image' );
-$gallery      = get_field( 'gallery' ) ?: array();
+$gallery      = get_field( 'gallery' ) ? get_field( 'gallery' ) : array();
 $image_ids    = array();
 
 if ( is_array( $legacy_image ) ) {
@@ -92,7 +92,9 @@ $classes = $block['className'] ?? null;
             </div>
             <div
                 class="<?= esc_attr( $split_image ); ?> <?= esc_attr( $order_image ); ?> text-center">
-                <?php if ( $has_gallery_carousel ) : ?>
+                <?php
+				if ( $has_gallery_carousel ) {
+					?>
                 <div class="text_image__carousel swiper">
                     <div class="swiper-wrapper">
                         <?php foreach ( $image_ids as $image_id ) : ?>
@@ -102,9 +104,13 @@ $classes = $block['className'] ?? null;
                         <?php endforeach; ?>
                     </div>
                 </div>
-                <?php elseif ( $display_image_id ) : ?>
-                <?= wp_get_attachment_image( $display_image_id, 'large', false, array( 'class' => 'wow text_image__image' ) ); ?>
-                <?php endif; ?>
+                	<?php
+				} elseif ( $display_image_id ) {
+					?>
+                	<?= wp_get_attachment_image( $display_image_id, 'large', false, array( 'class' => 'wow text_image__image' ) ); ?>
+                	<?php
+				}
+				?>
             </div>
         </div>
     </div>

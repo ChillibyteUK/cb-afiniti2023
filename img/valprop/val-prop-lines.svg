@@ -2,25 +2,25 @@
 <svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2274 1340.78">
   <defs>
     <style>
-      .cls-1 {
+      #Layer_1-2 .cls-1 {
         fill: #a25eb5;
       }
 
-      .cls-2 {
+      #Layer_1-2 .cls-2 {
         fill: #aac27f;
       }
 
-      .cls-3 {
+      #Layer_1-2 .cls-3 {
         fill: none;
         stroke: #000;
         stroke-width: .88px;
       }
 
-      .cls-4 {
+      #Layer_1-2 .cls-4 {
         fill: #f18a00;
       }
 
-      .cls-5 {
+      #Layer_1-2 .cls-5 {
         fill: gray;
       }
     </style>
