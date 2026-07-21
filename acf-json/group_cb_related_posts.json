@@ -44,7 +44,8 @@
       "post_status": "",
       "taxonomy": "",
       "filters": [
-        "search"
+        "search",
+        "post_type"
       ],
       "return_format": "id",
       "acfe_add_post": 0,
