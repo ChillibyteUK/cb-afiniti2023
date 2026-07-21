@@ -15,7 +15,7 @@ if ( empty( $selected ) ) {
 
 $r = new WP_Query(
 	array(
-		'post_type'      => get_post_types(),
+		'post_type'      => array( 'post', 'case-studies' ),
 		'posts_per_page' => -1,
 		'post__in'       => $selected,
 		'orderby'        => 'post__in',
