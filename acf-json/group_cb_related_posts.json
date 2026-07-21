@@ -1,0 +1,88 @@
+{
+  "key": "group_cb_related_posts",
+  "title": "CB Related Posts",
+  "fields": [
+    {
+      "key": "field_cb_related_posts_message",
+      "label": "CB Related Posts",
+      "name": "",
+      "aria-label": "",
+      "type": "message",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "relevanssi_exclude": 0,
+      "message": "",
+      "new_lines": "wpautop",
+      "esc_html": 0,
+      "acfe_field_group_condition": 0
+    },
+    {
+      "key": "field_cb_related_posts_items",
+      "label": "Related Posts",
+      "name": "related_posts",
+      "aria-label": "",
+      "type": "relationship",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "relevanssi_exclude": 0,
+      "post_type": [
+        "post",
+        "case-studies"
+      ],
+      "post_status": "",
+      "taxonomy": "",
+      "filters": [
+        "search"
+      ],
+      "return_format": "id",
+      "acfe_add_post": 0,
+      "acfe_edit_post": 0,
+      "acfe_bidirectional": {
+        "acfe_bidirectional_enabled": "0",
+        "acfe_bidirectional_related": ""
+      },
+      "acfe_field_group_condition": 0,
+      "min": 0,
+      "max": 0,
+      "elements": [],
+      "bidirectional_target": []
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "block",
+        "operator": "==",
+        "value": "acf/cb-related-posts"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "left",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": "",
+  "show_in_rest": 0,
+  "acfe_autosync": [
+    "json"
+  ],
+  "acfe_form": 0,
+  "acfe_display_title": "",
+  "acfe_meta": "",
+  "acfe_note": ""
+}
