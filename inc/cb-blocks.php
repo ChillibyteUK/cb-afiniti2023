@@ -475,9 +475,9 @@ function core_image_block_type_args( $args, $name ) {
     if ( $name == 'core/paragraph' ) {
         $args['render_callback'] = 'modify_core_add_container';
     }
-    // if ( $name == 'core/list' ) {
-    // $args['render_callback'] = 'modify_core_add_container';
-    // }
+    if ( $name == 'core/list' ) {
+        $args['render_callback'] = 'modify_core_list';
+    }
     if ( $name == 'core/columns' ) {
         $args['render_callback'] = 'modify_core_add_container';
     }
@@ -514,6 +514,17 @@ function modify_core_heading( $attributes, $content ) {
     $id = cbslugify( $id );
     ?>
 <div class="container-xl" id="<?= $id; ?>">
+	<?= $content; ?>
+</div>
+	<?php
+    $content = ob_get_clean();
+    return $content;
+}
+
+function modify_core_list( $attributes, $content ) {
+    ob_start();
+    ?>
+<div class="container-xl ps-5">
 	<?= $content; ?>
 </div>
 	<?php
