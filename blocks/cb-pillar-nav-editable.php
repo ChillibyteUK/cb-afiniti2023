@@ -34,16 +34,18 @@ $sections = array( 'shaping', 'readiness', 'delivering', 'embedding' );
 				$bg_colour   = get_field( $section . '_bg_colour' ) ? get_field( $section . '_bg_colour' ) : 'col-white';
 				$text_colour = get_field( $section . '_text_colour' ) ? get_field( $section . '_text_colour' ) : 'col-white';
 				$style       = 'background-color: var(--' . esc_attr( $bg_colour ) . '); color: var(--' . esc_attr( $text_colour ) . ');';
+				$has_link    = ! empty( $l['url'] );
 				$link_url    = $l['url'] ?? '';
 				$link_target = $l['target'] ?? '_self';
 				$link_title  = $l['title'] ?? 'Find out more';
+				$wrapper_tag = $has_link ? 'a' : 'div';
 				?>
 			<div class="col-12 col-lg-3">
 				<div class="row no-mobile">
 					<div class="col-6 <?= esc_attr( $dash_borders[ $i ][0] ); ?>"></div>
 					<div class="col-6 <?= esc_attr( $dash_borders[ $i ][1] ); ?>"></div>
 				</div>
-				<a href="<?= esc_url( $link_url ); ?>" target="<?= esc_attr( $link_target ); ?>">
+				<<?= $wrapper_tag; ?><?php if ( $has_link ) : ?> href="<?= esc_url( $link_url ); ?>" target="<?= esc_attr( $link_target ); ?>"<?php endif; ?>>
 					<div class="pillar-shadow" style="<?= esc_attr( $style ); ?>">
 						<div class="px-3 py-3 border-bottom border-white">
 							<span class="fs-4 fw-bold"><?= esc_html( $btitle ); ?></span><br>
@@ -53,12 +55,14 @@ $sections = array( 'shaping', 'readiness', 'delivering', 'embedding' );
 							<div class="pillar-text">
 								<?= wp_kses_post( $intro ); ?>
 							</div>
+							<?php if ( $has_link ) : ?>
 							<div class="fw-bold pt-4 pb-2">
 								<div class="anim-arrow--slide"><?= esc_html( $link_title ); ?> <span class="arrow me-3"></span></div>
 							</div>
+							<?php endif; ?>
 						</div>
 					</div>
-				</a>
+				</<?= $wrapper_tag; ?>>
 			</div>
 				<?php
 			}
