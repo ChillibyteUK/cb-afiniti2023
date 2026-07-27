@@ -36,7 +36,7 @@ $sections = array( 'shaping', 'readiness', 'delivering', 'embedding' );
 				$style       = 'background-color: var(--' . esc_attr( $bg_colour ) . '); color: var(--' . esc_attr( $text_colour ) . ');';
 				$link_url    = $l['url'] ?? '';
 				$link_target = $l['target'] ?? '_self';
-				$link_title  = $l['title'] ? $l['title'] : 'Find out more';
+				$link_title  = $l['title'] ?? 'Find out more';
 				?>
 			<div class="col-12 col-lg-3">
 				<div class="row no-mobile">
