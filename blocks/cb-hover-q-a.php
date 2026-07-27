@@ -70,7 +70,7 @@ if ( empty( $rows ) ) {
 	return;
 }
 ?>
-<section id="<?= esc_attr( $block_id ); ?>" class="<?= esc_attr( $classes ); ?> <?= esc_attr( $style_attr ); ?>">
+<section id="<?= esc_attr( $block_id ); ?>" class="<?= esc_attr( $classes ); ?>" <?= $style_attr; ?>">
 	<div class="container-xl">
 		<div class="cb-hover-q-a__inner">
 
