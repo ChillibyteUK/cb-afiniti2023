@@ -1,4 +1,61 @@
 <?php
+
+/**
+ * Parses the --col-* custom properties out of the :root block in
+ * _props.scss so they can be offered as ACF select choices, instead
+ * of keeping a hand-maintained list in sync with the theme's colours.
+ */
+function cb_get_theme_colour_choices() {
+    static $choices = null;
+
+    if ( $choices !== null ) {
+        return $choices;
+    }
+
+    $choices   = array();
+    $scss_path = get_stylesheet_directory() . '/src/sass/theme/_props.scss';
+
+    if ( ! file_exists( $scss_path ) ) {
+        return $choices;
+    }
+
+    $scss = file_get_contents( $scss_path );
+
+    if ( ! preg_match( '/:root\s*\{(.*?)\}/s', $scss, $root_match ) ) {
+        return $choices;
+    }
+
+    foreach ( explode( "\n", $root_match[1] ) as $line ) {
+        $line = trim( $line );
+
+        if ( $line === '' || strpos( $line, '//' ) === 0 ) {
+            continue;
+        }
+
+        if ( preg_match( '/^--(col-[a-z0-9-]+)\s*:\s*(.+?);/i', $line, $match ) ) {
+            $slug           = $match[1];
+            $label          = ucwords( str_replace( '-', ' ', substr( $slug, 4 ) ) );
+            $choices[ $slug ] = $label;
+        }
+    }
+
+    return $choices;
+}
+
+/**
+ * Populates any ACF select field named "*_colour" with the theme's
+ * --col-* custom properties, so new colours only need adding in one
+ * place (_props.scss) to become pickable in the block editor.
+ */
+add_filter( 'acf/load_field', 'cb_load_colour_select_choices' );
+function cb_load_colour_select_choices( $field ) {
+    if ( $field['type'] === 'select' && substr( $field['name'], -7 ) === '_colour' ) {
+        $field['choices'] = cb_get_theme_colour_choices();
+    }
+
+    return $field;
+}
+
 function acf_blocks() {
     if ( function_exists( 'acf_register_block_type' ) ) {
 
@@ -172,6 +229,22 @@ function acf_blocks() {
 				'render_template' => 'blocks/cb-pillar-nav-short.php',
 				'mode'            => 'edit',
 				'supports'        => array( 'mode' => false ),
+            )
+        );
+        acf_register_block_type(
+            array(
+				'name'            => 'cb_pillar_nav_editable',
+				'title'           => __( 'CB Pillar Navigation (Editable)' ),
+				'category'        => 'layout',
+				'icon'            => 'cover-image',
+				'render_template' => 'blocks/cb-pillar-nav-editable.php',
+				'mode'            => 'edit',
+                'supports'        => array(
+                    'mode'      => false,
+                    'anchor'    => true,
+                    'className' => true,
+                    'align'     => true,
+                ),
             )
         );
         acf_register_block_type(
