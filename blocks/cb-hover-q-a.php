@@ -41,7 +41,7 @@ if ( ! empty( $block['style']['color']['text'] ) ) {
 }
 
 $inline_style = $bg_style . $text_style;
-$style_attr   = $inline_style ? ' style="' . esc_attr( $inline_style ) . '"' : '';
+$style_attr   = $inline_style ? ' style="' . $inline_style . '"' : '';
 
 // Collect all rows from the repeater.
 $rows = array();

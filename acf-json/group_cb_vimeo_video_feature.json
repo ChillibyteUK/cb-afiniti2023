@@ -1,156 +1,157 @@
 {
-    "key": "group_cb_vimeo_video_feature",
-    "title": "CB Vimeo Video Feature",
-    "fields": [
-        {
-            "key": "field_685c1d66e560e",
-            "label": "CB Vimeo Video Feature",
-            "name": "",
-            "aria-label": "",
-            "type": "message",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "relevanssi_exclude": 0,
-            "message": "",
-            "new_lines": "wpautop",
-            "esc_html": 0
-        },
-        {
-            "key": "field_685c1d66e5657",
-            "label": "Featured Video ID",
-            "name": "featured_video_id",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "relevanssi_exclude": 0,
-            "default_value": "",
-            "maxlength": "",
-            "allow_in_bindings": 1,
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_685c1d66e569b",
-            "label": "Feature Title",
-            "name": "feature_title",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "relevanssi_exclude": 0,
-            "default_value": "",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_685c1d66e56e3",
-            "label": "Feature Description",
-            "name": "feature_description",
-            "aria-label": "",
-            "type": "wysiwyg",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "relevanssi_exclude": 0,
-            "default_value": "",
-            "allow_in_bindings": 1,
-            "tabs": "all",
-            "toolbar": "basic",
-            "media_upload": 0,
-            "delay": 0
-        },
-        {
-            "key": "field_685c1d66e572d",
-            "label": "Background",
-            "name": "background",
-            "aria-label": "",
-            "type": "editor_palette",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "relevanssi_exclude": 0,
-            "default_value": "",
-            "allowed_colors": "",
-            "exclude_colors": "",
-            "return_format": "slug",
-            "allow_in_bindings": 1
-        },
-        {
-            "key": "field_685c21b872623",
-            "label": "Order",
-            "name": "order",
-            "aria-label": "",
-            "type": "radio",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "relevanssi_exclude": 0,
-            "choices": {
-                "Video Text": "Video Text",
-                "Text Video": "Text Video"
-            },
-            "default_value": "Video Text",
-            "return_format": "value",
-            "allow_null": 0,
-            "other_choice": 0,
-            "allow_in_bindings": 0,
-            "layout": "vertical",
-            "save_other_choice": 0
-        }
-    ],
-    "location": [
-        [
-            {
-                "param": "block",
-                "operator": "==",
-                "value": "acf\/cb-vimeo-video-feature"
-            }
-        ]
-    ],
-    "menu_order": 0,
-    "position": "normal",
-    "style": "default",
-    "label_placement": "top",
-    "instruction_placement": "label",
-    "hide_on_screen": "",
-    "active": true,
-    "description": "",
-    "show_in_rest": 0
+  "key": "group_cb_vimeo_video_feature",
+  "title": "CB Vimeo Video Feature",
+  "fields": [
+    {
+      "key": "field_685c1d66e560e",
+      "label": "CB Vimeo Video Feature",
+      "name": "",
+      "aria-label": "",
+      "type": "message",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "relevanssi_exclude": 0,
+      "message": "",
+      "new_lines": "wpautop",
+      "esc_html": 0
+    },
+    {
+      "key": "field_685c1d66e5657",
+      "label": "Featured Video ID",
+      "name": "featured_video_id",
+      "aria-label": "",
+      "type": "text",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "relevanssi_exclude": 0,
+      "default_value": "",
+      "maxlength": "",
+      "allow_in_bindings": 1,
+      "placeholder": "",
+      "prepend": "",
+      "append": ""
+    },
+    {
+      "key": "field_685c1d66e569b",
+      "label": "Feature Title",
+      "name": "feature_title",
+      "aria-label": "",
+      "type": "text",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "relevanssi_exclude": 0,
+      "default_value": "",
+      "maxlength": "",
+      "placeholder": "",
+      "prepend": "",
+      "append": ""
+    },
+    {
+      "key": "field_685c1d66e56e3",
+      "label": "Feature Description",
+      "name": "feature_description",
+      "aria-label": "",
+      "type": "wysiwyg",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "relevanssi_exclude": 0,
+      "default_value": "",
+      "allow_in_bindings": 1,
+      "tabs": "all",
+      "toolbar": "basic",
+      "media_upload": 0,
+      "delay": 1
+    },
+    {
+      "key": "field_685c1d66e572d",
+      "label": "Background",
+      "name": "background",
+      "aria-label": "",
+      "type": "editor_palette",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "50",
+        "class": "",
+        "id": ""
+      },
+      "relevanssi_exclude": 0,
+      "default_value": "",
+      "allowed_colors": "",
+      "exclude_colors": "",
+      "return_format": "slug",
+      "allow_in_bindings": 1
+    },
+    {
+      "key": "field_685c21b872623",
+      "label": "Order",
+      "name": "order",
+      "aria-label": "",
+      "type": "radio",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "50",
+        "class": "",
+        "id": ""
+      },
+      "relevanssi_exclude": 0,
+      "choices": {
+        "Video Text": "Video Text",
+        "Text Video": "Text Video"
+      },
+      "default_value": "Video Text",
+      "return_format": "value",
+      "allow_null": 0,
+      "other_choice": 0,
+      "allow_in_bindings": 0,
+      "layout": "vertical",
+      "save_other_choice": 0
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "block",
+        "operator": "==",
+        "value": "acf/cb-vimeo-video-feature"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": "",
+  "show_in_rest": 0,
+  "modified": 1785317126
 }
