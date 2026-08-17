@@ -1,28 +1,28 @@
 @charset "UTF-8";
 :root {
   --col-green-300: hsl(102, 37%, 66%);
-  --col-green-500: hsl(102, 37%, 59%);
+  --col-green-500: var(--wp--preset--color--green-500);
   --col-green-700: hsl(102, 37%, 52%);
   --col-orange-300: hsl(28, 88%, 66%);
-  --col-orange-500: hsl(28, 88%, 59%);
+  --col-orange-500: var(--wp--preset--color--orange-500);
   --col-orange-700: hsl(28, 88%, 52%);
   --col-purple-300: hsl(245, 17%, 47%);
-  --col-purple-500: hsl(245, 17%, 40%);
+  --col-purple-500: var(--wp--preset--color--purple-500);
   --col-purple-700: hsl(245, 17%, 33%);
   --col-grey-100: hsl(270, 1%, 95%);
   --col-grey-200: hsl(270, 1%, 80%);
   --col-grey-300: hsl(270, 1%, 70%);
   --col-grey-400: hsl(270, 1%, 54%);
-  --col-grey-500: hsl(270, 1%, 38%);
+  --col-grey-500: var(--wp--preset--color--grey-500);
   --col-grey-700: hsl(270, 1%, 22%);
   --col-blue-300: hsl(197, 100%, 51%);
-  --col-blue-500: hsl(197, 100%, 44%);
+  --col-blue-500: var(--wp--preset--color--blue-500);
   --col-blue-700: hsl(197, 100%, 34%);
   --col-dk-purple-500: hsl(248, 49%, 19%);
   --col-red-300: hsl(354, 65%, 47%);
-  --col-red-500: hsl(354, 65%, 40%);
+  --col-red-500: var(--wp--preset--color--red-500);
   --col-red-700: hsl(354, 65%, 32%);
-  --col-white: #fff;
+  --col-white: var(--wp--preset--color--white);
 }
 
 /*!
@@ -22718,6 +22718,45 @@ strong, b {
   color: white !important;
 }
 
+.has-orange-500-background-color a:not(.btn):not(.wp-element-button),
+.bg--orange a:not(.btn):not(.wp-element-button),
+.bg--orange-500 a:not(.btn):not(.wp-element-button),
+.bg--orange-300 a:not(.btn):not(.wp-element-button),
+.bg--orange-700 a:not(.btn):not(.wp-element-button),
+.has-green-500-background-color a:not(.btn):not(.wp-element-button),
+.bg--green a:not(.btn):not(.wp-element-button),
+.bg--green-500 a:not(.btn):not(.wp-element-button),
+.bg--green-300 a:not(.btn):not(.wp-element-button),
+.bg--green-700 a:not(.btn):not(.wp-element-button),
+.has-purple-500-background-color a:not(.btn):not(.wp-element-button),
+.bg--purple a:not(.btn):not(.wp-element-button),
+.bg--purple-500 a:not(.btn):not(.wp-element-button),
+.bg--purple-300 a:not(.btn):not(.wp-element-button),
+.bg--purple-700 a:not(.btn):not(.wp-element-button),
+.has-grey-500-background-color a:not(.btn):not(.wp-element-button),
+.bg--grey a:not(.btn):not(.wp-element-button),
+.bg--grey-500 a:not(.btn):not(.wp-element-button),
+.bg--grey-300 a:not(.btn):not(.wp-element-button),
+.bg--grey-700 a:not(.btn):not(.wp-element-button),
+.has-blue-700-background-color a:not(.btn):not(.wp-element-button),
+.bg--blue-700 a:not(.btn):not(.wp-element-button),
+.has-blue-500-background-color a:not(.btn):not(.wp-element-button),
+.bg--blue a:not(.btn):not(.wp-element-button),
+.bg--blue-500 a:not(.btn):not(.wp-element-button),
+.bg--blue-300 a:not(.btn):not(.wp-element-button),
+.has-red-700-background-color a:not(.btn):not(.wp-element-button),
+.bg--red-700 a:not(.btn):not(.wp-element-button),
+.has-red-500-background-color a:not(.btn):not(.wp-element-button),
+.bg--red a:not(.btn):not(.wp-element-button),
+.bg--red-500 a:not(.btn):not(.wp-element-button),
+.bg--red-300 a:not(.btn):not(.wp-element-button) {
+  color: white;
+}
+
+.bg--grey-100 a:not(.btn):not(.wp-element-button) {
+  color: black;
+}
+
 .square-container, img.border-dash-circle {
   border-radius: 50%;
   border-style: dashed;
@@ -23534,6 +23573,9 @@ button.search.clear::after {
   .pillar_nav .pillar-shadow {
     min-height: 160px;
   }
+}
+.pillar_nav .pillar-shadow a:not(.btn):not(.wp-element-button) {
+  color: inherit;
 }
 @media (min-width: 992px) {
   .pillar_nav .pillar-text {
@@ -24894,7 +24936,7 @@ ul.nopad {
   margin-right: 0.5rem;
 }
 
-:not(.share-icons, .social-icons, figure, .halfcircle-content) > a[target=_blank]:not(.btn, .linkedin-circle)::after {
+:not(.share-icons, .social-icons, figure, .halfcircle-content) > a[target=_blank]:not(.btn, .linkedin-circle):not([href^="/"]):not([href^="#"]):not([href^="?"])::after {
   content: "\f08e";
   font-family: "Font Awesome 6 Free";
   margin-left: 0.5rem;

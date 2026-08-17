@@ -144,3 +144,56 @@
 }
 
 
+// Links inside a coloured panel.
+//
+// The panel rules above set their foreground with `color`, which only reaches
+// links by inheritance - and inheritance loses to any matching rule, including
+// Bootstrap reboot's bare `a { color: $link-color }`. So links inside a purple
+// or orange panel fell back to the body grey instead of the panel's white.
+// Restating it for anchors fixes that; buttons opt out since they carry their
+// own colours.
+.has-orange-500-background-color,
+.bg--orange,
+.bg--orange-500,
+.bg--orange-300,
+.bg--orange-700,
+.has-green-500-background-color,
+.bg--green,
+.bg--green-500,
+.bg--green-300,
+.bg--green-700,
+.has-purple-500-background-color,
+.bg--purple,
+.bg--purple-500,
+.bg--purple-300,
+.bg--purple-700,
+.has-grey-500-background-color,
+.bg--grey,
+.bg--grey-500,
+.bg--grey-300,
+.bg--grey-700,
+.has-blue-700-background-color,
+.bg--blue-700,
+.has-blue-500-background-color,
+.bg--blue,
+.bg--blue-500,
+.bg--blue-300,
+.has-red-700-background-color,
+.bg--red-700,
+.has-red-500-background-color,
+.bg--red,
+.bg--red-500,
+.bg--red-300 {
+    a:not(.btn):not(.wp-element-button) {
+        color: white;
+    }
+}
+
+// The one panel with a dark foreground.
+.bg--grey-100 {
+    a:not(.btn):not(.wp-element-button) {
+        color: black;
+    }
+}
+
+

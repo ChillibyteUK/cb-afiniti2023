@@ -21,6 +21,14 @@
         @media (min-width:992px) {
             min-height: 160px;
         }
+
+        // The editable variant sets the card's foreground with an inline style
+        // from the text colour field, so no class-based rule can restate it for
+        // links. Inheriting picks up whatever that field chose - without this,
+        // links in the intro copy fall back to Bootstrap reboot's `a` colour.
+        a:not(.btn):not(.wp-element-button) {
+            color: inherit;
+        }
     }
     @media (min-width: 992px) {
         .pillar-text {

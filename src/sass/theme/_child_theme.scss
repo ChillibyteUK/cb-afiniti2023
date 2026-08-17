@@ -83,7 +83,14 @@ ul.nopad {
     }
 }
 
-:not(.share-icons,.social-icons,figure,.halfcircle-content) > a[target="_blank"]:not(.btn,.linkedin-circle)::after {
+// Off-site indicator on links that open in a new tab.
+//
+// Relative hrefs are internal by definition, so they are excluded here. Absolute
+// links back to this site can't be spotted without knowing the current domain,
+// which CSS has no access to - cb_internal_link_icon_style() in cb-theme.php
+// emits a companion rule that cancels the icon for those, built from home_url()
+// so it stays correct across local, staging and production.
+:not(.share-icons,.social-icons,figure,.halfcircle-content) > a[target="_blank"]:not(.btn,.linkedin-circle):not([href^="/"]):not([href^="#"]):not([href^="?"])::after {
     content: "\f08e";
     font-family: "Font Awesome 6 Free";
     margin-left: 0.5rem;

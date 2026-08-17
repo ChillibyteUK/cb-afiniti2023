@@ -1,6 +1,8 @@
-// $col-green-300: hsl(89, 42%, 76%); // my hsl(102, 37%, 66%);
-// $col-green-500: hsl(89, 42%, 67%); // my hsl(102, 37%, 59%);
-// $col-green-700: hsl(105, 35%, 60%); // my hsl(102, 37%, 52%);
+// Sass variables, for compile-time colour functions only (lighten() etc in
+// _buttons.scss). Sass cannot operate on a CSS custom property, so the palette
+// values have to be repeated here as literals - keep the -500 values in step
+// with theme.json. Anything not needing a Sass colour function should use the
+// --col-* custom properties defined below instead.
 $col-green-300: hsl(102, 37%, 66%);
 $col-green-500: hsl(102, 37%, 59%);
 $col-green-700: hsl(102, 37%, 52%);
@@ -21,42 +23,47 @@ $col-grey-700: hsl(270, 1%, 22%);
 
 $col-blue-500: hsl(197, 100%, 44%);
 
+// The seven colours in the editor palette are defined in theme.json and are
+// aliased below, so a slug always renders the same colour whether it arrives
+// via a core class (.has-green-500-background-color) or a theme class
+// (.bg--green-500). Change these in theme.json, not here.
+//
+// The 300/700 tints, grey-100..400, dk-purple and white are not in the editor
+// palette and stay defined here. NB: they are hand-derived from the -500
+// values, so retuning a palette colour in theme.json means revisiting its
+// tints here too.
 :root {
 
-    // --col-green-300: hsl(89, 42%, 76%);
-    // --col-green-500: hsl(89, 42%, 67%);
-    // --col-green-700: hsl(105, 35%, 60%);
-
     --col-green-300: hsl(102, 37%, 66%);
-    --col-green-500: hsl(102, 37%, 59%);
+    --col-green-500: var(--wp--preset--color--green-500);
     --col-green-700: hsl(102, 37%, 52%);
 
     --col-orange-300: hsl(28, 88%, 66%);
-    --col-orange-500: hsl(28, 88%, 59%);
+    --col-orange-500: var(--wp--preset--color--orange-500);
     --col-orange-700: hsl(28, 88%, 52%);
-    
+
     --col-purple-300: hsl(245, 17%, 47%);
-    --col-purple-500: hsl(245, 17%, 40%);
+    --col-purple-500: var(--wp--preset--color--purple-500);
     --col-purple-700: hsl(245, 17%, 33%);
-    
+
     --col-grey-100: hsl(270, 1%, 95%);
     --col-grey-200: hsl(270, 1%, 80%);
     --col-grey-300: hsl(270, 1%, 70%);
     --col-grey-400: hsl(270, 1%, 54%);
-    --col-grey-500: hsl(270, 1%, 38%);
+    --col-grey-500: var(--wp--preset--color--grey-500);
     --col-grey-700: hsl(270, 1%, 22%);
-    
+
 
     --col-blue-300: hsl(197, 100%, 51%);
-    --col-blue-500: hsl(197, 100%, 44%);
+    --col-blue-500: var(--wp--preset--color--blue-500);
     --col-blue-700: hsl(197, 100%, 34%);
 
     --col-dk-purple-500: hsl(248, 49%, 19%);
 
     --col-red-300: hsl(354, 65%, 47%);
-    --col-red-500: hsl(354, 65%, 40%);
+    --col-red-500: var(--wp--preset--color--red-500);
     --col-red-700: hsl(354, 65%, 32%);
 
-    --col-white: #fff;
+    --col-white: var(--wp--preset--color--white);
 
 }

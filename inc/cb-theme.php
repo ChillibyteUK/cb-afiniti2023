@@ -17,7 +17,16 @@ require_once CB_THEME_DIR . '/inc/cb-block-usage.php';
 // require_once CB_THEME_DIR . '/inc/cb-careers.php';
 require_once CB_THEME_DIR . '/inc/cb-people-contact.php';
 
-// Remove unwanted SVG filter injection WP.
+/*
+ * Remove unwanted SVG filter injection WP.
+ *
+ * NB: the first line does not actually stop global styles being output - WP
+ * registers wp_enqueue_global_styles on both wp_enqueue_scripts and wp_footer,
+ * and only the former is removed, so global styles still print. Do not "finish
+ * the job": the --col-* custom properties in _props.scss alias
+ * --wp--preset--color--*, which global styles define. Removing them would
+ * flatten every theme colour. (Repeated verbatim further down this file.)
+ */
 remove_action('wp_enqueue_scripts', 'wp_enqueue_global_styles');
 remove_action('wp_body_open', 'wp_global_styles_render_svg_filters');
 
@@ -88,47 +97,97 @@ function widgets_init() {
 	unregister_sidebar('footerfull');
 	unregister_nav_menu('primary');
 
-	add_theme_support('disable-custom-colors');
-	add_theme_support(
-		'editor-color-palette',
-		array(
-			array(
-				'name'  => 'Green',
-				'slug'  => 'green-500',
-				'color' => '#accf83',
-			),
-			array(
-				'name'  => 'Orange',
-				'slug'  => 'orange-500',
-				'color' => '#ed9025',
-			),
-			array(
-				'name'  => 'Purple',
-				'slug'  => 'purple-500',
-				'color' => '#575b8a',
-			),
-			array(
-				'name'  => 'Blue',
-				'slug'  => 'blue-500',
-				'color' => '#00a0df',
-			),
-			array(
-				'name'  => 'Red',
-				'slug'  => 'red-500',
-				'color' => '#8a2432',
-			),
-			array(
-				'name'  => 'Grey',
-				'slug'  => 'grey-500',
-				'color' => '#474747',
-			),
-			array(
-				'name'  => 'white',
-				'slug'  => 'white',
-				'color' => '#fff',
-			),
-		)
-	);
+	/*
+	 * The editor colour palette and disable-custom-colors both live in
+	 * theme.json now. They used to be declared here with hex values that had
+	 * drifted from the --col-* custom properties in _props.scss, so the same
+	 * slug rendered two different colours depending on whether a core class or
+	 * a theme class was used. theme.json is the single source; _props.scss
+	 * aliases --col-* to the generated --wp--preset--color--* values.
+	 */
+}
+
+/**
+ * Cancels the off-site icon on new-tab links that point back at this site.
+ *
+ * _child_theme.scss puts a Font Awesome external-link glyph after any
+ * target="_blank" link. Relative hrefs are excluded there, but an absolute link
+ * to our own domain can't be recognised in CSS, which has no notion of the
+ * current host. So the host is injected here instead, derived from home_url() so
+ * it follows the environment rather than being hardcoded.
+ *
+ * Uses ^= rather than *= so a third-party URL merely containing our domain (in a
+ * query string, say) still counts as off-site. The prefix must include the
+ * trailing slash, or a lookalike host like afiniti.co.uk.example.com would match
+ * too - hence the separate exact-match selector for a bare domain with no path.
+ * !important is needed because the SCSS selector is more specific than anything
+ * reasonable to write here.
+ */
+add_action( 'wp_head', 'cb_internal_link_icon_style', 20 );
+function cb_internal_link_icon_style() {
+	$home = wp_parse_url( home_url() );
+	$host = $home['host'] ?? '';
+
+	if ( ! $host ) {
+		return;
+	}
+
+	if ( ! empty( $home['port'] ) ) {
+		$host .= ':' . $home['port'];
+	}
+
+	// Treat www and bare forms of the domain as the same site.
+	$hosts = array( $host );
+	$hosts[] = str_starts_with( $host, 'www.' ) ? substr( $host, 4 ) : 'www.' . $host;
+
+	$selectors = array();
+
+	foreach ( $hosts as $candidate ) {
+		$candidate = preg_replace( '/[^a-z0-9.\-:]/i', '', $candidate );
+
+		if ( ! $candidate ) {
+			continue;
+		}
+
+		foreach ( array( '//', 'http://', 'https://' ) as $scheme ) {
+			$selectors[] = 'a[target="_blank"][href^="' . $scheme . $candidate . '/"]::after';
+			$selectors[] = 'a[target="_blank"][href="' . $scheme . $candidate . '"]::after';
+		}
+	}
+
+	if ( ! $selectors ) {
+		return;
+	}
+
+	echo '<style id="cb-internal-link-icon">' . implode( ',', $selectors )
+		. '{content:none !important;margin-left:0 !important;}</style>' . "\n";
+}
+
+/**
+ * Mirrors the theme.json colour palette into add_theme_support().
+ *
+ * theme.json is the single source of truth for the palette, but some code reads
+ * get_theme_support( 'editor-color-palette' ) directly instead of going through
+ * wp_get_global_settings() - the ACF Editor Palette field, used by 18 block
+ * fields, is one such. Two things go wrong without this shim:
+ *
+ * 1. understrap registers its own Bootstrap palette on after_setup_theme, which
+ *    would resurface and offer 13 extra colours in those ACF fields.
+ * 2. WP strips theme.json palette entries whose slug collides with one of its
+ *    own defaults, so "white" never reaches wp_get_global_settings().
+ *
+ * Reading theme.json from disk sidesteps both while keeping one set of values.
+ * theme.json still takes precedence for the editor and the generated CSS, so
+ * this only ever affects get_theme_support() callers.
+ */
+add_action( 'after_setup_theme', 'cb_mirror_theme_json_palette', 20 );
+function cb_mirror_theme_json_palette() {
+	$theme_json = wp_json_file_decode( get_stylesheet_directory() . '/theme.json', array( 'associative' => true ) );
+	$palette    = $theme_json['settings']['color']['palette'] ?? array();
+
+	if ( $palette ) {
+		add_theme_support( 'editor-color-palette', $palette );
+	}
 }
 add_action('widgets_init', 'widgets_init', 11);
 
