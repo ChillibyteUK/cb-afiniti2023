@@ -373,30 +373,6 @@
             ]
         },
         {
-            "key": "field_64f0522d69c14",
-            "label": "CRA Tool Page ID",
-            "name": "cra_tool_page_id",
-            "aria-label": "",
-            "type": "number",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "relevanssi_exclude": 0,
-            "default_value": "",
-            "min": "",
-            "max": "",
-            "placeholder": "",
-            "step": "",
-            "prepend": "",
-            "append": "",
-            "acfe_field_group_condition": 0
-        },
-        {
             "key": "field_cb_contact_person_form_id",
             "label": "Contact Person Form ID",
             "name": "contact_person_form_id",
@@ -884,6 +860,130 @@
                     "append": ""
                 }
             ]
+        },
+        {
+            "key": "field_cra_tab",
+            "label": "CRA Tool",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_64f0522d69c14",
+            "label": "CRA Tool Page ID",
+            "name": "cra_tool_page_id",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "relevanssi_exclude": 0,
+            "default_value": "",
+            "min": "",
+            "max": "",
+            "placeholder": "",
+            "step": "",
+            "prepend": "",
+            "append": "",
+            "acfe_field_group_condition": 0
+        },
+        {
+            "key": "field_cra_recaptcha_site_key",
+            "label": "reCAPTCHA Site Key",
+            "name": "recaptcha_site_key",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Public key, rendered into the page. reCAPTCHA v3.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_cra_recaptcha_secret_key",
+            "label": "reCAPTCHA Secret Key",
+            "name": "recaptcha_secret_key",
+            "aria-label": "",
+            "type": "password",
+            "instructions": "Required, or submissions are accepted without any captcha check. Never rendered in the page.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_cra_recaptcha_min_score",
+            "label": "reCAPTCHA Minimum Score",
+            "name": "recaptcha_min_score",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "Between 0 and 1. Google suggests 0.5. Higher is stricter and rejects more real people.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 0.5,
+            "min": 0,
+            "max": 1,
+            "placeholder": "0.5",
+            "step": 0.1,
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_cra_rate_limit",
+            "label": "Submissions Per Hour Per IP",
+            "name": "cra_rate_limit",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "Leave blank for the default of 10.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 10,
+            "min": 1,
+            "max": "",
+            "placeholder": "10",
+            "step": 1,
+            "prepend": "",
+            "append": ""
         }
     ],
     "location": [

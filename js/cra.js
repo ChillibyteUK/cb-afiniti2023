@@ -201,7 +201,7 @@ document.getElementById('step4').addEventListener('click',function(){
 
 //---------------------------------------------------------------------- step 5
 
-document.getElementById('step5').addEventListener('click',function(){
+document.getElementById('step5').addEventListener('click',function(e){
 
     if (checkAllRadioGroups('form5') === true) {
         // console.log('all answered');
@@ -210,20 +210,32 @@ document.getElementById('step5').addEventListener('click',function(){
     else {
         // console.log('missing answer');
         document.getElementById('form5Warn').style.display = 'block';
-        return false;
+
+        /*
+         * `return false` does nothing in an addEventListener callback, so the
+         * submit handler in cra-tool.php used to run anyway and post the form
+         * with empty hidden fields. stopImmediatePropagation prevents any later
+         * listener on this element from firing at all.
+         */
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        return;
     }
 
     UpdateScores(5);
 
-    // document.getElementById('form5').style.display = 'none';
-
-    // console.log(scores);
-    // console.log(data);
+    // Last line of defence: never post a payload the server will only reject.
+    if (!data.contactEmail || !data.orgName || !data.contactName) {
+        document.getElementById('form5Warn').textContent =
+            'Your contact details are missing. Please go back to step 1.';
+        document.getElementById('form5Warn').style.display = 'block';
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        return;
+    }
 
     document.getElementById('data').value = JSON.stringify(data);
     document.getElementById('scores').value = JSON.stringify(scores);
-
-    return true;
 })
 
 //------------------------------------------------------------------- functions
@@ -234,14 +246,25 @@ function validate(field) {
     // console.log('field '+field+' value is: ' + document.getElementById(field).value);
     if (document.getElementById(field).type === 'text'
      || document.getElementById(field).type === 'email') {
-        if (document.getElementById(field).value == "") {
-            document.getElementById(field + 'Warn').style.display = 'block';
-            return false;
+        var input = document.getElementById(field);
+
+        /*
+         * Trimmed, so a single space no longer counts as filled in, and for
+         * email the browser's own format check is used. These inputs are not
+         * inside a <form>, so `required` and type="email" never fired natively
+         * - checkValidity() works on a detached input regardless. Before this,
+         * "abc" was accepted as an email and the results mail silently failed.
+         */
+        var value = input.value.trim();
+
+        if (value !== input.value) {
+            input.value = value;
         }
-        else {
-            document.getElementById(field + 'Warn').style.display = 'none';
-            return true;
-        }
+
+        var ok = value !== '' && input.checkValidity();
+
+        document.getElementById(field + 'Warn').style.display = ok ? 'none' : 'block';
+        return ok;
     }
     else if (document.getElementById(field).type === 'checkbox') {
         if (document.getElementById(field).checked != true) {
