@@ -209,7 +209,7 @@ function cb_dashboard_widget_display() {
 	?>
 <div style="display: flex; align-items: center; justify-content: space-around;">
 	<img style="width: 50%;"
-		src="<?= get_stylesheet_directory_uri() . '/img/cb-full.jpg'; ?>">
+		src="<?= esc_url( get_stylesheet_directory_uri() . '/img/cb-full.jpg' ); ?>">
 	<a class="button button-primary" target="_blank" rel="noopener nofollow noreferrer"
 		href="mailto:hello@chillibyte.co.uk/">Contact</a>
 </div>
