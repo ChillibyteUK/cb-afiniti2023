@@ -14,7 +14,7 @@ block_slug=$(echo "$block_name" | tr '[:upper:]' '[:lower:]' | tr ' ' '_')
 block_kebab=$(echo "$block_name" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
 
 # Define file paths
-php_file="./page-templates/blocks/${block_kebab}.php"
+php_file="./blocks/${block_kebab}.php"
 scss_file="./src/sass/theme/blocks/_${block_slug}.scss"
 blocks_scss="./src/sass/theme/blocks/_blocks.scss"
 blocks_php="./inc/cb-blocks.php"
@@ -73,7 +73,7 @@ block_code=$(cat <<EOF
                 'title'           => __( '${block_name}' ),
                 'category'        => 'layout',
                 'icon'            => 'cover-image',
-                'render_template' => 'page-templates/blocks/${block_kebab}.php',
+                'render_template' => 'blocks/${block_kebab}.php',
                 'mode'            => 'edit',
                 'supports'        => array(
                     'mode'      => false,

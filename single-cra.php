@@ -4,19 +4,24 @@
  *
  * @package cb-afiniti2023
  */
+
 defined( 'ABSPATH' ) || exit;
 
 ob_start();
 get_header();
 $header = ob_get_clean();
 $header = preg_replace( '#<title>(.*?)<\/title>#', '<title>Change Readiness Assessment Results | Afiniti</title>', $header );
-echo $header;
+echo $header; // phpcs:ignore
 
-$pageID = get_field( 'cra_tool_page_id', 'options' );
-$data   = get_field( 'data' );
-$scores = get_field( 'scores' );
+$page_id = get_field( 'cra_tool_page_id', 'options' );
+$data    = get_field( 'data' );
+$scores  = get_field( 'scores' );
+$levers  = array( 'Leadership', 'Drivers', 'Culture', 'Engagement', 'Capability', 'Method' );
 
-$levers = array( 'Leadership', 'Drivers', 'Culture', 'Engagement', 'Capability', 'Method' );
+// Both come back from a JSON payload stored by cra.php, so treat them as
+// untrusted shapes rather than reading keys off them blind.
+$data   = is_array( $data ) ? $data : array();
+$scores = is_array( $scores ) ? $scores : array();
 
 ?>
 <style>
@@ -66,13 +71,8 @@ $levers = array( 'Leadership', 'Drivers', 'Culture', 'Engagement', 'Capability',
         </div>
     </section>
     <?php
-include get_stylesheet_directory() . '/page-templates/anim/business-change.php';
-?>
-    <!--
-<?=cbdump($data)?>
-    <?=cbdump($scores)?>
-    -->
-
+    require get_stylesheet_directory() . '/page-templates/anim/business-change.php';
+    ?>
     <div class="container-xl">
         <section class="contact mb-5">
             <div class="row bg--grey-700 p-4">
@@ -80,27 +80,22 @@ include get_stylesheet_directory() . '/page-templates/anim/business-change.php';
                     <div class="row">
                         <div class="col-sm-6 fw-bold">Company Name</div>
                         <div class="col-sm-6">
-                            <?=$data['orgName']?>
-                        </div>
-                        <div class="col-sm-6 fw-bold">Contact Name</div>
-                        <div class="col-sm-6">
-                            <?=$data['contactName']?>
+                            <?= esc_html( $data['orgName'] ?? '' ); ?>
                         </div>
                         <div class="col-sm-6 fw-bold">Date</div>
                         <div class="col-sm-6">
-                            <?=date('d M Y')?>
+                            <?php // The date the assessment was taken, not today - this page is meant to be bookmarked and revisited. ?>
+                            <?= esc_html( get_the_date( 'd M Y' ) ); ?>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-8">
-                    The link to this report was emailed to
-                    <?=$data['contactEmail']?>.
                     <ul class="fa-ul mt-2">
                         <li><span class="fa-li"><i class="fa-solid fa-map-pin"></i></span> <a
-                                href="<?=get_the_permalink()?>"
+                                href="<?= esc_url( get_the_permalink() ); ?>"
                                 class="text-white">Bookmark this link</a> for future reference.</li>
                         <li><span class="fa-li"><i class="fa-solid fa-envelope"></i></span> <a
-                                href="mailto:?subject=Afiniti Change Readiness Assessment&body=<?=get_the_permalink()?>"
+                                href="mailto:?subject=Afiniti Change Readiness Assessment&body=<?= esc_url( get_the_permalink() ); ?>"
                                 class="text-white">Share via email</a></li>
                         <li><span class="fa-li"><i class="fa-solid fa-star"></i></span> Found your results useful? Help others by <a
                                 href="https://g.page/r/Cfn508DiV5pLEAI/review"
@@ -127,18 +122,17 @@ include get_stylesheet_directory() . '/page-templates/anim/business-change.php';
             <h2>Summary Assessment</h2>
             <div>
                 <?php
-            foreach ($levers as $l) {
-                $theScore = round(($scores[$l] / 30) * 100);
-                $field = strtolower($l) . '_analysis';
-                $which = '';
-                while(have_rows($field, $pageID)) {
-                    the_row();
-                    if ($theScore >= get_sub_field('low_score') && $theScore <= get_sub_field('high_score')) {
-                        echo str_replace(['<p>', '</p>'], '', apply_filters('the_content', get_sub_field('summary'))) . ' ';
+                foreach ( $levers as $l ) {
+                    $the_score = round( ( ( $scores[ $l ] ?? 0 ) / 30 ) * 100 );
+                    $field     = strtolower( $l ) . '_analysis';
+                    while ( have_rows( $field, $page_id ) ) {
+                        the_row();
+                        if ( $the_score >= get_sub_field( 'low_score' ) && $the_score <= get_sub_field( 'high_score' ) ) {
+                            echo str_replace( array( '<p>', '</p>' ), '', apply_filters( 'the_content', get_sub_field( 'summary' ) ) ) . ' '; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                        }
                     }
                 }
-            }
-?>
+                ?>
             </div>
         </section>
 
@@ -152,41 +146,46 @@ include get_stylesheet_directory() . '/page-templates/anim/business-change.php';
             </div>
 
             <?php
-    $pcts = array();
-    foreach ($levers as $l) {
-        // $theScore = getPercentOfNumber($scores[$l],30);
-        $theScore = round(($scores[$l] / 30) * 100);
-        $pcts[$l] = $theScore;
-        ?>
+            $pcts = array();
+            foreach ( $levers as $l ) {
+                $the_score  = round( ( ( $scores[ $l ] ?? 0 ) / 30 ) * 100 );
+                $pcts[ $l ] = $the_score;
+                ?>
             <div class="results__grid">
                 <div class="d-flex justify-content-between">
-                    <div class="fw-bold"><?=$l?></div>
-                    <div class="d-md-none fw-normal"><?=$theScore?>%
+                    <div class="fw-bold"><?= esc_html( $l ); ?></div>
+                    <div class="d-md-none fw-normal"><?= esc_html( $the_score ); ?>%
                     </div>
                 </div>
-                <div class="d-none d-md-block"><?=$theScore?>%</div>
+                <div class="d-none d-md-block"><?= esc_html( $the_score ); ?>%</div>
                 <?php
-                $field = strtolower($l) . '_analysis';
-        $which = '';
-        while(have_rows($field, $pageID)) {
-            the_row();
-            if ($theScore >= get_sub_field('low_score') && $theScore <= get_sub_field('high_score')) {
+                $field   = strtolower( $l ) . '_analysis';
+                $matched = false;
+                while ( have_rows( $field, $page_id ) ) {
+                    the_row();
+                    if ( $the_score >= get_sub_field( 'low_score' ) && $the_score <= get_sub_field( 'high_score' ) ) {
+                        $matched = true;
+                        ?>
+                <div>
+                        <?= wp_kses_post( apply_filters( 'the_content', get_sub_field( 'analysis' ) ) ); ?>
+                </div>
+                <div>
+                        <?= wp_kses_post( apply_filters( 'the_content', cb_list( get_sub_field( 'recommendations' ) ) ) ); ?>
+                </div>
+                        <?php
+                    }
+                }
+
+                // No band covers this score - keep the four column grid intact
+                // rather than letting the row collapse to two cells.
+                if ( ! $matched ) {
+                    echo '<div></div><div></div>';
+                }
                 ?>
-                <div>
-                    <?=apply_filters('the_content',get_sub_field('analysis'))?>
-                </div>
-                <div>
-                    <?=apply_filters('the_content', cb_list(get_sub_field('recommendations')))?>
-                </div>
+            </div>
                 <?php
             }
-        }
-        ?>
-            </div>
-            <?php
-    }
-?>
-    </div>
+            ?>
     </section>
 
     <section>
@@ -196,51 +195,58 @@ include get_stylesheet_directory() . '/page-templates/anim/business-change.php';
     </section>
 
     <!-- latest_insights -->
-    <section class="latest_news py-5 <?=$classes?>">
+    <section class="latest_news py-5">
         <div class="container">
             <h2 class="mb-4">Related <span>Insights</span></h2>
             <div class="slider mb-4">
                 <?php
-asort($pcts);
-$keys = array_slice(array_keys($pcts), 0, 2);
+                asort($pcts);
+                $keys = array_slice(array_keys($pcts), 0, 2);
 
-/*  two from lowest $keys[0] */
-/*  one from second lowest $keys[1] */
-/*  three of the latest */
+                /*  two from lowest $keys[0] */
+                /*  one from second lowest $keys[1] */
+                /*  three of the latest */
 
-$maxcount = 3;
-$postcount = 0;
-$theIDs = array();
+                // $maxcount is the total across all three queries - two lever
+                // posts, one for the second lever, then the latest to fill up.
+                // This used to be 3 and $remaining was computed the wrong way
+                // round ($postcount - $maxcount), so it was never above zero and
+                // the third query never ran.
+                $maxcount  = 6;
+                $postcount = 0;
+                $theIDs    = array();
 
-$lowest = new WP_Query(array(
-    'post_type' => 'post',
-    'posts_per_page' => 2,
-    'post_status' => 'publish',
-    'tax_query' => array(
-        'relation' => 'AND',
-        array(
-            'taxonomy' => 'category',
-            'field'    => 'slug',
-            'terms'    => 'team-insight',
-            'operator' => 'NOT IN'
-        ),
-        array(
-            'taxonomy' => 'lever',
-            'field'    => 'name',
-            'terms'    => array($keys[0]),
-        )
-    ),
-));
+                $lowest = new WP_Query(
+                    array(
+                        'post_type'      => 'post',
+                        'posts_per_page' => 2,
+                        'post_status'    => 'publish',
+                        'tax_query'      => array( // phpcs:ignore
+                            'relation' => 'AND',
+                            array(
+                                'taxonomy' => 'category',
+                                'field'    => 'slug',
+                                'terms'    => 'team-insight',
+                                'operator' => 'NOT IN'
+                            ),
+                            array(
+                                'taxonomy' => 'lever',
+                                'field'    => 'name',
+                                'terms'    => array( $keys[0] ),
+                            )
+                        ),
+                    )
+                );
 
-while ($lowest->have_posts()) {
-    $lowest->the_post();
-    $postcount++;
-    $theIDs[] = get_the_ID();
+                while ($lowest->have_posts()) {
+                    $lowest->the_post();
+                    $postcount++;
+                    $theIDs[] = get_the_ID();
 
-    $img = get_the_post_thumbnail_url(get_the_ID(), 'large');
-    if (!$img) {
-        $img = get_stylesheet_directory_uri() . '/img/default-blog.jpg';
-    }
+                    $img = get_the_post_thumbnail_url(get_the_ID(), 'large');
+                    if (!$img) {
+                        $img = get_stylesheet_directory_uri() . '/img/default-blog.jpg';
+                    }
 
     ?>
     <div class="slider__item insight px-3">
@@ -267,6 +273,8 @@ while ($lowest->have_posts()) {
     </div>
     <?php
 }
+
+wp_reset_postdata();
 
 $second = new WP_Query(array(
     'post_type' => 'post',
@@ -324,7 +332,9 @@ while ($second->have_posts()) {
     <?php
 }
 
-$remaining = $postcount - $maxcount;
+wp_reset_postdata();
+
+$remaining = $maxcount - $postcount;
 
 if ($remaining > 0) {
 
@@ -375,6 +385,8 @@ if ($remaining > 0) {
         </div>
         <?php
     }
+
+    wp_reset_postdata();
 }
 ?>
             </div>

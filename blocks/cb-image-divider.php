@@ -7,8 +7,8 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$colour = get_field('title_colour');
-$parts  = preg_split('/-/', $colour);
+$colour = get_field( 'title_colour' );
+$parts  = preg_split( '/-/', $colour );
 $colour = $parts[0];
 
 $classes = $block['className'] ?? null;
@@ -25,7 +25,7 @@ $classes = $block['className'] ?? null;
 			<div class="col-6 border-dash-top-right image_divider__h-60"></div>
 			<div class="col-12 image_divider__title">
 				<h2 class="h3 fw-bold text--<?= esc_attr( $colour ); ?>">
-					<?= esc_html( get_field( 'title' ) ); ?>
+					<?= wp_kses_post( get_field( 'title' ) ); ?>
 				</h2>
 			</div>
 		</div>

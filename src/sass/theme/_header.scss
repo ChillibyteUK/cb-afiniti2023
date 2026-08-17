@@ -3,10 +3,6 @@ nav.navbar {
     font-size: 16px;
     transition: all .3s ease;
 
-    &.hide {
-        top: -140px;
-    }
-
     &.scrolled,
     &.navdark {
         background: none;

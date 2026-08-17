@@ -34,7 +34,14 @@ if ($data['orgName']) {
     $company = $data['orgName'];
 }
 
-$post_title = trim($company . ' | ' . $email);
+/*
+ * The title used to be "Company | email". post_title reaches far more places
+ * than you would expect - Yoast puts it in og:title and the JSON-LD graph, so
+ * the submitter's email address was sitting in the markup of their own results
+ * page. The email is already stored in the ACF data field and has its own
+ * column on the admin list screen, so it does not need to be in the title.
+ */
+$post_title = trim($company) !== '' ? trim($company) : 'CRA Result';
 $post_slug = random_str(32);
 
 $post_data = array(

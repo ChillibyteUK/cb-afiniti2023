@@ -22952,9 +22952,6 @@ nav.navbar {
   font-size: 16px;
   transition: all 0.3s ease;
 }
-nav.navbar.hide {
-  top: -140px;
-}
 nav.navbar.scrolled, nav.navbar.navdark {
   background: none;
   background-color: #fff;
@@ -24795,6 +24792,47 @@ button.search.clear::after {
   color: var(--col-purple-500);
   background-color: white;
   border-color: white;
+}
+
+.nav_buttons {
+  --cb-navbar-height: 68px;
+  background-color: white;
+  padding-block: 0.75rem;
+}
+@media (min-width: 992px) {
+  .nav_buttons {
+    position: -webkit-sticky;
+    position: sticky;
+    top: var(--cb-navbar-height);
+    z-index: 1020;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  }
+}
+.nav_buttons__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+@media (max-width: 991px) {
+  .nav_buttons__list {
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .nav_buttons__list::-webkit-scrollbar {
+    display: none;
+  }
+}
+.nav_buttons__list > li {
+  flex: 0 0 auto;
+}
+
+:root:has(.nav_buttons) {
+  scroll-padding-top: calc(68px + 3.5rem + 1rem);
 }
 
 .single-person-photo {

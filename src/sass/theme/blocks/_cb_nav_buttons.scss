@@ -1,0 +1,55 @@
+// CB Nav Buttons
+//
+// A bar of buttons jumping to anchors further down the page.
+//
+// Sticky from lg up. It pins below the fixed navbar rather than at the very top,
+// so both stay usable together - nav.navbar is z-index 1030, so this sits just
+// under it. --cb-navbar-height is the one place to change that offset.
+
+.nav_buttons {
+    --cb-navbar-height: 68px;
+
+    background-color: white;
+    padding-block: 0.75rem;
+
+    @media (min-width: 992px) {
+        position: sticky;
+        top: var(--cb-navbar-height);
+        z-index: 1020;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    &__list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+
+        // Below lg the bar is not sticky, so let a long list scroll sideways
+        // rather than wrap into a tall block.
+        @media (max-width: 991px) {
+            justify-content: flex-start;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+        }
+
+        > li {
+            flex: 0 0 auto;
+        }
+    }
+}
+
+// Jumping to an anchor otherwise lands it underneath the fixed navbar and this
+// bar. Scoped with :has() so only pages carrying the block are affected - the
+// general case is for the anchor review.
+:root:has(.nav_buttons) {
+    scroll-padding-top: calc(68px + 3.5rem + 1rem);
+}
+
