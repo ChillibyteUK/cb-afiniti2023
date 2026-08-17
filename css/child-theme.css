@@ -24902,6 +24902,40 @@ button.search.clear::after {
   min-height: 6rem;
 }
 
+.results__grid {
+  display: grid;
+  gap: 1rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 1rem;
+  margin-bottom: 0.5rem;
+}
+@media (min-width: 768px) {
+  .results__grid {
+    grid-template-columns: 2fr 1fr 6fr 3fr;
+  }
+}
+
+.single-cra .fa-ul {
+  margin-left: 1.5rem;
+}
+.single-cra .post-image-flag {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--col-green-700);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  z-index: 9999;
+  font-size: 0.8rem;
+}
+.single-cra .slick-next::before,
+.single-cra .slick-prev::before {
+  color: var(--col-green-700) !important;
+}
+.single-cra a[target=_blank]::after {
+  content: "" !important;
+}
+
 #contact-icon {
   width: 140px;
   height: auto;

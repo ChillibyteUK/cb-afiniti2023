@@ -7,11 +7,21 @@
 
 defined( 'ABSPATH' ) || exit;
 
-ob_start();
+/*
+ * The document title used to be swapped by buffering the whole of get_header()
+ * and running a regex over it. Filtering is cheaper and does not depend on the
+ * markup. cb_strip_cra_seo_title() in cb-posttypes.php covers the Yoast path,
+ * which is what actually renders the title while Yoast is active.
+ */
+add_filter( 'document_title_parts', 'cb_cra_document_title' );
+function cb_cra_document_title( $parts ) {
+    $parts['title'] = 'Change Readiness Assessment Results';
+    unset( $parts['tagline'] );
+
+    return $parts;
+}
+
 get_header();
-$header = ob_get_clean();
-$header = preg_replace( '#<title>(.*?)<\/title>#', '<title>Change Readiness Assessment Results | Afiniti</title>', $header );
-echo $header; // phpcs:ignore
 
 $page_id = get_field( 'cra_tool_page_id', 'options' );
 $data    = get_field( 'data' );
@@ -23,44 +33,45 @@ $levers  = array( 'Leadership', 'Drivers', 'Culture', 'Engagement', 'Capability'
 $data   = is_array( $data ) ? $data : array();
 $scores = is_array( $scores ) ? $scores : array();
 
-?>
-<style>
-    .results__grid {
-        display: grid;
-        gap: 1rem;
-        border-bottom: 1px solid #eee;
-        padding-bottom: 1rem;
-        margin-bottom: 0.5rem;
-    }
+/*
+ * Resolve everything each lever needs up front, in one pass.
+ *
+ * The percentages and the matching score band used to be worked out twice over
+ * - once for the Summary section and again for Detailed Results - which meant
+ * walking all six ACF repeaters twice and duplicating the band-matching logic.
+ * The chart JS then recalculated the same six percentages twice more.
+ */
+$results = array();
 
-    @media (min-width:768px) {
-        .results__grid {
-            grid-template-columns: 2fr 1fr 6fr 3fr;
+foreach ( $levers as $lever ) {
+    $percent = round( ( ( $scores[ $lever ] ?? 0 ) / 30 ) * 100 );
+
+    $results[ $lever ] = array(
+        'percent'         => $percent,
+        'summary'         => '',
+        'analysis'        => '',
+        'recommendations' => '',
+    );
+
+    while ( have_rows( strtolower( $lever ) . '_analysis', $page_id ) ) {
+        the_row();
+
+        if ( $percent < (int) get_sub_field( 'low_score' ) || $percent > (int) get_sub_field( 'high_score' ) ) {
+            continue;
         }
-    }
 
-    .fa-ul {
-        margin-left: 1.5rem;
+        $results[ $lever ]['summary']         = get_sub_field( 'summary' );
+        $results[ $lever ]['analysis']        = get_sub_field( 'analysis' );
+        $results[ $lever ]['recommendations'] = get_sub_field( 'recommendations' );
     }
+}
 
-    .post-image-flag {
-        position: absolute;
-        top: 0;
-        left: 0;
-        background-color: var(--col-green-700);
-        color: white;
-        padding: 0.25rem 0.5rem;
-        z-index: 9999;
-        font-size: 0.8rem;
-    }
+$percentages = wp_list_pluck( $results, 'percent' );
 
-    .slick-next::before, .slick-prev::before {
-        color: var(--col-green-700) !important;
-    }
-    a[target=_blank]::after {
-        content: "" !important;
-    }
-</style>
+// Benchmark plotted against the user's scores on both charts.
+$change_index = array( 90, 80, 70, 75, 85, 75 );
+
+?>
 <main id="main">
     <section id="hero" class="hero d-flex align-items-start pt-lg-0 align-items-lg-center">
         <div class="hero__inner container-xl text-center">
@@ -90,7 +101,7 @@ $scores = is_array( $scores ) ? $scores : array();
                     </div>
                 </div>
                 <div class="col-md-8">
-                    <ul class="fa-ul mt-2">
+                    <ul class="fa-ul">
                         <li><span class="fa-li"><i class="fa-solid fa-map-pin"></i></span> <a
                                 href="<?= esc_url( get_the_permalink() ); ?>"
                                 class="text-white">Bookmark this link</a> for future reference.</li>
@@ -122,15 +133,13 @@ $scores = is_array( $scores ) ? $scores : array();
             <h2>Summary Assessment</h2>
             <div>
                 <?php
-                foreach ( $levers as $l ) {
-                    $the_score = round( ( ( $scores[ $l ] ?? 0 ) / 30 ) * 100 );
-                    $field     = strtolower( $l ) . '_analysis';
-                    while ( have_rows( $field, $page_id ) ) {
-                        the_row();
-                        if ( $the_score >= get_sub_field( 'low_score' ) && $the_score <= get_sub_field( 'high_score' ) ) {
-                            echo str_replace( array( '<p>', '</p>' ), '', apply_filters( 'the_content', get_sub_field( 'summary' ) ) ) . ' '; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                        }
+                foreach ( $results as $result ) {
+                    if ( ! $result['summary'] ) {
+                        continue;
                     }
+
+                    // Unwrapped so the six summaries read as one paragraph.
+                    echo str_replace( array( '<p>', '</p>' ), '', apply_filters( 'the_content', $result['summary'] ) ) . ' '; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                 }
                 ?>
             </div>
@@ -145,47 +154,23 @@ $scores = is_array( $scores ) ? $scores : array();
                 <div class="fw-bold">Recommended Action</div>
             </div>
 
-            <?php
-            $pcts = array();
-            foreach ( $levers as $l ) {
-                $the_score  = round( ( ( $scores[ $l ] ?? 0 ) / 30 ) * 100 );
-                $pcts[ $l ] = $the_score;
-                ?>
+            <?php foreach ( $results as $lever => $result ) { ?>
             <div class="results__grid">
                 <div class="d-flex justify-content-between">
-                    <div class="fw-bold"><?= esc_html( $l ); ?></div>
-                    <div class="d-md-none fw-normal"><?= esc_html( $the_score ); ?>%
+                    <div class="fw-bold"><?= esc_html( $lever ); ?></div>
+                    <div class="d-md-none fw-normal"><?= esc_html( $result['percent'] ); ?>%
                     </div>
                 </div>
-                <div class="d-none d-md-block"><?= esc_html( $the_score ); ?>%</div>
-                <?php
-                $field   = strtolower( $l ) . '_analysis';
-                $matched = false;
-                while ( have_rows( $field, $page_id ) ) {
-                    the_row();
-                    if ( $the_score >= get_sub_field( 'low_score' ) && $the_score <= get_sub_field( 'high_score' ) ) {
-                        $matched = true;
-                        ?>
+                <div class="d-none d-md-block"><?= esc_html( $result['percent'] ); ?>%</div>
+                <?php // Always two cells, so a lever with no matching band does not collapse the four column grid. ?>
                 <div>
-                        <?= wp_kses_post( apply_filters( 'the_content', get_sub_field( 'analysis' ) ) ); ?>
+                    <?= wp_kses_post( apply_filters( 'the_content', $result['analysis'] ) ); ?>
                 </div>
                 <div>
-                        <?= wp_kses_post( apply_filters( 'the_content', cb_list( get_sub_field( 'recommendations' ) ) ) ); ?>
+                    <?= wp_kses_post( apply_filters( 'the_content', cb_list( $result['recommendations'] ) ) ); ?>
                 </div>
-                        <?php
-                    }
-                }
-
-                // No band covers this score - keep the four column grid intact
-                // rather than letting the row collapse to two cells.
-                if ( ! $matched ) {
-                    echo '<div></div><div></div>';
-                }
-                ?>
             </div>
-                <?php
-            }
-            ?>
+            <?php } ?>
     </section>
 
     <section>
@@ -200,195 +185,126 @@ $scores = is_array( $scores ) ? $scores : array();
             <h2 class="mb-4">Related <span>Insights</span></h2>
             <div class="slider mb-4">
                 <?php
-                asort($pcts);
-                $keys = array_slice(array_keys($pcts), 0, 2);
+                // Sort a copy. $percentages itself has to stay in lever order,
+                // because the charts further down pair it with $levers.
+                $weakest_first = $percentages;
+                asort( $weakest_first );
+                $weakest = array_slice( array_keys( $weakest_first ), 0, 2 );
 
-                /*  two from lowest $keys[0] */
-                /*  one from second lowest $keys[1] */
-                /*  three of the latest */
+                /*
+                 * Two posts for the weakest lever, one for the second weakest,
+                 * then the most recent insights to fill up to $max_cards.
+                 *
+                 * This was three near identical query-and-render blocks. The
+                 * posts are now collected first and rendered by a single loop,
+                 * and the queries read from ->posts rather than calling
+                 * the_post(), so the global post is never touched.
+                 */
+                $max_cards = 6;
+                $cards     = array();
+                $seen      = array();
 
-                // $maxcount is the total across all three queries - two lever
-                // posts, one for the second lever, then the latest to fill up.
-                // This used to be 3 and $remaining was computed the wrong way
-                // round ($postcount - $maxcount), so it was never above zero and
-                // the third query never ran.
-                $maxcount  = 6;
-                $postcount = 0;
-                $theIDs    = array();
-
-                $lowest = new WP_Query(
-                    array(
-                        'post_type'      => 'post',
-                        'posts_per_page' => 2,
-                        'post_status'    => 'publish',
-                        'tax_query'      => array( // phpcs:ignore
-                            'relation' => 'AND',
-                            array(
-                                'taxonomy' => 'category',
-                                'field'    => 'slug',
-                                'terms'    => 'team-insight',
-                                'operator' => 'NOT IN'
-                            ),
-                            array(
-                                'taxonomy' => 'lever',
-                                'field'    => 'name',
-                                'terms'    => array( $keys[0] ),
-                            )
-                        ),
-                    )
+                $not_team_insight = array(
+                    'taxonomy' => 'category',
+                    'field'    => 'slug',
+                    'terms'    => 'team-insight',
+                    'operator' => 'NOT IN',
                 );
 
-                while ($lowest->have_posts()) {
-                    $lowest->the_post();
-                    $postcount++;
-                    $theIDs[] = get_the_ID();
+                $lever_picks = array(
+                    array( 'lever' => $weakest[0] ?? '', 'count' => 2 ),
+                    array( 'lever' => $weakest[1] ?? '', 'count' => 1 ),
+                );
 
-                    $img = get_the_post_thumbnail_url(get_the_ID(), 'large');
-                    if (!$img) {
-                        $img = get_stylesheet_directory_uri() . '/img/default-blog.jpg';
+                foreach ( $lever_picks as $pick ) {
+                    if ( ! $pick['lever'] ) {
+                        continue;
                     }
 
-    ?>
-    <div class="slider__item insight px-3">
-        <a href="<?=get_the_permalink()?>">
-            <div class="post-image-container">
-                <div class="post-image-flag"><?=$keys[0]?></div>
-                <div class="post-image mb-2"
-                    style="background-image:url('<?=$img?>')">
-                    <div class="img-overlay">
-                        <div class="middle"><span class="arrow arrow-block arrow-white"></span></div>
-                    </div>
-                </div>
-            </div>
-            <div class="article-title mt-2">
-                <?=get_the_title()?>
-            </div>
-            <div class="article-excerpt">
-                <?=wp_trim_words(get_the_content(), 20)?>
-            </div>
-            <div class="fw-bold py-2 arrow-link">
-                <div class="anim-arrow--slide">Read more <span class="arrow arrow-green"></span></div>
-            </div>
-        </a>
-    </div>
-    <?php
-}
+                    $lever_query = new WP_Query(
+                        array(
+                            'post_type'           => 'post',
+                            'posts_per_page'      => $pick['count'],
+                            'post_status'         => 'publish',
+                            'post__not_in'        => $seen,
+                            'no_found_rows'       => true,
+                            'ignore_sticky_posts' => true,
+                            'tax_query'           => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+                                'relation' => 'AND',
+                                $not_team_insight,
+                                array(
+                                    'taxonomy' => 'lever',
+                                    'field'    => 'name',
+                                    'terms'    => array( $pick['lever'] ),
+                                ),
+                            ),
+                        )
+                    );
 
-wp_reset_postdata();
+                    foreach ( $lever_query->posts as $lever_post ) {
+                        $seen[]  = $lever_post->ID;
+                        $cards[] = array(
+                            'id'   => $lever_post->ID,
+                            'flag' => $pick['lever'],
+                        );
+                    }
+                }
 
-$second = new WP_Query(array(
-    'post_type' => 'post',
-    'posts_per_page' => 1,
-    'post_status' => 'publish',
-    'tax_query' => array(
-        'relation' => 'AND',
-        array(
-            'taxonomy' => 'category',
-            'field'    => 'slug',
-            'terms'    => 'team-insight',
-            'operator' => 'NOT IN'
-        ),
-        array(
-            'taxonomy' => 'lever',
-            'field'    => 'name',
-            'terms'    => array($keys[1]),
-        )
-    ),
-));
+                $remaining = $max_cards - count( $cards );
 
-while ($second->have_posts()) {
-    $second->the_post();
-    $postcount++;
-    $theIDs[] = get_the_ID();
+                if ( $remaining > 0 ) {
+                    $latest_query = new WP_Query(
+                        array(
+                            'post_type'           => 'post',
+                            'posts_per_page'      => $remaining,
+                            'post_status'         => 'publish',
+                            'post__not_in'        => $seen,
+                            'no_found_rows'       => true,
+                            'ignore_sticky_posts' => true,
+                            'tax_query'           => array( $not_team_insight ), // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+                        )
+                    );
 
-    $img = get_the_post_thumbnail_url(get_the_ID(), 'large');
-    if (!$img) {
-        $img = get_stylesheet_directory_uri() . '/img/default-blog.jpg';
-    }
+                    foreach ( $latest_query->posts as $latest_post ) {
+                        $cards[] = array(
+                            'id'   => $latest_post->ID,
+                            'flag' => '',
+                        );
+                    }
+                }
 
-    ?>
-    <div class="slider__item insight px-3">
-        <a href="<?=get_the_permalink()?>">
-            <div class="post-image-container">
-                <div class="post-image-flag"><?=$keys[1]?></div>
-                <div class="post-image mb-2"
-                    style="background-image:url('<?=$img?>')">
-                    <div class="img-overlay">
-                        <div class="middle"><span class="arrow arrow-block arrow-white"></span></div>
-                    </div>
-                </div>
-            </div>
-            <div class="article-title mt-2">
-                <?=get_the_title()?>
-            </div>
-            <div class="article-excerpt">
-                <?=wp_trim_words(get_the_content(), 20)?>
-            </div>
-            <div class="fw-bold py-2 arrow-link">
-                <div class="anim-arrow--slide">Read more <span class="arrow arrow-green"></span></div>
-            </div>
-        </a>
-    </div>
-    <?php
-}
+                $fallback_image = get_stylesheet_directory_uri() . '/img/default-blog.jpg';
 
-wp_reset_postdata();
-
-$remaining = $maxcount - $postcount;
-
-if ($remaining > 0) {
-
-    $other = new WP_Query(array(
-        'post_type' => 'post',
-        'posts_per_page' => $remaining,
-        'post_status' => 'publish',
-        'post__not_in' => $theIDs,
-        'tax_query' => array(
-            array(
-                'taxonomy' => 'category',
-                'field'    => 'slug',
-                'terms'    => 'team-insight',
-                'operator' => 'NOT IN'
-            )
-        ),
-    ));
-
-    while ($other->have_posts()) {
-        $other->the_post();
-
-        $img = get_the_post_thumbnail_url(get_the_ID(), 'large');
-        if (!$img) {
-            $img = get_stylesheet_directory_uri() . '/img/default-blog.jpg';
-        }
-
-        ?>
-        <div class="slider__item insight px-3">
-            <a href="<?=get_the_permalink()?>">
-                <div class="post-image-container">
-                    <div class="post-image mb-2"
-                        style="background-image:url('<?=$img?>')">
-                        <div class="img-overlay">
-                            <div class="middle"><span class="arrow arrow-block arrow-white"></span></div>
+                foreach ( $cards as $card ) {
+                    $image = get_the_post_thumbnail_url( $card['id'], 'large' );
+                    $image = $image ? $image : $fallback_image;
+                    ?>
+                <div class="slider__item insight px-3">
+                    <a href="<?= esc_url( get_permalink( $card['id'] ) ); ?>">
+                        <div class="post-image-container">
+                            <?php if ( $card['flag'] ) { ?>
+                            <div class="post-image-flag"><?= esc_html( $card['flag'] ); ?></div>
+                            <?php } ?>
+                            <div class="post-image mb-2" style="background-image:url('<?= esc_url( $image ); ?>')">
+                                <div class="img-overlay">
+                                    <div class="middle"><span class="arrow arrow-block arrow-white"></span></div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                        <div class="article-title mt-2">
+                            <?= esc_html( get_the_title( $card['id'] ) ); ?>
+                        </div>
+                        <div class="article-excerpt">
+                            <?= esc_html( wp_trim_words( get_the_excerpt( $card['id'] ), 20 ) ); ?>
+                        </div>
+                        <div class="fw-bold py-2 arrow-link">
+                            <div class="anim-arrow--slide">Read more <span class="arrow arrow-green"></span></div>
+                        </div>
+                    </a>
                 </div>
-                <div class="article-title mt-2">
-                    <?=get_the_title()?>
-                </div>
-                <div class="article-excerpt">
-                    <?=wp_trim_words(get_the_content(), 20)?>
-                </div>
-                <div class="fw-bold py-2 arrow-link">
-                    <div class="anim-arrow--slide">Read more <span class="arrow arrow-green"></span></div>
-                </div>
-            </a>
-        </div>
-        <?php
-    }
-
-    wp_reset_postdata();
-}
-?>
+                    <?php
+                }
+                ?>
             </div>
             <div class="text-center"><a href="/insights/" class="btn btn--green">Read more</a></div>
         </div>
@@ -437,122 +353,67 @@ add_action('wp_footer', function () {
 ?>
     </div>
 </main>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<?php
+/*
+ * Pinned rather than tracking latest: an unversioned CDN URL means a Chart.js
+ * major release silently breaks this page.
+ *
+ * Both charts plot the same two series, so the labels, the scores and the
+ * benchmark are encoded once here instead of being repeated - the six
+ * percentages used to be recalculated twelve times between the two configs.
+ */
+?>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script>
-    const bar = document.getElementById('chart');
+    const craLabels = <?= wp_json_encode( $levers ); ?>;
+    const craScores = <?= wp_json_encode( array_values( $percentages ) ); ?>;
+    const craIndex = <?= wp_json_encode( $change_index ); ?>;
 
-    new Chart(bar, {
+    const craOrange = "#f07d19";
+    const craGreen = "#87bd75";
+
+    const craSeries = (fill) => [{
+            label: 'Your Score',
+            data: craScores,
+            backgroundColor: fill ? craOrange + "66" : craOrange,
+            borderWidth: 1,
+            pointBackgroundColor: craOrange,
+            pointBorderColor: craOrange,
+            pointHoverBackgroundColor: craOrange,
+            pointHoverBorderColor: craOrange
+        },
+        {
+            label: 'Afiniti Change Index',
+            data: craIndex,
+            backgroundColor: fill ? craGreen + "66" : craGreen,
+            borderWidth: 1,
+            pointBackgroundColor: craGreen,
+            pointBorderColor: craGreen,
+            pointHoverBackgroundColor: craGreen,
+            pointHoverBorderColor: craGreen
+        }
+    ];
+
+    new Chart(document.getElementById('chart'), {
         type: 'bar',
         data: {
-            labels: ['Leadership', 'Drivers', 'Culture', 'Engagement', 'Capability', 'Method'],
-            datasets: [{
-                    label: 'Your Score',
-                    yAxisID: 'score',
-                    data: [
-                        <?=getPercentOfNumber($scores['Leadership'], 30)?>
-                        ,
-                        <?=getPercentOfNumber($scores['Drivers'], 30)?>
-                        ,
-                        <?=getPercentOfNumber($scores['Culture'], 30)?>
-                        ,
-                        <?=getPercentOfNumber($scores['Engagement'], 30)?>
-                        ,
-                        <?=getPercentOfNumber($scores['Capability'], 30)?>
-                        ,
-                        <?=getPercentOfNumber($scores['Method'], 30)?>
-                    ],
-                    borderWidth: 1,
-                    backgroundColor: "#f07d19",
-                    pointBackgroundColor: "#f07d19",
-                    pointBorderColor: "#f07d19",
-                    pointHoverBackgroundColor: "#f07d19",
-                    pointHoverBorderColor: "#f07d19"
-                },
-                {
-                    label: 'Afiniti Change Index',
-                    yAxisID: 'acr',
-                    data: [90, 80, 70, 75, 85, 75],
-                    borderWidth: 1,
-                    backgroundColor: "#87bd75",
-                    pointBackgroundColor: "#87bd75",
-                    pointBorderColor: "#87bd75",
-                    pointHoverBackgroundColor: "#87bd75",
-                    pointHoverBorderColor: "#87bd75"
-                }
-            ]
+            labels: craLabels,
+            datasets: craSeries(false)
         },
         options: {
             scales: {
-                acr: {
-                    display: false,
+                y: {
                     max: 100
-                },
-                score: {
-                    type: 'linear',
-                    position: 'left',
-                    max: 100
-                },
-                rank: {
-                    type: 'linear',
-                    position: 'right',
-                    ticks: {
-                        // min: 0,
-                        // max: 1
-                        callback: function(value, index) {
-                            // console.log(this.getLabelForValue(value));
-                            if (this.getLabelForValue(index) == 1) {
-                                return 'Immediate action';
-                            } else if (this.getLabelForValue(index) == 5) {
-                                return 'Some improvements';
-                            } else if (this.getLabelForValue(index) == 9) {
-                                return 'No action';
-                            } else {
-                                return;
-                            }
-                        }
-                    }
                 }
             }
         }
     });
 
-    const radar = document.getElementById('radar');
-
-    new Chart(radar, {
+    new Chart(document.getElementById('radar'), {
         type: 'radar',
         data: {
-            labels: ['Leadership', 'Drivers', 'Culture', 'Engagement', 'Capability', 'Method'],
-            datasets: [{
-                    label: 'Actual',
-                    data: [
-                        <?=getPercentOfNumber($scores['Leadership'], 30)?>
-                        ,
-                        <?=getPercentOfNumber($scores['Drivers'], 30)?>
-                        ,
-                        <?=getPercentOfNumber($scores['Culture'], 30)?>
-                        ,
-                        <?=getPercentOfNumber($scores['Engagement'], 30)?>
-                        ,
-                        <?=getPercentOfNumber($scores['Capability'], 30)?>
-                        ,
-                        <?=getPercentOfNumber($scores['Method'], 30)?>
-                    ],
-                    backgroundColor: "#f07d1966",
-                    pointBackgroundColor: "#f07d19",
-                    pointBorderColor: "#f07d19",
-                    pointHoverBackgroundColor: "#f07d19",
-                    pointHoverBorderColor: "#f07d19"
-                },
-                {
-                    label: 'Afiniti Change Index',
-                    data: [90, 80, 70, 75, 85, 75],
-                    backgroundColor: "#87bd7566",
-                    pointBackgroundColor: "#87bd75",
-                    pointBorderColor: "#87bd75",
-                    pointHoverBackgroundColor: "#87bd75",
-                    pointHoverBorderColor: "#87bd75"
-                }
-            ]
+            labels: craLabels,
+            datasets: craSeries(true)
         },
         options: {
             elements: {
@@ -571,11 +432,4 @@ add_action('wp_footer', function () {
 </script>
 <?php
 
-function getPercentOfNumber($number, $percent)
-{
-    return round(($number / $percent) * 100);
-}
-
-
 get_footer();
-?>

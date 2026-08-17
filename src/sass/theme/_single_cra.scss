@@ -1,0 +1,46 @@
+// CRA results page (single-cra.php)
+// Moved out of an inline <style> block in the template.
+
+.results__grid {
+    display: grid;
+    gap: 1rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 1rem;
+    margin-bottom: 0.5rem;
+
+    @media (min-width: 768px) {
+        grid-template-columns: 2fr 1fr 6fr 3fr;
+    }
+}
+
+.single-cra {
+
+    .fa-ul {
+        margin-left: 1.5rem;
+    }
+
+    .post-image-flag {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: var(--col-green-700);
+        color: white;
+        padding: 0.25rem 0.5rem;
+        z-index: 9999;
+        font-size: 0.8rem;
+    }
+
+    // Slick's arrows are loaded from its own stylesheet, hence the !important.
+    .slick-next::before,
+    .slick-prev::before {
+        color: var(--col-green-700) !important;
+    }
+
+    // Suppresses the off-site indicator across this whole template, as the
+    // inline styles used to. Kept as-is to preserve the existing look, but note
+    // it now also hides the icon on the genuinely external "leave a review"
+    // link - worth revisiting alongside the anchor/icon work.
+    a[target="_blank"]::after {
+        content: "" !important;
+    }
+}

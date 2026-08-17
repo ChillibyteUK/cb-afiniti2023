@@ -179,7 +179,7 @@ function cb_strip_cra_seo_title( $title ) {
         return $title;
     }
 
-    return 'Change Readiness Assessment Results';
+    return 'Change Readiness Assessment Results | Afiniti';
 }
 add_filter( 'wpseo_title', 'cb_strip_cra_seo_title' );
 add_filter( 'wpseo_opengraph_title', 'cb_strip_cra_seo_title' );
