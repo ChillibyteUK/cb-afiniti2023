@@ -24729,6 +24729,8 @@ button.search.clear::after {
 .cra-hero--compact {
   display: none;
   align-items: center;
+  -webkit-padding-before: 2rem;
+  padding-block-start: 2rem;
 }
 .cra-hero--compact .hero__inner {
   padding-block: 3rem;
