@@ -1,0 +1,68 @@
+// CB CRA Hero
+// Renders two heroes: the primary hero on the CRA intro screen, and a compact
+// hero shown while the user is working through the form steps.
+
+.cra-hero {
+
+    &--primary {
+        display: flex;
+    }
+
+    &__eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    &__subtitle {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    &__intro {
+        max-width: 70ch;
+        margin-inline: auto;
+        margin-bottom: 1.5rem;
+    }
+
+    .hero__cta {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}
+
+// Compact variant shown during the form steps. Hidden until cra.js reveals it,
+// except in the block editor where both heroes are shown stacked.
+.cra-hero--compact {
+    display: none;
+    align-items: center;
+
+    .hero__inner {
+        padding-block: 3rem;
+    }
+
+    .cra-hero__form-title {
+        margin-bottom: 0.5rem;
+        font-size: 36px;
+    }
+}
+
+.cra-hero--compact.cra-hero--editor {
+    display: flex;
+}
+
+// Ghost button - white outline and text, used for the sample report link.
+.btn--ghost {
+    color: white;
+    background-color: transparent;
+    border: 2px solid white;
+
+    &:hover {
+        color: var(--col-purple-500);
+        background-color: white;
+        border-color: white;
+    }
+}

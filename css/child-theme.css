@@ -24701,6 +24701,58 @@ button.search.clear::after {
   padding-bottom: 1.25rem;
 }
 
+.cra-hero--primary {
+  display: flex;
+}
+.cra-hero__eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.cra-hero__subtitle {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+.cra-hero__intro {
+  max-width: 70ch;
+  margin-inline: auto;
+  margin-bottom: 1.5rem;
+}
+.cra-hero .hero__cta {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cra-hero--compact {
+  display: none;
+  align-items: center;
+}
+.cra-hero--compact .hero__inner {
+  padding-block: 3rem;
+}
+.cra-hero--compact .cra-hero__form-title {
+  margin-bottom: 0.5rem;
+  font-size: 36px;
+}
+
+.cra-hero--compact.cra-hero--editor {
+  display: flex;
+}
+
+.btn--ghost {
+  color: white;
+  background-color: transparent;
+  border: 2px solid white;
+}
+.btn--ghost:hover {
+  color: var(--col-purple-500);
+  background-color: white;
+  border-color: white;
+}
+
 .single-person-photo {
   max-width: 210px;
   width: 100%;

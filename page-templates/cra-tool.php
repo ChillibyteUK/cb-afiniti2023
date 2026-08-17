@@ -4,10 +4,10 @@
  *
  * Template for displaying the CRA tool.
  *
+ * @package cb-afiniti2023
  */
 
-// Exit if accessed directly.
-defined('ABSPATH') || exit;
+defined( 'ABSPATH' ) || exit;
 
 get_header();
 
@@ -105,19 +105,45 @@ get_header();
     }
 </style>
 <main id="main">
+    <?php
+    /*
+     * The CRA Hero block renders both the intro hero and the compact form
+     * hero, so it is lifted out of the page content: the intro section below
+     * is hidden once the assessment starts, and the form hero has to survive
+     * that. Everything else stays in the intro, rendered through the normal
+     * the_content filter chain.
+     */
+    $cra_hero_blocks  = array();
+    $cra_intro_blocks = array();
+
+    foreach ( parse_blocks( get_the_content() ) as $cra_block ) {
+        if ( 'acf/cb-cra-hero' === ( $cra_block['blockName'] ?? '' ) ) {
+            $cra_hero_blocks[] = $cra_block;
+        } else {
+            $cra_intro_blocks[] = $cra_block;
+        }
+    }
+
+    if ( $cra_hero_blocks ) {
+        echo apply_filters( 'the_content', serialize_blocks( $cra_hero_blocks ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+    } else {
+        // Fallback for CRA pages that have not had the hero block added yet.
+        ?>
     <section id="hero" class="hero d-flex align-items-start pt-lg-0 align-items-lg-center">
         <div class="hero__inner container-xl text-center">
-            <h1 class="mb-3"><span>Change Readiness</span> Assessment Tool</h1>
+            <h1 class="mb-3"><?= wp_kses_post( get_the_title() ); ?></h1>
             <div class="hero__cta">
-            <button id="step0" class="btn btn-lg btn--orange">Get Started</button>
+                <button id="step0" class="btn btn-lg btn--orange">Get Started</button>
+            </div>
         </div>
     </section>
+        <?php
+    }
+    ?>
+    <section class="stepCard" id="form0">
+        <?= apply_filters( 'the_content', serialize_blocks( $cra_intro_blocks ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+    </section>
     <div class="container-xl">
-        <section class="stepCard" id="form0">
-            <?php
-        the_content();
-?>
-        </section>
         <section class="stepCard" id="form1">
             <h2>Step 1 - Contact Details</h2>
             <div class="progress">
@@ -233,7 +259,7 @@ get_header();
             </div>
             <div class="form_panel">
                 <div class="alert alert-light">
-                    <?=get_field('question_header')?>
+                    <?= wp_kses_post( get_field( 'question_header' ) ); ?>
                 </div>
                 <div class="form_grid form_grid--wide">
                     <div class="d-none d-md-block">&nbsp;</div>
@@ -244,19 +270,18 @@ get_header();
                     <div class="d-none d-md-block">&nbsp;</div>
                     <div class="radio_group radio_group--labels d-none d-md-grid">
                         <?php
-            for ($i = 1; $i <= 10; $i++) {
-                echo '<div>' . $i . '</div>';
-            }
-?>
+                        for ( $i = 1; $i <= 10; $i++ ) {
+                            echo '<div>' . esc_html( $i ) . '</div>';
+                        }
+                        ?>
                     </div>
                     <?php
 
-                $mobLabels = '<div class="d-md-none mobLabels"><div>Strongly<br>Disagree</div><div>Strongly<br>Agree</div></div>';
-
-$q = 1;
-while (have_rows('questions_page_1')) {
-    the_row();
-    ?>
+                    $mobLabels = '<div class="d-md-none mobLabels"><div>Strongly<br>Disagree</div><div>Strongly<br>Agree</div></div>';
+                    $q = 1;
+                    while ( have_rows( 'questions_page_1' ) ) {
+                        the_row();
+                        ?>
                     <label
                         for="form3_answers"><?=get_sub_field('question')?><!-- [<?=get_sub_field('lever')?>]
                         --></label>
@@ -293,7 +318,7 @@ while (have_rows('questions_page_1')) {
             </div>
             <div class="form_panel">
                 <div class="alert alert-light">
-                    <?=get_field('question_header')?>
+                    <?= wp_kses_post( get_field('question_header') ); ?>
                 </div>
                 <div class="form_grid form_grid--wide">
                     <div class="d-none d-md-block">&nbsp;</div>

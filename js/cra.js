@@ -7,20 +7,36 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('form0').style.display = 'block';
 })
 
-document.getElementById('step0').addEventListener('click',function(){
+// swap the primary hero for the compact form hero (CB CRA Hero block)
+function showFormHero(showing) {
+    var primary = document.querySelector('.cra-hero--primary');
+    var compact = document.getElementById('cra-form-hero');
+    if (primary) {
+        primary.style.display = showing ? 'none' : 'flex';
+    }
+    if (compact) {
+        compact.style.display = showing ? 'flex' : 'none';
+    }
+}
+
+function startTool() {
     document.getElementById('form0').style.display = 'none';
     document.getElementById('form1').style.display = 'block';
-});
+    showFormHero(true);
+}
+
+var step0 = document.getElementById('step0');
+if (step0) {
+    step0.addEventListener('click', startTool);
+}
 document.querySelectorAll('.start').forEach(function(button) {
-    button.addEventListener('click', function(){
-        document.getElementById('form0').style.display = 'none';
-        document.getElementById('form1').style.display = 'block';
-    });
+    button.addEventListener('click', startTool);
 });
 document.querySelectorAll('.reset').forEach(function(button) {
     button.addEventListener('click', function(){
         document.getElementById('form0').style.display = 'block';
         document.getElementById('form1').style.display = 'none';
+        showFormHero(false);
     });
 });
 

@@ -1,21 +1,22 @@
 <?php
-
-$pageID = 1281;
-$data = get_field('data');
-$scores = get_field('scores');
-
+/**
+ * Template for displaying the CRA tool results.
+ *
+ * @package cb-afiniti2023
+ */
+defined( 'ABSPATH' ) || exit;
 
 ob_start();
 get_header();
 $header = ob_get_clean();
-$header = preg_replace('#<title>(.*?)<\/title>#', '<title>Change Readiness Assessment Results | Afiniti</title>', $header);
+$header = preg_replace( '#<title>(.*?)<\/title>#', '<title>Change Readiness Assessment Results | Afiniti</title>', $header );
 echo $header;
 
-$pageID = get_field('cra_tool_page_id', 'options');
-$data = get_field('data');
-$scores = get_field('scores');
+$pageID = get_field( 'cra_tool_page_id', 'options' );
+$data   = get_field( 'data' );
+$scores = get_field( 'scores' );
 
-$levers = array('Leadership','Drivers','Culture','Engagement','Capability','Method');
+$levers = array( 'Leadership', 'Drivers', 'Culture', 'Engagement', 'Capability', 'Method' );
 
 ?>
 <style>

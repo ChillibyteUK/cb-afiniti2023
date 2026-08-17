@@ -71,6 +71,24 @@ function acf_blocks() {
 
 		acf_register_block_type(
 			array(
+				'name'            => 'cb_cra_hero',
+				'title'           => __( 'CB CRA Hero' ),
+				'category'        => 'layout',
+				'icon'            => 'cover-image',
+				'render_template' => 'blocks/cb-cra-hero.php',
+				'mode'            => 'edit',
+				'supports'        => array(
+					'mode'      => false,
+					'anchor'    => false,
+					'className' => false,
+					'align'     => false,
+					'multiple'  => false,
+				),
+			)
+		);
+
+		acf_register_block_type(
+			array(
 				'name'            => 'cb_related_posts',
 				'title'           => __( 'CB Related Posts' ),
 				'category'        => 'layout',
