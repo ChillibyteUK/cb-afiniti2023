@@ -20,9 +20,15 @@ defined( 'ABSPATH' ) || exit;
 function single_sidebar() {
     ob_start();
 
-    $opt      = get_field( 'single_post_sidebar', 'options' ) ? get_field( 'single_post_sidebar', 'options' ) : array();
+    // Both groups are absent entirely on posts that have never had the sidebar
+    // filled in, and ACF returns false rather than an empty array, so normalise
+    // before reading any keys off them.
+    $opt = get_field( 'single_post_sidebar', 'options' );
+    $opt = is_array( $opt ) ? $opt : array();
+
     $post_id  = get_the_ID();
-    $override = ( $post_id ? get_field( 'sidebar', $post_id ) : null ) ? ( $post_id ? get_field( 'sidebar', $post_id ) : null ) : array();
+    $override = $post_id ? get_field( 'sidebar', $post_id ) : null;
+    $override = is_array( $override ) ? $override : array();
 
     // Determine nubbin state first so we can use it in the override check.
     $show_nubbin = ( $override['show_nubbin'] ?? array() ) === array( 'Yes' );
@@ -31,28 +37,32 @@ function single_sidebar() {
     // nubbin fields only count when show_nubbin is actually checked.
     $meaningful   = array_filter(
         array(
-			$override['title'] ? $override['title'] : '',
-			$override['body'] ? $override['body'] : '',
-			$override['link'] ? $override['link'] : '',
-			$override['link_title'] ? $override['link_title'] : '',
-			$show_nubbin ? ( $override['nubbin_link'] ? $override['nubbin_link'] : '' ) : '',
-			$show_nubbin ? ( $override['nubbin_link_title'] ? $override['nubbin_link_title'] : '' ) : '',
+			$override['title'] ?? '',
+			$override['body'] ?? '',
+			$override['link'] ?? '',
+			$override['link_title'] ?? '',
+			$show_nubbin ? ( $override['nubbin_link'] ?? '' ) : '',
+			$show_nubbin ? ( $override['nubbin_link_title'] ?? '' ) : '',
         )
     );
     $has_override = ! empty( $meaningful );
     $data         = $has_override ? $override : $opt;
 
-    $title        = $data['title'] ? $data['title'] : '';
-    $body         = $data['body'] ? $data['body'] : '';
-    $link         = $data['link'] ? $data['link'] : '';
-    $link_title   = $data['link_title'] ? $data['link_title'] : 'Newsletter Sign Up';
-    $nubbin_link  = $show_nubbin ? ( $override['nubbin_link'] ? $override['nubbin_link'] : '' ) : '';
-    $nubbin_title = $show_nubbin ? ( $override['nubbin_link_title'] ? $override['nubbin_link_title'] : '' ) : '';
+    $title        = $data['title'] ?? '';
+    $body         = $data['body'] ?? '';
+    $link         = $data['link'] ?? '';
+    $link_title   = $data['link_title'] ?? '';
+    $nubbin_link  = $show_nubbin ? ( $override['nubbin_link'] ?? '' ) : '';
+    $nubbin_title = $show_nubbin ? ( $override['nubbin_link_title'] ?? '' ) : '';
+
+    if ( ! $link_title ) {
+        $link_title = 'Newsletter Sign Up';
+    }
 
     // Site-wide nubbin settings (used as fallback when no per-post override).
-    $opt_show_nubbin  = ( $opt['show_nubbin'] ? $opt['show_nubbin'] : array() ) === array( 'Yes' );
-    $opt_nubbin_link  = $opt_show_nubbin ? ( $opt['nubbin_link'] ? $opt['nubbin_link'] : '' ) : '';
-    $opt_nubbin_title = $opt_show_nubbin ? ( $opt['nubbin_link_title'] ? $opt['nubbin_link_title'] : '' ) : '';
+    $opt_show_nubbin  = ( $opt['show_nubbin'] ?? array() ) === array( 'Yes' );
+    $opt_nubbin_link  = $opt_show_nubbin ? ( $opt['nubbin_link'] ?? '' ) : '';
+    $opt_nubbin_title = $opt_show_nubbin ? ( $opt['nubbin_link_title'] ?? '' ) : '';
     ?>
 <div class="sticky-top pb-4" style="top:1rem">
 	<div class="bg--green-500 px-5 py-4">

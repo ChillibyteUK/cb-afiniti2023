@@ -31,16 +31,9 @@ remove_action('wp_enqueue_scripts', 'wp_enqueue_global_styles');
 remove_action('wp_body_open', 'wp_global_styles_render_svg_filters');
 
 
-// Remove comment-reply.min.js from footer
-function remove_comment_reply_header_hook() {
-	wp_deregister_script('comment-reply');
-}
-add_action('init', 'remove_comment_reply_header_hook');
-
-add_action('admin_menu', 'remove_comments_menu');
-function remove_comments_menu() {
-	remove_menu_page('edit-comments.php');
-}
+// Comment handling now lives in the cbp-blog-options plugin. comment-reply.js
+// no longer needs deregistering either: functions.php only enqueues it when
+// comments_open() is true, and the plugin forces that false.
 
 add_filter('theme_page_templates', 'child_theme_remove_page_template');
 function child_theme_remove_page_template( $page_templates ) {
@@ -195,32 +188,9 @@ add_action('widgets_init', 'widgets_init', 11);
 remove_action('wp_enqueue_scripts', 'wp_enqueue_global_styles');
 remove_action('wp_body_open', 'wp_global_styles_render_svg_filters');
 
-// Custom Dashboard Widget
-add_action('wp_dashboard_setup', 'register_cb_dashboard_widget');
-function register_cb_dashboard_widget() {
-	wp_add_dashboard_widget(
-		'cb_dashboard_widget',
-		'Chillibyte',
-		'cb_dashboard_widget_display'
-	);
-}
-
-function cb_dashboard_widget_display() {
-	?>
-<div style="display: flex; align-items: center; justify-content: space-around;">
-	<img style="width: 50%;"
-		src="<?= esc_url( get_stylesheet_directory_uri() . '/img/cb-full.jpg' ); ?>">
-	<a class="button button-primary" target="_blank" rel="noopener nofollow noreferrer"
-		href="mailto:hello@chillibyte.co.uk/">Contact</a>
-</div>
-<div>
-	<p><strong>Thanks for choosing Chillibyte!</strong></p>
-	<hr>
-	<p>Got a problem with your site, or want to make some changes & need us to take a look for you?</p>
-	<p>Use the link above to get in touch and we'll get back to you ASAP.</p>
-</div>
-	<?php
-}
+// The Chillibyte dashboard widget is registered by the cbp-blog-options plugin,
+// unconditionally and under the same cb_dashboard_widget id, so the copy that
+// used to live here was being overwritten anyway.
 
 
 
