@@ -22,9 +22,10 @@ Blocks live in `blocks/`, registered in `inc/cb-blocks.php` at the
 - Local: `afiniti.local`. A one-page crash/burn copy, **not** a mirror of
   production - never infer production scope from a local DB query.
 - Production: WP Engine, heavy sticky full-page caching. Moving to Kinsta soon.
-- Cache busting is via `Version:` in `style.css` (currently **0.4**, bumped from
-  0.3 which had never changed since the theme was created). Bump it whenever
-  shipping CSS/JS, or returning visitors keep the stale files.
+- Cache busting is via `Version:` in `style.css` (currently **0.5**). Bump it
+  whenever shipping CSS/JS, or returning visitors keep the stale files.
+  `js/cra.js` is the exception - it is not compiled and not covered by that
+  version, so it carries its own `?v=` in `cra-tool.php`. Bump that too.
 
 ## Before the next production deploy
 
@@ -123,23 +124,16 @@ short of a captcha stops that and we are choosing not to have one. It stops the
 case that actually happens - a script posting a fixed payload straight at
 `admin-post.php`, having never loaded the form - and expires stale replays.
 
-### Parked
+### Superseded by the restructure
 
-`page-templates/cra-tool.php` has been **rolled back** to the earlier version.
-The phase 1 template work is preserved as
-`page-templates/cra-tool-working.php`, registered as "CRA Tool (working)".
+`cra-tool.php` was briefly rolled back to a pre-hardening version, with the phase
+1 work parked in `cra-tool-working.php`. Both of those are gone: the template was
+rewritten in the restructure below, and the parked copy was deleted.
 
-Both templates now render the `cra_token` field, and the rolled-back one grew a
-minimal `?cra_error=` notice - without it the new `expired` path would have been
-another silent bounce. `cb_cra_bail()` now prefers `wp_get_referer()` over
-`cra_tool_page_id`, because that setting is empty as often as not and every
-rejection was landing on the home page.
-
-Step 1's **Back** link in both templates was hard-coded to
-`/change-readiness-assessment-tool/`, which is not the slug of the live page
-(`/free-change-readiness-assessment-tool/`), so it led nowhere. It is now
-`get_permalink()` - reloading the current page returns to the intro, since
-`#form0` is what shows by default.
+What survived from that work: the `cra_token` field, the `?cra_error=` notice, and
+`cb_cra_bail()` preferring `wp_get_referer()`. Step 1's **Back** link had been
+hard-coded to `/change-readiness-assessment-tool/`, which is not the live page's
+slug; it is `get_permalink()` now.
 
 ## CRA restructure (branch `cra-block-rewrite`)
 
@@ -325,16 +319,37 @@ environment that has not run the migrations. **Production has not been migrated*
 so deleting the group outright would take its questions with it. Delete it, and
 the fallbacks, only after production is migrated and verified.
 
-**Still to do in the restructure:** move the 92 lines of inline `<style>` in
-`cra-tool.php` into SCSS; retire `cra_tool_page_id`; delete the legacy field
-definitions and fallbacks once production is migrated.
+### Phase 4: tidying - DONE except the final deletion
 
-> `page-templates/cra-tool-working.php` is now **dead**. It still has the old
-> `#form1`..`#form5` markup, which the rewritten `cra.js` ignores entirely - the
-> JS returns early when it finds no `[data-cra-step]`, so selecting "CRA Tool
-> (working)" gives a page whose buttons do nothing. It was only ever a parking
-> space for phase 1 template work that phase 3 has superseded. It should be
-> deleted.
+**Inline styles moved to SCSS.** The 92-line `<style>` block is now
+`src/sass/theme/_cra_tool.scss`, imported from `_child_theme.scss`. Everything is
+scoped under `body.page-template-cra-tool`, which is **not cosmetic**: the block
+contained `.alert-danger { display: none; }`, and as a global rule that would hide
+every Bootstrap danger alert on the site, including the `?cra_error=` notice this
+template renders. The inline block got away with it by only ever loading on one
+page. The `:root { --col-light-400: #fafafa }` override became a scoped
+`--cb-cra-panel-bg` for the same reason. One rule was dropped as dead:
+`.form-panel input[type="radio"]::before` used a hyphen where the markup has
+`.form_panel`, so it never matched anything.
+
+Theme `Version:` is **0.5**, bumped for that CSS.
+
+**`cra_tool_page_id` is retired as a dependency.** Everything now resolves through
+`cb_cra_tool_page_id()`: the setting if present, otherwise a page on the CRA Tool
+template. The setting was empty as often as not and every consumer failed quietly
+when it was - bails landed on the home page, the results page found no bands. It
+is also meaningless once several pages run the tool. The field still exists as an
+explicit override; nothing depends on it. Verified by emptying it and confirming
+the page still resolved.
+
+**`cra-tool-working.php` deleted.** It still had the old `#form1`..`#form5`
+markup, which the rewritten `cra.js` ignores entirely - the JS returns early when
+it finds no `[data-cra-step]`, so selecting "CRA Tool (working)" gave a page whose
+buttons did nothing. No page was assigned to it.
+
+**Still to do:** delete `group_6494183e38c8d.json` and the legacy fallbacks in
+`cb_cra_question_steps()` / `cb_cra_lever_bands()`, once production has been
+migrated and verified. Nothing else is outstanding.
 
 ### The denominator, still outstanding
 
@@ -455,10 +470,16 @@ Yoast put in `og:title` and the JSON-LD graph. Titles are now company-only,
 |---|---|
 | `inc/cb-cra-submit.php` | the whole validated pipeline; `admin_post_{,nopriv_}cb_cra_submit` |
 | `cra.php` | thin shim into the above, kept for visitors on cached HTML |
-| `js/cra.js` | step validation; hand-edited, **not** compiled from `src/` |
-| `page-templates/cra-tool.php` | live template, on the pre-hardening version |
-| `page-templates/cra-tool-working.php` | parked phase 1 template, "CRA Tool (working)" |
+| `js/cra.js` | markup-driven stepper; hand-edited, **not** compiled from `src/` |
+| `page-templates/cra-tool.php` | the template; renders steps from the question set |
+| `inc/cb-cra-levers.php` | levers, question steps, maxima, tool page resolver |
+| `src/sass/theme/_cra_tool.scss` | tool styles, scoped to `body.page-template-cra-tool` |
+| `bin/migrate-lever-analysis.php` | page analysis repeaters -> `lever` term meta |
+| `bin/migrate-cra-questions.php` | `questions_page_1/2/3` -> CRA Questions options page |
+| `acf-json/group_cra_questions.json` | the global question set |
+| `acf-json/group_cra_lever_analysis.json` | per-lever analysis bands, on the taxonomy |
 | `acf-json/group_63c67dca8bc3c.json` | Site-Wide Settings, incl. the CRA Tool tab |
+| `acf-json/group_6494183e38c8d.json` | legacy fields, detached from the edit screen |
 
 ## Verification habits that paid off here
 

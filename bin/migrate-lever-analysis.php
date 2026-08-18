@@ -43,43 +43,10 @@ foreach ( $argv as $arg ) {
 	}
 }
 
-/**
- * Finds the page holding the legacy analysis fields.
- *
- * cra_tool_page_id first, then any page on the CRA Tool template - that setting
- * is empty as often as not, and the template lookup is what actually matters.
- *
- * @return int
- */
-function cb_cra_find_tool_page() {
-	$page_id = (int) get_field( 'cra_tool_page_id', 'options' );
-
-	if ( $page_id && get_post( $page_id ) ) {
-		return $page_id;
-	}
-
-	$found = get_posts(
-		array(
-			'post_type'      => 'page',
-			'post_status'    => 'any',
-			'posts_per_page' => 1,
-			'fields'         => 'ids',
-			'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
-				array(
-					'key'   => '_wp_page_template',
-					'value' => 'page-templates/cra-tool.php',
-				),
-			),
-		)
-	);
-
-	return $found ? (int) $found[0] : 0;
-}
-
-$page_id = $page_arg ? $page_arg : cb_cra_find_tool_page();
+$page_id = $page_arg ? $page_arg : cb_cra_tool_page_id();
 
 if ( ! $page_id ) {
-	echo "Could not find the CRA tool page. Pass --page=<id>.\n";
+	echo "Could not find the CRA tool page. Pass page=<id>.\n";
 	return;
 }
 

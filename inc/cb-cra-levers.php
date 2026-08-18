@@ -282,6 +282,57 @@ function cb_cra_lever_maxima( $tool_page_id = 0 ) {
 }
 
 /**
+ * The page holding the legacy question and analysis fields.
+ *
+ * `cra_tool_page_id` is no longer load-bearing. It is a hand-entered setting that
+ * was empty as often as not, and every consumer that depended on it broke
+ * quietly when it was - bails landed on the home page, and the results page
+ * found no analysis bands. It is also meaningless once several pages run the
+ * tool.
+ *
+ * So: the setting is honoured if present, but a page on the CRA Tool template is
+ * found automatically otherwise. Nothing depends on the setting being filled in.
+ * It is only needed at all for the legacy fallbacks, which go once production is
+ * migrated - at which point this can go too.
+ *
+ * @return int Page id, or 0.
+ */
+function cb_cra_tool_page_id() {
+	static $page_id = null;
+
+	if ( null !== $page_id ) {
+		return $page_id;
+	}
+
+	$configured = function_exists( 'get_field' ) ? (int) get_field( 'cra_tool_page_id', 'options' ) : 0;
+
+	if ( $configured && get_post( $configured ) ) {
+		$page_id = $configured;
+
+		return $page_id;
+	}
+
+	$found = get_posts(
+		array(
+			'post_type'      => 'page',
+			'post_status'    => 'any',
+			'posts_per_page' => 1,
+			'fields'         => 'ids',
+			'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+				array(
+					'key'   => '_wp_page_template',
+					'value' => 'page-templates/cra-tool.php',
+				),
+			),
+		)
+	);
+
+	$page_id = $found ? (int) $found[0] : 0;
+
+	return $page_id;
+}
+
+/**
  * Post meta key holding the per-lever maxima a result was scored against.
  */
 const CB_CRA_MAXIMA_META = 'cb_cra_score_maxima';

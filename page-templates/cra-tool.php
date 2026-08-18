@@ -12,106 +12,12 @@ defined( 'ABSPATH' ) || exit;
 get_header();
 
 ?>
-<style>
-    :root {
-        --col-light-400: #fafafa;
-    }
-
-    .stepCard {
-        padding-bottom: 3rem;
-        display: none;
-    }
-
-    .form_grid {
-        display: grid;
-        gap: 1rem;
-
-        @media (min-width:768px) {
-            grid-template-columns: 1fr 2fr;
-        }
-    }
-
-    .form_grid--wide {
-        @media (min-width:768px) {
-            grid-template-columns: 2fr 1fr;
-        }
-    }
-
-    .form_panel {
-        background-color: var(--col-light-400);
-        padding: 1rem;
-    }
-
-    .form_buttons {
-        margin-block: 1rem;
-    }
-
-    .alert-danger {
-        display: none;
-        padding: 0.5rem;
-        margin-top: 0.25rem;
-        margin-bottom: 0;
-    }
-
-    #changeDetailContainer {
-        display: none;
-    }
-
-    .radio_group {
-        display: grid;
-        gap: 0.25rem;
-        grid-template-columns: repeat(10, 1fr);
-        height: 1.5rem;
-    }
-
-    .radio_group>div {
-        text-align: center;
-    }
-
-    label[for="consent"] {
-        display: flex;
-        gap: 0.5rem;
-        align-items: flex-start;
-    }
-
-    label[for="consent"] input[type="checkbox"] {
-        width: 1.5rem;
-        height: 1.5rem;
-    }
-
-    .form-panel input[type="radio"]::before {
-        content: "1";
-
-    }
-
-    .mobLabels {
-        display: flex;
-        justify-content: space-between;
-        font-size: 0.8rem;
-    }
-
-    .mobLabels div {
-        text-align: center;
-    }
-
-    .ohnohoney {
-        opacity: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 0;
-        width: 0;
-        z-index: -1;
-    }
-</style>
 <main id="main">
     <?php
     /*
-     * A rejected submission comes back here with ?cra_error=. This template
-     * otherwise renders nothing for it, so the visitor lost five steps of input
-     * and landed back at the top with no explanation - which is how the token
-     * expiry path would look too. The fuller treatment is in
-     * cra-tool-working.php; this is the minimum so no rejection is silent.
+     * A rejected submission comes back here with ?cra_error=. Without this the
+     * visitor lost every step of input and landed back at the top with no
+     * explanation.
      */
     $cra_errors = array(
         'invalid' => 'We could not read your contact details. Please check your name, organisation and email address and try again.',

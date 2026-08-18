@@ -48,26 +48,7 @@ foreach ( $argv as $arg ) {
 $page_id = $page_arg;
 
 if ( ! $page_id ) {
-	$page_id = (int) get_field( 'cra_tool_page_id', 'options' );
-}
-
-if ( ! $page_id ) {
-	$found = get_posts(
-		array(
-			'post_type'      => 'page',
-			'post_status'    => 'any',
-			'posts_per_page' => 1,
-			'fields'         => 'ids',
-			'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
-				array(
-					'key'   => '_wp_page_template',
-					'value' => 'page-templates/cra-tool.php',
-				),
-			),
-		)
-	);
-
-	$page_id = $found ? (int) $found[0] : 0;
+	$page_id = cb_cra_tool_page_id();
 }
 
 if ( ! $page_id ) {

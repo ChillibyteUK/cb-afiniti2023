@@ -218,7 +218,7 @@ function cb_cra_bail( $code ) {
     }
 
     if ( ! $target ) {
-        $page_id = get_field( 'cra_tool_page_id', 'options' );
+        $page_id = cb_cra_tool_page_id();
         $target  = $page_id ? get_permalink( $page_id ) : '';
     }
 
@@ -386,7 +386,7 @@ function cb_cra_handle_submission() {
      * without this, changing it would retroactively reinterpret every result
      * already saved. See cb_cra_result_maxima().
      */
-    update_post_meta( $post_id, CB_CRA_MAXIMA_META, cb_cra_lever_maxima( (int) get_field( 'cra_tool_page_id', 'options' ) ) );
+    update_post_meta( $post_id, CB_CRA_MAXIMA_META, cb_cra_lever_maxima( cb_cra_tool_page_id() ) );
 
     $results = get_permalink( $post_id );
 

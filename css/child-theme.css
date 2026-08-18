@@ -24936,6 +24936,82 @@ button.search.clear::after {
   content: "" !important;
 }
 
+body.page-template-cra-tool {
+  --cb-cra-panel-bg: #fafafa;
+}
+body.page-template-cra-tool .stepCard {
+  padding-bottom: 3rem;
+  display: none;
+}
+body.page-template-cra-tool .form_grid {
+  display: grid;
+  gap: 1rem;
+}
+@media (min-width: 768px) {
+  body.page-template-cra-tool .form_grid {
+    grid-template-columns: 1fr 2fr;
+  }
+}
+@media (min-width: 768px) {
+  body.page-template-cra-tool .form_grid--wide {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+body.page-template-cra-tool .form_panel {
+  background-color: var(--cb-cra-panel-bg);
+  padding: 1rem;
+}
+body.page-template-cra-tool .form_buttons {
+  margin-block: 1rem;
+}
+body.page-template-cra-tool .alert-danger, body.page-template-cra-tool .woocommerce-notices-wrapper .woocommerce-message.woocommerce-error, .woocommerce-notices-wrapper body.page-template-cra-tool .woocommerce-message.woocommerce-error {
+  display: none;
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0;
+}
+body.page-template-cra-tool .alert-danger[role=alert], body.page-template-cra-tool .woocommerce-notices-wrapper [role=alert].woocommerce-message.woocommerce-error, .woocommerce-notices-wrapper body.page-template-cra-tool [role=alert].woocommerce-message.woocommerce-error {
+  display: block;
+}
+body.page-template-cra-tool #changeDetailContainer {
+  display: none;
+}
+body.page-template-cra-tool .radio_group {
+  display: grid;
+  gap: 0.25rem;
+  grid-template-columns: repeat(10, 1fr);
+  height: 1.5rem;
+}
+body.page-template-cra-tool .radio_group > div {
+  text-align: center;
+}
+body.page-template-cra-tool label[for=consent] {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+body.page-template-cra-tool label[for=consent] input[type=checkbox] {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+body.page-template-cra-tool .mobLabels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+}
+body.page-template-cra-tool .mobLabels div {
+  text-align: center;
+}
+body.page-template-cra-tool .ohnohoney {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 0;
+  width: 0;
+  z-index: -1;
+}
+
 #contact-icon {
   width: 140px;
   height: auto;

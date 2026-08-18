@@ -23,7 +23,7 @@ function cb_cra_document_title( $parts ) {
 
 get_header();
 
-$page_id = get_field( 'cra_tool_page_id', 'options' );
+$page_id = cb_cra_tool_page_id();
 $data    = get_field( 'data' );
 $scores  = get_field( 'scores' );
 

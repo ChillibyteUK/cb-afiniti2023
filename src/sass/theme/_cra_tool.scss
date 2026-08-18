@@ -1,0 +1,114 @@
+// CRA Tool page template.
+//
+// Moved out of a 92-line inline <style> block in page-templates/cra-tool.php.
+//
+// Everything is scoped under body.page-template-cra-tool, which WordPress adds
+// for the template. That scoping is not cosmetic: the block contained
+// `.alert-danger { display: none; }`, which as a global rule would hide every
+// Bootstrap danger alert on the site - including the ?cra_error= notice this
+// template renders. The inline block got away with it because it only ever
+// loaded on this one page.
+
+body.page-template-cra-tool {
+
+    // Was a bare :root override, so it leaked to every page that loaded this
+    // template. Scoped here, and only used by .form_panel below.
+    --cb-cra-panel-bg: #fafafa;
+
+    .stepCard {
+        padding-bottom: 3rem;
+
+        // Steps are shown and hidden by cra.js setting style.display. Never use
+        // a Bootstrap display utility on these - they are !important and would
+        // beat the inline style, so the section could never be hidden again.
+        display: none;
+    }
+
+    .form_grid {
+        display: grid;
+        gap: 1rem;
+
+        @media (min-width: 768px) {
+            grid-template-columns: 1fr 2fr;
+        }
+    }
+
+    .form_grid--wide {
+        @media (min-width: 768px) {
+            grid-template-columns: 2fr 1fr;
+        }
+    }
+
+    .form_panel {
+        background-color: var(--cb-cra-panel-bg);
+        padding: 1rem;
+    }
+
+    .form_buttons {
+        margin-block: 1rem;
+    }
+
+    // Hidden by default and revealed by cra.js on validation failure.
+    .alert-danger {
+        display: none;
+        padding: 0.5rem;
+        margin-top: 0.25rem;
+        margin-bottom: 0;
+    }
+
+    // ...except the ?cra_error= notice, which is server-rendered and must show
+    // on load. It carries .d-block, which is !important and so already wins, but
+    // being explicit means the notice does not depend on that to be visible.
+    .alert-danger[role="alert"] {
+        display: block;
+    }
+
+    // Shown as a grid by cra.js when the change-in-progress answer is Yes.
+    #changeDetailContainer {
+        display: none;
+    }
+
+    .radio_group {
+        display: grid;
+        gap: 0.25rem;
+        grid-template-columns: repeat(10, 1fr);
+        height: 1.5rem;
+
+        > div {
+            text-align: center;
+        }
+    }
+
+    label[for="consent"] {
+        display: flex;
+        gap: 0.5rem;
+        align-items: flex-start;
+
+        input[type="checkbox"] {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+    }
+
+    .mobLabels {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.8rem;
+
+        div {
+            text-align: center;
+        }
+    }
+
+    // Honeypot. Off-screen rather than display:none, so bots that skip hidden
+    // fields still fill it in.
+    .ohnohoney {
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 0;
+        width: 0;
+        z-index: -1;
+    }
+}
