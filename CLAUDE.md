@@ -54,6 +54,16 @@ block renders; `getElementById` only returns the first, so the in-content one is
 dead. It should be `<button class="start btn btn--orange">` - `cra.js` binds all
 `.start` buttons, and other buttons on that page already use it.
 
+This recurred locally on 2026-08-18: the template had been left unassigned, and
+the symptom was exactly "none of the start buttons work". Assigning the template
+fixed it. Template assignment is the first thing to check for that report.
+
+**4. Purge the page cache after deploying the CRA changes.** Submissions now
+require a `cra_token` field that only exists in freshly rendered HTML. Anyone
+served a cached copy of the tool page from before the deploy posts without one
+and gets bounced with `?cra_error=expired`. One purge of that page clears it;
+without a purge it resolves itself only as the cache expires.
+
 ## In-flight work: CRA tool hardening
 
 ### Done
@@ -66,18 +76,52 @@ The old `cra.php` was a bare web-callable file with no `ABSPATH` guard that read
 plain `GET` was enough to mint a submission - which is where results with no
 company name came from - and it let anyone send mail apparently from
 `enquiries@afiniti.co.uk` to any address. Now closed: POST only, honeypot,
-reCAPTCHA verification, per-IP rate limiting, `is_email()`, required `orgName`
-and `contactName`, sanitised fields, scores clamped to known levers.
+signed form token, per-IP and site-wide rate limiting, `is_email()`, required
+`orgName` and `contactName`, sanitised fields, scores clamped to known levers.
 
 `js/cra.js`: failed validation now calls `stopImmediatePropagation()` so the
 template's submit handler cannot fire anyway (it used to submit regardless, with
 empty hidden fields). Email is validated with `checkValidity()` and values are
 trimmed, so `abc` and `" "` no longer pass.
 
-Settings live under **Site-Wide Settings > CRA Tool**: reCAPTCHA site key,
-secret key, minimum score, submissions per hour per IP. `cra_tool_page_id` moved
-into that tab. A matching constant (`CB_RECAPTCHA_SECRET` etc.) overrides the
-field if defined.
+Settings live under **Site-Wide Settings > CRA Tool**: notification email,
+submissions per hour per IP, submissions per hour site wide. `cra_tool_page_id`
+moved into that tab. A matching constant (`CB_CRA_RATE_LIMIT` etc.) overrides
+the field if defined.
+
+### reCAPTCHA was removed, deliberately
+
+There is no captcha. The v3 that was here never worked anyway - both templates
+fetched a token and submitted without ever posting it - and finishing it was
+judged not worth it: a probabilistic score needing a blind threshold, where one
+silently rejected real enquiry costs more than a hundred junk rows, plus a Google
+script on the page and the consent question that brings. **Do not re-add it
+without discussing it first.**
+
+What replaced it, all in `inc/cb-cra-submit.php`:
+
+- `cb_cra_form_token()` - HMAC of a day-long time window, three windows accepted,
+  so a token is good for 48-72h. Deliberately **not** a nonce: a nonce is per
+  user and would go stale behind the host's full page cache, which is the exact
+  failure mode this file exists to prevent. Same value for every visitor in a
+  window, so cached HTML stays valid. Posted as `cra_token`; rejection code is
+  `?cra_error=expired`.
+- Rate limits: 3/hour/IP, and a site-wide ceiling of 30/hour as a circuit
+  breaker, since per-IP limiting cannot see a distributed flood. Tripping the
+  ceiling logs `CRA: global hourly submission ceiling hit`.
+- The visitor email and the internal notification are now **two** `wp_mail()`
+  calls, not one with a `Bcc`, so inbox volume can be throttled independently of
+  what a submitter can trigger.
+
+The thing being protected is `wp_mail()`, not the `cra` post type: a submission
+makes the server send mail From `afiniti.co.uk` to an address the submitter
+chose, so unbounded it is a mail-bomb amplifier and a route to the sending
+domain being blocklisted. The controls are sized for that.
+
+Honest about the bar: anyone can fetch the page and scrape the token. Nothing
+short of a captcha stops that and we are choosing not to have one. It stops the
+case that actually happens - a script posting a fixed payload straight at
+`admin-post.php`, having never loaded the form - and expires stale replays.
 
 ### Parked
 
@@ -85,17 +129,17 @@ field if defined.
 The phase 1 template work is preserved as
 `page-templates/cra-tool-working.php`, registered as "CRA Tool (working)".
 
-> **Do not set the reCAPTCHA secret while the rolled-back template is live.**
-> That template does not send a `g-recaptcha-response` token, so the moment a
-> secret exists every submission is rejected with `?cra_error=captcha` - and the
-> rolled-back template does not render that message either, so users just land
-> back at the top of the tool. Either finish the working template first, or
-> leave the secret blank. With no secret the check fails open and logs
-> `CRA: no reCAPTCHA secret set (...)` per submission.
+Both templates now render the `cra_token` field, and the rolled-back one grew a
+minimal `?cra_error=` notice - without it the new `expired` path would have been
+another silent bounce. `cb_cra_bail()` now prefers `wp_get_referer()` over
+`cra_tool_page_id`, because that setting is empty as often as not and every
+rejection was landing on the home page.
 
-The secret is **not** in the codebase or the database - only the public site key
-(`6LeKUsAp…`) ever was, because the old code never verified anything. Get it
-from the Google reCAPTCHA console, or register a fresh v3 pair and paste both.
+Step 1's **Back** link in both templates was hard-coded to
+`/change-readiness-assessment-tool/`, which is not the slug of the live page
+(`/free-change-readiness-assessment-tool/`), so it led nowhere. It is now
+`get_permalink()` - reloading the current page returns to the intro, since
+`#form0` is what shows by default.
 
 ### Not started
 
@@ -204,6 +248,7 @@ conclusions were wrong until I tested them properly:
 - Browser tests can silently read a **cached** bundle. If behaviour contradicts
   the file on disk, fetch the asset with `cache: 'no-store'` and compare.
 - For the CRA endpoint, seed a fixture with `wp eval` and re-run the actual
-  attack requests (GET, no orgName, bad email, honeypot, bogus captcha token)
+  attack requests (GET, no token, bogus token, honeypot, no orgName, bad email,
+  then four valid posts to trip the per-IP limit)
   after each change - that is how the misfire cause was confirmed rather than
   guessed at.

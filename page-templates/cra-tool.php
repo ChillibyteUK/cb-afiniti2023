@@ -107,6 +107,33 @@ get_header();
 <main id="main">
     <?php
     /*
+     * A rejected submission comes back here with ?cra_error=. This template
+     * otherwise renders nothing for it, so the visitor lost five steps of input
+     * and landed back at the top with no explanation - which is how the token
+     * expiry path would look too. The fuller treatment is in
+     * cra-tool-working.php; this is the minimum so no rejection is silent.
+     */
+    $cra_errors = array(
+        'invalid' => 'We could not read your contact details. Please check your name, organisation and email address and try again.',
+        'expired' => 'This page had been open too long and your session expired. Please reload the page and try again.',
+        'rate'    => 'Too many submissions from your connection. Please try again later.',
+        'save'    => 'Something went wrong saving your results. Please try again, or contact us if it keeps happening.',
+        'method'  => 'That link cannot be opened directly. Please start the assessment from the beginning.',
+    );
+
+    $cra_error = isset( $_GET['cra_error'] ) ? sanitize_key( wp_unslash( $_GET['cra_error'] ) ) : '';
+
+    if ( $cra_error && isset( $cra_errors[ $cra_error ] ) ) {
+        ?>
+    <div class="container-xl">
+        <div class="alert alert-danger d-block my-4" role="alert">
+            <?= esc_html( $cra_errors[ $cra_error ] ); ?>
+        </div>
+    </div>
+        <?php
+    }
+
+    /*
      * The CRA Hero block renders both the intro hero and the compact form
      * hero, so it is lifted out of the page content: the intro section below
      * is hidden once the assessment starts, and the form hero has to survive
@@ -197,7 +224,8 @@ get_header();
                     </div>
                 </div>
                 <div class="form_buttons d-flex gap-2 justify-content-between">
-                    <a href="/change-readiness-assessment-tool/" class="btn btn-primary">Back</a>
+                    <?php // Step 1's Back leaves the assessment, so it reloads this page to the intro. Was hard-coded to /change-readiness-assessment-tool/, which is not this page's slug. ?>
+                    <a href="<?=esc_url(get_permalink())?>" class="btn btn-primary">Back</a>
                     <button id="step1" class="btn btn-primary">Next</button>
                 </div>
             </div>
@@ -426,6 +454,8 @@ while (have_rows('questions_page_3')) {
                         <input type="hidden" name="scores" id="scores" value="">
                         <input type="hidden" name="pageID" id="pageID"
                             value="<?=get_the_ID()?>">
+                        <input type="hidden" name="cra_token"
+                            value="<?=esc_attr(cb_cra_form_token())?>">
                         <input type="submit" id="step5" class="btn btn-primary" value="View Results">
                         <input class="ohnohoney" autocomplete="off" type="email" id="emailaddress" name="emailaddress"
                             placeholder="Your e-mail here">
@@ -439,7 +469,6 @@ while (have_rows('questions_page_3')) {
 <?php
 add_action('wp_footer', function () {
     ?>
-<script src="https://www.google.com/recaptcha/api.js?render=6LeKUsApAAAAAD9wCXHTKx5BaujLUJVE8BdMQlLY"></script>
 <script>
 
     window.addEventListener('pageshow', function(event) {
@@ -450,22 +479,17 @@ add_action('wp_footer', function () {
         }
     });
 
-    document.addEventListener('DOMContentLoaded', function () {
-        var submitButton = document.getElementById('step5');
-        submitButton.addEventListener('click', onClick, false);
-    });
-    function onClick(e) {
-        console.log('submitting');
-        e.preventDefault();
-        grecaptcha.ready(function() {
-            grecaptcha.execute('6LeKUsApAAAAAD9wCXHTKx5BaujLUJVE8BdMQlLY', {
-                action: 'submit'
-            }).then(function(token) {
-                document.getElementById("craForm").submit();
-            });
-        });
-    }
 </script>
+<?php
+/*
+ * The reCAPTCHA v3 handler that used to live in the script above has been
+ * removed. It cancelled the native submit, fetched a token and then submitted
+ * without ever posting the token, so it verified nothing while still loading a
+ * Google script on every view. #step5 is a plain submit button again: cra.js
+ * fills the hidden fields on click and preventDefault()s when a step does not
+ * validate. A PHP comment, so it does not ship to the browser.
+ */
+?>
 <script src="<?=get_stylesheet_directory_uri()?>/js/cra.js?v=1.1"></script>
 <?php
 });

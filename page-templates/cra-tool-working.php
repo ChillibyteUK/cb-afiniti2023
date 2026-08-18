@@ -160,7 +160,7 @@ get_header();
      */
     $cra_errors = array(
         'invalid' => 'We could not read your contact details. Please check your name, organisation and email address and try again.',
-        'captcha' => 'We could not verify that you are human. Please reload the page and try again.',
+        'expired' => 'This page had been open too long and your session expired. Please reload the page and try again.',
         'rate'    => 'Too many submissions from your connection. Please try again later.',
         'save'    => 'Something went wrong saving your results. Please try again, or contact us if it keeps happening.',
         'method'  => 'That link cannot be opened directly. Please start the assessment from the beginning.',
@@ -235,7 +235,8 @@ get_header();
                     </div>
                 </div>
                 <div class="form_buttons d-flex gap-2 justify-content-between">
-                    <a href="/change-readiness-assessment-tool/" class="btn btn-primary">Back</a>
+                    <?php // Step 1's Back leaves the assessment, so it reloads this page to the intro. Was hard-coded to /change-readiness-assessment-tool/, which is not this page's slug. ?>
+                    <a href="<?= esc_url( get_permalink() ); ?>" class="btn btn-primary">Back</a>
                     <button id="step1" class="btn btn-primary">Next</button>
                 </div>
             </div>
@@ -471,8 +472,8 @@ while (have_rows('questions_page_3')) {
                         <input type="hidden" name="scores" id="scores" value="">
                         <input type="hidden" name="pageID" id="pageID"
                             value="<?= esc_attr( get_the_ID() ); ?>">
-                        <?php // Populated by the reCAPTCHA callback just before submit, and verified server side. ?>
-                        <input type="hidden" name="g-recaptcha-response" id="recaptchaToken" value="">
+                        <?php // Signed time window token - see cb_cra_form_token(). ?>
+                        <input type="hidden" name="cra_token" value="<?= esc_attr( cb_cra_form_token() ); ?>">
                         <input type="submit" id="step5" class="btn btn-primary" value="View Results">
                         <input class="ohnohoney" autocomplete="off" type="email" id="emailaddress" name="emailaddress"
                             placeholder="Your e-mail here">
@@ -486,7 +487,6 @@ while (have_rows('questions_page_3')) {
 <?php
 add_action('wp_footer', function () {
     ?>
-<script src="https://www.google.com/recaptcha/api.js?render=<?= esc_attr( cb_cra_recaptcha_site_key() ); ?>"></script>
 <script>
     window.addEventListener('pageshow', function(event) {
         // navigation.type is deprecated; PerformanceNavigationTiming replaces it.
@@ -500,41 +500,13 @@ add_action('wp_footer', function () {
         }
     });
 
-    document.addEventListener('DOMContentLoaded', function () {
-        document.getElementById('step5').addEventListener('click', onClick, false);
-    });
-
     /*
-     * Runs after the validation handler in cra.js, which is bound earlier and
-     * calls stopImmediatePropagation() when the answers are incomplete - so
-     * this never fires on an invalid form. It used to submit regardless, which
-     * meant a failed validation still posted, with empty hidden fields.
-     *
-     * The token is written into the form so the server can verify it. Before,
-     * execute() ran purely for show and the token was thrown away.
+     * No submit handler here by design. reCAPTCHA was removed, so #step5 is a
+     * plain submit button: cra.js validates on click, fills the hidden fields
+     * and preventDefault()s when a step is incomplete. Anything that cancels the
+     * native submit and re-submits by hand has to re-implement that ordering,
+     * which is what the old captcha handler got wrong.
      */
-    function onClick(e) {
-        e.preventDefault();
-
-        var form = document.getElementById('craForm');
-
-        if (typeof grecaptcha === 'undefined') {
-            form.submit();
-            return;
-        }
-
-        grecaptcha.ready(function () {
-            grecaptcha.execute('<?= esc_js( cb_cra_recaptcha_site_key() ); ?>', {
-                action: 'submit'
-            }).then(function (token) {
-                document.getElementById('recaptchaToken').value = token;
-                form.submit();
-            }, function () {
-                // Captcha unavailable - submit anyway and let the server decide.
-                form.submit();
-            });
-        });
-    }
 </script>
 <script src="<?=get_stylesheet_directory_uri()?>/js/cra.js?v=1.1"></script>
 <?php

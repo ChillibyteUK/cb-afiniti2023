@@ -16,9 +16,14 @@
  * a thin shim because the site sits behind full page caching, so visitors on
  * stale HTML will keep posting to the old URL for a while yet.
  *
- * NOTE: no nonce. The page is cached, so an embedded nonce would go stale and
- * break submissions, and on an anonymous form it adds nothing a bot cannot get
- * for itself. reCAPTCHA verification is the control that matters here.
+ * NOTE: no nonce, and no captcha either. See cb_cra_form_token() for what
+ * replaced it and why.
+ *
+ * The asset worth protecting is not the cra post type - it is wp_mail(). A
+ * successful submission makes this server send HTML mail From afiniti.co.uk to
+ * an address the submitter chose. Unbounded, that is a mail-bomb amplifier
+ * pointed at a third party and a fast route to the sending domain being
+ * blocklisted. The controls below are sized for that, not for junk rows.
  *
  * @package cb-afiniti2023
  */
@@ -30,6 +35,16 @@ defined( 'ABSPATH' ) || exit;
  */
 const CB_CRA_LEVERS         = array( 'Leadership', 'Drivers', 'Culture', 'Engagement', 'Capability', 'Method' );
 const CB_CRA_MAX_LEVER_SCORE = 30;
+
+/**
+ * Form token window, and how many past windows still verify.
+ *
+ * A day, with three accepted, so a token is good for 48-72 hours. That is well
+ * past any sane full page cache TTL - the point of the window is to expire
+ * scraped tokens, not to be tight.
+ */
+const CB_CRA_TOKEN_WINDOW           = DAY_IN_SECONDS;
+const CB_CRA_TOKEN_WINDOWS_ACCEPTED = 3;
 
 add_action( 'admin_post_nopriv_cb_cra_submit', 'cb_cra_handle_submission' );
 add_action( 'admin_post_cb_cra_submit', 'cb_cra_handle_submission' );
@@ -65,46 +80,91 @@ function cb_cra_setting( $name, $constant, $default = '' ) {
 }
 
 /**
- * reCAPTCHA v3 site key. Public - it ships in the page markup.
- *
- * Falls back to the key that was previously hardcoded in the template, so the
- * form keeps working until the field is filled in.
- *
- * @return string
- */
-function cb_cra_recaptcha_site_key() {
-    return (string) cb_cra_setting(
-        'recaptcha_site_key',
-        'CB_RECAPTCHA_SITE_KEY',
-        '6LeKUsApAAAAAD9wCXHTKx5BaujLUJVE8BdMQlLY'
-    );
-}
-
-/**
- * Returns the reCAPTCHA secret, or an empty string when it has not been set up.
- *
- * @return string
- */
-function cb_cra_recaptcha_secret() {
-    return (string) cb_cra_setting( 'recaptcha_secret_key', 'CB_RECAPTCHA_SECRET', '' );
-}
-
-/**
- * Minimum reCAPTCHA v3 score to accept. 0.5 is Google's suggested default.
- *
- * @return float
- */
-function cb_cra_recaptcha_min_score() {
-    return (float) cb_cra_setting( 'recaptcha_min_score', 'CB_RECAPTCHA_MIN_SCORE', 0.5 );
-}
-
-/**
  * Max submissions from one IP per hour.
+ *
+ * A real visitor submits once. Three leaves room for someone retrying after a
+ * validation bounce without leaving much headroom for anyone else.
  *
  * @return int
  */
 function cb_cra_rate_limit() {
-    return (int) cb_cra_setting( 'cra_rate_limit', 'CB_CRA_RATE_LIMIT', 10 );
+    return (int) cb_cra_setting( 'cra_rate_limit', 'CB_CRA_RATE_LIMIT', 3 );
+}
+
+/**
+ * Max submissions site wide per hour - a circuit breaker.
+ *
+ * Per-IP limiting does nothing against a distributed flood, and the cost of one
+ * is measured in sending reputation rather than disk. Tripping this stops mail
+ * going out at all, which is the outcome to prefer over getting the domain
+ * blocklisted. Well above any plausible real hour of traffic for this tool.
+ *
+ * @return int
+ */
+function cb_cra_global_limit() {
+    return (int) cb_cra_setting( 'cra_global_limit', 'CB_CRA_GLOBAL_LIMIT', 30 );
+}
+
+/**
+ * Where the internal notification goes.
+ *
+ * @return string
+ */
+function cb_cra_notify_email() {
+    return (string) cb_cra_setting( 'cra_notify_email', 'CB_CRA_NOTIFY_EMAIL', 'enquiries@afiniti.co.uk' );
+}
+
+/**
+ * A token proving the submission came from a page this site rendered recently.
+ *
+ * This replaces reCAPTCHA v3, which was removed. The v3 that was here never
+ * worked - the template fetched a token and threw it away without ever posting
+ * it - but it was not worth finishing either: it is a probabilistic score
+ * needing a blind threshold, and on a low volume B2B lead form one silently
+ * rejected real enquiry costs more than a hundred junk rows. It also put a
+ * Google script on the page, with the consent question that brings.
+ *
+ * What is left is deliberately not a nonce. A nonce is per user and would go
+ * stale behind the host's full page cache, breaking real submissions - the
+ * failure mode this whole file exists to stop. Instead: an HMAC of the current
+ * time window, so every visitor within a window gets the same value and cached
+ * HTML stays valid.
+ *
+ * Honest about the bar this sets. A determined attacker fetches the page and
+ * scrapes the token; nothing short of a captcha stops that, and we are choosing
+ * not to have one. What it does stop is the case that actually happens - a
+ * script posting a fixed payload straight at admin-post.php, having never
+ * loaded the form - plus replay of any payload more than three days old. The
+ * honeypot covers indiscriminate form fillers; the rate limits cap whatever
+ * gets through.
+ *
+ * @param int $offset Windows back from now. 0 is the current window.
+ * @return string
+ */
+function cb_cra_form_token( $offset = 0 ) {
+    $window = (int) floor( time() / CB_CRA_TOKEN_WINDOW ) + (int) $offset;
+
+    return hash_hmac( 'sha256', 'cb_cra_form|' . $window, wp_salt( 'cb_cra_form' ) );
+}
+
+/**
+ * Verifies a form token against the current and recent windows.
+ *
+ * @param string $token Token from the submitted form.
+ * @return bool
+ */
+function cb_cra_verify_form_token( $token ) {
+    if ( ! is_string( $token ) || '' === $token ) {
+        return false;
+    }
+
+    for ( $offset = 0; $offset > -CB_CRA_TOKEN_WINDOWS_ACCEPTED; $offset-- ) {
+        if ( hash_equals( cb_cra_form_token( $offset ), $token ) ) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 /**
@@ -139,8 +199,25 @@ function cb_cra_client_ip() {
  * @return void
  */
 function cb_cra_bail( $code ) {
-    $page_id = get_field( 'cra_tool_page_id', 'options' );
-    $target  = $page_id ? get_permalink( $page_id ) : home_url( '/' );
+    /*
+     * The referer first, because it is the page the visitor was actually on and
+     * needs no configuration. cra_tool_page_id is a hand-entered setting and is
+     * empty as often as not - when it is, every rejection used to land on the
+     * home page, which is the silent bounce this error code exists to replace.
+     * wp_safe_redirect() rejects off-site hosts, so an attacker-supplied referer
+     * cannot turn this into an open redirect.
+     */
+    $target  = '';
+    $referer = wp_get_referer();
+
+    if ( $referer ) {
+        $target = remove_query_arg( 'cra_error', $referer );
+    }
+
+    if ( ! $target ) {
+        $page_id = get_field( 'cra_tool_page_id', 'options' );
+        $target  = $page_id ? get_permalink( $page_id ) : '';
+    }
 
     if ( ! $target ) {
         $target = home_url( '/' );
@@ -148,62 +225,6 @@ function cb_cra_bail( $code ) {
 
     wp_safe_redirect( add_query_arg( 'cra_error', rawurlencode( $code ), $target ), 302 );
     exit;
-}
-
-/**
- * Verifies the reCAPTCHA token.
- *
- * Returns true when no secret is configured: the alternative is breaking every
- * submission on a live site the moment this deploys. That is deliberately loud
- * in the log so it does not go unnoticed - the protection is inert until the
- * secret is filled in under Site-Wide Settings > CRA Tool (or defined as
- * CB_RECAPTCHA_SECRET, which takes precedence).
- *
- * @param string $token The g-recaptcha-response token.
- * @return bool
- */
-function cb_cra_verify_recaptcha( $token ) {
-    $secret = cb_cra_recaptcha_secret();
-
-    if ( '' === $secret ) {
-        error_log( 'CRA: no reCAPTCHA secret set (Site-Wide Settings > CRA Tool) - submission accepted without captcha verification.' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-        return true;
-    }
-
-    if ( '' === $token ) {
-        return false;
-    }
-
-    $response = wp_remote_post(
-        'https://www.google.com/recaptcha/api/siteverify',
-        array(
-            'timeout' => 10,
-            'body'    => array(
-                'secret'   => $secret,
-                'response' => $token,
-                'remoteip' => cb_cra_client_ip(),
-            ),
-        )
-    );
-
-    if ( is_wp_error( $response ) ) {
-        // Do not punish the visitor for Google being unreachable.
-        error_log( 'CRA: reCAPTCHA request failed - ' . $response->get_error_message() ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-        return true;
-    }
-
-    $body = json_decode( wp_remote_retrieve_body( $response ), true );
-
-    if ( ! is_array( $body ) || empty( $body['success'] ) ) {
-        return false;
-    }
-
-    // v3 returns a score; v2 does not, in which case success alone is enough.
-    if ( isset( $body['score'] ) && (float) $body['score'] < cb_cra_recaptcha_min_score() ) {
-        return false;
-    }
-
-    return true;
 }
 
 /**
@@ -298,20 +319,32 @@ function cb_cra_handle_submission() {
         exit;
     }
 
-    $ip            = cb_cra_client_ip();
-    $rate_key      = 'cb_cra_rate_' . md5( $ip );
-    $recent        = (int) get_transient( $rate_key );
+    $token = isset( $_POST['cra_token'] )
+        ? sanitize_text_field( wp_unslash( $_POST['cra_token'] ) )
+        : '';
+
+    if ( ! cb_cra_verify_form_token( $token ) ) {
+        cb_cra_bail( 'expired' );
+    }
+
+    $ip       = cb_cra_client_ip();
+    $rate_key = 'cb_cra_rate_' . md5( $ip );
+    $recent   = (int) get_transient( $rate_key );
 
     if ( $ip && $recent >= cb_cra_rate_limit() ) {
         cb_cra_bail( 'rate' );
     }
 
-    $token = isset( $_POST['g-recaptcha-response'] )
-        ? sanitize_text_field( wp_unslash( $_POST['g-recaptcha-response'] ) )
-        : '';
+    /*
+     * Keyed by the hour rather than using a rolling transient, so the count
+     * cannot be walked forward indefinitely by submitting just under the limit.
+     */
+    $global_key = 'cb_cra_rate_all_' . (int) floor( time() / HOUR_IN_SECONDS );
+    $global     = (int) get_transient( $global_key );
 
-    if ( ! cb_cra_verify_recaptcha( $token ) ) {
-        cb_cra_bail( 'captcha' );
+    if ( $global >= cb_cra_global_limit() ) {
+        error_log( 'CRA: global hourly submission ceiling hit - mail suppressed until the hour rolls over.' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+        cb_cra_bail( 'rate' );
     }
 
     $data   = cb_cra_clean_contact( json_decode( wp_unslash( $_POST['data'] ?? '' ), true ) );
@@ -324,6 +357,8 @@ function cb_cra_handle_submission() {
     if ( $ip ) {
         set_transient( $rate_key, $recent + 1, HOUR_IN_SECONDS );
     }
+
+    set_transient( $global_key, $global + 1, 2 * HOUR_IN_SECONDS );
 
     $post_id = wp_insert_post(
         array(
@@ -345,6 +380,7 @@ function cb_cra_handle_submission() {
     $results = get_permalink( $post_id );
 
     cb_cra_send_results_email( $data, $results );
+    cb_cra_notify_team( $data, $results );
 
     wp_safe_redirect( $results, 302 );
     exit;
@@ -374,8 +410,46 @@ function cb_cra_send_results_email( $data, $results ) {
     $headers = array(
         'Content-Type: text/html; charset=UTF-8',
         'From: Afiniti <enquiries@afiniti.co.uk>',
-        'Bcc: enquiries@afiniti.co.uk',
     );
 
     wp_mail( $data['contactEmail'], $subject, $message, $headers );
+}
+
+/**
+ * Tells the team about a new submission.
+ *
+ * This used to be a Bcc on the visitor's mail. Separating them means the two
+ * can be throttled, filtered or turned off independently - a flood aimed at the
+ * public endpoint no longer arrives as a flood in the enquiries inbox with the
+ * team's own copy attached to it. The submitted address is only ever shown as
+ * text here, never used as a header.
+ *
+ * @param array  $data    Cleaned contact payload.
+ * @param string $results Results page URL.
+ * @return void
+ */
+function cb_cra_notify_team( $data, $results ) {
+    $to = cb_cra_notify_email();
+
+    if ( ! is_email( $to ) ) {
+        return;
+    }
+
+    $subject = 'CRA submission: ' . $data['orgName'];
+
+    $message  = '<p>A new Change Readiness Assessment has been completed.</p>';
+    $message .= '<ul>';
+    $message .= '<li><strong>Organisation:</strong> ' . esc_html( $data['orgName'] ) . '</li>';
+    $message .= '<li><strong>Contact:</strong> ' . esc_html( $data['contactName'] ) . '</li>';
+    $message .= '<li><strong>Email:</strong> ' . esc_html( $data['contactEmail'] ) . '</li>';
+    $message .= '<li><strong>Phone:</strong> ' . esc_html( $data['contactPhone'] ) . '</li>';
+    $message .= '</ul>';
+    $message .= '<p><a href="' . esc_url( $results ) . '">View the results</a></p>';
+
+    $headers = array(
+        'Content-Type: text/html; charset=UTF-8',
+        'From: Afiniti <enquiries@afiniti.co.uk>',
+    );
+
+    wp_mail( $to, $subject, $message, $headers );
 }
