@@ -285,18 +285,15 @@ function add_new_cra_admin_column_show_value($column, $post_id)
             break;
         case 'optin':
             /*
-             * Three states, not two. A submission from before this field existed has
-             * no meta at all, which is different from an explicit "no" - showing a
-             * dash rather than "No" keeps that honest.
+             * "Yes" or a dash - only the opt-ins are worth spotting in a list, so a
+             * decline reads the same as a submission from before the question
+             * existed. The stored meta still distinguishes them ('0' vs no value at
+             * all), so a query can tell them apart even though the column does not.
              */
-            $cb_optin = get_post_meta( $post_id, CB_CRA_OPTIN_META, true );
-
-            if ( '1' === $cb_optin ) {
+            if ( '1' === get_post_meta( $post_id, CB_CRA_OPTIN_META, true ) ) {
                 echo '<span style="color:#008a20;font-weight:600;">' . esc_html__( 'Yes', 'cb-afiniti' ) . '</span>';
-            } elseif ( '0' === $cb_optin ) {
-                echo '<span style="color:#646970;">' . esc_html__( 'No', 'cb-afiniti' ) . '</span>';
             } else {
-                echo '<span style="color:#a7aaad;" title="' . esc_attr__( 'Submitted before this was asked', 'cb-afiniti' ) . '">&mdash;</span>';
+                echo '<span style="color:#a7aaad;">&mdash;</span>';
             }
             break;
     }
