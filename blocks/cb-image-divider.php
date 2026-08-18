@@ -11,11 +11,11 @@ $colour = get_field( 'title_colour' );
 $parts  = preg_split( '/-/', $colour );
 $colour = $parts[0];
 
-$classes = $block['className'] ?? null;
+$classes = $block['className'] ?? '';
 
 ?>
 <!-- image_divider -->
-<section class="image_divider pt-5 <?= esc_url( $classes ); ?>">
+<section class="image_divider pt-5 <?= esc_attr( $classes ); ?>">
 	<div class="container-xl">
 		<div class="row">
 			<div class="col-12 text-center"><img

@@ -227,7 +227,10 @@ function acf_blocks() {
 				'icon'            => 'cover-image',
 				'render_template' => 'blocks/cb-intro-block.php',
 				'mode'            => 'edit',
-				'supports'        => array( 'mode' => false ),
+				'supports'        => array( 'mode' => false,
+					'className' => true,
+					'anchor'    => true,
+				),
 			)
 		);
 		acf_register_block_type(
@@ -238,7 +241,10 @@ function acf_blocks() {
 				'icon'            => 'cover-image',
 				'render_template' => 'blocks/cb-page-intro-block.php',
 				'mode'            => 'edit',
-				'supports'        => array( 'mode' => false ),
+				'supports'        => array( 'mode' => false,
+					'className' => true,
+					'anchor'    => true,
+				),
 			)
 		);
 		acf_register_block_type(
@@ -249,7 +255,10 @@ function acf_blocks() {
 				'icon'            => 'cover-image',
 				'render_template' => 'blocks/cb-vimeo.php',
 				'mode'            => 'edit',
-				'supports'        => array( 'mode' => false ),
+				'supports'        => array( 'mode' => false,
+					'className' => true,
+					'anchor'    => true,
+				),
 			)
 		);
 		acf_register_block_type(
@@ -260,7 +269,10 @@ function acf_blocks() {
 				'icon'            => 'cover-image',
 				'render_template' => 'blocks/cb-pillar-nav.php',
 				'mode'            => 'edit',
-				'supports'        => array( 'mode' => false ),
+				'supports'        => array( 'mode' => false,
+					'className' => true,
+					'anchor'    => true,
+				),
 			)
 		);
 		acf_register_block_type(
@@ -271,7 +283,10 @@ function acf_blocks() {
 				'icon'            => 'cover-image',
 				'render_template' => 'blocks/cb-pillar-nav-short.php',
 				'mode'            => 'edit',
-				'supports'        => array( 'mode' => false ),
+				'supports'        => array( 'mode' => false,
+					'className' => true,
+					'anchor'    => true,
+				),
 			)
 		);
 		acf_register_block_type(
@@ -298,7 +313,10 @@ function acf_blocks() {
 				'icon'            => 'cover-image',
 				'render_template' => 'blocks/cb-accreditation-carousel.php',
 				'mode'            => 'edit',
-				'supports'        => array( 'mode' => false ),
+				'supports'        => array( 'mode' => false,
+					'className' => true,
+					'anchor'    => true,
+				),
 			)
 		);
 		acf_register_block_type(
@@ -309,7 +327,10 @@ function acf_blocks() {
 				'icon'            => 'cover-image',
 				'render_template' => 'blocks/cb-text-image.php',
 				'mode'            => 'edit',
-				'supports'        => array( 'mode' => false ),
+				'supports'        => array( 'mode' => false,
+					'className' => true,
+					'anchor'    => true,
+				),
 			)
 		);
 		acf_register_block_type(
@@ -320,7 +341,10 @@ function acf_blocks() {
 				'icon'            => 'cover-image',
 				'render_template' => 'blocks/cb-quote.php',
 				'mode'            => 'edit',
-				'supports'        => array( 'mode' => false ),
+				'supports'        => array( 'mode' => false,
+					'className' => true,
+					'anchor'    => true,
+				),
 			)
 		);
 		acf_register_block_type(
@@ -331,7 +355,10 @@ function acf_blocks() {
 				'icon'            => 'cover-image',
 				'render_template' => 'blocks/cb-divider.php',
 				'mode'            => 'edit',
-				'supports'        => array( 'mode' => false ),
+				'supports'        => array( 'mode' => false,
+					'className' => true,
+					'anchor'    => true,
+				),
 			)
 		);
 		acf_register_block_type(
@@ -342,7 +369,10 @@ function acf_blocks() {
 				'icon'            => 'cover-image',
 				'render_template' => 'blocks/cb-image-divider.php',
 				'mode'            => 'edit',
-				'supports'        => array( 'mode' => false ),
+				'supports'        => array( 'mode' => false,
+					'className' => true,
+					'anchor'    => true,
+				),
 			)
 		);
 		acf_register_block_type(
@@ -353,7 +383,10 @@ function acf_blocks() {
 				'icon'            => 'cover-image',
 				'render_template' => 'blocks/cb-tab-divider.php',
 				'mode'            => 'edit',
-				'supports'        => array( 'mode' => false ),
+				'supports'        => array( 'mode' => false,
+					'className' => true,
+					'anchor'    => true,
+				),
 			)
 		);
 		acf_register_block_type(
@@ -364,7 +397,10 @@ function acf_blocks() {
 				'icon'            => 'cover-image',
 				'render_template' => 'blocks/cb-business-change-tabs.php',
 				'mode'            => 'edit',
-				'supports'        => array( 'mode' => false ),
+				'supports'        => array( 'mode' => false,
+					'className' => true,
+					'anchor'    => true,
+				),
 			)
 		);
 		acf_register_block_type(
@@ -375,7 +411,10 @@ function acf_blocks() {
 				'icon'            => 'cover-image',
 				'render_template' => 'blocks/cb-two-col-img-text.php',
 				'mode'            => 'edit',
-				'supports'        => array( 'mode' => false ),
+				'supports'        => array( 'mode' => false,
+					'className' => true,
+					'anchor'    => true,
+				),
 			)
 		);
 		acf_register_block_type(
@@ -386,7 +425,10 @@ function acf_blocks() {
 				'icon'            => 'cover-image',
 				'render_template' => 'blocks/cb-three-col-text-icon.php',
 				'mode'            => 'edit',
-				'supports'        => array( 'mode' => false ),
+				'supports'        => array( 'mode' => false,
+					'className' => true,
+					'anchor'    => true,
+				),
 			)
 		);
 		acf_register_block_type(
@@ -397,7 +439,10 @@ function acf_blocks() {
 				'icon'            => 'cover-image',
 				'render_template' => 'blocks/cb-latest-insights.php',
 				'mode'            => 'edit',
-				'supports'        => array( 'mode' => false ),
+				'supports'        => array( 'mode' => false,
+					'className' => true,
+					'anchor'    => true,
+				),
 			)
 		);
 		acf_register_block_type(
@@ -408,7 +453,10 @@ function acf_blocks() {
 				'icon'            => 'cover-image',
 				'render_template' => 'blocks/cb-team-insights.php',
 				'mode'            => 'edit',
-				'supports'        => array( 'mode' => false ),
+				'supports'        => array( 'mode' => false,
+					'className' => true,
+					'anchor'    => true,
+				),
 			)
 		);
 		acf_register_block_type(
@@ -419,7 +467,10 @@ function acf_blocks() {
 				'icon'            => 'cover-image',
 				'render_template' => 'blocks/cb-all-case-studies.php',
 				'mode'            => 'edit',
-				'supports'        => array( 'mode' => false ),
+				'supports'        => array( 'mode' => false,
+					'className' => true,
+					'anchor'    => true,
+				),
 			)
 		);
 		acf_register_block_type(
@@ -430,7 +481,10 @@ function acf_blocks() {
 				'icon'            => 'cover-image',
 				'render_template' => 'blocks/cb-featured-experience.php',
 				'mode'            => 'edit',
-				'supports'        => array( 'mode' => false ),
+				'supports'        => array( 'mode' => false,
+					'className' => true,
+					'anchor'    => true,
+				),
 			)
 		);
 		acf_register_block_type(
@@ -441,7 +495,10 @@ function acf_blocks() {
 				'icon'            => 'cover-image',
 				'render_template' => 'blocks/cb-qa-tool.php',
 				'mode'            => 'edit',
-				'supports'        => array( 'mode' => false ),
+				'supports'        => array( 'mode' => false,
+					'className' => true,
+					'anchor'    => true,
+				),
 			)
 		);
 		acf_register_block_type(
@@ -452,7 +509,10 @@ function acf_blocks() {
 				'icon'            => 'cover-image',
 				'render_template' => 'blocks/cb-related-case-studies.php',
 				'mode'            => 'edit',
-				'supports'        => array( 'mode' => false ),
+				'supports'        => array( 'mode' => false,
+					'className' => true,
+					'anchor'    => true,
+				),
 			)
 		);
 		acf_register_block_type(
@@ -463,7 +523,10 @@ function acf_blocks() {
 				'icon'            => 'cover-image',
 				'render_template' => 'blocks/cb-related-insights.php',
 				'mode'            => 'edit',
-				'supports'        => array( 'mode' => false ),
+				'supports'        => array( 'mode' => false,
+					'className' => true,
+					'anchor'    => true,
+				),
 			)
 		);
 		acf_register_block_type(
@@ -474,7 +537,10 @@ function acf_blocks() {
 				'icon'            => 'cover-image',
 				'render_template' => 'blocks/cb-tabs.php',
 				'mode'            => 'edit',
-				'supports'        => array( 'mode' => false ),
+				'supports'        => array( 'mode' => false,
+					'className' => true,
+					'anchor'    => true,
+				),
 			)
 		);
 		acf_register_block_type(
@@ -485,7 +551,10 @@ function acf_blocks() {
 				'icon'            => 'cover-image',
 				'render_template' => 'blocks/cb-popup.php',
 				'mode'            => 'edit',
-				'supports'        => array( 'mode' => false ),
+				'supports'        => array( 'mode' => false,
+					'className' => true,
+					'anchor'    => true,
+				),
 			)
 		);
 		acf_register_block_type(
@@ -499,6 +568,7 @@ function acf_blocks() {
 				'supports'        => array(
 					'mode'   => false,
 					'anchor' => true,
+					'className' => true,
 				),
 			)
 		);
@@ -510,7 +580,10 @@ function acf_blocks() {
 				'icon'            => 'cover-image',
 				'render_template' => 'blocks/cb-five-steps.php',
 				'mode'            => 'edit',
-				'supports'        => array( 'mode' => false ),
+				'supports'        => array( 'mode' => false,
+					'className' => true,
+					'anchor'    => true,
+				),
 			)
 		);
 		acf_register_block_type(
@@ -521,7 +594,10 @@ function acf_blocks() {
 				'icon'            => 'cover-image',
 				'render_template' => 'blocks/cb-hub-insights.php',
 				'mode'            => 'edit',
-				'supports'        => array( 'mode' => false ),
+				'supports'        => array( 'mode' => false,
+					'className' => true,
+					'anchor'    => true,
+				),
 			)
 		);
 		acf_register_block_type(
@@ -532,7 +608,10 @@ function acf_blocks() {
 				'icon'            => 'cover-image',
 				'render_template' => 'blocks/cb-people-cta.php',
 				'mode'            => 'edit',
-				'supports'        => array( 'mode' => false ),
+				'supports'        => array( 'mode' => false,
+					'className' => true,
+					'anchor'    => true,
+				),
 			)
 		);
 		acf_register_block_type(
@@ -543,7 +622,10 @@ function acf_blocks() {
 				'icon'            => 'cover-image',
 				'render_template' => 'blocks/cb-dt-diagram.php',
 				'mode'            => 'edit',
-				'supports'        => array( 'mode' => false ),
+				'supports'        => array( 'mode' => false,
+					'className' => true,
+					'anchor'    => true,
+				),
 			)
 		);
 		acf_register_block_type(
@@ -554,7 +636,10 @@ function acf_blocks() {
 				'icon'            => 'cover-image',
 				'render_template' => 'blocks/cb-video-feature.php',
 				'mode'            => 'edit',
-				'supports'        => array( 'mode' => false ),
+				'supports'        => array( 'mode' => false,
+					'className' => true,
+					'anchor'    => true,
+				),
 			)
 		);
 		acf_register_block_type(
@@ -565,7 +650,10 @@ function acf_blocks() {
 				'icon'            => 'cover-image',
 				'render_template' => 'blocks/cb-video-carousel.php',
 				'mode'            => 'edit',
-				'supports'        => array( 'mode' => false ),
+				'supports'        => array( 'mode' => false,
+					'className' => true,
+					'anchor'    => true,
+				),
 			)
 		);
 		acf_register_block_type(
@@ -579,6 +667,7 @@ function acf_blocks() {
 				'supports'        => array(
 					'mode'      => false,
 					'className' => true,
+					'anchor'    => true,
 				),
 			)
 		);
@@ -587,6 +676,106 @@ function acf_blocks() {
 add_action( 'acf/init', 'acf_blocks' );
 
 
+
+/**
+ * Applies "Additional CSS class(es)" and the HTML anchor to ACF block output.
+ *
+ * Every non-hero ACF block declares `className` and `anchor` support, which makes
+ * the fields appear in the editor - but an ACF `render_template` block only gets
+ * `$block['className']` / `$block['anchor']` handed to the template, and nothing
+ * outputs them unless the template does. Around two thirds of the templates never
+ * did, so the fields would have appeared and then done nothing.
+ *
+ * Rather than edit thirty-odd templates and their differing root elements, the
+ * values are merged into the first opening tag of the rendered output here. This
+ * mirrors how core blocks are already post-processed further down this file.
+ *
+ * Idempotent by design:
+ *
+ * - classes already on the element are not repeated, so the ~25 templates that do
+ *   output `$block['className']` themselves keep working and gain nothing extra;
+ * - an existing `id` is left alone, so a template that renders its own anchor wins.
+ *
+ * Hero blocks declare `className => false` / no anchor, so nothing is injected
+ * into them.
+ *
+ * @param string $content Rendered block HTML.
+ * @param array  $block   Parsed block.
+ * @return string
+ */
+function cb_acf_block_wrapper_attributes( $content, $block ) {
+	$name = $block['blockName'] ?? '';
+
+	if ( 0 !== strpos( (string) $name, 'acf/' ) || '' === trim( (string) $content ) ) {
+		return $content;
+	}
+
+	/*
+	 * Gated on what the block actually declares, not just on the attribute being
+	 * present. Hero blocks opt out (className => false, no anchor), and a block
+	 * saved with a stale class before support was removed must not have it
+	 * silently reinstated here.
+	 */
+	$type     = WP_Block_Type_Registry::get_instance()->get_registered( $name );
+	$supports = $type ? (array) $type->supports : array();
+
+	$attrs  = $block['attrs'] ?? array();
+	$class  = empty( $supports['className'] ) ? '' : trim( (string) ( $attrs['className'] ?? '' ) );
+	$anchor = empty( $supports['anchor'] ) ? '' : trim( (string) ( $attrs['anchor'] ?? '' ) );
+
+	if ( '' === $class && '' === $anchor ) {
+		return $content;
+	}
+
+	/*
+	 * The first opening tag is the block's root element. Leading HTML comments -
+	 * several templates start with one, e.g. <!-- text_image --> - cannot match
+	 * because the pattern requires a letter straight after the "<".
+	 */
+	if ( ! preg_match( '/<([a-z][a-z0-9-]*)((?:"[^"]*"|\'[^\']*\'|[^>"\'])*)>/i', $content, $match, PREG_OFFSET_CAPTURE ) ) {
+		return $content;
+	}
+
+	$whole    = $match[0][0];
+	$offset   = (int) $match[0][1];
+	$tag      = $match[1][0];
+	$existing = $match[2][0];
+	$updated  = $existing;
+
+	if ( '' !== $class ) {
+		$wanted = preg_split( '/\s+/', $class, -1, PREG_SPLIT_NO_EMPTY );
+
+		if ( preg_match( '/\sclass\s*=\s*"([^"]*)"/i', $updated, $class_match ) ) {
+			$present = preg_split( '/\s+/', trim( $class_match[1] ), -1, PREG_SPLIT_NO_EMPTY );
+			$add     = array_diff( $wanted, $present );
+
+			if ( $add ) {
+				// The existing value is left as-is; only the addition is escaped,
+				// so nothing gets double-encoded.
+				$merged  = trim( $class_match[1] ) . ' ' . esc_attr( implode( ' ', $add ) );
+				$updated = preg_replace(
+					'/\sclass\s*=\s*"[^"]*"/i',
+					' class="' . $merged . '"',
+					$updated,
+					1
+				);
+			}
+		} else {
+			$updated .= ' class="' . esc_attr( $class ) . '"';
+		}
+	}
+
+	if ( '' !== $anchor && ! preg_match( '/\sid\s*=\s*["\']/i', $updated ) ) {
+		$updated .= ' id="' . esc_attr( $anchor ) . '"';
+	}
+
+	if ( $updated === $existing ) {
+		return $content;
+	}
+
+	return substr_replace( $content, '<' . $tag . $updated . '>', $offset, strlen( $whole ) );
+}
+add_filter( 'render_block', 'cb_acf_block_wrapper_attributes', 10, 2 );
 
 // Gutenburg core modifications
 add_filter( 'register_block_type_args', 'core_image_block_type_args', 10, 3 );

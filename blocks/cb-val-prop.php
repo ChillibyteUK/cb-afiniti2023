@@ -11,7 +11,12 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$block_id = 'vp-' . ( $block['id'] ?? uniqid() );
+// An author-supplied anchor becomes the block id, so the popover and modal ids
+// derived from it below follow suit and the anchor is actually linkable. Falls
+// back to the generated id when no anchor is set.
+$block_id = ! empty( $block['anchor'] )
+	? $block['anchor']
+	: 'vp-' . ( $block['id'] ?? uniqid() );
 $classes  = $block['className'] ?? '';
 
 // General fields.
