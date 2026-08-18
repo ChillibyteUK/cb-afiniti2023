@@ -347,6 +347,32 @@ markup, which the rewritten `cra.js` ignores entirely - the JS returns early whe
 it finds no `[data-cra-step]`, so selecting "CRA Tool (working)" gave a page whose
 buttons did nothing. No page was assigned to it.
 
+### Running the migrations: Tools > CRA Migration
+
+**WP Engine has no wp-cli**, so the migrations cannot be shell scripts. The logic
+lives in `inc/cb-cra-migrate.php` as `cb_cra_migrate_analysis()` and
+`cb_cra_migrate_questions()`; **Tools > CRA Migration** runs them, and
+`bin/migrate-*.php` are thin wrappers over the same functions for environments
+that do have wp-cli. One implementation, two front ends - do not reimplement
+either in the scripts.
+
+The page shows current state before you touch anything: which page is the source,
+how many legacy rows it holds, whether the options page and each lever's bands are
+populated, the 0-100 coverage per lever, and the derived max score. Dry run is
+ticked by default; Overwrite is not.
+
+> **Several pages run this template in production, and that matters.** The
+> migration reads from **one** page and writes to **global** storage, so
+> afterwards every template page renders the same questions. If those pages
+> currently differ, one set wins and the others stop being used.
+>
+> The page therefore lists every template page with a fingerprint of its
+> questions and bands. Matching fingerprints mean the choice is arbitrary;
+> differing fingerprints raise a red warning and the source has to be picked
+> explicitly. Nothing is deleted either way - the other pages keep their fields
+> and the change is reversible - but which content becomes global is an editorial
+> decision, not a technical one. **Do not pick for the client.**
+
 **Still to do:** delete `group_6494183e38c8d.json` and the legacy fallbacks in
 `cb_cra_question_steps()` / `cb_cra_lever_bands()`, once production has been
 migrated and verified. Nothing else is outstanding.
@@ -474,8 +500,8 @@ Yoast put in `og:title` and the JSON-LD graph. Titles are now company-only,
 | `page-templates/cra-tool.php` | the template; renders steps from the question set |
 | `inc/cb-cra-levers.php` | levers, question steps, maxima, tool page resolver |
 | `src/sass/theme/_cra_tool.scss` | tool styles, scoped to `body.page-template-cra-tool` |
-| `bin/migrate-lever-analysis.php` | page analysis repeaters -> `lever` term meta |
-| `bin/migrate-cra-questions.php` | `questions_page_1/2/3` -> CRA Questions options page |
+| `inc/cb-cra-migrate.php` | the migrations, and `Tools > CRA Migration` that runs them |
+| `bin/migrate-*.php` | wp-cli wrappers over the same functions; WPE has no wp-cli |
 | `acf-json/group_cra_questions.json` | the global question set |
 | `acf-json/group_cra_lever_analysis.json` | per-lever analysis bands, on the taxonomy |
 | `acf-json/group_63c67dca8bc3c.json` | Site-Wide Settings, incl. the CRA Tool tab |

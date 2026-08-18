@@ -14,6 +14,7 @@ require_once CB_THEME_DIR . '/inc/cb-utility.php';
 require_once CB_THEME_DIR . '/inc/cb-blocks.php';
 require_once CB_THEME_DIR . '/inc/cb-news.php';
 require_once CB_THEME_DIR . '/inc/cb-cra-levers.php';
+require_once CB_THEME_DIR . '/inc/cb-cra-migrate.php';
 require_once CB_THEME_DIR . '/inc/cb-cra-submit.php';
 require_once CB_THEME_DIR . '/inc/cb-block-usage.php';
 // require_once CB_THEME_DIR . '/inc/cb-careers.php';
