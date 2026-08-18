@@ -301,8 +301,26 @@ get_header();
 
         // --------------------------------------------- last step: the contact
         $cra_open_step( $cra_step, 'contact' );
+
+        /*
+         * Editable intro for this step, from Site-Wide Settings > CRA Questions.
+         *
+         * Stripped and entity-decoded before the emptiness test, because clearing
+         * a wysiwyg usually leaves "<p>&nbsp;</p>" behind and that would otherwise
+         * render an empty grey panel. Note the "\xc2\xa0" in the trim list: the
+         * decoded &nbsp; is U+00A0, which PHP's default trim() does *not* strip,
+         * so without it this check passes anything containing a single nbsp.
+         */
+        $cra_contact_intro  = (string) get_field( 'cra_contact_intro', 'options' );
+        $cra_intro_text     = html_entity_decode( wp_strip_all_tags( $cra_contact_intro ), ENT_QUOTES, 'UTF-8' );
+        $cra_intro_has_text = '' !== trim( $cra_intro_text, " \t\n\r\0\x0B\xc2\xa0" );
         ?>
             <div class="form_panel">
+                <?php if ( $cra_intro_has_text ) { ?>
+                <div class="alert alert-light">
+                    <?= wp_kses_post( $cra_contact_intro ); ?>
+                </div>
+                <?php } ?>
                 <div class="form_grid">
                     <label for="contactName">Name<sup>*</sup></label>
                     <div>

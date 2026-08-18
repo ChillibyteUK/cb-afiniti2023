@@ -148,6 +148,27 @@
                     ]
                 }
             ]
+        },
+        {
+            "key": "field_cra_contact_intro",
+            "label": "Contact Step Introduction",
+            "name": "cra_contact_intro",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "Appears above the contact fields on the final step, in the same panel style as a question step's introduction. This is the last thing someone reads before submitting, so it is the place to say what happens next. Leave blank to show nothing.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0,
+            "acfe_field_group_condition": 0
         }
     ],
     "location": [

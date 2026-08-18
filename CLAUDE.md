@@ -376,6 +376,19 @@ ticked by default; Overwrite is not.
 > and the change is reversible - but which content becomes global is an editorial
 > decision, not a technical one. **Do not pick for the client.**
 
+### Editable intro on the contact step
+
+`cra_contact_intro` on the **CRA Questions** options page (wysiwyg, alongside the
+`cra_steps` repeater) renders above the contact fields on the final step, in the
+same `.alert-light` panel the question steps use for their own introduction.
+
+Empty renders nothing. The emptiness test strips tags, decodes entities and then
+trims `" \t\n\r\0\x0B\xc2\xa0"` - note the last one. Clearing a wysiwyg
+usually leaves `<p>&nbsp;</p>`, and the decoded `&nbsp;` is U+00A0, which PHP's
+default `trim()` does **not** strip. Without that byte pair in the list the check
+passes and an empty grey panel renders. Verified against `<p>&nbsp;</p>`, `<p></p>`,
+`""` and whitespace.
+
 ### Numbered step indicator
 
 The Bootstrap progress bar is gone, replaced by a numbered `<ol class="cra_steps">`
