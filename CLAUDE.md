@@ -472,6 +472,46 @@ None are blocking; all are one-line changes. Ask rather than assume.
   `CRA Result` fallback title or an unusable email, from before validation
   existed. Run that against production, not locally.
 
+## Block editor styles
+
+`inc/cb-editor.php` calls `add_editor_style()` with the compiled frontend
+stylesheet **and** the editor-only one, in that order:
+
+```php
+add_editor_style( array( 'css/child-theme.min.css', 'css/custom-editor-style.min.css' ) );
+```
+
+`src/sass/custom-editor-style.scss` has existed since the theme was created and
+`npm run css` has always compiled it to `css/custom-editor-style{,.min}.css` - but
+**nothing ever called `add_editor_style()`**, so none of it had ever loaded. Ported
+from `cb-global42026`, which does the same thing.
+
+Order matters: the frontend stylesheet defines the `--col-*` properties on
+`:root`, and the editor stylesheet's colour rules need them resolved in the same
+document. `add_theme_support( 'editor-styles' )` is added in the same function -
+without it `add_editor_style()` enqueues nothing and the whole thing is a silent
+no-op.
+
+The width rules at the end of `custom-editor-style.scss` contain top-level blocks
+to a page-width centred column. On the frontend `inc/cb-blocks.php` wraps core
+blocks in `.container-xl` and ACF blocks render their own container; neither
+happens in the editor, so without this every block runs full-bleed. The widths
+come from Bootstrap's own `$container-max-widths` map (1140px from xl, 1320px from
+xxl) rather than a hand-picked number, so the editor tracks `.container-xl`.
+
+Two things to know if you touch it:
+
+- Not scoped to `.is-root-container > .wp-block`. The post title sits in a sibling
+  section above the root container, so the stricter selector would leave the title
+  full-bleed while the content was constrained.
+- **This install renders the editor un-iframed**, because meta boxes are present.
+  In that mode WordPress prefixes editor-stylesheet selectors with
+  `.editor-styles-wrapper` itself, so an already-prefixed selector could in
+  principle end up doubled and never match. It does match here - verified by
+  reading the computed style, `max-width: 1320px` with auto margins - but check
+  the computed value rather than the source if these rules ever appear to stop
+  working.
+
 ## Gotchas worth knowing
 
 **Bootstrap utilities are `!important`.** `d-flex` is `display:flex!important`,

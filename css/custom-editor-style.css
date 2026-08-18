@@ -1186,4 +1186,33 @@ body.understrap-no-sidebar .wp-block-cover.alignwide {
   margin-bottom: 3rem;
 }
 
+.editor-styles-wrapper .wp-block {
+  margin-inline: auto;
+}
+@media (min-width: 1200px) {
+  .editor-styles-wrapper .wp-block {
+    max-width: 1140px;
+  }
+}
+@media (min-width: 1400px) {
+  .editor-styles-wrapper .wp-block {
+    max-width: 1320px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .editor-styles-wrapper .wp-block[data-align=wide] {
+    max-width: calc(1140px + 4rem);
+  }
+}
+@media (min-width: 1400px) {
+  .editor-styles-wrapper .wp-block[data-align=wide] {
+    max-width: calc(1320px + 4rem);
+  }
+}
+
+.editor-styles-wrapper .wp-block[data-align=full] {
+  max-width: none;
+}
+
 /*# sourceMappingURL=custom-editor-style.css.map */
