@@ -36,6 +36,22 @@
         }
     }
 
+    // Links inside the intro copy are inline, not block.
+    //
+    // `.pillar_nav a` is display:block so the whole card is a click target, but
+    // that also caught links written into the intro text, which then broke onto
+    // their own line mid-sentence. Bold gives them an affordance now that they no
+    // longer sit on a line of their own.
+    //
+    // Buttons are excluded on the same basis as the colour rule above - they need
+    // their own display value.
+    .pillar-text {
+        a:not(.btn):not(.wp-element-button) {
+            display: inline;
+            font-weight: 700;
+        }
+    }
+
 
     .pillar-active {
         position: relative;

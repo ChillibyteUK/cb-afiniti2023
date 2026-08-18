@@ -23579,6 +23579,10 @@ button.search.clear::after {
     min-height: 150px;
   }
 }
+.pillar_nav .pillar-text a:not(.btn):not(.wp-element-button) {
+  display: inline;
+  font-weight: 700;
+}
 .pillar_nav .pillar-active {
   position: relative;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
