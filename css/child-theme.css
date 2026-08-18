@@ -24805,7 +24805,6 @@ button.search.clear::after {
     position: sticky;
     top: var(--cb-navbar-height);
     z-index: 1020;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   }
 }
 .nav_buttons__list {

@@ -12,11 +12,15 @@
     background-color: white;
     padding-block: 0.75rem;
 
+    // No box-shadow when sticky - deliberate. One was added here originally so the
+    // pinned bar read as floating above the content; it was not wanted. The white
+    // background is what separates it from whatever scrolls underneath. If some
+    // separation is ever needed, a border-bottom is the thing to reach for rather
+    // than reinstating the shadow.
     @media (min-width: 992px) {
         position: sticky;
         top: var(--cb-navbar-height);
         z-index: 1020;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
     }
 
     &__list {
