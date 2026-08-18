@@ -14,40 +14,40 @@ defined( 'ABSPATH' ) || exit;
  * of keeping a hand-maintained list in sync with the theme's colours.
  */
 function cb_get_theme_colour_choices() {
-    static $choices = null;
+	static $choices = null;
 
-    if ( $choices !== null ) {
-        return $choices;
-    }
+	if ( null !== $choices ) {
+		return $choices;
+	}
 
-    $choices   = array();
-    $scss_path = get_stylesheet_directory() . '/src/sass/theme/_props.scss';
+	$choices   = array();
+	$scss_path = get_stylesheet_directory() . '/src/sass/theme/_props.scss';
 
-    if ( ! file_exists( $scss_path ) ) {
-        return $choices;
-    }
+	if ( ! file_exists( $scss_path ) ) {
+		return $choices;
+	}
 
-    $scss = file_get_contents( $scss_path );
+	$scss = file_get_contents( $scss_path );
 
-    if ( ! preg_match( '/:root\s*\{(.*?)\}/s', $scss, $root_match ) ) {
-        return $choices;
-    }
+	if ( ! preg_match( '/:root\s*\{(.*?)\}/s', $scss, $root_match ) ) {
+		return $choices;
+	}
 
-    foreach ( explode( "\n", $root_match[1] ) as $line ) {
-        $line = trim( $line );
+	foreach ( explode( "\n", $root_match[1] ) as $line ) {
+		$line = trim( $line );
 
-        if ( $line === '' || strpos( $line, '//' ) === 0 ) {
-            continue;
-        }
+		if ( '' === $line || strpos( $line, '//' ) === 0 ) {
+			continue;
+		}
 
-        if ( preg_match( '/^--(col-[a-z0-9-]+)\s*:\s*(.+?);/i', $line, $match ) ) {
-            $slug           = $match[1];
-            $label          = ucwords( str_replace( '-', ' ', substr( $slug, 4 ) ) );
-            $choices[ $slug ] = $label;
-        }
-    }
+		if ( preg_match( '/^--(col-[a-z0-9-]+)\s*:\s*(.+?);/i', $line, $match ) ) {
+			$slug             = $match[1];
+			$label            = ucwords( str_replace( '-', ' ', substr( $slug, 4 ) ) );
+			$choices[ $slug ] = $label;
+		}
+	}
 
-    return $choices;
+	return $choices;
 }
 
 /**
@@ -57,11 +57,11 @@ function cb_get_theme_colour_choices() {
  */
 add_filter( 'acf/load_field', 'cb_load_colour_select_choices' );
 function cb_load_colour_select_choices( $field ) {
-    if ( $field['type'] === 'select' && substr( $field['name'], -7 ) === '_colour' ) {
-        $field['choices'] = cb_get_theme_colour_choices();
-    }
+	if ( 'select' === $field['type'] && substr( $field['name'], -7 ) === '_colour' ) {
+		$field['choices'] = cb_get_theme_colour_choices();
+	}
 
-    return $field;
+	return $field;
 }
 
 function acf_blocks() {
@@ -69,22 +69,22 @@ function acf_blocks() {
 
 		// INSERT NEW BLOCKS HERE.
 
-        acf_register_block_type(
-            array(
-                'name'            => 'cb_nav_buttons',
-                'title'           => __( 'CB Nav Buttons' ),
-                'category'        => 'layout',
-                'icon'            => 'cover-image',
-                'render_template' => 'blocks/cb-nav-buttons.php',
-                'mode'            => 'edit',
-                'supports'        => array(
-                    'mode'      => false,
-                    'anchor'    => true,
-                    'className' => true,
-                    'align'     => true,
-                ),
-            )
-        );
+		acf_register_block_type(
+			array(
+				'name'            => 'cb_nav_buttons',
+				'title'           => __( 'CB Nav Buttons' ),
+				'category'        => 'layout',
+				'icon'            => 'cover-image',
+				'render_template' => 'blocks/cb-nav-buttons.php',
+				'mode'            => 'edit',
+				'supports'        => array(
+					'mode'      => false,
+					'anchor'    => true,
+					'className' => true,
+					'align'     => true,
+				),
+			)
+		);
 
 		acf_register_block_type(
 			array(
@@ -272,7 +272,7 @@ function acf_blocks() {
 				'render_template' => 'blocks/cb-pillar-nav-short.php',
 				'mode'            => 'edit',
 				'supports'        => array( 'mode' => false ),
-		)
+			)
 		);
 		acf_register_block_type(
 			array(

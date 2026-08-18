@@ -1,75 +1,70 @@
 <?php
 /**
- * Block usage shortcode for debugging/QA.
+ * Block usage shortcode for debugging/QA — [block_usage_table].
  *
- * @package cb-sis2026
+ * Lists every block file in /blocks against the published content (across
+ * all public post types, not just pages/posts) that actually uses it, so
+ * you can tell at a glance whether a block is safe to remove with
+ * rm_block.sh.
+ *
+ * @package cb-global42026
  */
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Renders a table of all blocks and the pages/posts that use them.
+ * Renders a table of all blocks and the content that uses them.
  *
  * @return string HTML table of block usage.
  */
-function block_usage_table_shortcode() {
-	// Get all block files from /blocks directory.
-	$blocks_dir  = get_stylesheet_directory() . '/page-templates/blocks/';
-	$block_files = array_unique(
-		array_merge(
-			glob( $blocks_dir . 'cb-*.php' ) ?: array(),
-			glob( $blocks_dir . 'cb_*.php' ) ?: array()
-		)
-	);
+function cb_global42026_block_usage_table_shortcode() {
+	$blocks_dir  = get_stylesheet_directory() . '/blocks/';
+	$block_files = glob( $blocks_dir . '*.php' );
 
 	if ( ! $block_files ) {
 		return '<p>No blocks found.</p>';
 	}
 
-	// Extract block names from filenames (cb-block-name.php -> cb_block_name).
+	// Block names are kebab-case, matching both the filename and the
+	// registered block type: acf_register_block_type() runs 'name' through
+	// acf_slugify() regardless of how add_block.sh wrote it, so the block
+	// comment stored in post content is always the hyphenated form.
 	$block_names = array();
 	foreach ( $block_files as $file ) {
-		$filename      = basename( $file, '.php' );
-		$block_name    = str_replace( '-', '_', $filename );
-		$block_names[] = $block_name;
+		$block_names[] = basename( $file, '.php' );
 	}
 
-	// Query all pages and posts.
 	$posts = get_posts(
 		array(
-			'post_type'      => array( 'page', 'post' ),
+			'post_type'      => get_post_types( array( 'public' => true ), 'names' ),
 			'posts_per_page' => -1,
 			'post_status'    => 'publish',
 		)
 	);
 
-	// Build usage map: block_name => [post1, post2, ...].
 	$usage_map = array_fill_keys( $block_names, array() );
 
 	foreach ( $posts as $post ) {
-		$content = $post->post_content;
+		preg_match_all( '/<!-- wp:acf\/([a-z0-9-]+)\s/', $post->post_content, $matches );
 
-		// Parse ACF block comments from post content.
-		// ACF blocks are stored as: <!-- wp:acf/cb-block-name {...} /-->.
-		preg_match_all( '/<!-- wp:acf\/(cb-[a-z0-9\-_]+)\s/', $content, $matches );
+		if ( empty( $matches[1] ) ) {
+			continue;
+		}
 
-		if ( ! empty( $matches[1] ) ) {
-			$found_blocks = array_unique( $matches[1] );
-			foreach ( $found_blocks as $found_block ) {
-				// Normalize block name: cb-block-name -> cb_block_name.
-				$normalized = str_replace( '-', '_', $found_block );
-				if ( isset( $usage_map[ $normalized ] ) ) {
-					$usage_map[ $normalized ][] = $post;
-				}
+		foreach ( array_unique( $matches[1] ) as $found_block ) {
+			if ( isset( $usage_map[ $found_block ] ) ) {
+				$usage_map[ $found_block ][] = $post;
 			}
 		}
 	}
 
-	// Render table.
+	// Inline-styled on purpose — this is a standalone QA utility that should
+	// look reasonable on any project regardless of whether it has opted
+	// into src/css/tables.css.
 	ob_start();
 	?>
-	<div class="container py-5">
-	<table class="block-usage-table" style="width: 100%; border-collapse: collapse;">
+	<div style="padding: 2rem;">
+	<table style="width: 100%; border-collapse: collapse;">
 		<thead>
 			<tr style="border-bottom: 2px solid #ccc;">
 				<th style="text-align: left; padding: 8px; font-weight: bold;">Block Name</th>
@@ -77,12 +72,9 @@ function block_usage_table_shortcode() {
 			</tr>
 		</thead>
 		<tbody>
-			<?php
-			foreach ( $usage_map as $block_name => $posts_using_block ) :
-				$block_display = str_replace( '_', '-', $block_name );
-				?>
+			<?php foreach ( $usage_map as $block_name => $posts_using_block ) : ?>
 				<tr style="border-bottom: 1px solid #eee;">
-					<td style="padding: 8px; vertical-align: top;"><?= esc_html( $block_display ); ?></td>
+					<td style="padding: 8px; vertical-align: top;"><?php echo esc_html( $block_name ); ?></td>
 					<td style="padding: 8px;">
 						<?php if ( empty( $posts_using_block ) ) : ?>
 							<em style="color: #999;">Not used</em>
@@ -90,10 +82,10 @@ function block_usage_table_shortcode() {
 							<ul style="margin: 0; padding-left: 20px;">
 								<?php foreach ( $posts_using_block as $post ) : ?>
 									<li>
-										<a href="<?= esc_url( get_edit_post_link( $post->ID ) ); ?>" target="_blank">
-											<?= esc_html( $post->post_title ); ?>
+										<a href="<?php echo esc_url( get_edit_post_link( $post->ID ) ); ?>" target="_blank">
+											<?php echo esc_html( $post->post_title ); ?>
 										</a>
-										<span style="color: #999; font-size: 0.9em;">(<?= esc_html( ucfirst( $post->post_type ) ); ?>)</span>
+										<span style="color: #999; font-size: 0.9em;">(<?php echo esc_html( ucfirst( $post->post_type ) ); ?>)</span>
 									</li>
 								<?php endforeach; ?>
 							</ul>
@@ -107,5 +99,4 @@ function block_usage_table_shortcode() {
 	<?php
 	return ob_get_clean();
 }
-
-add_shortcode( 'block_usage_table', 'block_usage_table_shortcode' );
+add_shortcode( 'block_usage_table', 'cb_global42026_block_usage_table_shortcode' );

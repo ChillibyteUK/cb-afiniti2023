@@ -45,7 +45,15 @@ $sections = array( 'shaping', 'readiness', 'delivering', 'embedding' );
 					<div class="col-6 <?= esc_attr( $dash_borders[ $i ][0] ); ?>"></div>
 					<div class="col-6 <?= esc_attr( $dash_borders[ $i ][1] ); ?>"></div>
 				</div>
-				<<?= $wrapper_tag; ?><?php if ( $has_link ) : ?> href="<?= esc_url( $link_url ); ?>" target="<?= esc_attr( $link_target ); ?>"<?php endif; ?>>
+				<<?= esc_attr( $wrapper_tag ); ?>
+				<?php
+				if ( $has_link ) {
+					?>
+					href="<?= esc_url( $link_url ); ?>" target="<?= esc_attr( $link_target ); ?>"
+					<?php
+				}
+				?>
+				>
 					<div class="pillar-shadow" style="<?= esc_attr( $style ); ?>">
 						<div class="px-3 py-3 border-bottom border-white">
 							<span class="fs-4 fw-bold"><?= esc_html( $btitle ); ?></span><br>
@@ -62,7 +70,7 @@ $sections = array( 'shaping', 'readiness', 'delivering', 'embedding' );
 							<?php endif; ?>
 						</div>
 					</div>
-				</<?= $wrapper_tag; ?>>
+				</<?= esc_attr( $wrapper_tag ); ?>>
 			</div>
 				<?php
 			}
