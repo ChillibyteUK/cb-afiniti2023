@@ -265,10 +265,76 @@ unequal weight.
 > the migration only. Wiring the template to `cb_cra_question_steps()` is phase 3.
 > This is why the legacy field definitions must stay for now.
 
-**Still to do in the restructure:** the data-driven `cra.js` and template;
-contact details moving to the last step and `orgName` moving up; storing the
-per-lever denominator (see below); deleting the legacy field definitions once
-verified.
+### Phase 3: data-driven template and JS - DONE
+
+`cra-tool.php` builds its steps from `cb_cra_question_steps()`. The order is now
+organisation → question steps → contact, as agreed. Progress percentages are
+computed from the step count, and headings are numbered from the loop.
+
+`js/cra.js` was rewritten to be **markup-driven**. No step or question count
+appears in it at all; it walks whatever the template rendered:
+
+| attribute | meaning |
+|---|---|
+| `data-cra-step` | a step section, in document order |
+| `data-cra-kind` | `org` / `questions` / `contact` |
+| `data-cra-field="key"` | an input whose value goes into the payload |
+| `data-cra-required` | must be filled before leaving the step |
+| `data-cra-warn-for="key"` | that field's error message |
+| `data-cra-warn-step` | the step-level error message |
+| `data-cra-shown-when="k=v"` | shown only while field k has value v |
+| `data-lever` | on a radio: which lever its score belongs to |
+
+Scores are summed from checked radios across every question step, so **moving a
+question between steps does not change the result**. Verified: answering step 1
+with 2s, step 2 with 3s and step 3 with 4s gave `Method: 8` and `Capability: 10`
+where the others gave 9, which is right - the production question set puts two
+Method questions in step 2 and two Capability in step 3.
+
+Three things the rewrite nearly lost, all found by driving the real thing:
+
+- **`.stepCard` is `display:none` in CSS, and `#form0` is a `.stepCard` too**, so
+  the intro does not appear unless JS shows it explicitly.
+- **The CB CRA Hero block renders two heroes** and starting the tool swaps them
+  (`.cra-hero--primary` ↔ `#cra-form-hero`). Both are `flex`; setting `block`
+  silently breaks their internal layout.
+- **`.reset` buttons** return to the intro and restore the primary hero.
+
+The submit handler validates **every** step, not just the contact one. The submit
+button lives inside the last section, which is in the DOM the whole time, so
+validating only that step let an incomplete question step through and posted a
+payload of all-zero scores. Found by a faulty test that accidentally checked no
+radios - worth keeping in mind as a real class of bug rather than a test artefact.
+
+`cra.js` is cache-busted **only** by its own `?v=` query string in
+`cra-tool.php` - it is not compiled, so nothing else busts it. Bump it on every
+change. It is at `2.3`. A browser test against a stale bundle is worthless; fetch
+the asset with `cache: 'no-store'` and grep it if behaviour contradicts the file.
+
+Step changes no longer `scrollIntoView`. The compact hero is short enough that
+the next step is already in view, and the jump was disorienting.
+
+### The legacy field group is detached, not deleted
+
+`group_6494183e38c8d.json` ("TPL CRA Tool") is now attached to
+`post_type == cb_cra_legacy_retained`, a post type that does not exist. That
+removes the metabox from CRA Tool pages while keeping the fields **registered**,
+because location rules only control display - `get_field()` still reads them, and
+`cb_cra_question_steps()` / `cb_cra_lever_bands()` still fall back to them on any
+environment that has not run the migrations. **Production has not been migrated**,
+so deleting the group outright would take its questions with it. Delete it, and
+the fallbacks, only after production is migrated and verified.
+
+**Still to do in the restructure:** move the 92 lines of inline `<style>` in
+`cra-tool.php` into SCSS; retire `cra_tool_page_id`; delete the legacy field
+definitions and fallbacks once production is migrated.
+
+> `page-templates/cra-tool-working.php` is now **dead**. It still has the old
+> `#form1`..`#form5` markup, which the rewritten `cra.js` ignores entirely - the
+> JS returns early when it finds no `[data-cra-step]`, so selecting "CRA Tool
+> (working)" gives a page whose buttons do nothing. It was only ever a parking
+> space for phase 1 template work that phase 3 has superseded. It should be
+> deleted.
 
 ### The denominator, still outstanding
 

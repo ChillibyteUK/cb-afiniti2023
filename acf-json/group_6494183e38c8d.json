@@ -1401,9 +1401,9 @@
     "location": [
         [
             {
-                "param": "page_template",
+                "param": "post_type",
                 "operator": "==",
-                "value": "page-templates\/cra-tool.php"
+                "value": "cb_cra_legacy_retained"
             }
         ]
     ],
@@ -1414,7 +1414,7 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "",
+    "description": "Legacy CRA question and analysis fields. The questions now live on the CRA Questions options page and the analysis bands on the lever taxonomy, so this group is deliberately attached to a post type that does not exist: the fields stay registered - cb_cra_question_steps() and cb_cra_lever_bands() still fall back to them on any environment that has not run bin/migrate-*.php - but the metabox no longer appears on CRA Tool pages. Safe to delete outright once production has been migrated and the fallbacks are removed.",
     "show_in_rest": 0,
     "display_title": "",
     "allow_ai_access": false,

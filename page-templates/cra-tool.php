@@ -171,39 +171,220 @@ get_header();
         <?= apply_filters( 'the_content', serialize_blocks( $cra_intro_blocks ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
     </section>
     <div class="container-xl">
-        <section class="stepCard" id="form1">
-            <h2>Step 1 - Contact Details</h2>
+        <?php
+        /*
+         * The steps are built here rather than hard-coded, because the question
+         * steps come from Site-Wide Settings > CRA Questions and there can be any
+         * number of them. Fixed steps top and tail the sequence:
+         *
+         *   0            About Your Organisation  (orgName + the change context)
+         *   1 .. n-2     question steps           (global, editable)
+         *   n-1          Contact Details          (last - gates the report)
+         *
+         * Contact details deliberately come last: the tool used to ask for an
+         * email before showing any value. orgName is the exception and stays up
+         * front, because it becomes the result's post_title.
+         *
+         * Both fixed steps stay code-defined. Their inputs map to payload keys
+         * cb_cra_clean_contact() validates by name, so they are not content.
+         *
+         * The markup carries everything cra.js needs - data-cra-step,
+         * data-cra-kind, data-cra-field, data-lever - so the JS walks whatever is
+         * rendered instead of counting to five. No step or question count appears
+         * in the JS at all.
+         */
+        $cra_question_steps = cb_cra_question_steps( get_the_ID() );
+        $cra_total_steps    = count( $cra_question_steps ) + 2;
+        $cra_step           = 0;
+
+        /**
+         * Opens a step section, with its heading and progress bar.
+         *
+         * @param int    $index Zero-based step index.
+         * @param int    $total Total steps.
+         * @param string $kind  org|questions|contact.
+         * @param string $title Heading text after "Step N - ".
+         * @return void
+         */
+        $cra_open_step = function ( $index, $total, $kind, $title ) {
+            $percent = $total > 0 ? (int) round( ( $index / $total ) * 100 ) : 0;
+            ?>
+        <section class="stepCard" id="craStep<?= (int) $index; ?>" data-cra-step="<?= (int) $index; ?>"
+            data-cra-kind="<?= esc_attr( $kind ); ?>">
+            <h2>Step <?= (int) $index + 1; ?> - <?= esc_html( $title ); ?></h2>
             <div class="progress">
-                <div class="progress-bar progress-bar-striped" role="progressbar" style="width:0%" aria-valuenow="0"
-                    aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar progress-bar-striped" role="progressbar" style="width:<?= $percent; ?>%"
+                    aria-valuenow="<?= $percent; ?>" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
+            <?php
+        };
+
+        /**
+         * Renders the Back / Next pair. Step 0's Back leaves the assessment.
+         *
+         * @param int    $index Zero-based step index.
+         * @param string $next  Label for the forward button.
+         * @return void
+         */
+        $cra_step_buttons = function ( $index, $next = 'Next' ) {
+            ?>
+            <div class="form_buttons d-flex gap-2 justify-content-between">
+                <?php if ( 0 === $index ) { ?>
+                <a href="<?= esc_url( get_permalink() ); ?>" class="btn btn-secondary">Back</a>
+                <?php } else { ?>
+                <button type="button" class="btn btn-secondary" data-cra-back>Back</button>
+                <?php } ?>
+                <button type="button" class="btn btn-primary" data-cra-next><?= esc_html( $next ); ?></button>
+            </div>
+            <?php
+        };
+
+        // ------------------------------------------------ step 1: organisation
+        $cra_open_step( $cra_step, $cra_total_steps, 'org', 'About Your Organisation' );
+        ?>
+            <div class="form_panel">
+                <div class="form_grid mb-3">
+                    <label for="orgName">Organisation Name<sup>*</sup></label>
+                    <div>
+                        <input type="text" name="orgName" id="orgName" class="form-control" required
+                            data-cra-field="orgName" data-cra-required="1">
+                        <div class="alert alert-danger" data-cra-warn-for="orgName">Please enter your organisation name
+                        </div>
+                    </div>
+                </div>
+                <div class="form_grid mb-3">
+                    <label for="changeInProgress">Is your organisation currently implementing or planning a major change
+                        initiative?</label>
+                    <div>
+                        <select name="changeInProgress" id="changeInProgress" class="form-select"
+                            data-cra-field="changeInProgress" data-cra-required="1">
+                            <option value="" disabled selected>Select</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                        <div class="alert alert-danger" data-cra-warn-for="changeInProgress">Please select an option.
+                        </div>
+                    </div>
+                </div>
+                <?php // Shown only when the answer above is Yes - see cra.js. ?>
+                <div id="changeDetailContainer" class="form_grid my-3" data-cra-shown-when="changeInProgress=Yes">
+                    <label for="changeDetail">Please briefly outline this change</label>
+                    <div>
+                        <textarea name="changeDetail" id="changeDetail" class="form-control" data-cra-field="changeDetail"
+                            data-cra-required="1"
+                            placeholder="For example, implementing a new technology or system, creating a new operating model, digital transformation, culture change, regulatory changes."></textarea>
+                        <div class="alert alert-danger" data-cra-warn-for="changeDetail">Please tell us about your
+                            current/planned change.</div>
+                    </div>
+                </div>
+                <div class="form_grid">
+                    <label for="changeRole">What, if any role do you normally undertake in relation to a Change
+                        Project/Programme?</label>
+                    <div>
+                        <select name="changeRole" id="changeRole" class="form-select" data-cra-field="changeRole"
+                            data-cra-required="1">
+                            <option value="" disabled selected>Select</option>
+                            <option value="None">None</option>
+                            <option value="End User">End User</option>
+                            <option value="Project/Programme Manager">Project/Programme Manager</option>
+                            <option value="Sponsor">Sponsor</option>
+                            <option value="Stakeholder">Stakeholder</option>
+                        </select>
+                        <div class="alert alert-danger" data-cra-warn-for="changeRole">Please select an option.</div>
+                    </div>
+                </div>
+                <?php $cra_step_buttons( $cra_step ); ?>
+            </div>
+        </section>
+        <?php
+        ++$cra_step;
+
+        // -------------------------------------------------- the question steps
+        foreach ( $cra_question_steps as $cra_qstep ) {
+            $cra_open_step( $cra_step, $cra_total_steps, 'questions', $cra_qstep['title'] );
+            ?>
+            <div class="form_panel">
+                <?php if ( '' !== trim( (string) $cra_qstep['header'] ) ) { ?>
+                <div class="alert alert-light">
+                    <?= wp_kses_post( $cra_qstep['header'] ); ?>
+                </div>
+                <?php } ?>
+                <div class="form_grid form_grid--wide">
+                    <div class="d-none d-md-block">&nbsp;</div>
+                    <div class="justify-content-between d-none d-md-flex">
+                        <div>Strongly<br>Disagree</div>
+                        <div>Strongly<br>Agree</div>
+                    </div>
+                    <?php
+                    /*
+                     * The 1-10 scale labels, repeated for mobile under each
+                     * question. Built once here rather than inlined per question.
+                     */
+                    ob_start();
+                    ?>
+                    <div class="d-md-none d-flex justify-content-between small">
+                        <div>Strongly Disagree</div>
+                        <div>Strongly Agree</div>
+                    </div>
+                    <?php
+                    $cra_mob_labels = ob_get_clean();
+
+                    foreach ( $cra_qstep['questions'] as $cra_question ) {
+                        $cra_group = 'cra_' . $cra_question['id'];
+                        ?>
+                    <label for="<?= esc_attr( $cra_group ); ?>"><?= esc_html( $cra_question['text'] ); ?></label>
+                    <?= $cra_mob_labels; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                    <div class="radio_group" role="radiogroup"
+                        aria-label="<?= esc_attr( $cra_question['text'] ); ?>">
+                        <?php for ( $cra_i = 1; $cra_i <= CB_CRA_SCALE_MAX; $cra_i++ ) { ?>
+                        <input type="radio" name="<?= esc_attr( $cra_group ); ?>"
+                            data-lever="<?= esc_attr( $cra_question['lever_key'] ); ?>" value="<?= (int) $cra_i; ?>"
+                            class="form-check" aria-label="<?= (int) $cra_i; ?>">
+                        <?php } ?>
+                    </div>
+                        <?php
+                    }
+                    ?>
+                </div>
+                <div class="alert alert-danger mt-4" data-cra-warn-step>Please answer all questions.</div>
+                <?php $cra_step_buttons( $cra_step ); ?>
+            </div>
+        </section>
+            <?php
+            ++$cra_step;
+        }
+
+        // --------------------------------------------- last step: the contact
+        $cra_open_step( $cra_step, $cra_total_steps, 'contact', 'Your Details' );
+        ?>
             <div class="form_panel">
                 <div class="form_grid">
                     <label for="contactName">Name<sup>*</sup></label>
                     <div>
-                        <input type="text" name="contactName" id="contactName" class="form-control" required>
-                        <div class="alert alert-danger" id="contactNameWarn">Please enter your name</div>
+                        <input type="text" name="contactName" id="contactName" class="form-control" required
+                            data-cra-field="contactName" data-cra-required="1">
+                        <div class="alert alert-danger" data-cra-warn-for="contactName">Please enter your name</div>
                     </div>
                     <label for="contactTitle">Job Title</label>
-                    <input type="text" name="contactTitle" id="contactTitle" class="form-control">
-                    <label for="orgName">Organisation Name<sup>*</sup></label>
-                    <div>
-                        <input type="text" name="orgName" id="orgName" class="form-control" required>
-                        <div class="alert alert-danger" id="orgNameWarn">Please enter your organisation name</div>
-                    </div>
+                    <input type="text" name="contactTitle" id="contactTitle" class="form-control"
+                        data-cra-field="contactTitle">
                     <label for="contactPhone">Contact Number</label>
-                    <input type="text" name="contactPhone" id="contactPhone" class="form-control">
+                    <input type="text" name="contactPhone" id="contactPhone" class="form-control"
+                        data-cra-field="contactPhone">
                     <label for="contactMobile">Contact Mobile</label>
-                    <input type="text" name="contactMobile" id="contactMobile" class="form-control">
+                    <input type="text" name="contactMobile" id="contactMobile" class="form-control"
+                        data-cra-field="contactMobile">
                     <label for="contactEmail">Contact Email<sup>*</sup></label>
                     <div>
-                        <input type="email" name="contactEmail" id="contactEmail" class="form-control" required>
-                        <div class="alert alert-danger" id="contactEmailWarn">Please enter your email address</div>
+                        <input type="email" name="contactEmail" id="contactEmail" class="form-control" required
+                            data-cra-field="contactEmail" data-cra-required="1">
+                        <div class="alert alert-danger" data-cra-warn-for="contactEmail">Please enter your email address
+                        </div>
                     </div>
-
                     <label for="contactHowHear">How did you hear about Afiniti?<sup>*</sup></label>
                     <div>
-                        <select name="contactHowHear" id="contactHowHear" class="form-select" required>
+                        <select name="contactHowHear" id="contactHowHear" class="form-select" required
+                            data-cra-field="contactHowHear" data-cra-required="1">
                             <option value="" disabled selected>Select</option>
                             <option value="Web Search">Web Search</option>
                             <option value="LinkedIn">LinkedIn</option>
@@ -213,257 +394,43 @@ get_header();
                             <option value="Internal Referral">Internal Referral</option>
                             <option value="Other">Other</option>
                         </select>
-                        <div class="alert alert-danger" id="contactHowHearWarn">Please select an option</div>
+                        <div class="alert alert-danger" data-cra-warn-for="contactHowHear">Please select an option</div>
                     </div>
                     <div>
-                        <label for="consent"><input type="checkbox" name="consent" id="consent" value="true">
+                        <label for="consent"><input type="checkbox" name="consent" id="consent" value="true"
+                                data-cra-field="consent" data-cra-required="1">
                             <div>I consent to the terms of the <a href="/privacy-policy/" target="_blank">privacy
                                     policy</a><sup>*</sup>.</div>
                         </label>
-                        <div class="alert alert-danger" id="consentWarn">Please consent to the terms.</div>
+                        <div class="alert alert-danger" data-cra-warn-for="consent">Please consent to the terms.</div>
                     </div>
                 </div>
+                <div class="alert alert-danger mt-4" data-cra-warn-step>Please complete the required fields.</div>
                 <div class="form_buttons d-flex gap-2 justify-content-between">
-                    <?php // Step 1's Back leaves the assessment, so it reloads this page to the intro. Was hard-coded to /change-readiness-assessment-tool/, which is not this page's slug. ?>
-                    <a href="<?=esc_url(get_permalink())?>" class="btn btn-primary">Back</a>
-                    <button id="step1" class="btn btn-primary">Next</button>
-                </div>
-            </div>
-        </section>
-        <section class="stepCard" id="form2">
-            <h2>Step 2 - About Your Organisation</h2>
-            <div class="progress">
-                <div class="progress-bar progress-bar-striped" role="progressbar" style="width:20%" aria-valuenow="20"
-                    aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            <div class="form_panel">
-                <div class="form_grid mb-3">
-                    <label for="changeInProgress">Is your organisation currently implementing or planning a major change
-                        initiative?</label>
-                    <div>
-                        <select name="changeInProgress" id="changeInProgress" class="form-select">
-                            <option value="" disabled selected>Select</option>
-                            <option value="Yes">Yes</option>
-                            <option value="No">No</option>
-                        </select>
-                        <div class="alert alert-danger" id="changeInProgressWarn">Please select an option.</div>
-                    </div>
-                </div>
-                <div id="changeDetailContainer" class="form_grid my-3">
-                    <label for="changeDetail">Please briefly outline this change</label>
-                    <div>
-                        <textarea name="changeDetail" id="changeDetail" class="form-control" placeholder="For example, implementing a new technology or system, creating a new operating model, digital transformation, culture change, regulatory changes.
-"></textarea>
-                        <div class="alert alert-danger" id="changeDetailWarn">Please tell us about your current/planned
-                            change.</div>
-                    </div>
-                </div>
-                <div class="form_grid">
-                    <label for="changeRole">What, if any role do you normally undertake in relation to a Change
-                        Project/Programme?</label>
-                    <div>
-                        <select name="changeRole" id="changeRole" class="form-select">
-                            <option value="" disabled selected>Select</option>
-                            <option value="None">None</option>
-                            <option value="End User">End User</option>
-                            <option value="Project/Programme Manager">Project/Programme Manager</option>
-                            <option value="Sponsor">Sponsor</option>
-                            <option value="Stakeholder">Stakeholder</option>
-                        </select>
-                        <div class="alert alert-danger" id="changeRoleWarn">Please select an option.</div>
-                    </div>
-                </div>
-                <div class="form_buttons d-flex gap-2 justify-content-between">
-                    <button id="step1back" class="btn btn-secondary">Back</button>
-                    <button id="step2" class="btn btn-primary">Next</button>
-                </div>
-            </div>
-        </section>
-        <section class="stepCard" id="form3">
-            <h2>Step 3 - Making Change Stick</h2>
-            <div class="progress">
-                <div class="progress-bar progress-bar-striped" role="progressbar" style="width:40%" aria-valuenow="40"
-                    aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            <div class="form_panel">
-                <div class="alert alert-light">
-                    <?= wp_kses_post( get_field( 'question_header' ) ); ?>
-                </div>
-                <div class="form_grid form_grid--wide">
-                    <div class="d-none d-md-block">&nbsp;</div>
-                    <div class="justify-content-between d-none d-md-flex">
-                        <div>Strongly<br>Disagree</div>
-                        <div>Strongly<br>Agree</div>
-                    </div>
-                    <div class="d-none d-md-block">&nbsp;</div>
-                    <div class="radio_group radio_group--labels d-none d-md-grid">
-                        <?php
-                        for ( $i = 1; $i <= 10; $i++ ) {
-                            echo '<div>' . esc_html( $i ) . '</div>';
-                        }
-                        ?>
-                    </div>
+                    <button type="button" class="btn btn-secondary" data-cra-back>Back</button>
                     <?php
-
-                    $mobLabels = '<div class="d-md-none mobLabels"><div>Strongly<br>Disagree</div><div>Strongly<br>Agree</div></div>';
-                    $q = 1;
-                    while ( have_rows( 'questions_page_1' ) ) {
-                        the_row();
-                        ?>
-                    <label
-                        for="form3_answers"><?=get_sub_field('question')?><!-- [<?=get_sub_field('lever')?>]
-                        --></label>
-                    <?=$mobLabels?>
-                    <div class="radio_group">
-                        <?php
-        for ($i = 1; $i <= 10; $i++) {
-            ?>
-                        <input type="radio"
-                            name="form3_answers_<?=$q?>"
-                            data-lever="<?=get_sub_field('lever')?>"
-                            value="<?=$i?>" class="form-check">
-                        <?php
-        }
-    ?>
-                    </div>
-                    <?php
-                    $q++;
-}
-?>
-                </div>
-                <div class="alert alert-danger mt-4" id="form3Warn">Please answer all questions.</div>
-                <div class="form_buttons d-flex gap-2 justify-content-between">
-                    <button id="step2back" class="btn btn-secondary">Back</button>
-                    <button id="step3" class="btn btn-primary">Next</button>
-                </div>
-            </div>
-        </section>
-        <section class="stepCard" id="form4">
-            <h2>Step 4 - Making Change Stick</h2>
-            <div class="progress">
-                <div class="progress-bar progress-bar-striped" role="progressbar" style="width:60%" aria-valuenow="60"
-                    aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            <div class="form_panel">
-                <div class="alert alert-light">
-                    <?= wp_kses_post( get_field('question_header') ); ?>
-                </div>
-                <div class="form_grid form_grid--wide">
-                    <div class="d-none d-md-block">&nbsp;</div>
-                    <div class="justify-content-between d-none d-md-flex">
-                        <div>Strongly<br>Disagree</div>
-                        <div>Strongly<br>Agree</div>
-                    </div>
-                    <div class="d-none d-md-block">&nbsp;</div>
-                    <div class="radio_group radio_group--labels d-none d-md-grid">
-                        <?php
-    for ($i = 1; $i <= 10; $i++) {
-        echo '<div>' . $i . '</div>';
-    }
-?>
-                    </div>
-                    <?php
-                $q = 1;
-while (have_rows('questions_page_2')) {
-    the_row();
-    ?>
-                    <label
-                        for="form4_answers"><?=get_sub_field('question')?><!-- [<?=get_sub_field('lever')?>]
-                        --></label>
-                    <?=$mobLabels?>
-                    <div class="radio_group">
-                        <?php
-        for ($i = 1; $i <= 10; $i++) {
-            ?>
-                        <input type="radio"
-                            name="form4_answers_<?=$q?>"
-                            data-lever="<?=get_sub_field('lever')?>"
-                            value="<?=$i?>" class="form-check">
-                        <?php
-        }
-    ?>
-                    </div>
-                    <?php
-                    $q++;
-}
-?>
-                </div>
-                <div class="alert alert-danger mt-4" id="form4Warn">Please answer all questions.</div>
-                <div class="form_buttons d-flex gap-2 justify-content-between">
-                    <button id="step3back" class="btn btn-secondary">Back</button>
-                    <button id="step4" class="btn btn-primary">Next</button>
-                </div>
-            </div>
-        </section>
-        <section class="stepCard" id="form5">
-            <h2>Step 5 - Making Change Stick</h2>
-            <div class="progress">
-                <div class="progress-bar progress-bar-striped" role="progressbar" style="width:80%" aria-valuenow="80"
-                    aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            <div class="form_panel">
-                <div class="alert alert-light">
-                    <?=get_field('question_header')?>
-                </div>
-                <div class="form_grid form_grid--wide">
-                    <div>&nbsp;</div>
-                    <div class="d-none d-md-flex justify-content-between">
-                        <div>Strongly<br>Disagree</div>
-                        <div>Strongly<br>Agree</div>
-                    </div>
-                    <div>&nbsp;</div>
-                    <div class="radio_group radio_group--labels d-none d-md-grid">
-                        <?php
-    for ($i = 1; $i <= 10; $i++) {
-        echo '<div>' . $i . '</div>';
-    }
-?>
-                    </div>
-                    <?php
-                $q = 1;
-while (have_rows('questions_page_3')) {
-    the_row();
-    ?>
-                    <label
-                        for="form5_answers"><?=get_sub_field('question')?><!-- [<?=get_sub_field('lever')?>]
-                        --></label>
-                    <?=$mobLabels?>
-                    <div class="radio_group">
-                        <?php
-        for ($i = 1; $i <= 10; $i++) {
-            ?>
-                        <input type="radio"
-                            name="form5_answers_<?=$q?>"
-                            data-lever="<?=get_sub_field('lever')?>"
-                            value="<?=$i?>" class="form-check">
-                        <?php
-        }
-    ?>
-                    </div>
-                    <?php
-                    $q++;
-}
-?>
-                </div>
-                <div class="alert alert-danger mt-4" id="form5Warn">Please answer all questions.</div>
-                <div class="form_buttons text-end">
-                    <form
-                        action="<?=get_stylesheet_directory_uri()?>/cra.php"
-                        method="post" id="craForm">
+                    /*
+                     * The submit lives in the form so the button is a real submit
+                     * - cra.js fills the hidden fields on click and
+                     * preventDefault()s if anything is incomplete.
+                     */
+                    ?>
+                    <form action="<?= esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post" id="craForm">
+                        <input type="hidden" name="action" value="cb_cra_submit">
                         <input type="hidden" name="data" id="data" value="">
                         <input type="hidden" name="scores" id="scores" value="">
-                        <input type="hidden" name="pageID" id="pageID"
-                            value="<?=get_the_ID()?>">
-                        <input type="hidden" name="cra_token"
-                            value="<?=esc_attr(cb_cra_form_token())?>">
-                        <input type="submit" id="step5" class="btn btn-primary" value="View Results">
+                        <input type="hidden" name="pageID" id="pageID" value="<?= esc_attr( get_the_ID() ); ?>">
+                        <input type="hidden" name="cra_token" value="<?= esc_attr( cb_cra_form_token() ); ?>">
+                        <input type="submit" id="craSubmit" class="btn btn-primary" value="View Results">
                         <input class="ohnohoney" autocomplete="off" type="email" id="emailaddress" name="emailaddress"
                             placeholder="Your e-mail here">
                     </form>
                 </div>
             </div>
         </section>
-
+        <?php
+        ++$cra_step;
+        ?>
     </div>
 </main>
 <?php
@@ -490,7 +457,8 @@ add_action('wp_footer', function () {
  * validate. A PHP comment, so it does not ship to the browser.
  */
 ?>
-<script src="<?=get_stylesheet_directory_uri()?>/js/cra.js?v=1.1"></script>
+<?php // Bumped from 1.1: cra.js was rewritten to be markup-driven. Bump on every change - the file is not compiled, so nothing else busts its cache. ?>
+<script src="<?=get_stylesheet_directory_uri()?>/js/cra.js?v=2.3"></script>
 <?php
 });
 get_footer();

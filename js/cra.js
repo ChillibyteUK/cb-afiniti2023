@@ -1,394 +1,368 @@
-var data = {};
-var scores = { 'Culture': 0, 'Leadership': 0, 'Method': 0, 'Engagement': 0, 'Drivers': 0, 'Capability': 0 };
+/*
+ * CRA tool stepper.
+ *
+ * Hand-edited - NOT compiled from src/. See CLAUDE.md.
+ *
+ * This walks whatever the template rendered rather than counting to five. The
+ * previous version hard-coded #form0..#form5, #step0..#step5, #step1back..
+ * #step3back, UpdateScores(3|4|5) and checkAllRadioGroups('form3'...), so
+ * adding a step meant editing this file. The question steps are now global
+ * content and there can be any number of them, so every count comes from the
+ * DOM:
+ *
+ *   [data-cra-step]              a step section, in document order
+ *   [data-cra-kind]              org | questions | contact
+ *   [data-cra-field="key"]       an input whose value goes into the payload
+ *   [data-cra-required]          must be filled before leaving the step
+ *   [data-cra-warn-for="key"]    that field's error message
+ *   [data-cra-warn-step]         the step-level error message
+ *   [data-cra-shown-when="k=v"]  shown only while field k has value v
+ *   [data-lever]                 on a radio: which lever its score belongs to
+ *
+ * Contact details are the LAST step and gate the report. Scores are summed from
+ * checked radios across every question step, so moving a question between steps
+ * does not change the result.
+ */
 
-// show first step
+(function () {
+    'use strict';
 
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('form0').style.display = 'block';
-})
+    var steps = [].slice.call(document.querySelectorAll('[data-cra-step]'));
 
-// swap the primary hero for the compact form hero (CB CRA Hero block)
-function showFormHero(showing) {
-    var primary = document.querySelector('.cra-hero--primary');
-    var compact = document.getElementById('cra-form-hero');
-    if (primary) {
-        primary.style.display = showing ? 'none' : 'flex';
+    if (!steps.length) {
+        // Not the CRA tool template, or the tool rendered no steps.
+        return;
     }
-    if (compact) {
-        compact.style.display = showing ? 'flex' : 'none';
+
+    var intro = document.getElementById('form0');
+    var current = -1;
+
+    /*
+     * The CB CRA Hero block renders two heroes: the tall intro one and a compact
+     * form one. Starting the tool swaps them. Both are flex, not block - setting
+     * 'block' here silently broke their internal layout.
+     */
+    function showFormHero(showing) {
+        var primary = document.querySelector('.cra-hero--primary');
+        var compact = document.getElementById('cra-form-hero');
+
+        if (primary) {
+            primary.style.display = showing ? 'none' : 'flex';
+        }
+
+        if (compact) {
+            compact.style.display = showing ? 'flex' : 'none';
+        }
     }
-}
 
-function startTool() {
-    document.getElementById('form0').style.display = 'none';
-    document.getElementById('form1').style.display = 'block';
-    showFormHero(true);
-}
+    // ------------------------------------------------------------- utilities
 
-var step0 = document.getElementById('step0');
-if (step0) {
-    step0.addEventListener('click', startTool);
-}
-document.querySelectorAll('.start').forEach(function(button) {
-    button.addEventListener('click', startTool);
-});
-document.querySelectorAll('.reset').forEach(function(button) {
-    button.addEventListener('click', function(){
-        document.getElementById('form0').style.display = 'block';
-        document.getElementById('form1').style.display = 'none';
-        showFormHero(false);
-    });
-});
+    function fieldsIn(step) {
+        return [].slice.call(step.querySelectorAll('[data-cra-field]'));
+    }
 
-//Back buttons
-document.getElementById('step1back').addEventListener('click',function(){
-    document.getElementById('form1').style.display = 'block';
-    document.getElementById('form2').style.display = 'none';
-})
+    function warnFor(step, key) {
+        return step.querySelector('[data-cra-warn-for="' + key + '"]');
+    }
 
-document.getElementById('step2back').addEventListener('click',function(){
-    document.getElementById('form2').style.display = 'block';
-    document.getElementById('form3').style.display = 'none';
-})
-
-document.getElementById('step3back').addEventListener('click',function(){
-    document.getElementById('form3').style.display = 'block';
-    document.getElementById('form4').style.display = 'none';
-})
-
-//---------------------------------------------------------------------- step 2
-// validate step 1
-
-document.getElementById('step1').addEventListener('click',function(){
-    const requiredFields = ['contactName','orgName','contactEmail','consent','contactHowHear'];
-
-    const isValid = [];
-    requiredFields.every((x) => {
-        if (validate(x) == true) {
-            isValid.push(true)
+    function show(el, on) {
+        if (el) {
+            el.style.display = on ? 'block' : 'none';
         }
-        else {
-            isValid.push(false)
-        }
-        return true;
-    })
+    }
 
-    if (isValid.every(Boolean)) {
-
-        data.contactName = document.getElementById('contactName').value;
-        data.contactTitle = document.getElementById('contactTitle').value;
-        data.orgName = document.getElementById('orgName').value;
-        data.contactPhone = document.getElementById('contactPhone').value;
-        data.contactMobile = document.getElementById('contactMobile').value;
-        data.contactEmail = document.getElementById('contactEmail').value;
-        data.contactHowHear = document.getElementById('contactHowHear').value;
-        data.consent = document.getElementById('consent').value;
-
-        document.getElementById('form1').style.display = 'none';
-        document.getElementById('form2').style.display = 'block';
-
-        console.log('pushing event to dataLayer');
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({
-            'event': 'cra_contact_submit'
+    /*
+     * Bootstrap utilities are !important, so d-flex would beat an inline
+     * style.display and the element could never be hidden. Sections are shown
+     * and hidden here only, never with a utility class. See CLAUDE.md.
+     */
+    function hideAllSteps() {
+        steps.forEach(function (step) {
+            step.style.display = 'none';
         });
 
-        // console.log(data);
+        current = -1;
     }
 
-})
-
-//---------------------------------------------------------------------- step 2
-// check select
-document.getElementById('changeInProgress').addEventListener('change',function(){
-    if (document.getElementById('changeInProgress').value == 'Yes') {
-        document.getElementById('changeDetailContainer').style.display = 'grid';
-    }
-    else {
-        document.getElementById('changeDetailContainer').style.display = 'none';
-    }
-});
-
-
-document.getElementById('step2').addEventListener('click',function(){
-
-    const requiredFields = ['changeInProgress','changeRole'];
-
-    const isValid = [];
-
-    requiredFields.every((x) => {
-        if (validate(x) == true) {
-            isValid.push(true)
+    function showIntro() {
+        if (intro) {
+            intro.style.display = 'block';
         }
-        else {
-            isValid.push(false)
+
+        showFormHero(false);
+    }
+
+    function showStep(index) {
+        steps.forEach(function (step, i) {
+            step.style.display = i === index ? 'block' : 'none';
+        });
+
+        current = index;
+
+        if (intro) {
+            intro.style.display = 'none';
         }
-        return true;
-    })
 
-    // if (document.getElementById('changeInProgress').value == 'Yes') {
-    //     if (validate('changeDetail') == true) {
-    //         isValid.push(true);
-    //     }
-    //     else {
-    //         isValid.push(false);
-    //     }
-    // }
-
-    // console.log('isValid ' + isValid);
-
-    if (isValid.every(Boolean)) {
-
-        data.changeInProgress = document.getElementById('changeInProgress').value;
-        // data.changeDetail = document.getElementById('changeDetail').value;
-        data.changeRole = document.getElementById('changeRole').value;
-
-        document.getElementById('form2').style.display = 'none';
-        document.getElementById('form3').style.display = 'block';
-
-        // console.log(data);
-    }
-
-});
-
-//---------------------------------------------------------------------- step 3
-
-document.getElementById('step3').addEventListener('click',function(){
-
-    if (checkAllRadioGroups('form3') === true) {
-        // console.log('all answered');
-        document.getElementById('form3Warn').style.display = 'none';
-    }
-    else {
-        // console.log('missing answer');
-        document.getElementById('form3Warn').style.display = 'block';
-        return false;
-    }
-
-    UpdateScores(3);
-
-    document.getElementById('form3').style.display = 'none';
-    document.getElementById('form4').style.display = 'block';
-
-    // console.log(data);
-    // console.log(scores);
-
-})
-
-//---------------------------------------------------------------------- step 4
-
-document.getElementById('step4').addEventListener('click',function(){
-
-    if (checkAllRadioGroups('form4') === true) {
-        // console.log('all answered');
-        document.getElementById('form4Warn').style.display = 'none';
-    }
-    else {
-        // console.log('missing answer');
-        document.getElementById('form4Warn').style.display = 'block';
-        return false;
-    }
-
-    UpdateScores(4);
-
-    document.getElementById('form4').style.display = 'none';
-    document.getElementById('form5').style.display = 'block';
-
-    // console.log(scores);
-    // console.log(data);
-
-});
-
-//---------------------------------------------------------------------- step 5
-
-document.getElementById('step5').addEventListener('click',function(e){
-
-    if (checkAllRadioGroups('form5') === true) {
-        // console.log('all answered');
-        document.getElementById('form5Warn').style.display = 'none';
-    }
-    else {
-        // console.log('missing answer');
-        document.getElementById('form5Warn').style.display = 'block';
+        showFormHero(true);
 
         /*
-         * `return false` does nothing in an addEventListener callback, so the
-         * submit handler in cra-tool.php used to run anyway and post the form
-         * with empty hidden fields. stopImmediatePropagation prevents any later
-         * listener on this element from firing at all.
+         * No scrollIntoView on step change. The compact form hero is short
+         * enough that the next step is already in view, and jumping the page
+         * was more disorienting than helpful.
          */
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        return;
     }
 
-    UpdateScores(5);
+    // ------------------------------------------------------------ validation
 
-    // Last line of defence: never post a payload the server will only reject.
-    if (!data.contactEmail || !data.orgName || !data.contactName) {
-        document.getElementById('form5Warn').textContent =
-            'Your contact details are missing. Please go back to step 1.';
-        document.getElementById('form5Warn').style.display = 'block';
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        return;
-    }
+    function isFilled(input) {
+        if (input.type === 'checkbox') {
+            return input.checked;
+        }
 
-    document.getElementById('data').value = JSON.stringify(data);
-    document.getElementById('scores').value = JSON.stringify(scores);
-})
-
-//------------------------------------------------------------------- functions
-
-// functions
-
-function validate(field) {
-    // console.log('field '+field+' value is: ' + document.getElementById(field).value);
-    if (document.getElementById(field).type === 'text'
-     || document.getElementById(field).type === 'email') {
-        var input = document.getElementById(field);
-
-        /*
-         * Trimmed, so a single space no longer counts as filled in, and for
-         * email the browser's own format check is used. These inputs are not
-         * inside a <form>, so `required` and type="email" never fired natively
-         * - checkValidity() works on a detached input regardless. Before this,
-         * "abc" was accepted as an email and the results mail silently failed.
-         */
         var value = input.value.trim();
 
+        // Trim in place, so a single space does not count as filled in.
         if (value !== input.value) {
             input.value = value;
         }
 
-        var ok = value !== '' && input.checkValidity();
+        if (value === '') {
+            return false;
+        }
 
-        document.getElementById(field + 'Warn').style.display = ok ? 'none' : 'block';
+        /*
+         * These inputs are not inside a <form>, so `required` and type="email"
+         * never fire natively. checkValidity() works on a detached input, which
+         * is what stops "abc" being accepted as an email address.
+         */
+        return typeof input.checkValidity !== 'function' || input.checkValidity();
+    }
+
+    function validateFields(step) {
+        var ok = true;
+
+        fieldsIn(step).forEach(function (input) {
+            if (!input.hasAttribute('data-cra-required')) {
+                return;
+            }
+
+            // A conditionally hidden field is not required while it is hidden.
+            if (input.closest('[data-cra-shown-when]') &&
+                input.closest('[data-cra-shown-when]').style.display === 'none') {
+                show(warnFor(step, input.getAttribute('data-cra-field')), false);
+                return;
+            }
+
+            var filled = isFilled(input);
+
+            show(warnFor(step, input.getAttribute('data-cra-field')), !filled);
+
+            if (!filled) {
+                ok = false;
+            }
+        });
+
         return ok;
     }
-    else if (document.getElementById(field).type === 'checkbox') {
-        if (document.getElementById(field).checked != true) {
-            document.getElementById(field + 'Warn').style.display = 'block';
-            return false;
-        }
-        else {
-            document.getElementById(field + 'Warn').style.display = 'none';
-            return true;
-        }
+
+    function validateQuestions(step) {
+        var groups = {};
+
+        [].slice.call(step.querySelectorAll('input[type="radio"][name]')).forEach(function (radio) {
+            if (!(radio.name in groups)) {
+                groups[radio.name] = false;
+            }
+
+            if (radio.checked) {
+                groups[radio.name] = true;
+            }
+        });
+
+        return Object.keys(groups).every(function (name) {
+            return groups[name];
+        });
     }
-    else if (document.getElementById(field).type === 'select-one') {
-        if (document.getElementById(field).value == false) {
-            document.getElementById(field + 'Warn').style.display = 'block';
-            return false;
-        }
-        else {
-            document.getElementById(field + 'Warn').style.display = 'none';
-            return true;
-        }
+
+    function validate(step) {
+        var kind = step.getAttribute('data-cra-kind');
+        var ok = kind === 'questions' ? validateQuestions(step) : validateFields(step);
+
+        show(step.querySelector('[data-cra-warn-step]'), !ok);
+
+        return ok;
     }
-    else if (document.getElementById(field).type === 'textarea') {
-        if(document.getElementById(field).value == '') {
-            // console.log(field + ' value is null ' + document.getElementById(field).value); 
-            document.getElementById(field + 'Warn').style.display = 'block';
-            return false;
-        }
-        else {
-            document.getElementById(field + 'Warn').style.display = 'none';
-            return true;
-        }
+
+    // --------------------------------------------------------------- payload
+
+    function collectData() {
+        var data = {};
+
+        steps.forEach(function (step) {
+            fieldsIn(step).forEach(function (input) {
+                var key = input.getAttribute('data-cra-field');
+
+                if (input.type === 'checkbox') {
+                    data[key] = input.checked ? 'true' : '';
+                } else {
+                    data[key] = input.value.trim();
+                }
+            });
+        });
+
+        return data;
     }
-    else {
-        console.log('ERR: not handled ' + document.getElementById(field).type);
-    }
-}
 
-function getVal(field) {
-    let answer;
-    let lever;
-    for (var i = 0; i < field.length; i++) {
-        if (field[i].checked) {
-            answer = field[i].value;
-            lever = field[i].getAttribute('data-lever');
-            break;
+    function collectScores() {
+        var scores = {};
+
+        steps.forEach(function (step) {
+            [].slice.call(step.querySelectorAll('input[type="radio"][data-lever]')).forEach(function (radio) {
+                var lever = radio.getAttribute('data-lever');
+
+                if (!(lever in scores)) {
+                    scores[lever] = 0;
+                }
+
+                if (radio.checked) {
+                    scores[lever] += parseInt(radio.value, 10) || 0;
+                }
+            });
+        });
+
+        return scores;
+    }
+
+    // ---------------------------------------------------------------- wiring
+
+    steps.forEach(function (step, index) {
+        var next = step.querySelector('[data-cra-next]');
+        var back = step.querySelector('[data-cra-back]');
+
+        if (next) {
+            next.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                if (!validate(step)) {
+                    return;
+                }
+
+                if (index + 1 < steps.length) {
+                    showStep(index + 1);
+                }
+            });
         }
-    }
-    return [lever, answer];
-}
 
-// function checkAllRadioGroups(container) {
-//     var divElement = document.getElementById(container);
-//     var radioGroups = divElement.querySelectorAll('input[type="radio"]');
-//     var radioGroupNames = new Set();
+        if (back) {
+            back.addEventListener('click', function (e) {
+                e.preventDefault();
 
-//     // Collect unique radio group names
-//     radioGroups.forEach(function(radio) {
-//         radioGroupNames.add(radio.name);
-//     });
-
-//     // Check if all radio groups have a selected value
-//     for (var name of radioGroupNames) {
-//         var radios = document.getElementsByName(name);
-//         var hasValidValue = Array.from(radios).some(radio => radio.checked && !isNaN(Number(radio.value)));
-
-//         for (var i = 0; i < radios.length; i++) {
-//             if (radios[i].checked) {
-//                 hasSelectedValue = true;
-//                 break;
-//             }
-//         }
-
-//         if (!hasSelectedValue) {
-//             return false; // At least one radio group doesn't have a value
-//         }
-//     }
-
-//     return true; // All radio groups have a value
-// }
-
-// 20250107 stricter validation
-function checkAllRadioGroups(container) {
-    var divElement = document.getElementById(container);
-    var radioGroups = divElement.querySelectorAll('input[type="radio"]');
-    var radioGroupNames = new Set();
-
-    // Collect unique radio group names
-    radioGroups.forEach(function(radio) {
-        radioGroupNames.add(radio.name);
+                if (index > 0) {
+                    showStep(index - 1);
+                }
+            });
+        }
     });
 
-    // Check if all radio groups have a valid selected value
-    for (var name of radioGroupNames) {
-        var radios = document.getElementsByName(name);
-        var hasValidValue = Array.from(radios).some(radio => radio.checked && !isNaN(Number(radio.value)));
+    // Conditional blocks, e.g. "outline this change" only when the answer is Yes.
+    [].slice.call(document.querySelectorAll('[data-cra-shown-when]')).forEach(function (block) {
+        var parts = block.getAttribute('data-cra-shown-when').split('=');
+        var source = document.querySelector('[data-cra-field="' + parts[0] + '"]');
 
-        if (!hasValidValue) {
-            return false;
+        if (!source) {
+            return;
         }
+
+        var sync = function () {
+            block.style.display = source.value === parts[1] ? 'grid' : 'none';
+        };
+
+        source.addEventListener('change', sync);
+        sync();
+    });
+
+    // Start buttons. The hero renders #step0; other buttons use .start.
+    var starters = [].slice.call(document.querySelectorAll('.start'));
+    var step0 = document.getElementById('step0');
+
+    if (step0 && starters.indexOf(step0) === -1) {
+        starters.push(step0);
     }
-    return true;
-}
 
+    starters.forEach(function (button) {
+        button.addEventListener('click', function (e) {
+            e.preventDefault();
+            showStep(0);
+        });
+    });
 
-function UpdateScores(form) {
-    // console.log(scores);
-    // for (i = 1; i <= 6; i++) {
-    //     var [lever,ans] = getVal( document.getElementsByName('form'+form+'_answers_' + i) );
-    //     let curr = scores[lever];
-    //     // console.log('curr '+lever+': '+curr);
-    //     scores[lever] = Number(curr) + Number(ans);
-    // }
+    // .reset buttons abandon the assessment and go back to the intro.
+    [].slice.call(document.querySelectorAll('.reset')).forEach(function (button) {
+        button.addEventListener('click', function (e) {
+            e.preventDefault();
+            hideAllSteps();
+            showIntro();
+        });
+    });
 
-    // 20250107 validate the presence of fields before processing
-    for (let i = 1; i <= 6; i++) {
-        const elements = document.getElementsByName('form' + form + '_answers_' + i);
-        if (elements.length > 0) {
-            var [lever, ans] = getVal(elements);
-            if (lever && ans) {
-                let curr = scores[lever] || 0;
-                scores[lever] = Number(curr) + Number(ans);
+    // ---------------------------------------------------------------- submit
+
+    var submit = document.getElementById('craSubmit');
+
+    if (submit) {
+        submit.addEventListener('click', function (e) {
+            var step = steps[steps.length - 1];
+
+            if (!validate(step)) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                return;
             }
-        }
+
+            /*
+             * Every step, not just this one. The submit button sits inside the
+             * last section, which is in the DOM the whole time - so validating
+             * only the contact step would let an incomplete question step through
+             * and post a payload of zero scores. Walking all of them means the
+             * only way to submit is to have genuinely finished.
+             */
+            for (var i = 0; i < steps.length; i++) {
+                if (!validate(steps[i])) {
+                    showStep(i);
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    return;
+                }
+            }
+
+            var data = collectData();
+
+            /*
+             * Last line of defence: never post a payload the server will only
+             * reject. orgName is captured on the first step, so a broken jump
+             * between steps would otherwise submit without it.
+             */
+            if (!data.contactEmail || !data.orgName || !data.contactName) {
+                var warn = step.querySelector('[data-cra-warn-step]');
+
+                if (warn) {
+                    warn.textContent = 'Some details are missing. Please check the earlier steps.';
+                    warn.style.display = 'block';
+                }
+
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                return;
+            }
+
+            document.getElementById('data').value = JSON.stringify(data);
+            document.getElementById('scores').value = JSON.stringify(collectScores());
+        });
     }
 
-    return;
-}
+    /*
+     * .stepCard is display:none in CSS, and #form0 is a .stepCard too, so the
+     * intro has to be shown explicitly - it does not appear on its own.
+     */
+    hideAllSteps();
+    showIntro();
+}());
