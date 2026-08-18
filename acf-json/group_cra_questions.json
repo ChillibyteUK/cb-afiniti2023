@@ -1,0 +1,175 @@
+{
+    "key": "group_cra_questions",
+    "title": "CRA Questions",
+    "fields": [
+        {
+            "key": "field_cra_steps",
+            "label": "Question Steps",
+            "name": "cra_steps",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Each step is one screen of the assessment. Add, remove and reorder freely - the tool renders whatever is here, and the progress bar counts it. The contact and organisation steps are not listed here: they are fixed, because their fields map to values the server validates by name.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "acfe_repeater_stylised_button": 0,
+            "layout": "block",
+            "pagination": 0,
+            "min": 1,
+            "max": 0,
+            "collapsed": "field_cra_step_title",
+            "button_label": "Add Step",
+            "acfe_field_group_condition": 0,
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_cra_step_title",
+                    "label": "Step Title",
+                    "name": "step_title",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "Shown as the step heading, after \"Step N - \".",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "acfe_field_group_condition": 0,
+                    "parent_repeater": "field_cra_steps"
+                },
+                {
+                    "key": "field_cra_step_header",
+                    "label": "Step Introduction",
+                    "name": "step_header",
+                    "aria-label": "",
+                    "type": "wysiwyg",
+                    "instructions": "Appears above the questions. This was a single question_header shared by all three steps; it is now per step.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "tabs": "all",
+                    "toolbar": "basic",
+                    "media_upload": 0,
+                    "delay": 0,
+                    "acfe_field_group_condition": 0,
+                    "parent_repeater": "field_cra_steps"
+                },
+                {
+                    "key": "field_cra_step_questions",
+                    "label": "Questions",
+                    "name": "questions",
+                    "aria-label": "",
+                    "type": "repeater",
+                    "instructions": "Each question is scored 1-10. A lever's score is the total across all of its questions, wherever they sit, so moving a question between steps does not change the result.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "acfe_repeater_stylised_button": 0,
+                    "layout": "table",
+                    "pagination": 0,
+                    "min": 1,
+                    "max": 0,
+                    "collapsed": "",
+                    "button_label": "Add Question",
+                    "acfe_field_group_condition": 0,
+                    "rows_per_page": 20,
+                    "parent_repeater": "field_cra_steps",
+                    "sub_fields": [
+                        {
+                            "key": "field_cra_question_text",
+                            "label": "Question",
+                            "name": "question",
+                            "aria-label": "",
+                            "type": "textarea",
+                            "instructions": "",
+                            "required": 1,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "70",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "acfe_textarea_code": 0,
+                            "maxlength": "",
+                            "rows": 3,
+                            "placeholder": "",
+                            "new_lines": "",
+                            "acfe_field_group_condition": 0,
+                            "parent_repeater": "field_cra_step_questions"
+                        },
+                        {
+                            "key": "field_cra_question_lever",
+                            "label": "Lever",
+                            "name": "lever",
+                            "aria-label": "",
+                            "type": "taxonomy",
+                            "instructions": "",
+                            "required": 1,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "30",
+                                "class": "",
+                                "id": ""
+                            },
+                            "taxonomy": "lever",
+                            "add_term": 0,
+                            "save_terms": 0,
+                            "load_terms": 0,
+                            "return_format": "id",
+                            "field_type": "select",
+                            "allow_null": 0,
+                            "multiple": 0,
+                            "bidirectional": 0,
+                            "bidirectional_target": [],
+                            "acfe_field_group_condition": 0,
+                            "parent_repeater": "field_cra_step_questions"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "cra-questions"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Global CRA question set. Moved off the tool page, where it was bound to page_template == cra-tool.php.",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1787059200
+}

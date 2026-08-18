@@ -159,10 +159,29 @@ no point refactoring them.
   test" means here.
 - **Contact details move to the last step**, required before the report is
   created or viewed. Currently step 1, which means the tool asks for an email
-  before showing any value. The `data`/`scores` server contract does not change,
-  but `cra.js` gates progression on contact validity at step 1 today - that gate
-  moves to the end, and the "last line of defence" check before submit becomes
-  the primary one.
+  before showing any value. `orgName` is the exception - it moves *up* into
+  "About Your Organisation", because the organisation name is needed early (it
+  becomes `post_title`).
+
+  The resulting order, agreed 2026-08-18:
+
+  | step | fields |
+  |---|---|
+  | slide 1 | page content, no fields |
+  | About Your Organisation | `orgName`, `changeInProgress`, `changeDetail`, `changeRole` |
+  | question steps | from the global options page, any number |
+  | Contact Details (last) | `contactName`, `contactTitle`, `contactPhone`, `contactMobile`, `contactEmail`, `contactHowHear`, `consent` |
+
+  The `data`/`scores` server contract does **not** change -
+  `cb_cra_clean_contact()` still requires `orgName`, `contactName` and a valid
+  email, and all eleven keys are still collected. What changes is when. `cra.js`
+  gates progression on contact validity at step 1 today; that gate moves to the
+  end, and the "last line of defence" check before submit becomes the primary
+  one. `orgNameWarn` moves with its field.
+
+  These two steps stay **code-defined**, not author-editable: their fields map to
+  payload keys the server validates by name, so making them editable would break
+  the contract for no gain. Only the question steps are content.
 - **Scale stays 1-10 globally.** One setting, not per step or per question.
 
 An earlier plan to make each question an ACF block was dropped: questions being
@@ -207,10 +226,49 @@ term **slug** rather than name so rewording a lever cannot silently break the
 Related Insights query. `CB_CRA_LEVERS` is gone from `inc/cb-cra-submit.php`;
 `cb_cra_clean_scores()` validates against `cb_cra_lever_keys()`.
 
-**Still to do in the restructure:** the global questions options page and its
-migration from `questions_page_1/2/3`; the data-driven `cra.js`; contact details
-moving to the last step; storing the per-lever denominator (see below); deleting
-the legacy field definitions once verified.
+### Phase 2: questions are global - DONE (data model only)
+
+**Site-Wide Settings > CRA Questions** (`acf_add_options_sub_page`, slug
+`cra-questions`) holds a `cra_steps` repeater: `step_title`, `step_header`, and a
+nested `questions` repeater of `question` + `lever`. Any number of steps, any
+number of questions per step.
+
+Two deliberate differences from the old fields:
+
+- `step_header` is **per step**. It was one `question_header` shared by all three,
+  fetched three times. The migration copies the same text into each, so nothing
+  changes visually until someone edits one.
+- `lever` is an ACF **taxonomy** field storing a term id, not a select with six
+  hard-coded choices. That was the last of the six hard-codings.
+
+`cb_cra_question_steps()` normalises whichever source is live into
+`[ title, header, questions[ id, text, lever_slug, lever_key ] ]`, and falls back
+to the legacy `questions_page_1/2/3` repeaters when the options page is empty -
+same principle as `cb_cra_lever_bands()`. Question ids (`q1`…`qN`) are assigned
+over the flattened set, so they are stable for a configuration and independent of
+which step a question sits in. A question whose lever does not resolve is
+dropped, not scored against nothing.
+
+`cb_cra_lever_maxima()` derives the per-lever maximum from the live question set
+(`CB_CRA_SCALE_MAX` is a constant, 10 - fixed, not a setting, because every
+stored result was scored on it). Against the production question set it returns
+30 for all six, **exactly matching the hard-coded `CB_CRA_MAX_LEVER_SCORE`** -
+which is what makes switching to the derived value provably a no-op today.
+
+`bin/migrate-cra-questions.php` moves the questions. Positional args as above,
+plus `force`. Refuses to run over a populated options page. Reports unresolved
+levers, and warns if the migration leaves a lever with no questions or with
+unequal weight.
+
+> **The front end still reads the legacy repeaters.** `cra-tool.php` has not been
+> touched, so the tool renders exactly as before - phase 2 is the data model and
+> the migration only. Wiring the template to `cb_cra_question_steps()` is phase 3.
+> This is why the legacy field definitions must stay for now.
+
+**Still to do in the restructure:** the data-driven `cra.js` and template;
+contact details moving to the last step and `orgName` moving up; storing the
+per-lever denominator (see below); deleting the legacy field definitions once
+verified.
 
 ### The denominator, still outstanding
 

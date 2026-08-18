@@ -57,6 +57,23 @@ if ( function_exists('acf_add_options_page') ) {
 			'capability' => 'edit_posts',
 		)
 	);
+
+	/*
+	 * The CRA questions are global: every page running the CRA Tool template
+	 * presents the same assessment, and only slide 1 differs. They used to live
+	 * on the tool page itself in three questions_page_N repeaters, bound to
+	 * page_template == cra-tool.php - so losing that template assignment hid
+	 * every question from the editor while the values sat orphaned in postmeta.
+	 */
+	acf_add_options_sub_page(
+		array(
+			'page_title'  => 'CRA Questions',
+			'menu_title'  => 'CRA Questions',
+			'menu_slug'   => 'cra-questions',
+			'parent_slug' => 'theme-general-settings',
+			'capability'  => 'edit_posts',
+		)
+	);
 }
 
 function widgets_init() {
