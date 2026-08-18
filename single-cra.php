@@ -26,7 +26,6 @@ get_header();
 $page_id = get_field( 'cra_tool_page_id', 'options' );
 $data    = get_field( 'data' );
 $scores  = get_field( 'scores' );
-$levers  = array( 'Leadership', 'Drivers', 'Culture', 'Engagement', 'Capability', 'Method' );
 
 // Both come back from a JSON payload stored by cra.php, so treat them as
 // untrusted shapes rather than reading keys off them blind.
@@ -40,32 +39,32 @@ $scores = is_array( $scores ) ? $scores : array();
  * - once for the Summary section and again for Detailed Results - which meant
  * walking all six ACF repeaters twice and duplicating the band-matching logic.
  * The chart JS then recalculated the same six percentages twice more.
+ *
+ * The lever list and its analysis copy now come from the `lever` taxonomy via
+ * cb_cra_levers() rather than a hard-coded array plus six {slug}_analysis
+ * repeaters on the tool page. $page_id is still passed through because
+ * cb_cra_lever_bands() falls back to those page fields when a term has no bands,
+ * which keeps an unmigrated environment rendering.
  */
 $results = array();
 
-foreach ( $levers as $lever ) {
-    $percent = round( ( ( $scores[ $lever ] ?? 0 ) / 30 ) * 100 );
+foreach ( cb_cra_levers() as $slug => $lever ) {
+    $key     = $lever['key'];
+    $percent = round( ( ( $scores[ $key ] ?? 0 ) / CB_CRA_MAX_LEVER_SCORE ) * 100 );
+    $band    = cb_cra_match_band( cb_cra_lever_bands( $slug, $page_id ), $percent );
 
-    $results[ $lever ] = array(
+    $results[ $key ] = array(
+        'slug'            => $slug,
+        'label'           => $lever['label'],
         'percent'         => $percent,
-        'summary'         => '',
-        'analysis'        => '',
-        'recommendations' => '',
+        'summary'         => $band['summary'] ?? '',
+        'analysis'        => $band['analysis'] ?? '',
+        'recommendations' => $band['recommendations'] ?? '',
     );
-
-    while ( have_rows( strtolower( $lever ) . '_analysis', $page_id ) ) {
-        the_row();
-
-        if ( $percent < (int) get_sub_field( 'low_score' ) || $percent > (int) get_sub_field( 'high_score' ) ) {
-            continue;
-        }
-
-        $results[ $lever ]['summary']         = get_sub_field( 'summary' );
-        $results[ $lever ]['analysis']        = get_sub_field( 'analysis' );
-        $results[ $lever ]['recommendations'] = get_sub_field( 'recommendations' );
-    }
 }
 
+// Storage keys, in canonical order. Paired with the benchmark series below.
+$levers      = array_keys( $results );
 $percentages = wp_list_pluck( $results, 'percent' );
 
 // Benchmark plotted against the user's scores on both charts.
@@ -157,7 +156,7 @@ $change_index = array( 90, 80, 70, 75, 85, 75 );
             <?php foreach ( $results as $lever => $result ) { ?>
             <div class="results__grid">
                 <div class="d-flex justify-content-between">
-                    <div class="fw-bold"><?= esc_html( $lever ); ?></div>
+                    <div class="fw-bold"><?= esc_html( $result['label'] ); ?></div>
                     <div class="d-md-none fw-normal"><?= esc_html( $result['percent'] ); ?>%
                     </div>
                 </div>
@@ -211,13 +210,18 @@ $change_index = array( 90, 80, 70, 75, 85, 75 );
                     'operator' => 'NOT IN',
                 );
 
+                /*
+                 * Matched on slug rather than name: the term name is now an
+                 * editable label, so rewording a lever must not silently stop
+                 * matching its insights.
+                 */
                 $lever_picks = array(
                     array( 'lever' => $weakest[0] ?? '', 'count' => 2 ),
                     array( 'lever' => $weakest[1] ?? '', 'count' => 1 ),
                 );
 
                 foreach ( $lever_picks as $pick ) {
-                    if ( ! $pick['lever'] ) {
+                    if ( ! $pick['lever'] || ! isset( $results[ $pick['lever'] ] ) ) {
                         continue;
                     }
 
@@ -233,9 +237,9 @@ $change_index = array( 90, 80, 70, 75, 85, 75 );
                                 'relation' => 'AND',
                                 $not_team_insight,
                                 array(
-                                    'taxonomy' => 'lever',
-                                    'field'    => 'name',
-                                    'terms'    => array( $pick['lever'] ),
+                                    'taxonomy' => CB_CRA_LEVER_TAXONOMY,
+                                    'field'    => 'slug',
+                                    'terms'    => array( $results[ $pick['lever'] ]['slug'] ),
                                 ),
                             ),
                         )
@@ -245,7 +249,7 @@ $change_index = array( 90, 80, 70, 75, 85, 75 );
                         $seen[]  = $lever_post->ID;
                         $cards[] = array(
                             'id'   => $lever_post->ID,
-                            'flag' => $pick['lever'],
+                            'flag' => $results[ $pick['lever'] ]['label'],
                         );
                     }
                 }
@@ -365,7 +369,8 @@ add_action('wp_footer', function () {
 ?>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script>
-    const craLabels = <?= wp_json_encode( $levers ); ?>;
+    // Editable term labels, not the storage keys the scores are keyed by.
+    const craLabels = <?= wp_json_encode( array_values( wp_list_pluck( $results, 'label' ) ) ); ?>;
     const craScores = <?= wp_json_encode( array_values( $percentages ) ); ?>;
     const craIndex = <?= wp_json_encode( $change_index ); ?>;
 

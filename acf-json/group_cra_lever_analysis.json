@@ -1,0 +1,171 @@
+{
+    "key": "group_cra_lever_analysis",
+    "title": "Lever Analysis",
+    "fields": [
+        {
+            "key": "field_cra_lever_analysis",
+            "label": "Analysis Bands",
+            "name": "lever_analysis",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Score bands for this lever, as a percentage of the maximum available. The first band whose range contains the score wins, so order matters where ranges overlap. Bands should cover 0-100 with no gaps.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "acfe_repeater_stylised_button": 0,
+            "layout": "block",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "",
+            "button_label": "Add Band",
+            "acfe_field_group_condition": 0,
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_cra_lever_low_score",
+                    "label": "Low Score",
+                    "name": "low_score",
+                    "aria-label": "",
+                    "type": "number",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "min": 0,
+                    "max": 100,
+                    "placeholder": "",
+                    "step": "",
+                    "prepend": "",
+                    "append": "%",
+                    "acfe_field_group_condition": 0,
+                    "parent_repeater": "field_cra_lever_analysis"
+                },
+                {
+                    "key": "field_cra_lever_high_score",
+                    "label": "High Score",
+                    "name": "high_score",
+                    "aria-label": "",
+                    "type": "number",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "min": 0,
+                    "max": 100,
+                    "placeholder": "",
+                    "step": "",
+                    "prepend": "",
+                    "append": "%",
+                    "acfe_field_group_condition": 0,
+                    "parent_repeater": "field_cra_lever_analysis"
+                },
+                {
+                    "key": "field_cra_lever_summary",
+                    "label": "Summary",
+                    "name": "summary",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "acfe_textarea_code": 0,
+                    "maxlength": "",
+                    "rows": "",
+                    "placeholder": "",
+                    "new_lines": "br",
+                    "acfe_field_group_condition": 0,
+                    "parent_repeater": "field_cra_lever_analysis"
+                },
+                {
+                    "key": "field_cra_lever_analysis_body",
+                    "label": "Analysis",
+                    "name": "analysis",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "acfe_textarea_code": 0,
+                    "maxlength": "",
+                    "rows": "",
+                    "placeholder": "",
+                    "new_lines": "br",
+                    "acfe_field_group_condition": 0,
+                    "parent_repeater": "field_cra_lever_analysis"
+                },
+                {
+                    "key": "field_cra_lever_recommendations",
+                    "label": "Recommendations",
+                    "name": "recommendations",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "acfe_textarea_code": 0,
+                    "maxlength": "",
+                    "rows": "",
+                    "placeholder": "",
+                    "new_lines": "br",
+                    "acfe_field_group_condition": 0,
+                    "parent_repeater": "field_cra_lever_analysis"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "taxonomy",
+                "operator": "==",
+                "value": "lever"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Per-lever score bands for the CRA results page. Moved here from six {slug}_analysis repeaters on the CRA Tool page, so the levers own their own copy.",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1787059200
+}

@@ -141,11 +141,116 @@ Step 1's **Back** link in both templates was hard-coded to
 `get_permalink()` - reloading the current page returns to the intro, since
 `#form0` is what shows by default.
 
+## CRA restructure (branch `cra-block-rewrite`)
+
+Agreed 2026-08-18. The old "phase 2" - deduplicating steps 3/4/5 in
+`cra-tool.php` - is **superseded**: those blocks are being deleted, so there is
+no point refactoring them.
+
+### The shape agreed
+
+- **Questions are global**, on a single options page: a steps repeater, each step
+  holding a questions sub-repeater (`question` + `lever`). Arbitrary numbers of
+  steps and questions, no code change to add either.
+- **Analysis bands are global**, on the `lever` taxonomy. Done, see below.
+- **A page using the CRA Tool template automatically renders the test.** The page
+  content is then just slide 1's content, so several pages can present different
+  intros over the same global questions - that is what "different versions of the
+  test" means here.
+- **Contact details move to the last step**, required before the report is
+  created or viewed. Currently step 1, which means the tool asks for an email
+  before showing any value. The `data`/`scores` server contract does not change,
+  but `cra.js` gates progression on contact validity at step 1 today - that gate
+  moves to the end, and the "last line of defence" check before submit becomes
+  the primary one.
+- **Scale stays 1-10 globally.** One setting, not per step or per question.
+
+An earlier plan to make each question an ACF block was dropped: questions being
+global means blocks would duplicate them per page. It also avoids being the first
+block in this theme to need `'jsx' => true` and three-level `InnerBlocks`
+nesting, which was the riskiest unknown.
+
+Consequence worth knowing: `cra_tool_page_id` can be retired. It exists to locate
+the analysis fields (no longer needed) and as a `cb_cra_bail()` fallback
+(superseded by the referer), and a single page ID is wrong once several pages run
+the tool.
+
+### Phase 1: levers own their own content - DONE
+
+`inc/cb-cra-levers.php` (new) is the single source of truth. It splits the job:
+
+- `CB_CRA_LEVER_MAP` owns the canonical **order** and the **storage key**. Fixed
+  at six, because it is the client's trademarked methodology, not a growing list.
+- The `lever` taxonomy owns the **label** and the **analysis copy**.
+
+Storage keys are the capitalised names every existing `cra` post already uses, so
+**no historical result data moved**. Slugs equal `strtolower( key )`, which was
+also the prefix of the old `{slug}_analysis` fields, so the join was exact.
+
+`bin/migrate-lever-analysis.php` copies the six `{slug}_analysis` repeaters from
+the tool page onto the matching terms. Idempotent, non-destructive (the page
+fields are read, never deleted), and it prints a 0-100 coverage check per lever.
+Arguments are **positional**, not flags - `wp eval-file` rejects `--`:
+
+```bash
+wp eval-file bin/migrate-lever-analysis.php dry-run
+```
+
+`cb_cra_lever_bands()` falls back to the page fields when a term has no bands, so
+an unmigrated environment still renders and rolling back means doing nothing.
+That fallback is also why "it still works" is not proof the migration worked -
+see the sentinel test below.
+
+`single-cra.php` now reads levers, labels and bands through those helpers, uses
+the editable term **label** for display and chart labels, and matches insights by
+term **slug** rather than name so rewording a lever cannot silently break the
+Related Insights query. `CB_CRA_LEVERS` is gone from `inc/cb-cra-submit.php`;
+`cb_cra_clean_scores()` validates against `cb_cra_lever_keys()`.
+
+**Still to do in the restructure:** the global questions options page and its
+migration from `questions_page_1/2/3`; the data-driven `cra.js`; contact details
+moving to the last step; storing the per-lever denominator (see below); deleting
+the legacy field definitions once verified.
+
+### The denominator, still outstanding
+
+`single-cra.php` divides by `CB_CRA_MAX_LEVER_SCORE` (30), which is only correct
+because there are exactly three questions per lever across the three question
+pages, each scored 1-10. The moment the number of questions per lever is
+editable, 30 is wrong - and wrong retroactively, misreading every historical
+result.
+
+The fix is to store the denominator **with the submission** (`{lever: max}`,
+computed at submit time) and have the results page use the stored value, falling
+back to 30 when absent. Old results keep rendering exactly as they do now; new
+ones become self-describing. This is the one irreversible-ish data decision in
+the restructure, so it lands late and deliberately. **A migration script for
+legacy results is not needed** as long as the fallback is kept - that was checked
+against the fixtures below.
+
+### Verification fixtures (dev only)
+
+Six `cra` posts, slugs `fixture-zero`, `fixture-all-low`, `fixture-all-high`,
+`fixture-mixed`, `fixture-boundary`, `fixture-legacy-title`. Scores chosen so
+percentages land on the real band edges (`raw 12 -> 40%`, `18 -> 60%`,
+`27 -> 90%`), and one carries the legacy `Company | email` title to exercise the
+scrubbing filters. The seed script is in the session scratchpad, not the repo.
+
+How phase 1 was proved, which is the pattern to repeat:
+
+1. Render all six fixtures to HTML **before** the change.
+2. Migrate, wire the template up, render again, diff. Every fixture was
+   byte-identical apart from one comment line deliberately added.
+3. Byte-identical is *not* enough on its own, because the page-field fallback
+   could have been doing all the work. So: patch a band's text in term meta to a
+   sentinel, confirm it appears in the rendered page, then restore and re-diff.
+   That is what actually proves the new source is live.
+4. Re-run the migration to confirm it skips rather than duplicating.
+5. Re-run the CRA attack matrix, since `cb_cra_clean_scores()` changed. Confirmed
+   `40 -> 30`, `-5 -> 0`, and an unknown `Bogus` lever dropped.
+
 ### Not started
 
-- Phase 2 of `cra-tool.php`: steps 3/4/5 are the same ~60 line block three
-  times, 92 lines of inline `<style>` to move to SCSS, `question_header` fetched
-  three times, inconsistent escaping between steps.
 - Anchor review across all blocks - every anchor currently lands under the fixed
   navbar. `:root:has(.nav_buttons)` sets `scroll-padding-top` only on pages
   using the nav buttons block; the general case is unsolved.

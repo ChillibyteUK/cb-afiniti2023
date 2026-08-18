@@ -33,7 +33,10 @@ defined( 'ABSPATH' ) || exit;
 /**
  * The levers a score payload may contain, and the maximum per lever.
  */
-const CB_CRA_LEVERS         = array( 'Leadership', 'Drivers', 'Culture', 'Engagement', 'Capability', 'Method' );
+/*
+ * The lever list itself now lives in inc/cb-cra-levers.php - see
+ * cb_cra_lever_keys(). It was duplicated here.
+ */
 const CB_CRA_MAX_LEVER_SCORE = 30;
 
 /**
@@ -290,7 +293,7 @@ function cb_cra_clean_contact( $raw ) {
 function cb_cra_clean_scores( $raw ) {
     $clean = array();
 
-    foreach ( CB_CRA_LEVERS as $lever ) {
+    foreach ( cb_cra_lever_keys() as $lever ) {
         $value = is_array( $raw ) ? ( $raw[ $lever ] ?? 0 ) : 0;
         $value = is_numeric( $value ) ? (int) $value : 0;
 
