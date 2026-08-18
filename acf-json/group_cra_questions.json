@@ -169,6 +169,65 @@
             "media_upload": 0,
             "delay": 0,
             "acfe_field_group_condition": 0
+        },
+        {
+            "aria-label": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "acfe_field_group_condition": 0,
+            "key": "field_cra_cta_title",
+            "label": "Results CTA Title",
+            "name": "cra_cta_title",
+            "type": "text",
+            "instructions": "Heading for the call to action on the results page. Leave the whole CTA blank to hide the section.",
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "aria-label": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "acfe_field_group_condition": 0,
+            "key": "field_cra_cta_text",
+            "label": "Results CTA Text",
+            "name": "cra_cta_text",
+            "type": "wysiwyg",
+            "instructions": "Body copy under the heading.",
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0
+        },
+        {
+            "aria-label": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "acfe_field_group_condition": 0,
+            "key": "field_cra_cta_button",
+            "label": "Results CTA Button",
+            "name": "cra_cta_button",
+            "type": "link",
+            "instructions": "Optional. Shown as a white button. The link's own text is used as the label.",
+            "return_format": "array"
         }
     ],
     "location": [
