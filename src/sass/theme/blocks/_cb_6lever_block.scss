@@ -1,0 +1,132 @@
+// CB 6Lever Block
+//
+// Two columns from lg up: the diagram and a text column, with one lever's
+// description shown at a time. Below lg the diagram is centred and every
+// description is stacked underneath, so nothing depends on tapping a circle.
+
+.sixlever {
+    padding-block: 3rem;
+
+    &__grid {
+        display: grid;
+        gap: 2rem;
+
+        // Top-aligned, not centred: the diagram is much taller than the copy, so
+        // centring pushed a short description into the middle of the column.
+        align-items: start;
+
+        // 4/8 of a twelve column grid: the diagram does not need half the width,
+        // and the descriptions read better with the extra room.
+        @media (min-width: 992px) {
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+        }
+    }
+
+    // Centred and capped below lg, where it sits above the text rather than
+    // beside it and would otherwise get gratuitously large.
+    &__figure {
+        max-width: 26rem;
+        margin-inline: auto;
+
+        @media (min-width: 992px) {
+            max-width: none;
+        }
+    }
+
+    // The positioning context for the hotspots. Percentages on the buttons are
+    // relative to this box, so it has to track the image exactly - hence the
+    // image being a plain block-level child at width 100%.
+    &__image {
+        position: relative;
+
+        img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    // Transparent round targets over each coloured circle. Positioned by centre,
+    // so left/top are the circle centres and the button is pulled back by half
+    // its own size.
+    &__hotspot {
+        position: absolute;
+        width: 24%;
+        aspect-ratio: 1;
+        transform: translate(-50%, -50%);
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        background: transparent;
+        cursor: pointer;
+        transition: box-shadow 0.15s ease, transform 0.15s ease;
+
+        &:hover {
+            box-shadow: 0 0 0 0.35rem rgba(255, 255, 255, 0.55);
+        }
+
+        // Keyboard focus has to be visible - the button itself is invisible.
+        &:focus-visible {
+            outline: 3px solid var(--col-grey-700);
+            outline-offset: 2px;
+        }
+
+        &[aria-selected="true"] {
+            box-shadow: 0 0 0 0.35rem rgba(255, 255, 255, 0.9);
+            transform: translate(-50%, -50%) scale(1.04);
+        }
+
+        // No interaction below lg: every description is already on screen, so an
+        // invisible target that appears to do nothing is worse than none.
+        @media (max-width: 991px) {
+            display: none;
+        }
+    }
+
+    // Desktop only. Below lg every description is already visible, so intro copy
+    // that exists to prompt clicking a circle has nothing to say.
+    //
+    // The :not([hidden]) matters: the script sets `hidden` once a lever is picked,
+    // and a bare `display: block` in a media query outranks the UA stylesheet's
+    // [hidden] rule, so the intro would never go away.
+    &__intro {
+        display: none;
+
+        @media (min-width: 992px) {
+            &:not([hidden]) {
+                display: block;
+            }
+        }
+    }
+
+    &__panel-title {
+        margin-bottom: 0.5rem;
+    }
+
+    &__panel {
+        > :last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    // Stacked below lg: all panels visible, separated rather than switched.
+    @media (max-width: 991px) {
+        &__panel + &__panel {
+            margin-top: 1.5rem;
+        }
+    }
+
+    // From lg up only the selected panel shows. data-open is set by the block's
+    // own script; the first panel carries it server-side so the block is not
+    // blank before JS runs.
+    @media (min-width: 992px) {
+        &__panel {
+            display: none;
+
+            &[data-open] {
+                display: block;
+            }
+        }
+    }
+}

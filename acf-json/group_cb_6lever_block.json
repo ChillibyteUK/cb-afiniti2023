@@ -1,0 +1,175 @@
+{
+    "key": "group_cb_6lever_block",
+    "title": "CB 6Lever Block",
+    "fields": [
+        {
+            "key": "field_cb_6lever_intro",
+            "label": "Intro",
+            "name": "intro",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "Optional. Shown in the text column before anything is selected, and again if the visitor closes a lever. Leave blank to open on the first lever instead.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0,
+            "acfe_field_group_condition": 0
+        },
+        {
+            "key": "field_cb_6lever_leadership",
+            "label": "Leadership",
+            "name": "lever_leadership",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0,
+            "acfe_field_group_condition": 0
+        },
+        {
+            "key": "field_cb_6lever_drivers",
+            "label": "Drivers",
+            "name": "lever_drivers",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0,
+            "acfe_field_group_condition": 0
+        },
+        {
+            "key": "field_cb_6lever_capability",
+            "label": "Capability",
+            "name": "lever_capability",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0,
+            "acfe_field_group_condition": 0
+        },
+        {
+            "key": "field_cb_6lever_method",
+            "label": "Method",
+            "name": "lever_method",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0,
+            "acfe_field_group_condition": 0
+        },
+        {
+            "key": "field_cb_6lever_engagement",
+            "label": "Engagement",
+            "name": "lever_engagement",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0,
+            "acfe_field_group_condition": 0
+        },
+        {
+            "key": "field_cb_6lever_culture",
+            "label": "Culture",
+            "name": "lever_culture",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0,
+            "acfe_field_group_condition": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf/cb-6lever-block"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Two-column 6Lever diagram: click a circle to show that lever's description alongside it.",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1787059200
+}

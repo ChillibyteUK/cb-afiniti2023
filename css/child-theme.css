@@ -24838,6 +24838,93 @@ button.search.clear::after {
   scroll-padding-top: calc(68px + 3.5rem + 1rem);
 }
 
+.sixlever {
+  padding-block: 3rem;
+}
+.sixlever__grid {
+  display: grid;
+  gap: 2rem;
+  align-items: start;
+}
+@media (min-width: 992px) {
+  .sixlever__grid {
+    grid-template-columns: 1fr 2fr;
+    gap: 3rem;
+  }
+}
+.sixlever__figure {
+  max-width: 26rem;
+  margin-inline: auto;
+}
+@media (min-width: 992px) {
+  .sixlever__figure {
+    max-width: none;
+  }
+}
+.sixlever__image {
+  position: relative;
+}
+.sixlever__image img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.sixlever__hotspot {
+  position: absolute;
+  width: 24%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+.sixlever__hotspot:hover {
+  box-shadow: 0 0 0 0.35rem rgba(255, 255, 255, 0.55);
+}
+.sixlever__hotspot:focus-visible {
+  outline: 3px solid var(--col-grey-700);
+  outline-offset: 2px;
+}
+.sixlever__hotspot[aria-selected=true] {
+  box-shadow: 0 0 0 0.35rem rgba(255, 255, 255, 0.9);
+  transform: translate(-50%, -50%) scale(1.04);
+}
+@media (max-width: 991px) {
+  .sixlever__hotspot {
+    display: none;
+  }
+}
+.sixlever__intro {
+  display: none;
+}
+@media (min-width: 992px) {
+  .sixlever__intro:not([hidden]) {
+    display: block;
+  }
+}
+.sixlever__panel-title {
+  margin-bottom: 0.5rem;
+}
+.sixlever__panel > :last-child {
+  margin-bottom: 0;
+}
+@media (max-width: 991px) {
+  .sixlever__panel + .sixlever__panel {
+    margin-top: 1.5rem;
+  }
+}
+@media (min-width: 992px) {
+  .sixlever__panel {
+    display: none;
+  }
+  .sixlever__panel[data-open] {
+    display: block;
+  }
+}
+
 .single-person-photo {
   max-width: 210px;
   width: 100%;

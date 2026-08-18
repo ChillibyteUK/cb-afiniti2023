@@ -22,7 +22,7 @@ Blocks live in `blocks/`, registered in `inc/cb-blocks.php` at the
 - Local: `afiniti.local`. A one-page crash/burn copy, **not** a mirror of
   production - never infer production scope from a local DB query.
 - Production: WP Engine, heavy sticky full-page caching. Moving to Kinsta soon.
-- Cache busting is via `Version:` in `style.css` (currently **1.0**). Bump it
+- Cache busting is via `Version:` in `style.css` (currently **1.4**). Bump it
   whenever shipping CSS/JS, or returning visitors keep the stale files.
   `js/cra.js` is the exception - it is not compiled and not covered by that
   version, so it carries its own `?v=` in `cra-tool.php`. Bump that too.

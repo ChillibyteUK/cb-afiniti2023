@@ -69,6 +69,23 @@ function acf_blocks() {
 
 		// INSERT NEW BLOCKS HERE.
 
+        acf_register_block_type(
+            array(
+                'name'            => 'cb_6lever_block',
+                'title'           => __( 'CB 6Lever Block' ),
+                'category'        => 'layout',
+                'icon'            => 'cover-image',
+                'render_template' => 'blocks/cb-6lever-block.php',
+                'mode'            => 'edit',
+                'supports'        => array(
+                    'mode'      => false,
+                    'anchor'    => true,
+                    'className' => true,
+                    'align'     => true,
+                ),
+            )
+        );
+
 		acf_register_block_type(
 			array(
 				'name'            => 'cb_nav_buttons',
