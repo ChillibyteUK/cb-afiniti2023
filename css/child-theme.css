@@ -24907,6 +24907,8 @@ button.search.clear::after {
 }
 .sixlever__panel-title {
   margin-bottom: 0.5rem;
+  font-weight: 700;
+  color: var(--col-orange-700);
 }
 .sixlever__panel > :last-child {
   margin-bottom: 0;
