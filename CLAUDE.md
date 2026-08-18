@@ -22,7 +22,7 @@ Blocks live in `blocks/`, registered in `inc/cb-blocks.php` at the
 - Local: `afiniti.local`. A one-page crash/burn copy, **not** a mirror of
   production - never infer production scope from a local DB query.
 - Production: WP Engine, heavy sticky full-page caching. Moving to Kinsta soon.
-- Cache busting is via `Version:` in `style.css` (currently **0.7**). Bump it
+- Cache busting is via `Version:` in `style.css` (currently **0.8**). Bump it
   whenever shipping CSS/JS, or returning visitors keep the stale files.
   `js/cra.js` is the exception - it is not compiled and not covered by that
   version, so it carries its own `?v=` in `cra-tool.php`. Bump that too.
@@ -487,45 +487,58 @@ None are blocking; all are one-line changes. Ask rather than assume.
 
 ## Block editor styles
 
-`inc/cb-editor.php` calls `add_editor_style()` with the compiled frontend
-stylesheet **and** the editor-only one, in that order:
+**`css/custom-editor-style.min.css` is loaded by understrap, not by this theme.**
+Understrap's `inc/editor.php` calls
+`add_editor_style( 'css/custom-editor-style.min.css' )` on `admin_init`, and
+`add_editor_style()` resolves **child theme first** - so the parent's call has
+always been picking up *our* file. Do not add it again; it would load twice.
 
-```php
-add_editor_style( array( 'css/child-theme.min.css', 'css/custom-editor-style.min.css' ) );
-```
+`inc/cb-editor.php` adds the one thing that was missing: the compiled frontend
+stylesheet, so the editor shows real fonts, colours and block styles rather than a
+subset, and so `--col-*` resolves in the same document.
 
-`src/sass/custom-editor-style.scss` has existed since the theme was created and
-`npm run css` has always compiled it to `css/custom-editor-style{,.min}.css` - but
-**nothing ever called `add_editor_style()`**, so none of it had ever loaded. Ported
-from `cb-global42026`, which does the same thing.
+### Block widths in the editor
 
-Order matters: the frontend stylesheet defines the `--col-*` properties on
-`:root`, and the editor stylesheet's colour rules need them resolved in the same
-document. `add_theme_support( 'editor-styles' )` is added in the same function -
-without it `add_editor_style()` enqueues nothing and the whole thing is a silent
-no-op.
+The width rules at the end of `custom-editor-style.scss` contain blocks to a
+centred page-width column, using Bootstrap's own `$container-max-widths` map
+(1140px from xl, 1320px from xxl) so the editor tracks `.container-xl`. On the
+frontend `inc/cb-blocks.php` wraps core blocks in `.container-xl` and ACF blocks
+render their own container; neither happens in the editor, so without this
+everything runs full-bleed.
 
-The width rules at the end of `custom-editor-style.scss` contain top-level blocks
-to a page-width centred column. On the frontend `inc/cb-blocks.php` wraps core
-blocks in `.container-xl` and ACF blocks render their own container; neither
-happens in the editor, so without this every block runs full-bleed. The widths
-come from Bootstrap's own `$container-max-widths` map (1140px from xl, 1320px from
-xxl) rather than a hand-picked number, so the editor tracks `.container-xl`.
+**Alignment needs a marker that WordPress does not emit here.** A group set to full
+width stores `align: "full"` in its attributes, but the editor renders no
+`data-align` attribute and no `.alignfull` class for it - WordPress only emits
+those when a root layout exists, which needs `settings.layout` in `theme.json`.
+The first version of these rules keyed off `[data-align="full"]`, never matched,
+and silently clamped full-width groups - backgrounds included - to the container
+width. That was the reported regression.
 
-Two things to know if you touch it:
+`cb_editor_align_classes()` in `inc/cb-editor.php` fixes it by adding
+`cb-align-full` / `cb-align-wide` to the block wrapper in the editor from the
+block's own `align` attribute. Editor only; saved content and the frontend are
+untouched. The native `data-align` / `.alignfull` selectors are kept alongside so
+the rules still work if WordPress starts emitting them.
+
+**Adding `settings.layout` to `theme.json` would be the root fix** - it would
+restore the native Align control in the block toolbar as well - but it makes
+WordPress emit constrained-layout CSS on the **frontend**, which would
+double-constrain content that `cb-blocks.php` already wraps in `.container-xl`.
+Hundreds of live pages depend on the current behaviour, so that is a deliberate,
+separately-tested change, not a drive-by.
+
+Two more things to know:
 
 - Not scoped to `.is-root-container > .wp-block`. The post title sits in a sibling
   section above the root container, so the stricter selector would leave the title
   full-bleed while the content was constrained.
 - **This install renders the editor un-iframed**, because meta boxes are present.
-  In that mode WordPress prefixes editor-stylesheet selectors with
-  `.editor-styles-wrapper` itself, so an already-prefixed selector could in
-  principle end up doubled and never match. It does match here - verified by
-  reading the computed style, `max-width: 1320px` with auto margins - but check
-  the computed value rather than the source if these rules ever appear to stop
-  working.
+  In that mode WordPress inlines editor stylesheets and prefixes their selectors
+  itself, so the filename never appears in the page and a `link[href]` check will
+  wrongly report the styles as absent. Check computed styles, not the DOM, when
+  these rules appear not to be working.
 
-### Fullscreen mode, and what the plugin already covers
+## Fullscreen mode, and what the plugin already covers
 
 `cb_editor_windowed_by_default()` stops the block editor opening fullscreen.
 Ported from `cb-global42026` but **rewritten**, for two reasons:

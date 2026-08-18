@@ -53,7 +53,20 @@
 // Deliberately NOT scoped to .is-root-container > .wp-block: the post title sits
 // in a sibling section above the root container, so the stricter selector would
 // leave the title full-bleed while the content was constrained.
-.editor-styles-wrapper .wp-block {
+//
+// Aligned blocks are excluded, and getting that hook right took some doing.
+//
+// A group set to full width stores `align: "full"` in its attributes, but the
+// editor renders no marker for it in the DOM here - no `data-align` attribute and
+// no `.alignfull` class - so there was nothing for CSS to key off. An earlier
+// version of this rule keyed off `[data-align="full"]`, never matched, and
+// silently clamped full-width groups (backgrounds included) to the container.
+//
+// `cb_editor_align_classes()` in inc/cb-editor.php now puts `cb-align-full` /
+// `cb-align-wide` on the wrapper in the editor so these selectors work. The
+// native markers are kept alongside, so this still behaves if WordPress starts
+// emitting them.
+.editor-styles-wrapper .wp-block:not(.cb-align-full):not(.cb-align-wide):not([data-align="full"]):not([data-align="wide"]) {
 	margin-inline: auto;
 
 	@media (min-width: map-get($grid-breakpoints, xl)) {
@@ -65,9 +78,11 @@
 	}
 }
 
-// alignwide gets a little more room than the container, alignfull none of the
-// constraint at all - matching what those alignments do on the frontend.
+// alignwide gets a little more room than the container.
+.editor-styles-wrapper .wp-block.cb-align-wide,
 .editor-styles-wrapper .wp-block[data-align="wide"] {
+	margin-inline: auto;
+
 	@media (min-width: map-get($grid-breakpoints, xl)) {
 		max-width: calc(#{map-get($container-max-widths, xl)} + 4rem);
 	}
@@ -77,6 +92,11 @@
 	}
 }
 
-.editor-styles-wrapper .wp-block[data-align="full"] {
+// alignfull runs edge to edge, so a group with a background colour shows that
+// background full-width in the editor exactly as it does on the frontend.
+.editor-styles-wrapper .wp-block.cb-align-full,
+.editor-styles-wrapper .wp-block[data-align="full"],
+.editor-styles-wrapper .wp-block.alignfull {
 	max-width: none;
+	margin-inline: 0;
 }

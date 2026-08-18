@@ -2,11 +2,14 @@
 /**
  * Block editor tweaks.
  *
- * `src/sass/custom-editor-style.scss` has existed since the theme was created and
- * `npm run css` has been compiling it to `css/custom-editor-style{,.min}.css` all
- * along - but nothing ever called add_editor_style(), so none of it has ever
- * loaded. That is fixed here, and the stylesheet now also contains top-level
- * blocks to a page-width column instead of letting them run full-bleed.
+ * NOTE: `css/custom-editor-style.min.css` is **already** loaded into the editor,
+ * and always has been - understrap's own `inc/editor.php` calls
+ * `add_editor_style( 'css/custom-editor-style.min.css' )` on `admin_init`, and
+ * `add_editor_style()` resolves child theme first, so the parent's call picks up
+ * *our* file. Do not add it again here; it would just load twice.
+ *
+ * What was genuinely missing is the theme's real frontend stylesheet, which is
+ * what this adds.
  *
  * @package cb-afiniti2023
  */
@@ -40,6 +43,56 @@ function cb_add_editor_styles() {
 	);
 }
 add_action( 'after_setup_theme', 'cb_add_editor_styles' );
+
+/**
+ * Puts each block's alignment into a class on its editor wrapper.
+ *
+ * A group set to full width stores `align: "full"` in its attributes, but this
+ * install renders no marker for it in the editor DOM - no `data-align` attribute
+ * and no `.alignfull` class - so the editor stylesheet has nothing to target and
+ * cannot tell a full-width group from a normal one. (WordPress only emits those
+ * markers when a root layout exists, which needs `settings.layout` in theme.json;
+ * see CLAUDE.md for why that has not been added.)
+ *
+ * This adds `cb-align-full` / `cb-align-wide` to the block wrapper in the editor,
+ * purely so `custom-editor-style.scss` can leave those blocks unconstrained while
+ * everything else stays in a centred column. Editor only - it changes nothing
+ * about the saved content or the frontend.
+ *
+ * @return void
+ */
+function cb_editor_align_classes() {
+	$script = <<<'JS'
+( function ( hooks, compose, element ) {
+	if ( ! hooks || ! compose || ! element ) {
+		return;
+	}
+
+	hooks.addFilter(
+		'editor.BlockListBlock',
+		'cb/editor-align-class',
+		compose.createHigherOrderComponent( function ( BlockListBlock ) {
+			return function ( props ) {
+				var align = props.attributes && props.attributes.align;
+
+				if ( ! align ) {
+					return element.createElement( BlockListBlock, props );
+				}
+
+				var extended = Object.assign( {}, props, {
+					className: ( props.className || '' ) + ' cb-align-' + align,
+				} );
+
+				return element.createElement( BlockListBlock, extended );
+			};
+		}, 'cbEditorAlignClass' )
+	);
+}( window.wp && wp.hooks, window.wp && wp.compose, window.wp && wp.element ) );
+JS;
+
+	wp_add_inline_script( 'wp-block-editor', $script );
+}
+add_action( 'enqueue_block_editor_assets', 'cb_editor_align_classes' );
 
 /**
  * Stops the block editor opening in fullscreen mode.
