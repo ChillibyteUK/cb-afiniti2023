@@ -35,12 +35,16 @@ if ( $cta_url && ! $cta_title ) {
 $colour     = is_string( $colour ) ? $colour : '';
 $background = $colour ? 'bg--' . $colour : '';
 
+// "Additional CSS class(es)" from the block's Advanced panel. Needs
+// 'className' => true in the block's supports (inc/cb-blocks.php) to appear.
+$classes = $block['className'] ?? '';
+
 if ( ! $btitle && ! $content && ! $cta_url ) {
     return;
 }
 
 ?>
-<section class="simple_cta">
+<section class="simple_cta <?= esc_attr( $classes ); ?>">
     <div class="container">
         <?php if ( $btitle || $content ) { ?>
         <div class="simple_cta__content p-4 <?= esc_attr( $background ); ?>">
