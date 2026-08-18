@@ -512,6 +512,32 @@ Two things to know if you touch it:
   the computed value rather than the source if these rules ever appear to stop
   working.
 
+### Fullscreen mode, and what the plugin already covers
+
+`cb_editor_windowed_by_default()` stops the block editor opening fullscreen.
+Ported from `cb-global42026` but **rewritten**, for two reasons:
+
+- That version used `jQuery( window ).load()` (removed in jQuery 3, only still
+  working here because jQuery Migrate patches it) and `core/edit-post`'s
+  `isFeatureActive()` / `toggleFeature()` (deprecated in favour of
+  `core/preferences`). Checked against this install - jQuery 3.7.1, WP 7.0.4 -
+  before changing.
+- It toggled fullscreen off on **every load**, so anyone who deliberately turned
+  fullscreen on found it off again next time and could never make it stick. This
+  uses `setDefaults()`, which a persisted user preference still overrides. Verified
+  by writing `fullscreenMode: true` into `wp_persisted_preferences` and confirming
+  it survived a reload. The docblock has the one-liner if a hard override is ever
+  wanted instead.
+
+**The ACF Visual/Text focus workaround from that file was deliberately not
+ported.** `cbp-blog-options` already fixes that, and better: it forces
+`delay: true` on WYSIWYG fields so TinyMCE never initialises until clicked, and
+guards scroll position across ACF DOM mutations. The theme version monkey-patched
+`switchEditors.go`, which would have been a second competing fix for the same
+problem. Check the plugin before porting anything else editor-related from a
+sibling theme - it also forces ACF blocks into edit mode, and handles
+comments/tags/emoji site-wide.
+
 ## Gotchas worth knowing
 
 **Bootstrap utilities are `!important`.** `d-flex` is `display:flex!important`,
