@@ -255,6 +255,27 @@
                     "prepend": "",
                     "append": "",
                     "acfe_field_group_condition": 0
+                },
+                {
+                    "key": "field_cra_marketing_opt_in",
+                    "label": "Marketing Opt In",
+                    "name": "marketingOptIn",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "\"true\" when the visitor asked to receive insights and updates. Captured for a future mailing list; deliberately not shown on the results page or in either email.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": ""
                 }
             ]
         },

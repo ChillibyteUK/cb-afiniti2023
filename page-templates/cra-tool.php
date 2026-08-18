@@ -367,6 +367,20 @@ get_header();
                         </label>
                         <div class="alert alert-danger" data-cra-warn-for="consent">Please consent to the terms.</div>
                     </div>
+                    <?php
+                    /*
+                     * Marketing opt-in. Deliberately optional - no data-cra-required -
+                     * and separate from the privacy consent above, which is a condition
+                     * of using the tool. Stored on the submission for a future mailing
+                     * list; never shown on the results page or in either email.
+                     */
+                    ?>
+                    <div>
+                        <label for="marketingOptIn"><input type="checkbox" name="marketingOptIn" id="marketingOptIn"
+                                value="true" data-cra-field="marketingOptIn">
+                            <div>I&rsquo;d like to receive relevant change insights and updates from Afiniti</div>
+                        </label>
+                    </div>
                 </div>
                 <div class="alert alert-danger mt-4" data-cra-warn-step>Please complete the required fields.</div>
                 <div class="form_buttons d-flex gap-2 justify-content-between">

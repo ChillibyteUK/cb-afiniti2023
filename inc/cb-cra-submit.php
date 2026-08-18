@@ -253,6 +253,15 @@ function cb_cra_clean_contact( $raw ) {
         'changeDetail',
         'changeRole',
         'consent',
+        /*
+         * Marketing opt-in, for a future mailing list. Optional, and separate from
+         * `consent`, which is a condition of using the tool. Stored on the
+         * submission but deliberately absent from the results page and from both
+         * emails: single-cra.php only ever prints orgName, and the two mail
+         * functions name the fields they use, so it stays out by construction
+         * rather than by being filtered later.
+         */
+        'marketingOptIn',
     );
 
     $clean = array();
