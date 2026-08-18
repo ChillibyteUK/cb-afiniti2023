@@ -181,9 +181,11 @@ $change_index = array( 90, 80, 70, 75, 85, 75 );
 			<?php } ?>
 	</section>
 
-	<section>
+	<section class="mb-5">
 		<div class="container-xl">
-		This online version of the Afiniti 6Lever<sup>TM</sup> diagnostic tool provides a general overview of your change readiness strengths and weaknesses. Our consultants regularly conduct the full change readiness assessment across our clients' organisations, which allows them to deliver specific, tailored analysis and recommendations for your specific change projects, as well as help implementing these. Please <a href="/contact-us/">get in touch</a> if you'd like to know more.  
+			<p>This online version of the Afiniti 6Lever™ diagnostic tool provides a general overview of your change readiness strengths and weaknesses.</p>
+			<p>Our consultants regularly conduct the full change readiness assessment across our clients' organisations. This experience allows them to deliver specific, tailored analysis and recommendations for your change projects, as well as help with implementation.</p>
+			<p>Please <a href="/contact-us/">get in touch</a> if you'd like to know more.</p>
 		</div>
 	</section>
 
