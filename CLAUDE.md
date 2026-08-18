@@ -135,9 +135,12 @@ What survived from that work: the `cra_token` field, the `?cra_error=` notice, a
 hard-coded to `/change-readiness-assessment-tool/`, which is not the live page's
 slug; it is `get_permalink()` now.
 
-## CRA restructure (branch `cra-block-rewrite`)
+## CRA restructure
 
-Agreed 2026-08-18. The old "phase 2" - deduplicating steps 3/4/5 in
+Agreed 2026-08-18. Developed on `cra-block-rewrite`, fast-forwarded onto `main`
+the same day - **WP Pusher tracks `main`**, so nothing reaches an environment
+until it is there and pushed. Work on a branch by all means, but merge to `main`
+before expecting a deploy to pick it up. The old "phase 2" - deduplicating steps 3/4/5 in
 `cra-tool.php` - is **superseded**: those blocks are being deleted, so there is
 no point refactoring them.
 
