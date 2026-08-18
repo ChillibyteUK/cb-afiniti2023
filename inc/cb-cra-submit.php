@@ -397,6 +397,21 @@ function cb_cra_handle_submission() {
      */
     update_post_meta( $post_id, CB_CRA_MAXIMA_META, cb_cra_lever_maxima( cb_cra_tool_page_id() ) );
 
+    /*
+     * The marketing opt-in again, as its own post meta so it can be queried.
+     *
+     * It is also inside the `data` ACF group, which keeps the whole submission
+     * together for anyone reading a single record in the admin - but that group is
+     * one serialised value, so it cannot be filtered on. This copy is the index.
+     * Written from the same cleaned value in the same place, so the two cannot
+     * drift.
+     *
+     * Always written, '1' or '0', rather than only on opt-in: a missing key and an
+     * explicit no are different things, and storing both means you can count
+     * declines and use a plain meta_query either way without EXISTS gymnastics.
+     */
+    update_post_meta( $post_id, CB_CRA_OPTIN_META, empty( $data['marketingOptIn'] ) ? '0' : '1' );
+
     $results = get_permalink( $post_id );
 
     cb_cra_send_results_email( $data, $results );

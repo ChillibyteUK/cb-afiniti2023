@@ -338,6 +338,41 @@ function cb_cra_tool_page_id() {
 const CB_CRA_MAXIMA_META = 'cb_cra_score_maxima';
 
 /**
+ * Post meta key holding the marketing opt-in, '1' or '0'.
+ *
+ * Duplicates the value inside the `data` ACF group. That group is a single
+ * serialised value, so it cannot be filtered on; this is the queryable copy. See
+ * cb_cra_opted_in_query_args().
+ */
+const CB_CRA_OPTIN_META = 'cb_cra_marketing_opt_in';
+
+/**
+ * Query args for the submissions that opted in to marketing.
+ *
+ * Saves rediscovering the meta key and the '1' convention at the point someone
+ * needs to export a mailing list.
+ *
+ *   $ids = get_posts( cb_cra_opted_in_query_args() );
+ *
+ * @param bool $opted_in Pass false for the declines.
+ * @return array
+ */
+function cb_cra_opted_in_query_args( $opted_in = true ) {
+	return array(
+		'post_type'      => 'cra',
+		'post_status'    => 'publish',
+		'posts_per_page' => -1,
+		'fields'         => 'ids',
+		'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+			array(
+				'key'   => CB_CRA_OPTIN_META,
+				'value' => $opted_in ? '1' : '0',
+			),
+		),
+	);
+}
+
+/**
  * The maxima a stored result was actually scored against.
  *
  * Results created before the question set became editable have no stored maxima,
