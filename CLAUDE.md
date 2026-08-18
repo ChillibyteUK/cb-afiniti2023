@@ -22,7 +22,7 @@ Blocks live in `blocks/`, registered in `inc/cb-blocks.php` at the
 - Local: `afiniti.local`. A one-page crash/burn copy, **not** a mirror of
   production - never infer production scope from a local DB query.
 - Production: WP Engine, heavy sticky full-page caching. Moving to Kinsta soon.
-- Cache busting is via `Version:` in `style.css` (currently **0.5**). Bump it
+- Cache busting is via `Version:` in `style.css` (currently **0.7**). Bump it
   whenever shipping CSS/JS, or returning visitors keep the stale files.
   `js/cra.js` is the exception - it is not compiled and not covered by that
   version, so it carries its own `?v=` in `cra-tool.php`. Bump that too.
@@ -335,7 +335,7 @@ page. The `:root { --col-light-400: #fafafa }` override became a scoped
 `.form-panel input[type="radio"]::before` used a hyphen where the markup has
 `.form_panel`, so it never matched anything.
 
-Theme `Version:` is **0.5**, bumped for that CSS.
+Theme `Version:` is **0.5** for that CSS (now **0.6**, see the step indicator below).
 
 **`cra_tool_page_id` is retired as a dependency.** Everything now resolves through
 `cb_cra_tool_page_id()`: the setting if present, otherwise a page on the CRA Tool
@@ -375,6 +375,28 @@ ticked by default; Overwrite is not.
 > explicitly. Nothing is deleted either way - the other pages keep their fields
 > and the change is reversible - but which content becomes global is an editorial
 > decision, not a technical one. **Do not pick for the client.**
+
+### Numbered step indicator
+
+The Bootstrap progress bar is gone, replaced by a numbered `<ol class="cra_steps">`
+- markers, labels and a connecting trail that fills in behind you. Styles live in
+`_cra_tool.scss` with the rest of the tool.
+
+Rendered per step section and **entirely server side**: each section knows its own
+index, so `is-done` / `is-current` / `is-upcoming` is static markup and the JS was
+not touched. `aria-current="step"` marks the current one, and done/current
+markers carry a visually-hidden note so the state is not colour-only.
+
+The step `<h2>` and the indicator labels say the same thing, so they swap at
+576px: below it the labels are visually hidden and the `<h2>` names the step;
+above it the `<h2>` is visually hidden and the labels do. Both use
+`@include visually-hidden` rather than `display:none`, so either way the step is
+still named for assistive tech. The `<h2>` rule is scoped to `[data-cra-step] > h2`
+deliberately - `#form0` is a `.stepCard` too and holds the page's own intro
+content, headings included.
+
+Completed steps are not clickable. Could be, but it needs thought about what
+jumping backwards does to validation, so it was left out.
 
 **Still to do:** delete `group_6494183e38c8d.json` and the legacy fallbacks in
 `cb_cra_question_steps()` / `cb_cra_lever_bands()`, once production has been

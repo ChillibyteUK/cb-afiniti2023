@@ -100,28 +100,67 @@ get_header();
          * in the JS at all.
          */
         $cra_question_steps = cb_cra_question_steps( get_the_ID() );
-        $cra_total_steps    = count( $cra_question_steps ) + 2;
-        $cra_step           = 0;
+
+        /*
+         * Titles for every step, in order, so the numbered indicator can label
+         * each one. The count comes from this rather than an arithmetic guess.
+         */
+        $cra_step_titles = array( 'About Your Organisation' );
+
+        foreach ( $cra_question_steps as $cra_qstep ) {
+            $cra_step_titles[] = $cra_qstep['title'];
+        }
+
+        $cra_step_titles[] = 'Your Details';
+
+        $cra_step = 0;
 
         /**
-         * Opens a step section, with its heading and progress bar.
+         * Opens a step section, with its heading and the numbered step indicator.
+         *
+         * The indicator replaced a Bootstrap progress bar. It is rendered per
+         * section and entirely server side: each section knows its own index, so
+         * done / current / upcoming is static markup and needs no JS.
          *
          * @param int    $index Zero-based step index.
-         * @param int    $total Total steps.
          * @param string $kind  org|questions|contact.
-         * @param string $title Heading text after "Step N - ".
          * @return void
          */
-        $cra_open_step = function ( $index, $total, $kind, $title ) {
-            $percent = $total > 0 ? (int) round( ( $index / $total ) * 100 ) : 0;
+        $cra_open_step = function ( $index, $kind ) use ( $cra_step_titles ) {
+            $title = $cra_step_titles[ $index ] ?? '';
             ?>
         <section class="stepCard" id="craStep<?= (int) $index; ?>" data-cra-step="<?= (int) $index; ?>"
             data-cra-kind="<?= esc_attr( $kind ); ?>">
             <h2>Step <?= (int) $index + 1; ?> - <?= esc_html( $title ); ?></h2>
-            <div class="progress">
-                <div class="progress-bar progress-bar-striped" role="progressbar" style="width:<?= $percent; ?>%"
-                    aria-valuenow="<?= $percent; ?>" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
+            <?php // aria-label rather than a heading, so the list is announced as navigation for the assessment. ?>
+            <ol class="cra_steps" aria-label="Assessment progress">
+                <?php
+                foreach ( $cra_step_titles as $i => $step_title ) {
+                    if ( $i < $index ) {
+                        $state = 'is-done';
+                        $note  = 'completed';
+                    } elseif ( $i === $index ) {
+                        $state = 'is-current';
+                        $note  = 'current step';
+                    } else {
+                        $state = 'is-upcoming';
+                        $note  = '';
+                    }
+                    ?>
+                <li class="cra_steps__step <?= esc_attr( $state ); ?>"
+                    <?= 'is-current' === $state ? ' aria-current="step"' : ''; ?>>
+                    <span class="cra_steps__marker" aria-hidden="true"><?= (int) $i + 1; ?></span>
+                    <span class="cra_steps__label">
+                        <?= esc_html( $step_title ); ?>
+                        <?php if ( $note ) { ?>
+                        <span class="visually-hidden">(<?= esc_html( $note ); ?>)</span>
+                        <?php } ?>
+                    </span>
+                </li>
+                    <?php
+                }
+                ?>
+            </ol>
             <?php
         };
 
@@ -146,7 +185,7 @@ get_header();
         };
 
         // ------------------------------------------------ step 1: organisation
-        $cra_open_step( $cra_step, $cra_total_steps, 'org', 'About Your Organisation' );
+        $cra_open_step( $cra_step, 'org' );
         ?>
             <div class="form_panel">
                 <div class="form_grid mb-3">
@@ -207,7 +246,7 @@ get_header();
 
         // -------------------------------------------------- the question steps
         foreach ( $cra_question_steps as $cra_qstep ) {
-            $cra_open_step( $cra_step, $cra_total_steps, 'questions', $cra_qstep['title'] );
+            $cra_open_step( $cra_step, 'questions' );
             ?>
             <div class="form_panel">
                 <?php if ( '' !== trim( (string) $cra_qstep['header'] ) ) { ?>
@@ -261,7 +300,7 @@ get_header();
         }
 
         // --------------------------------------------- last step: the contact
-        $cra_open_step( $cra_step, $cra_total_steps, 'contact', 'Your Details' );
+        $cra_open_step( $cra_step, 'contact' );
         ?>
             <div class="form_panel">
                 <div class="form_grid">

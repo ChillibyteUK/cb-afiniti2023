@@ -24943,6 +24943,110 @@ body.page-template-cra-tool .stepCard {
   padding-bottom: 3rem;
   display: none;
 }
+body.page-template-cra-tool .cra_steps {
+  --cra-step-size: 2.25rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  list-style: none;
+  counter-reset: none;
+}
+body.page-template-cra-tool .cra_steps__step {
+  position: relative;
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+  min-width: 0;
+}
+body.page-template-cra-tool .cra_steps__step:not(:first-child)::before {
+  content: "";
+  position: absolute;
+  top: calc(var(--cra-step-size) / 2);
+  right: 50%;
+  left: -50%;
+  height: 2px;
+  background-color: var(--col-grey-200);
+  transform: translateY(-1px);
+}
+body.page-template-cra-tool .cra_steps__step.is-done::before, body.page-template-cra-tool .cra_steps__step.is-current::before {
+  background-color: var(--col-orange-500);
+}
+body.page-template-cra-tool .cra_steps__marker {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: var(--cra-step-size);
+  height: var(--cra-step-size);
+  border-radius: 50%;
+  border: 2px solid var(--col-grey-200);
+  background-color: #fff;
+  color: var(--col-grey-500);
+  font-weight: 700;
+  font-size: 0.95rem;
+  line-height: 1;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+body.page-template-cra-tool .cra_steps__label {
+  font-size: 0.8rem;
+  line-height: 1.25;
+  color: var(--col-grey-500);
+  max-width: 10rem;
+}
+body.page-template-cra-tool .cra_steps__step.is-done .cra_steps__marker {
+  border-color: var(--col-orange-500);
+  background-color: var(--col-orange-500);
+  color: #fff;
+}
+body.page-template-cra-tool .cra_steps__step.is-done .cra_steps__label {
+  color: var(--col-grey-700);
+}
+body.page-template-cra-tool .cra_steps__step.is-current .cra_steps__marker {
+  border-color: var(--col-orange-700);
+  background-color: var(--col-orange-700);
+  color: #fff;
+  box-shadow: 0 0 0 4px rgba(240, 145, 48, 0.25);
+}
+body.page-template-cra-tool .cra_steps__step.is-current .cra_steps__label {
+  color: var(--col-grey-700);
+  font-weight: 700;
+}
+@media (max-width: 575px) {
+  body.page-template-cra-tool .cra_steps {
+    --cra-step-size: 1.85rem;
+  }
+  body.page-template-cra-tool .cra_steps__label {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+}
+@media (min-width: 576px) {
+  body.page-template-cra-tool [data-cra-step] > h2, body.page-template-cra-tool [data-cra-step] > .h2 {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+}
 body.page-template-cra-tool .form_grid {
   display: grid;
   gap: 1rem;

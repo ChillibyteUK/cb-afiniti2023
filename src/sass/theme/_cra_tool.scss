@@ -24,6 +24,135 @@ body.page-template-cra-tool {
         display: none;
     }
 
+    // Numbered step indicator, replacing a Bootstrap progress bar.
+    //
+    // Rendered per step section and entirely server side - each section knows
+    // its own index, so done/current/upcoming is static markup with no JS.
+    //
+    // The connecting line is drawn with a ::before on each step after the first,
+    // rather than a separate element, so the markup stays a plain <ol>.
+    .cra_steps {
+        --cra-step-size: 2.25rem;
+
+        display: flex;
+        align-items: flex-start;
+        gap: 0;
+        margin: 0 0 1.5rem;
+        padding: 0;
+        list-style: none;
+        counter-reset: none;
+    }
+
+    .cra_steps__step {
+        position: relative;
+        flex: 1 1 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        text-align: center;
+        min-width: 0;
+
+        // The joining line, sitting behind the markers and vertically centred on
+        // them. Drawn leftwards from each step, so the first has none.
+        &:not(:first-child)::before {
+            content: "";
+            position: absolute;
+            top: calc(var(--cra-step-size) / 2);
+            right: 50%;
+            left: -50%;
+            height: 2px;
+            background-color: var(--col-grey-200);
+            transform: translateY(-1px);
+        }
+
+        // A completed step colours the line behind it, so the trail fills in.
+        &.is-done::before,
+        &.is-current::before {
+            background-color: var(--col-orange-500);
+        }
+    }
+
+    .cra_steps__marker {
+        position: relative; // above the joining line
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 auto;
+        width: var(--cra-step-size);
+        height: var(--cra-step-size);
+        border-radius: 50%;
+        border: 2px solid var(--col-grey-200);
+        background-color: #fff;
+        color: var(--col-grey-500);
+        font-weight: 700;
+        font-size: 0.95rem;
+        line-height: 1;
+        transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    }
+
+    .cra_steps__label {
+        font-size: 0.8rem;
+        line-height: 1.25;
+        color: var(--col-grey-500);
+        max-width: 10rem;
+    }
+
+    .cra_steps__step.is-done {
+        .cra_steps__marker {
+            border-color: var(--col-orange-500);
+            background-color: var(--col-orange-500);
+            color: #fff;
+        }
+
+        .cra_steps__label {
+            color: var(--col-grey-700);
+        }
+    }
+
+    .cra_steps__step.is-current {
+        .cra_steps__marker {
+            border-color: var(--col-orange-700);
+            background-color: var(--col-orange-700);
+            color: #fff;
+
+            // Ring rather than a size change, so the row does not shift as you
+            // move between steps.
+            box-shadow: 0 0 0 4px rgba(240, 145, 48, 0.25);
+        }
+
+        .cra_steps__label {
+            color: var(--col-grey-700);
+            font-weight: 700;
+        }
+    }
+
+    // Labels are the first thing to go when there is no room; the numbers and
+    // the trail still show where you are. Below this width the step's <h2> is
+    // the only thing naming the step, which is why the two swap over.
+    @media (max-width: 575px) {
+        .cra_steps {
+            --cra-step-size: 1.85rem;
+        }
+
+        .cra_steps__label {
+            @include visually-hidden;
+        }
+    }
+
+    // Once the indicator shows its labels, the step's <h2> says the same thing
+    // immediately above it. Hidden visually rather than removed: it still names
+    // the step for assistive tech and keeps the document outline intact.
+    //
+    // Scoped to [data-cra-step] deliberately - #form0 is a .stepCard too, and it
+    // holds the page's own intro content, headings included.
+    @media (min-width: 576px) {
+        [data-cra-step] > h2 {
+            @include visually-hidden;
+        }
+    }
+
     .form_grid {
         display: grid;
         gap: 1rem;
