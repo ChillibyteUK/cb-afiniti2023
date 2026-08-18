@@ -45,6 +45,56 @@ function cb_add_editor_styles() {
 add_action( 'after_setup_theme', 'cb_add_editor_styles' );
 
 /**
+ * Gives the editor a root layout, so the Align control exists, without letting
+ * WordPress apply layout CSS on the frontend.
+ *
+ * WordPress only offers "Wide width" / "Full width" on a block when a root layout
+ * exists, which means `settings.layout` in theme.json. This theme had none, so the
+ * Align control was missing from the toolbar entirely and any `align` attribute
+ * already saved on a group was being discarded on load - which is why one group on
+ * the CRA page renders full width on the frontend while having no `align` attribute
+ * left in its block data.
+ *
+ * Putting `settings.layout` in theme.json fixes the editor but is **not safe on the
+ * frontend here**. It makes WordPress emit
+ * `.is-layout-constrained > * { max-width: var(--wp--style--global--content-size) }`,
+ * which caps any ACF block section sitting directly inside a constrained group.
+ * Those sections render their own inner `.container-xl` and are meant to be
+ * full-bleed, so measured on the CRA page `section.text_image` and
+ * `section.simple_cta` went from 2383px to 1320px. Hundreds of live pages are built
+ * that way, so that is not an acceptable side effect of fixing a toolbar control.
+ *
+ * Hence: inject the layout for admin requests only. The editor gets its root layout
+ * and the Align control; the frontend's theme.json still has no layout, so no layout
+ * CSS is generated and rendered widths are untouched.
+ *
+ * If the frontend is ever reworked to use constrained layouts properly, move this
+ * into theme.json and delete this filter.
+ *
+ * @param WP_Theme_JSON_Data $theme_json Theme's theme.json data.
+ * @return WP_Theme_JSON_Data
+ */
+function cb_editor_root_layout( $theme_json ) {
+	if ( ! is_admin() ) {
+		return $theme_json;
+	}
+
+	return $theme_json->update_with(
+		array(
+			'version'  => 2,
+			'settings' => array(
+				'layout' => array(
+					// contentSize matches .container-xl at its widest (Bootstrap xxl).
+					'contentSize' => '1320px',
+					'wideSize'    => '1440px',
+				),
+			),
+		)
+	);
+}
+add_filter( 'wp_theme_json_data_theme', 'cb_editor_root_layout' );
+
+/**
  * Puts each block's alignment into a class on its editor wrapper.
  *
  * A group set to full width stores `align: "full"` in its attributes, but this
