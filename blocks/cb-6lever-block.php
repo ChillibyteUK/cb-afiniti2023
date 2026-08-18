@@ -24,19 +24,23 @@ $classes = $block['className'] ?? '';
 
 /*
  * Circle centres as a percentage of the image box, measured off
- * img/6Lever-Current_logo-962x1024.png by finding each coloured circle's
- * centroid. They form a regular hexagon: x at 17 / 49.3 / 83, y at 13.2 / 31.9 /
- * 68 / 85.5. Radius is ~12% of the width.
+ * img/6Lever-Current_logo-962x1024.png.
+ *
+ * Taken from each coloured circle's **bounding box**, not its pixel centroid. The
+ * centroid is pulled off-centre by the circles' gradients and the white icon
+ * cutouts, which is what put the top and bottom ones visibly out; the box centre
+ * of a circle is exact. Every circle measures 24.1-24.2% of the image width
+ * across, which is where the hotspot's `width: 24%` comes from.
  *
  * If the diagram is ever replaced, these need re-measuring.
  */
 $hotspots = array(
-	'leadership' => array( 49.3, 13.2 ),
-	'drivers'    => array( 83.0, 31.9 ),
-	'capability' => array( 83.0, 68.0 ),
-	'method'     => array( 49.3, 85.5 ),
-	'engagement' => array( 17.0, 68.0 ),
-	'culture'    => array( 17.0, 31.9 ),
+	'leadership' => array( 49.58, 13.96 ),
+	'drivers'    => array( 83.00, 31.93 ),
+	'capability' => array( 83.00, 68.02 ),
+	'method'     => array( 49.58, 85.16 ),
+	'engagement' => array( 17.00, 68.02 ),
+	'culture'    => array( 17.00, 31.98 ),
 );
 
 /**

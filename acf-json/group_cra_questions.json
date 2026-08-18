@@ -66,7 +66,7 @@
                     "tabs": "all",
                     "toolbar": "basic",
                     "media_upload": 0,
-                    "delay": 0,
+                    "delay": 1,
                     "acfe_field_group_condition": 0,
                     "parent_repeater": "field_cra_steps"
                 },
@@ -167,7 +167,7 @@
             "tabs": "all",
             "toolbar": "basic",
             "media_upload": 0,
-            "delay": 0,
+            "delay": 1,
             "acfe_field_group_condition": 0
         },
         {
@@ -210,7 +210,7 @@
             "tabs": "all",
             "toolbar": "basic",
             "media_upload": 0,
-            "delay": 0
+            "delay": 1
         },
         {
             "aria-label": "",
