@@ -380,6 +380,14 @@ function cb_cra_handle_submission() {
     update_field( 'field_64955d11c677b', $data, $post_id );
     update_field( 'field_649564f0c6785', $scores, $post_id );
 
+    /*
+     * The denominator this result was scored against, stored with it. The
+     * question set is editable, so the maximum per lever can change - and
+     * without this, changing it would retroactively reinterpret every result
+     * already saved. See cb_cra_result_maxima().
+     */
+    update_post_meta( $post_id, CB_CRA_MAXIMA_META, cb_cra_lever_maxima( (int) get_field( 'cra_tool_page_id', 'options' ) ) );
+
     $results = get_permalink( $post_id );
 
     cb_cra_send_results_email( $data, $results );

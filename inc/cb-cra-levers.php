@@ -282,6 +282,37 @@ function cb_cra_lever_maxima( $tool_page_id = 0 ) {
 }
 
 /**
+ * Post meta key holding the per-lever maxima a result was scored against.
+ */
+const CB_CRA_MAXIMA_META = 'cb_cra_score_maxima';
+
+/**
+ * The maxima a stored result was actually scored against.
+ *
+ * Results created before the question set became editable have no stored maxima,
+ * so they fall back to 30 - which is what they were scored on, three questions
+ * per lever at 10 each. Without this, editing the question set would silently
+ * reinterpret every historical result: a lever that used to be 21/30 (70%) would
+ * be redrawn against the new maximum and mean something different.
+ *
+ * @param int $post_id A `cra` post.
+ * @return array<string,int> Storage key => maximum.
+ */
+function cb_cra_result_maxima( $post_id ) {
+	$stored = get_post_meta( $post_id, CB_CRA_MAXIMA_META, true );
+	$maxima = array();
+
+	foreach ( cb_cra_lever_keys() as $key ) {
+		$value = is_array( $stored ) ? (int) ( $stored[ $key ] ?? 0 ) : 0;
+
+		// A zero would divide by nothing, so treat it as unrecorded.
+		$maxima[ $key ] = $value > 0 ? $value : CB_CRA_MAX_LEVER_SCORE;
+	}
+
+	return $maxima;
+}
+
+/**
  * The band matching a percentage, or null.
  *
  * Bands are inclusive at both ends. The first match wins, so overlapping bands

@@ -48,9 +48,18 @@ $scores = is_array( $scores ) ? $scores : array();
  */
 $results = array();
 
+/*
+ * The denominator comes from the result itself, not from the live question set.
+ * Editing the questions changes the maximum per lever, and a stored result has
+ * to keep meaning what it meant when it was scored. Results saved before this
+ * was recorded fall back to 30.
+ */
+$maxima = cb_cra_result_maxima( get_the_ID() );
+
 foreach ( cb_cra_levers() as $slug => $lever ) {
     $key     = $lever['key'];
-    $percent = round( ( ( $scores[ $key ] ?? 0 ) / CB_CRA_MAX_LEVER_SCORE ) * 100 );
+    $max     = max( 1, (int) ( $maxima[ $key ] ?? CB_CRA_MAX_LEVER_SCORE ) );
+    $percent = round( ( ( $scores[ $key ] ?? 0 ) / $max ) * 100 );
     $band    = cb_cra_match_band( cb_cra_lever_bands( $slug, $page_id ), $percent );
 
     $results[ $key ] = array(
