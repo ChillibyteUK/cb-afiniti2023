@@ -7,9 +7,9 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$col1 = get_field('left');
-$col2 = get_field('centre');
-$col3 = get_field('right');
+$col1 = get_field( 'left' );
+$col2 = get_field( 'centre' );
+$col3 = get_field( 'right' );
 
 $row1_col1_style = '';
 $row2_col1_style = '';

@@ -69,10 +69,12 @@ defined( 'ABSPATH' ) || exit;
 
 <div class="row w-100" id="grid">
 	<?php
-	$p = new WP_Query(array(
-		'post_type'      => 'case-studies',
-		'posts_per_page' => -1,
-	));
+	$p = new WP_Query(
+		array(
+			'post_type'      => 'case-studies',
+			'posts_per_page' => -1,
+		)
+	);
 	while ( $p->have_posts() ) {
 		$p->the_post();
 		$img = get_the_post_thumbnail_url( get_the_ID(), 'large' );
@@ -80,15 +82,15 @@ defined( 'ABSPATH' ) || exit;
 			$img = get_stylesheet_directory_uri() . '/img/default.png';
 		}
 
-		$sectors   = get_the_terms(get_the_ID(), 'sectors');
-		$sector    = wp_list_pluck($sectors, 'name');
-		$sectclass = implode(' ', array_map( 'cbslugify', $sector ) );
+		$sectors   = get_the_terms( get_the_ID(), 'sectors' );
+		$sector    = wp_list_pluck( $sectors, 'name' );
+		$sectclass = implode( ' ', array_map( 'cbslugify', $sector ) );
 
-		$txs     = get_the_terms(get_the_ID(), 'transformation');
-		$tx      = wp_list_pluck($txs, 'name');
-		$txclass = implode(' ', array_map( 'cbslugify', $tx ) );
+		$txs     = get_the_terms( get_the_ID(), 'transformation' );
+		$tx      = wp_list_pluck( $txs, 'name' );
+		$txclass = implode( ' ', array_map( 'cbslugify', $tx ) );
 
-		$the_date = get_the_date('jS F, Y');
+		$the_date = get_the_date( 'jS F, Y' );
 
 		?>
 <div class="<?= esc_attr( $sectclass ); ?> <?= esc_attr( $txclass ); ?> insight col-12 col-lg-4 mb-4">
@@ -112,8 +114,11 @@ defined( 'ABSPATH' ) || exit;
 </div>
 <?php
 
-add_action('wp_footer', function () {
-	?>
+add_action(
+	'wp_footer',
+	function () {
+	// phpcs:disable WordPress.WP.EnqueuedResources.NonEnqueuedScript
+		?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha512-Zq2BOxyhvnRFXu0+WE6ojpZLOU2jdnqbrM1hmVdGzyeCa1DgM3X5Q4A/Is9xA1IkbUeDd7755dNNI/PzSf2Pew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
 (function($){
@@ -160,5 +165,7 @@ add_action('wp_footer', function () {
 
 })( jQuery );
 </script>
-	<?php
-}, 9999);
+		<?php
+	},
+	9999
+);

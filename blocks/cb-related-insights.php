@@ -6,14 +6,16 @@
  */
 
 defined( 'ABSPATH' ) || exit;
-$cs = get_field('insights');
+$cs = get_field( 'insights' );
 
-$r = new WP_Query(array(
-	'post_type'      => 'post',
-	'posts_per_page' => -1,
-	'post__in'       => $cs,
-	'orderby'        => 'post__in',
-));
+$r = new WP_Query(
+	array(
+		'post_type'      => 'post',
+		'posts_per_page' => -1,
+		'post__in'       => $cs,
+		'orderby'        => 'post__in',
+	)
+);
 
 $classes = $block['className'] ?? null;
 
@@ -25,7 +27,7 @@ if ( $r->have_posts() ) {
 		<?php
 		while ( $r->have_posts() ) {
 			$r->the_post();
-			$img = get_the_post_thumbnail_url(get_the_ID(), 'large');
+			$img = get_the_post_thumbnail_url( get_the_ID(), 'large' );
 			?>
 		<div class="insight col-12 col-lg-4 mb-4">
 			<a href="<?= esc_url( get_the_permalink() ); ?>">

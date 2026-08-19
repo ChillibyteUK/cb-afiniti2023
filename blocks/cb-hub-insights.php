@@ -7,23 +7,25 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$category = get_field('hub_category');
-$hub_term = get_term($category[0], 'hub-category');
+$category = get_field( 'hub_category' );
+$hub_term = get_term( $category[0], 'hub-category' );
 
-$q = new WP_Query(array(
-	'post_type'      => array( 'post', 'case-studies' ),
-	'posts_per_page' => 5,
-	'tax_query'      => array(
-		array(
-			'taxonomy' => 'hub-category', // Your custom taxonomy
-			'field'    => 'term_id', // Query by term IDs
-			'terms'    => $category, // Pass the array of term IDs
+$q = new WP_Query(
+	array(
+		'post_type'      => array( 'post', 'case-studies' ),
+		'posts_per_page' => 5,
+		'tax_query'      => array(
+			array(
+				'taxonomy' => 'hub-category', // Your custom taxonomy.
+				'field'    => 'term_id', // Query by term IDs.
+				'terms'    => $category, // Pass the array of term IDs.
+			),
 		),
-	),
-	'orderby'        => 'date',
-	'order'          => 'DESC',
-	'post_status'    => 'publish',
-));
+		'orderby'        => 'date',
+		'order'          => 'DESC',
+		'post_status'    => 'publish',
+	)
+);
 
 ?>
 <section class="hub_insights">
@@ -33,8 +35,8 @@ $q = new WP_Query(array(
 			<?php
 			while ( $q->have_posts() ) {
 				$q->the_post();
-				$t = get_post_type(get_the_ID());
-				$o = get_post_type_object($t);
+				$t = get_post_type( get_the_ID() );
+				$o = get_post_type_object( $t );
 				$n = $o->labels->singular_name;
 				$n = 'Post' === $n ? 'Insight' : 'Case Study';
 				?>

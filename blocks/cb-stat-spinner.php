@@ -69,7 +69,7 @@ if ( ! $has_content ) {
 				?>
 			<div class="col-lg-4 p-4">
 				<div class="cb-stat-spinner__item text-center" style="color: var(--col-grey-500);">
-					<div class="cb-stat-spinner__stat<?= esc_attr( $stat_color_class_attr ); ?>"<?= $stat_color_style_attr; ?>>
+					<div class="cb-stat-spinner__stat<?= esc_attr( $stat_color_class_attr ); ?>"<?= $stat_color_style_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 						<?php
 						if ( '' !== (string) $stat['prefix'] ) {
 							?>

@@ -51,8 +51,11 @@ $slider_id = 'cb-quote-slider-' . ( $block['id'] ?? uniqid() );
 </div>
 <?php
 
-add_action( 'wp_footer', function () use ( $slider_id, $quotes ) {
-	?>
+add_action(
+	'wp_footer',
+	function () use ( $slider_id, $quotes ) {
+	// phpcs:disable WordPress.WP.EnqueuedResources.NonEnqueuedScript, WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet
+		?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
 	integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="
 	crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -65,7 +68,9 @@ add_action( 'wp_footer', function () use ( $slider_id, $quotes ) {
 <script>
 jQuery(function ($) {
 	var $slider = $('#<?= esc_js( $slider_id ); ?>');
-	<?php if ( count( $quotes ) > 1 ) : ?>
+		<?php
+		if ( count( $quotes ) > 1 ) {
+			?>
 	$slider.slick({
 		infinite:      true,
 		slidesToShow:  1,
@@ -75,8 +80,12 @@ jQuery(function ($) {
 		dots:          true,
 		arrows:        true,
 	});
-	<?php endif; ?>
+			<?php
+		}
+		?>
 });
 </script>
-	<?php
-}, 9999 );
+		<?php
+	},
+	9999
+);

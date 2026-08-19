@@ -41,7 +41,7 @@ if ( ! empty( $block['style']['color']['text'] ) ) {
 }
 
 $inline_style = $bg_style . $text_style;
-$style_attr   = $inline_style ? ' style="' . $inline_style . '"' : '';
+$style_attr   = $inline_style ? ' style="' . esc_attr( $inline_style ) . '"' : '';
 
 // Collect all rows from the repeater.
 $rows = array();
@@ -70,7 +70,7 @@ if ( empty( $rows ) ) {
 	return;
 }
 ?>
-<section id="<?= esc_attr( $block_id ); ?>" class="<?= esc_attr( $classes ); ?>" <?= $style_attr; ?>">
+<section id="<?= esc_attr( $block_id ); ?>" class="<?= esc_attr( $classes ); ?>" <?= $style_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>">
 	<div class="container-xl">
 		<div class="cb-hover-q-a__inner">
 

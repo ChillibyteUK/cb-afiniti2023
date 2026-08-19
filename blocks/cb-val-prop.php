@@ -124,7 +124,7 @@ $svg_centre = file_get_contents( get_stylesheet_directory() . '/img/valprop/val-
 
 		<?php /* ── Cards ── */ ?>
 		<?php
-        foreach ( $cards as $n => $card ) :
+		foreach ( $cards as $n => $card ) :
 			$modal_id   = esc_attr( $block_id . '-modal-' . $n );
 			$popover_id = esc_attr( $block_id . '-popover-' . $n );
 			?>
@@ -198,7 +198,7 @@ $svg_centre = file_get_contents( get_stylesheet_directory() . '/img/valprop/val-
 
 	<?php /* ── Bootstrap modals (one per card that has a video ID) ── */ ?>
 	<?php
-    foreach ( $cards as $n => $card ) :
+	foreach ( $cards as $n => $card ) :
 		if ( empty( $card['video_id'] ) ) {
 			continue;
 		}
@@ -236,7 +236,7 @@ $svg_centre = file_get_contents( get_stylesheet_directory() . '/img/valprop/val-
 	<?php endforeach; ?>
 
 	<?php if ( ! empty( $centre_video_id ) ) : ?>
-	<?php $centre_embed_url = 'https://player.vimeo.com/video/' . rawurlencode( $centre_video_id ) . '?autoplay=1&title=0&byline=0&portrait=0&badge=0'; ?>
+		<?php $centre_embed_url = 'https://player.vimeo.com/video/' . rawurlencode( $centre_video_id ) . '?autoplay=1&title=0&byline=0&portrait=0&badge=0'; ?>
 	<div
 		class="modal fade val-prop__modal"
 		id="<?= esc_attr( $block_id . '-modal-centre' ); ?>"

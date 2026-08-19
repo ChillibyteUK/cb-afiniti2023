@@ -16,20 +16,20 @@ $classes = $block['className'] ?? null;
 			<h2 class="h2 mb-4">Featured Story</h2>
 			<?php
 
-			// featured
+			// featured.
 
 			$featured = new WP_Query(
-			array(
-				'post_type'      => 'post',
-				'posts_per_page' => 1,
-				'meta_query'     => array(
-					array(
-						'key'     => 'featured',
-						'value'   => 'Yes',
-						'compare' => 'LIKE',
+				array(
+					'post_type'      => 'post',
+					'posts_per_page' => 1,
+					'meta_query'     => array(
+						array(
+							'key'     => 'featured',
+							'value'   => 'Yes',
+							'compare' => 'LIKE',
+						),
 					),
-				),
-			)
+				)
 			);
 
 			if ( $featured->have_posts() ) {
@@ -37,7 +37,7 @@ $classes = $block['className'] ?? null;
 				while ( $featured->have_posts() ) {
 					$featured->the_post();
 					$thumb_id        = get_post_thumbnail_id();
-					$thumb_url_array = wp_get_attachment_image_src($thumb_id, 'large', true);
+					$thumb_url_array = wp_get_attachment_image_src( $thumb_id, 'large', true );
 					$thumb_url       = $thumb_url_array[0];
 					?>
 			<div class="col-12 insight insight--short">
@@ -71,11 +71,11 @@ $classes = $block['className'] ?? null;
 			<?php
 
 			$the_query = new WP_Query(
-			array(
-				'post_type'      => 'case-studies',
-				'posts_per_page' => 4,
-				'post_status'    => 'publish',
-			)
+				array(
+					'post_type'      => 'case-studies',
+					'posts_per_page' => 4,
+					'post_status'    => 'publish',
+				)
 			);
 
 
@@ -83,7 +83,7 @@ $classes = $block['className'] ?? null;
 				echo '<div class="row g-4">';
 				while ( $the_query->have_posts() ) {
 					$the_query->the_post();
-					$img = get_the_post_thumbnail_url(get_the_ID(), 'large');
+					$img = get_the_post_thumbnail_url( get_the_ID(), 'large' );
 					?>
 			<div class="col-12 col-lg-6 insight insight--short">
 				<a href="<?= esc_url( get_the_permalink() ); ?>">

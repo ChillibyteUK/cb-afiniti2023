@@ -15,7 +15,7 @@ $classes = $block['className'] ?? null;
 		<div class="acc_container">
 			<?php
 
-			$accs = get_field('accreditations', 'options');
+			$accs = get_field( 'accreditations', 'options' );
 			foreach ( $accs as $a ) {
 				?>
 			<div class="accreditation">
@@ -32,8 +32,11 @@ $classes = $block['className'] ?? null;
 </section>
 
 <?php
-add_action('wp_footer', function () {
-	?>
+add_action(
+	'wp_footer',
+	function () {
+	// phpcs:disable WordPress.WP.EnqueuedResources.NonEnqueuedScript
+		?>
 <script src="<?= esc_url( get_stylesheet_directory_uri() . '/js/slick.min.js' ); ?>"></script>
 <script>
 	jQuery(function($) {
@@ -64,6 +67,8 @@ add_action('wp_footer', function () {
 		});
 	});
 </script>
-	<?php
-}, 9999);
+		<?php
+	},
+	9999
+);
 ?>

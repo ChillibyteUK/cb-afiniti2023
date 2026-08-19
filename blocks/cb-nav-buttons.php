@@ -18,36 +18,36 @@ $buttons = is_array( $buttons ) ? $buttons : array();
 $links = array();
 
 foreach ( $buttons as $button ) {
-    $btitle = trim( (string) ( $button['title'] ?? '' ) );
+	$btitle = trim( (string) ( $button['title'] ?? '' ) );
 
-    // The field asks for the anchor without a #, but accept one if it is typed
-    // anyway. Beyond that the value is passed through untouched - it has to
-    // match the target's id exactly, so it can't be slugified here.
-    $anchor = ltrim( trim( (string) ( $button['anchor'] ?? '' ) ), '#' );
+	// The field asks for the anchor without a #, but accept one if it is typed
+	// anyway. Beyond that the value is passed through untouched - it has to
+	// match the target's id exactly, so it can't be slugified here.
+	$anchor = ltrim( trim( (string) ( $button['anchor'] ?? '' ) ), '#' );
 
-    if ( ! $btitle || ! $anchor ) {
-        continue;
-    }
+	if ( ! $btitle || ! $anchor ) {
+		continue;
+	}
 
-    $links[] = array(
-        'title'  => $btitle,
-        'anchor' => $anchor,
-    );
+	$links[] = array(
+		'title'  => $btitle,
+		'anchor' => $anchor,
+	);
 }
 
 if ( ! $links ) {
-    return;
+	return;
 }
 
 ?>
 <nav class="nav_buttons" aria-label="<?= esc_attr__( 'Page sections', 'cb-afiniti2023' ); ?>">
-    <div class="container-xl">
-        <ul class="nav_buttons__list">
-            <?php foreach ( $links as $l ) { ?>
-            <li>
-                <a class="btn btn--purple" href="#<?= esc_attr( $l['anchor'] ); ?>"><?= esc_html( $l['title'] ); ?></a>
-            </li>
-            <?php } ?>
-        </ul>
-    </div>
+	<div class="container-xl">
+		<ul class="nav_buttons__list">
+			<?php foreach ( $links as $l ) { ?>
+			<li>
+				<a class="btn btn--purple" href="#<?= esc_attr( $l['anchor'] ); ?>"><?= esc_html( $l['title'] ); ?></a>
+			</li>
+			<?php } ?>
+		</ul>
+	</div>
 </nav>

@@ -17,32 +17,34 @@ $classes = $block['className'] ?? null;
 		<h2 class="mb-4">Latest <span>Insights</span></h2>
 		<div class="slider mb-4">
 			<?php
-			$q = new WP_Query(array(
-				'post_type'      => 'post',
-				'posts_per_page' => '6',
-				'post_status'    => 'publish',
-				'tax_query'      => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
-					array(
-						'taxonomy' => 'category',
-						'field'    => 'slug',
-						'terms'    => 'team-insight',
-						'operator' => 'NOT IN',
+			$q = new WP_Query(
+				array(
+					'post_type'      => 'post',
+					'posts_per_page' => '6',
+					'post_status'    => 'publish',
+					'tax_query'      => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+						array(
+							'taxonomy' => 'category',
+							'field'    => 'slug',
+							'terms'    => 'team-insight',
+							'operator' => 'NOT IN',
+						),
 					),
-				),
-			));
+				)
+			);
 			while ( $q->have_posts() ) {
 				$q->the_post();
 
-				$img = get_the_post_thumbnail_url(get_the_ID(), 'large');
+				$img = get_the_post_thumbnail_url( get_the_ID(), 'large' );
 				if ( ! $img ) {
 					$img = get_stylesheet_directory_uri() . '/img/default-blog.jpg';
 				}
 
-				$types      = get_the_terms(get_the_ID(), 'insight-type');
-				$type_slugs = wp_list_pluck($types, 'slug');
-				if ( ! empty($types) && ! is_wp_error($types) ) {
-					if ( in_array('video', $type_slugs, true) ) {
-						$img = get_vimeo_data_from_id(get_field('video_id', get_the_ID()), 'thumbnail_url');
+				$types      = get_the_terms( get_the_ID(), 'insight-type' );
+				$type_slugs = wp_list_pluck( $types, 'slug' );
+				if ( ! empty( $types ) && ! is_wp_error( $types ) ) {
+					if ( in_array( 'video', $type_slugs, true ) ) {
+						$img = get_vimeo_data_from_id( get_field( 'video_id', get_the_ID() ), 'thumbnail_url' );
 					}
 				}
 
@@ -76,8 +78,12 @@ $classes = $block['className'] ?? null;
 	</div>
 </section>
 <?php
-add_action('wp_footer', function () {
-	?>
+add_action(
+	'wp_footer',
+	function () {
+	// phpcs:disable WordPress.WP.EnqueuedResources.NonEnqueuedScript
+	// phpcs:disable WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet
+		?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
 	integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="
 	crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -115,6 +121,8 @@ add_action('wp_footer', function () {
 		]
 	});
 </script>
-	<?php
-}, 9999);
+		<?php
+	},
+	9999
+);
 ?>
