@@ -80,7 +80,7 @@ $classes = $block['className'] ?? null;
 	class="text_image <?= esc_attr( $breakout ); ?> <?= esc_attr( $classes ); ?>">
 	<div class="container-xl <?= esc_attr( $background ); ?> py-4">
 	<?php
-	if ( get_field( 'title' ) ) {
+	if ( get_field( 'title' ) !== '' ) {
 		?>
 		<h2 class="d-md-none">
 			<?= wp_kses_post( get_field( 'title' ) ); ?>
