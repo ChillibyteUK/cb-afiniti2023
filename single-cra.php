@@ -7,19 +7,22 @@
 
 defined( 'ABSPATH' ) || exit;
 
-/*
+/**
  * The document title used to be swapped by buffering the whole of get_header()
  * and running a regex over it. Filtering is cheaper and does not depend on the
  * markup. cb_strip_cra_seo_title() in cb-posttypes.php covers the Yoast path,
  * which is what actually renders the title while Yoast is active.
+ *
+ * @param array $parts The document title parts.
+ * @return array Modified document title parts.
  */
-add_filter( 'document_title_parts', 'cb_cra_document_title' );
 function cb_cra_document_title( $parts ) {
 	$parts['title'] = 'Change Readiness Assessment Results';
 	unset( $parts['tagline'] );
 
 	return $parts;
 }
+add_filter( 'document_title_parts', 'cb_cra_document_title' );
 
 get_header();
 
@@ -403,8 +406,12 @@ $change_index = array( 90, 80, 70, 75, 85, 75 );
 		</div>
 	</section>
 	<?php
-	add_action('wp_footer', function () {
-		?>
+	add_action(
+		'wp_footer',
+		function () {
+			// phpcs:disable WordPress.WP.EnqueuedResources.NonEnqueuedScript
+			// phpcs:disable WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet
+			?>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
 		integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="
 		crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -440,8 +447,12 @@ $change_index = array( 90, 80, 70, 75, 85, 75 );
 			]
 		});
 	</script>
-		<?php
-	}, 9999);
+			<?php
+			// phpcs:enable WordPress.WP.EnqueuedResources.NonEnqueuedScript
+			// phpcs:enable WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet
+		},
+		9999
+	);
 
 	?>
 	</div>
@@ -455,6 +466,7 @@ $change_index = array( 90, 80, 70, 75, 85, 75 );
  * benchmark are encoded once here instead of being repeated - the six
  * percentages used to be recalculated twelve times between the two configs.
  */
+// phpcs:disable WordPress.WP.EnqueuedResources.NonEnqueuedScript
 ?>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script>
@@ -525,5 +537,5 @@ $change_index = array( 90, 80, 70, 75, 85, 75 );
 	})
 </script>
 <?php
-
+// phpcs:enable WordPress.WP.EnqueuedResources.NonEnqueuedScript
 get_footer();
