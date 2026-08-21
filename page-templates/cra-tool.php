@@ -337,15 +337,9 @@ get_header();
                             data-cra-field="contactName" data-cra-required="1">
                         <div class="alert alert-danger" data-cra-warn-for="contactName">Please enter your name</div>
                     </div>
-                    <label for="contactTitle">Job Title</label>
-                    <input type="text" name="contactTitle" id="contactTitle" class="form-control"
-                        data-cra-field="contactTitle">
                     <label for="contactPhone">Contact Number</label>
                     <input type="text" name="contactPhone" id="contactPhone" class="form-control"
                         data-cra-field="contactPhone">
-                    <label for="contactMobile">Contact Mobile</label>
-                    <input type="text" name="contactMobile" id="contactMobile" class="form-control"
-                        data-cra-field="contactMobile">
                     <label for="contactEmail">Contact Email<sup>*</sup></label>
                     <div>
                         <input type="email" name="contactEmail" id="contactEmail" class="form-control" required
