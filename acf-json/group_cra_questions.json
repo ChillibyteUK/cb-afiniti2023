@@ -3,12 +3,33 @@
     "title": "CRA Questions",
     "fields": [
         {
+            "aria-label": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "acfe_field_group_condition": 0,
+            "key": "field_cra_org_step_title",
+            "label": "Organisation Step Title",
+            "name": "cra_org_step_title",
+            "type": "text",
+            "instructions": "Title of the first step, shown after \"Step 1 - \" and in the progress indicator. Leave blank for \"About Your Organisation\".",
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "About Your Organisation",
+            "prepend": "",
+            "append": ""
+        },
+        {
             "key": "field_cra_steps",
             "label": "Question Steps",
             "name": "cra_steps",
             "aria-label": "",
             "type": "repeater",
-            "instructions": "Each step is one screen of the assessment. Add, remove and reorder freely - the tool renders whatever is here, and the progress bar counts it. The contact and organisation steps are not listed here: they are fixed, because their fields map to values the server validates by name.",
+            "instructions": "Each step is one screen of the assessment. Add, remove and reorder freely - the tool renders whatever is here, and the progress bar counts it. The organisation and contact steps are not listed here: their fields are fixed, because they map to values the server validates by name. Only their titles are editable, above and below.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -150,6 +171,27 @@
             ]
         },
         {
+            "aria-label": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "acfe_field_group_condition": 0,
+            "key": "field_cra_contact_step_title",
+            "label": "Contact Step Title",
+            "name": "cra_contact_step_title",
+            "type": "text",
+            "instructions": "Title of the final step, shown after \"Step N - \" and in the progress indicator. Leave blank for \"Your Details\".",
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Your Details",
+            "prepend": "",
+            "append": ""
+        },
+        {
             "key": "field_cra_contact_intro",
             "label": "Contact Step Introduction",
             "name": "cra_contact_intro",
@@ -251,5 +293,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1787059200
+    "modified": 1787266800
 }

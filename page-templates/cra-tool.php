@@ -83,16 +83,17 @@ get_header();
          * steps come from Site-Wide Settings > CRA Questions and there can be any
          * number of them. Fixed steps top and tail the sequence:
          *
-         *   0            About Your Organisation  (orgName + the change context)
+         *   0            organisation step        (orgName + the change context)
          *   1 .. n-2     question steps           (global, editable)
-         *   n-1          Contact Details          (last - gates the report)
+         *   n-1          contact step             (last - gates the report)
          *
          * Contact details deliberately come last: the tool used to ask for an
          * email before showing any value. orgName is the exception and stays up
          * front, because it becomes the result's post_title.
          *
-         * Both fixed steps stay code-defined. Their inputs map to payload keys
-         * cb_cra_clean_contact() validates by name, so they are not content.
+         * The two fixed steps keep code-defined *fields*: those inputs map to
+         * payload keys cb_cra_clean_contact() validates by name, so they are not
+         * content. Their titles are, and come from the same options page.
          *
          * The markup carries everything cra.js needs - data-cra-step,
          * data-cra-kind, data-cra-field, data-lever - so the JS walks whatever is
@@ -104,14 +105,22 @@ get_header();
         /*
          * Titles for every step, in order, so the numbered indicator can label
          * each one. The count comes from this rather than an arithmetic guess.
+         *
+         * The two fixed steps keep their code-defined fields, but their titles
+         * are editable on the CRA Questions options page - a blank field falls
+         * back to the wording used before those fields existed, so an
+         * unconfigured environment renders identically.
          */
-        $cra_step_titles = array( 'About Your Organisation' );
+        $cra_org_title     = trim( (string) get_field( 'cra_org_step_title', 'options' ) );
+        $cra_contact_title = trim( (string) get_field( 'cra_contact_step_title', 'options' ) );
+
+        $cra_step_titles = array( $cra_org_title ?: 'About Your Organisation' );
 
         foreach ( $cra_question_steps as $cra_qstep ) {
             $cra_step_titles[] = $cra_qstep['title'];
         }
 
-        $cra_step_titles[] = 'Your Details';
+        $cra_step_titles[] = $cra_contact_title ?: 'Your Details';
 
         $cra_step = 0;
 
