@@ -23465,6 +23465,7 @@ button.search.clear::after {
 }
 .hero h1, .hero .h1 {
   font-size: 54px;
+  line-height: 1.1;
 }
 
 @-webkit-keyframes fadeIn {
@@ -24746,6 +24747,36 @@ button.search.clear::after {
 
 .cra-hero--primary {
   display: flex;
+  --cra-hero-illo-height: 200px;
+  --cra-hero-illo-bleed: 50px;
+  --cra-hero-illo-optical-offset: 12%;
+  margin-bottom: calc(2rem + var(--cra-hero-illo-bleed));
+}
+@media (max-width: 767px) {
+  .cra-hero--primary {
+    --cra-hero-illo-height: 170px;
+    --cra-hero-illo-bleed: 55px;
+  }
+  .cra-hero--primary .hero__inner {
+    -webkit-padding-before: 1.5rem;
+    padding-block-start: 1.5rem;
+    -webkit-padding-after: calc(var(--cra-hero-illo-height) - var(--cra-hero-illo-bleed) + 1.5rem);
+    padding-block-end: calc(var(--cra-hero-illo-height) - var(--cra-hero-illo-bleed) + 1.5rem);
+  }
+}
+.cra-hero__illustration {
+  position: absolute;
+  bottom: calc(var(--cra-hero-illo-bleed) * -1);
+  left: 50%;
+  height: var(--cra-hero-illo-height);
+  width: auto;
+  max-width: 90vw;
+  -o-object-fit: contain;
+  object-fit: contain;
+  transform: translateX(calc(-50% + var(--cra-hero-illo-optical-offset)));
+  pointer-events: none;
+  -webkit-animation: fadeIn 1s ease-in-out;
+  animation: fadeIn 1s ease-in-out;
 }
 .cra-hero__eyebrow {
   text-transform: uppercase;
@@ -24758,9 +24789,9 @@ button.search.clear::after {
   margin-bottom: 1rem;
 }
 .cra-hero__intro {
-  max-width: 70ch;
   margin-inline: auto;
   margin-bottom: 1.5rem;
+  text-wrap: pretty;
 }
 .cra-hero .hero__cta {
   display: flex;

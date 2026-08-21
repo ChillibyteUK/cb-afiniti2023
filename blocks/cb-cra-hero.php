@@ -54,41 +54,80 @@ $is_editor = ! empty( $is_preview );
 <section id="hero"
 	class="hero cra-hero cra-hero--primary align-items-start pt-lg-0 align-items-lg-center">
 	<div class="hero__inner container-xl text-center">
-		<?php if ( $eyebrow ) { ?>
+		<?php
+		if ( $eyebrow ) {
+			?>
 		<p class="cra-hero__eyebrow"><?= esc_html( $eyebrow ); ?></p>
-		<?php } ?>
-		<?php if ( $btitle ) { ?>
+			<?php
+		}
+		if ( $btitle ) {
+			?>
 		<h1 class="mb-3"><?= wp_kses_post( $btitle ); ?></h1>
-		<?php } ?>
-		<?php if ( $subtitle ) { ?>
+			<?php
+		}
+		if ( $subtitle ) {
+			?>
 		<p class="cra-hero__subtitle"><?= wp_kses_post( $subtitle ); ?></p>
-		<?php } ?>
-		<?php if ( $intro ) { ?>
+			<?php
+		}
+		if ( $intro ) {
+			?>
 		<div class="cra-hero__intro"><?= wp_kses_post( $intro ); ?></div>
-		<?php } ?>
+			<?php
+		}
+		?>
 		<div class="hero__cta">
 			<button id="step0" class="btn btn-lg btn--orange"><?= esc_html( $start_label ); ?></button>
-			<?php if ( $sample_url ) { ?>
+			<?php
+			if ( $sample_url ) {
+				?>
 			<a class="btn btn-lg btn--ghost" href="<?= esc_url( $sample_url ); ?>"
 				<?php
 				if ( $sample_target ) {
 					?>
-					target="<?= esc_attr( $sample_target ); ?>" rel="noopener"<?php } ?>><?= esc_html( $sample_title ); ?></a>
-			<?php } ?>
+					target="<?= esc_attr( $sample_target ); ?>" rel="noopener"
+					<?php
+				}
+				?>
+				><?= esc_html( $sample_title ); ?></a>
+				<?php
+			}
+			?>
 		</div>
 	</div>
+	<?php
+	/*
+	 * Decorative, and deliberately a sibling of .hero__inner rather than a child
+	 * of it: it is absolutely positioned against the section so it can sit below
+	 * the copy and bleed past the bottom edge of the hero background. Inside
+	 * .hero__inner it would be in flow and centred with the text, which is what
+	 * the old negative-top version was fighting.
+	 */
+	?>
+	<img class="cra-hero__illustration"
+		src="<?= esc_url( get_stylesheet_directory_uri() . '/img/anim/Change-Readiness-Tool.png' ); ?>"
+		width="600" height="375" alt="" aria-hidden="true">
 </section>
-<?php if ( $form_title || $form_text || $is_editor ) { ?>
-	<?php // No d-flex here - it is display:flex !important, which would override the hidden state. ?>
+<?php
+if ( $form_title || $form_text || $is_editor ) {
+	// No d-flex here - it is display:flex !important, which would override the hidden state.
+	?>
 <section id="cra-form-hero"
 	class="hero cra-hero cra-hero--compact<?= $is_editor ? ' cra-hero--editor' : ''; ?>">
 	<div class="hero__inner container-xl text-center">
-		<?php if ( $form_title ) { ?>
+		<?php
+		if ( $form_title ) {
+			?>
 		<p class="cra-hero__form-title h1"><?= wp_kses_post( $form_title ); ?></p>
-		<?php } ?>
-		<?php if ( $form_text ) { ?>
+			<?php
+		}
+		if ( $form_text ) {
+			?>
 		<p class="cra-hero__form-text mb-0"><?= wp_kses_post( $form_text ); ?></p>
-		<?php } ?>
+			<?php
+		}
+		?>
 	</div>
 </section>
-<?php } ?>
+	<?php
+}

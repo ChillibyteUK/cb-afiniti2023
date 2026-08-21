@@ -6,6 +6,78 @@
 
     &--primary {
         display: flex;
+
+        // Geometry of the illustration below. Kept as custom properties because
+        // the two values have to stay in step: the hero's own bottom margin has
+        // to clear whatever hangs below its background, or the artwork lands on
+        // the content underneath.
+        --cra-hero-illo-height: 200px;
+        --cra-hero-illo-bleed: 50px;
+
+        // The artwork is not centred within its own canvas: the drawing sits in
+        // the left two thirds and a soft drop shadow fills the right. Measured
+        // on the PNG, all the ink is centred at 50.5% of the 600px canvas - so
+        // the file centres correctly - but the dark line art alone, which is
+        // what the eye reads as the subject, is centred at 38%. Centring the
+        // file therefore leaves the subject about 12% of the image left of the
+        // hero's centre line, and this puts it back. It is a property of the
+        // asset, so it changes only if the asset does.
+        --cra-hero-illo-optical-offset: 12%;
+
+        margin-bottom: calc(2rem + var(--cra-hero-illo-bleed));
+
+        // .hero__inner already carries 12rem of bottom padding, which is more
+        // than the part of the illustration that sits inside the hero, so the
+        // copy needs no extra room.
+
+        @media (max-width: 767px) {
+            --cra-hero-illo-height: 170px;
+            --cra-hero-illo-bleed: 55px;
+
+            // .hero puts 80px on the section below 992px to clear the fixed
+            // navbar, which is 48px tall at this width, and .hero__inner then
+            // adds 6rem on top of that - 174px of empty green above the eyebrow
+            // on a 900px screen, with the hero itself taller than the viewport.
+            // The section's clearance stays; this is the padding that was only
+            // ever there to give a desktop-width hero some air.
+            //
+            // Scoped to this block rather than changed on .hero, which is used
+            // by every template on the site.
+            .hero__inner {
+                padding-block-start: 1.5rem;
+
+                // Derived rather than picked: the copy has to clear the part of
+                // the illustration that sits inside the hero, which is its
+                // height less whatever bleeds out of the bottom, plus a gap.
+                // Retune the height above and this follows on its own, so the
+                // two cannot drift into a collision.
+                padding-block-end: calc(var(--cra-hero-illo-height) - var(--cra-hero-illo-bleed) + 1.5rem);
+            }
+        }
+    }
+
+    // Anchored to the bottom edge of the hero and pulled below it, so it reads
+    // as standing on the background and breaking out of it. Decorative, so it
+    // is aria-hidden in the markup and ignores the pointer here - it overlaps
+    // the section below and would otherwise swallow clicks on it.
+    &__illustration {
+        position: absolute;
+        bottom: calc(var(--cra-hero-illo-bleed) * -1);
+        left: 50%;
+        height: var(--cra-hero-illo-height);
+        width: auto;
+        max-width: 90vw;
+        object-fit: contain;
+        // The nudge is in the transform, not in `left`, and that distinction is
+        // the whole point. A percentage on `left` resolves against the hero,
+        // i.e. the viewport, so the same figure drifts with window width - 41px
+        // at 2000px, 20px at 1000px, 10px at 500px, where the image is at its
+        // proportionally largest and needs the correction most. A percentage in
+        // translateX resolves against the element's own box, so it tracks the
+        // artwork it is correcting and holds at every width.
+        transform: translateX(calc(-50% + var(--cra-hero-illo-optical-offset)));
+        pointer-events: none;
+        animation: fadeIn 1s ease-in-out;
     }
 
     &__eyebrow {
@@ -21,9 +93,9 @@
     }
 
     &__intro {
-        max-width: 70ch;
         margin-inline: auto;
         margin-bottom: 1.5rem;
+        text-wrap: pretty;
     }
 
     .hero__cta {
