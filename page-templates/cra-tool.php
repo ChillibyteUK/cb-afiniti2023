@@ -362,7 +362,7 @@ get_header();
                         </select>
                         <div class="alert alert-danger" data-cra-warn-for="contactHowHear">Please select an option</div>
                     </div>
-                    <div>
+                    <div class="form_check">
                         <label for="consent"><input type="checkbox" name="consent" id="consent" value="true"
                                 data-cra-field="consent" data-cra-required="1">
                             <div>I consent to the terms of the <a href="/privacy-policy/" target="_blank">privacy
@@ -378,7 +378,7 @@ get_header();
                      * list; never shown on the results page or in either email.
                      */
                     ?>
-                    <div>
+                    <div class="form_check">
                         <label for="marketingOptIn"><input type="checkbox" name="marketingOptIn" id="marketingOptIn"
                                 value="true" data-cra-field="marketingOptIn">
                             <div>I&rsquo;d like to receive relevant change insights and updates from Afiniti</div>

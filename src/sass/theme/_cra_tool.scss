@@ -208,14 +208,31 @@ body.page-template-cra-tool {
         }
     }
 
-    label[for="consent"] {
-        display: flex;
-        gap: 0.5rem;
-        align-items: flex-start;
+    // Checkbox rows - privacy consent and the marketing opt-in.
+    //
+    // The span matters. .form_grid is a two-column label/input grid, and these
+    // wrappers are bare grid children, so without it consent auto-flows into
+    // the 1fr column and the opt-in into the 2fr one beside it: one row, two
+    // different widths. Spanning both columns puts each on its own row, so they
+    // stack and match.
+    //
+    // This was label[for="consent"], which is why the opt-in had no flex and
+    // dropped its text below the box. Keyed off a class now, so a third
+    // checkbox needs no new selector.
+    .form_check {
+        @media (min-width: 768px) {
+            grid-column: 1 / -1;
+        }
 
-        input[type="checkbox"] {
-            width: 1.5rem;
-            height: 1.5rem;
+        label {
+            display: flex;
+            gap: 0.5rem;
+            align-items: flex-start;
+
+            input[type="checkbox"] {
+                width: 1.5rem;
+                height: 1.5rem;
+            }
         }
     }
 

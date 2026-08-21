@@ -25181,12 +25181,17 @@ body.page-template-cra-tool .radio_group {
 body.page-template-cra-tool .radio_group > div {
   text-align: center;
 }
-body.page-template-cra-tool label[for=consent] {
+@media (min-width: 768px) {
+  body.page-template-cra-tool .form_check {
+    grid-column: 1/-1;
+  }
+}
+body.page-template-cra-tool .form_check label {
   display: flex;
   gap: 0.5rem;
   align-items: flex-start;
 }
-body.page-template-cra-tool label[for=consent] input[type=checkbox] {
+body.page-template-cra-tool .form_check label input[type=checkbox] {
   width: 1.5rem;
   height: 1.5rem;
 }
