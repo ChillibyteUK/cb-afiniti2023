@@ -153,6 +153,78 @@ $change_index = array( 90, 80, 70, 75, 85, 75 );
 			</div>
 		</section>
 
+		<?php
+		/*
+		* Results CTA, editable under Site-Wide Settings > CRA Questions.
+		*
+		* White text comes from .bg--green-500 itself, which sets `color: white
+		* !important`, and headings inherit it.
+		*
+		* .text-white is applied to the body copy only, NOT the whole section. It
+		* carries `a { color: $white !important }`, which is wanted for links inside
+		* the copy but outranks .btn--white's own colour - put it on the section and
+		* the button renders white text on a white background, i.e. invisible.
+		*
+		* The wysiwyg emptiness test strips tags, decodes entities and trims
+		* "\xc2\xa0" - clearing a wysiwyg usually leaves "<p>&nbsp;</p>", and the
+		* decoded &nbsp; is U+00A0, which PHP's default trim() does not strip.
+		*/
+		$cra_cta_title  = (string) get_field( 'cra_cta_title', 'options' );
+		$cra_cta_text   = (string) get_field( 'cra_cta_text', 'options' );
+		$cra_cta_button = get_field( 'cra_cta_button', 'options' );
+
+		$cra_cta_has_text = '' !== trim(
+			html_entity_decode( wp_strip_all_tags( $cra_cta_text ), ENT_QUOTES, 'UTF-8' ),
+			" \t\n\r\0\x0B\xc2\xa0"
+		);
+
+		// The link field can come back as an array or a bare URL string.
+		if ( is_array( $cra_cta_button ) ) {
+			$cra_cta_url    = $cra_cta_button['url'] ?? '';
+			$cra_cta_label  = $cra_cta_button['title'] ?? '';
+			$cra_cta_target = $cra_cta_button['target'] ?? '';
+		} elseif ( is_string( $cra_cta_button ) ) {
+			$cra_cta_url    = $cra_cta_button;
+			$cra_cta_label  = '';
+			$cra_cta_target = '';
+		} else {
+			$cra_cta_url    = '';
+			$cra_cta_label  = '';
+			$cra_cta_target = '';
+		}
+
+		if ( $cra_cta_url && '' === trim( $cra_cta_label ) ) {
+			$cra_cta_label = __( 'Get in touch', 'cb-afiniti' );
+		}
+
+		if ( '' !== trim( $cra_cta_title ) || $cra_cta_has_text || $cra_cta_url ) {
+			?>
+		<!-- CTA -->
+		<section class="cra_cta bg--green-500 py-5 mb-5">
+			<div class="container-xl text-center">
+				<?php if ( '' !== trim( $cra_cta_title ) ) { ?>
+				<h2 class="mb-3"><?= wp_kses_post( $cra_cta_title ); ?></h2>
+				<?php } ?>
+				<?php if ( $cra_cta_has_text ) { ?>
+				<div class="cra_cta__text text-white mb-4"><?= wp_kses_post( $cra_cta_text ); ?></div>
+				<?php } ?>
+				<?php if ( $cra_cta_url ) { ?>
+				<a class="btn btn--white" href="<?= esc_url( $cra_cta_url ); ?>"
+					<?php
+					if ( $cra_cta_target ) {
+						?>
+						target="<?= esc_attr( $cra_cta_target ); ?>" rel="noopener"
+						<?php
+					}
+					?>
+					><?= esc_html( $cra_cta_label ); ?></a>
+				<?php } ?>
+			</div>
+		</section>
+			<?php
+		}
+		?>
+
 		<section class="results mb-5">
 			<h2>Detailed Results</h2>
 			<div class="results__grid d-none d-md-grid">
@@ -188,78 +260,6 @@ $change_index = array( 90, 80, 70, 75, 85, 75 );
 			<p>Please <a href="/contact-us/">get in touch</a> if you'd like to know more.</p>
 		</div>
 	</section>
-
-	<?php
-	/*
-	 * Results CTA, editable under Site-Wide Settings > CRA Questions.
-	 *
-	 * White text comes from .bg--green-500 itself, which sets `color: white
-	 * !important`, and headings inherit it.
-	 *
-	 * .text-white is applied to the body copy only, NOT the whole section. It
-	 * carries `a { color: $white !important }`, which is wanted for links inside
-	 * the copy but outranks .btn--white's own colour - put it on the section and
-	 * the button renders white text on a white background, i.e. invisible.
-	 *
-	 * The wysiwyg emptiness test strips tags, decodes entities and trims
-	 * "\xc2\xa0" - clearing a wysiwyg usually leaves "<p>&nbsp;</p>", and the
-	 * decoded &nbsp; is U+00A0, which PHP's default trim() does not strip.
-	 */
-	$cra_cta_title  = (string) get_field( 'cra_cta_title', 'options' );
-	$cra_cta_text   = (string) get_field( 'cra_cta_text', 'options' );
-	$cra_cta_button = get_field( 'cra_cta_button', 'options' );
-
-	$cra_cta_has_text = '' !== trim(
-		html_entity_decode( wp_strip_all_tags( $cra_cta_text ), ENT_QUOTES, 'UTF-8' ),
-		" \t\n\r\0\x0B\xc2\xa0"
-	);
-
-	// The link field can come back as an array or a bare URL string.
-	if ( is_array( $cra_cta_button ) ) {
-		$cra_cta_url    = $cra_cta_button['url'] ?? '';
-		$cra_cta_label  = $cra_cta_button['title'] ?? '';
-		$cra_cta_target = $cra_cta_button['target'] ?? '';
-	} elseif ( is_string( $cra_cta_button ) ) {
-		$cra_cta_url    = $cra_cta_button;
-		$cra_cta_label  = '';
-		$cra_cta_target = '';
-	} else {
-		$cra_cta_url    = '';
-		$cra_cta_label  = '';
-		$cra_cta_target = '';
-	}
-
-	if ( $cra_cta_url && '' === trim( $cra_cta_label ) ) {
-		$cra_cta_label = __( 'Get in touch', 'cb-afiniti' );
-	}
-
-	if ( '' !== trim( $cra_cta_title ) || $cra_cta_has_text || $cra_cta_url ) {
-		?>
-	<!-- CTA -->
-	<section class="cra_cta bg--green-500 py-5">
-		<div class="container-xl text-center">
-			<?php if ( '' !== trim( $cra_cta_title ) ) { ?>
-			<h2 class="mb-3"><?= wp_kses_post( $cra_cta_title ); ?></h2>
-			<?php } ?>
-			<?php if ( $cra_cta_has_text ) { ?>
-			<div class="cra_cta__text text-white mb-4"><?= wp_kses_post( $cra_cta_text ); ?></div>
-			<?php } ?>
-			<?php if ( $cra_cta_url ) { ?>
-			<a class="btn btn--white" href="<?= esc_url( $cra_cta_url ); ?>"
-				<?php
-				if ( $cra_cta_target ) {
-					?>
-					target="<?= esc_attr( $cra_cta_target ); ?>" rel="noopener"
-					<?php
-				}
-				?>
-				><?= esc_html( $cra_cta_label ); ?></a>
-			<?php } ?>
-		</div>
-	</section>
-		<?php
-	}
-	?>
 
 	<!-- latest_insights -->
 	<section class="latest_news py-5">
