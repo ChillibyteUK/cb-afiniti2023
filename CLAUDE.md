@@ -167,7 +167,14 @@ no point refactoring them.
   | slide 1 | page content, no fields |
   | About Your Organisation | `orgName`, `changeInProgress`, `changeDetail`, `changeRole` |
   | question steps | from the global options page, any number |
-  | Contact Details (last) | `contactName`, `contactTitle`, `contactPhone`, `contactMobile`, `contactEmail`, `contactHowHear`, `consent` |
+  | Contact Details (last) | `contactName`, `contactPhone`, `contactEmail`, `contactHowHear`, `consent`, `marketingOptIn` |
+
+  `contactTitle` (Job Title) and `contactMobile` were later dropped from the
+  form, but **not** from `cb_cra_clean_contact()`, the `data` ACF group or
+  `cra-results.php`'s CSV export. Both were optional, so a new submission stores
+  the same empty string a blank one always did, while historical rows that hold
+  values keep rendering and exporting in the same columns. Deleting the keys
+  would shift the CSV and risk undefined-index notices on old data for no gain.
 
   The `data`/`scores` server contract does **not** change -
   `cb_cra_clean_contact()` still requires `orgName`, `contactName` and a valid
@@ -176,9 +183,12 @@ no point refactoring them.
   end, and the "last line of defence" check before submit becomes the primary
   one. `orgNameWarn` moves with its field.
 
-  These two steps stay **code-defined**, not author-editable: their fields map to
-  payload keys the server validates by name, so making them editable would break
-  the contract for no gain. Only the question steps are content.
+  These two steps' **fields** stay code-defined: they map to payload keys the
+  server validates by name, so making them editable would break the contract for
+  no gain. Their **titles** are content - `cra_org_step_title` and
+  `cra_contact_step_title` on the CRA Questions options page, blank falling back
+  to "About Your Organisation" and "Your Details". The fallback is a `trim()`
+  test, so a whitespace-only value still yields the coded wording.
 - **Scale stays 1-10 globally.** One setting, not per step or per question.
 
 An earlier plan to make each question an ACF block was dropped: questions being
@@ -335,7 +345,10 @@ page. The `:root { --col-light-400: #fafafa }` override became a scoped
 `.form-panel input[type="radio"]::before` used a hyphen where the markup has
 `.form_panel`, so it never matched anything.
 
-Theme `Version:` is **0.5** for that CSS (now **0.6**, see the step indicator below).
+Theme `Version:` was bumped for that CSS. It is now **1.5** - the `0.5`/`0.6` this
+note used to quote never matched `style.css`, which has been on the `1.x` line
+throughout. Read the real value out of `style.css` rather than trusting a number
+written down here.
 
 **`cra_tool_page_id` is retired as a dependency.** Everything now resolves through
 `cb_cra_tool_page_id()`: the setting if present, otherwise a page on the CRA Tool

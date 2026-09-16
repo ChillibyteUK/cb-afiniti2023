@@ -83,6 +83,37 @@ function cb_cra_setting( $name, $constant, $default = '' ) {
 }
 
 /**
+ * Whether the rate limits are enforced at all.
+ *
+ * Turned OFF on 2026-09-16. The client ran the tool at an event, where a hall
+ * full of people shares one NAT'd public IP, so the per-IP limit of 3/hour
+ * bounced genuine attendees - and the site-wide ceiling of 30/hour would have
+ * caught the rest of the room regardless of IP. Both limits assume "one
+ * visitor, one submission", which an event breaks by design.
+ *
+ * TO RE-ENABLE: define CB_CRA_RATE_LIMITING true in wp-config.php - that needs
+ * no deploy and takes effect on the next request. Flipping the false below is
+ * the permanent version.
+ *
+ * What is NOT disabled by this, and still guards the endpoint: POST-only, the
+ * honeypot, the signed form token, is_email(), required orgName/contactName,
+ * field sanitising and score clamping. The limits were defence in depth for
+ * wp_mail() abuse, not the primary control - see the reCAPTCHA note in
+ * CLAUDE.md. Leaving them off indefinitely does restore the mail-amplifier
+ * exposure they were sized for, so this is an event-shaped exception, not a
+ * decision to drop them.
+ *
+ * @return bool
+ */
+function cb_cra_rate_limiting_enabled() {
+    if ( defined( 'CB_CRA_RATE_LIMITING' ) ) {
+        return (bool) CB_CRA_RATE_LIMITING;
+    }
+
+    return false;
+}
+
+/**
  * Max submissions from one IP per hour.
  *
  * A real visitor submits once. Three leaves room for someone retrying after a
@@ -339,24 +370,38 @@ function cb_cra_handle_submission() {
         cb_cra_bail( 'expired' );
     }
 
-    $ip       = cb_cra_client_ip();
-    $rate_key = 'cb_cra_rate_' . md5( $ip );
-    $recent   = (int) get_transient( $rate_key );
-
-    if ( $ip && $recent >= cb_cra_rate_limit() ) {
-        cb_cra_bail( 'rate' );
-    }
+    $ip = cb_cra_client_ip();
 
     /*
      * Keyed by the hour rather than using a rolling transient, so the count
      * cannot be walked forward indefinitely by submitting just under the limit.
      */
+    $rate_key   = 'cb_cra_rate_' . md5( $ip );
     $global_key = 'cb_cra_rate_all_' . (int) floor( time() / HOUR_IN_SECONDS );
-    $global     = (int) get_transient( $global_key );
+    $recent     = 0;
+    $global     = 0;
 
-    if ( $global >= cb_cra_global_limit() ) {
-        error_log( 'CRA: global hourly submission ceiling hit - mail suppressed until the hour rolls over.' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-        cb_cra_bail( 'rate' );
+    /*
+     * Both limits are behind one switch, which is currently off - see
+     * cb_cra_rate_limiting_enabled(). The counters are not read or written
+     * while it is off, so re-enabling starts from a clean hour rather than
+     * immediately bailing on a tally built up while nobody was being limited.
+     */
+    $cra_limits_on = cb_cra_rate_limiting_enabled();
+
+    if ( $cra_limits_on ) {
+        $recent = (int) get_transient( $rate_key );
+
+        if ( $ip && $recent >= cb_cra_rate_limit() ) {
+            cb_cra_bail( 'rate' );
+        }
+
+        $global = (int) get_transient( $global_key );
+
+        if ( $global >= cb_cra_global_limit() ) {
+            error_log( 'CRA: global hourly submission ceiling hit - mail suppressed until the hour rolls over.' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+            cb_cra_bail( 'rate' );
+        }
     }
 
     $data   = cb_cra_clean_contact( json_decode( wp_unslash( $_POST['data'] ?? '' ), true ) );
@@ -366,11 +411,13 @@ function cb_cra_handle_submission() {
         cb_cra_bail( 'invalid' );
     }
 
-    if ( $ip ) {
-        set_transient( $rate_key, $recent + 1, HOUR_IN_SECONDS );
-    }
+    if ( $cra_limits_on ) {
+        if ( $ip ) {
+            set_transient( $rate_key, $recent + 1, HOUR_IN_SECONDS );
+        }
 
-    set_transient( $global_key, $global + 1, 2 * HOUR_IN_SECONDS );
+        set_transient( $global_key, $global + 1, 2 * HOUR_IN_SECONDS );
+    }
 
     $post_id = wp_insert_post(
         array(
