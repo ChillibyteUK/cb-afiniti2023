@@ -7,6 +7,8 @@
     margin-block: 2rem;
 
     &__card {
+        width: min(600px, 90vw);
+        margin-inline: auto;
         background-color: var(--col-green-700);
         color: white;
         padding: 2rem 1.5rem;
@@ -36,6 +38,20 @@
 
     &__form {
         margin-top: 1.5rem;
+
+        // Scoped to this block, so the form's submit button matches the
+        // orange trigger without changing .btn--green or Gravity Forms
+        // buttons anywhere else on the site.
+        .btn--green,
+        .gform_wrapper .gform_footer button {
+            background-color: var(--col-orange-700);
+            color: white;
+
+            &:hover,
+            &:focus-visible {
+                background-color: var(--col-orange-700);
+            }
+        }
 
         // Gravity Forms' own labels and descriptions are dark by default and
         // would vanish on the green. Validation messages and the confirmation
