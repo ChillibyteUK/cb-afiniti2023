@@ -69,6 +69,22 @@ function acf_blocks() {
 
 		// INSERT NEW BLOCKS HERE.
 
+		acf_register_block_type(
+			array(
+				'name'            => 'cb_form_cta',
+				'title'           => __( 'CB Form CTA' ),
+				'category'        => 'layout',
+				'icon'            => 'feedback',
+				'render_template' => 'blocks/cb-form-cta.php',
+				'mode'            => 'edit',
+				'supports'        => array(
+					'mode'      => false,
+					'anchor'    => true,
+					'className' => true,
+				),
+			)
+		);
+
         acf_register_block_type(
             array(
                 'name'            => 'cb_6lever_block',
