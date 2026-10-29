@@ -146,7 +146,7 @@
             {
                 "param": "block",
                 "operator": "==",
-                "value": "acf\/cb_quote"
+                "value": "acf\/cb-quote"
             }
         ]
     ],
