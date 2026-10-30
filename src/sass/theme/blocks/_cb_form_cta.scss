@@ -1,16 +1,23 @@
 // CB Form CTA
 //
-// A green card holding a button that expands a Gravity Form. Expanding is
+// A card holding a button that expands a Gravity Form. Expanding is
 // Bootstrap's collapse; there is no block JS.
+//
+// Card colours come from two custom properties set inline by the template when
+// an editor picks a palette colour. They default to green-700 and white, so a
+// block with nothing chosen looks as it always did.
 
 .form_cta {
     margin-block: 2rem;
 
     &__card {
+        --form-cta-bg: var(--col-green-700);
+        --form-cta-text: white;
+
         width: min(600px, 90vw);
         margin-inline: auto;
-        background-color: var(--col-green-700);
-        color: white;
+        background-color: var(--form-cta-bg);
+        color: var(--form-cta-text);
         padding: 2rem 1.5rem;
         border-radius: 0.5rem;
     }
@@ -25,7 +32,7 @@
         &:active {
             color: white;
             background-color: var(--col-orange-700);
-            border-color: white;
+            border-color: var(--form-cta-text);
         }
     }
 
@@ -33,7 +40,7 @@
         margin: 1rem 0 0;
         text-align: center;
         font-style: italic;
-        color: white;
+        color: var(--form-cta-text);
     }
 
     &__form {
@@ -54,7 +61,7 @@
         }
 
         // Gravity Forms' own labels and descriptions are dark by default and
-        // would vanish on the green. Validation messages and the confirmation
+        // would vanish on a dark card, so they follow the card's text colour. Validation messages and the confirmation
         // keep their own colours so they stay legible against the white fields.
         .gform_wrapper {
             label,
@@ -62,7 +69,7 @@
             .gfield_description,
             .gform_heading,
             .gform_confirmation_message {
-                color: white;
+                color: var(--form-cta-text);
             }
         }
     }

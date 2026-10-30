@@ -14,6 +14,19 @@ $button_label = trim( (string) get_field( 'button_label' ) );
 $form_id      = absint( get_field( 'form_id' ) );
 $after_text   = trim( (string) get_field( 'after_text' ) );
 
+// Palette slugs from the editor palette field. Empty means "use the SCSS
+// defaults", so only emit a custom property when a colour was chosen.
+$card_style = '';
+foreach ( array(
+	'--form-cta-bg'   => get_field( 'background' ),
+	'--form-cta-text' => get_field( 'text_colour' ),
+) as $prop => $slug ) {
+	$slug = strtolower( (string) $slug );
+	if ( '' !== $slug && preg_match( '/^[a-z0-9-]+$/', $slug ) ) {
+		$card_style .= $prop . ':var(--col-' . $slug . ');';
+	}
+}
+
 if ( '' === $button_label || ! $form_id ) {
 	return;
 }
@@ -30,7 +43,8 @@ $classes = $block['className'] ?? '';
 <section class="form_cta <?= esc_attr( $classes ); ?>"
 	<?= ! empty( $block['anchor'] ) ? 'id="' . esc_attr( $block['anchor'] ) . '"' : ''; ?>>
 	<div class="container-xl">
-		<div class="form_cta__card">
+		<div class="form_cta__card"
+			<?= '' !== $card_style ? 'style="' . esc_attr( $card_style ) . '"' : ''; ?>>
 			<div class="text-center">
 				<button class="form_cta__button btn collapsed" type="button"
 					data-bs-toggle="collapse"

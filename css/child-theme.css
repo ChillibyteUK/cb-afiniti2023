@@ -23619,10 +23619,12 @@ button.search.clear::after {
   margin-block: 2rem;
 }
 .form_cta__card {
+  --form-cta-bg: var(--col-green-700);
+  --form-cta-text: white;
   width: min(600px, 90vw);
   margin-inline: auto;
-  background-color: var(--col-green-700);
-  color: white;
+  background-color: var(--form-cta-bg);
+  color: var(--form-cta-text);
   padding: 2rem 1.5rem;
   border-radius: 0.5rem;
 }
@@ -23634,13 +23636,13 @@ button.search.clear::after {
 .form_cta__button:hover, .form_cta__button:focus-visible, .form_cta__button:active {
   color: white;
   background-color: var(--col-orange-700);
-  border-color: white;
+  border-color: var(--form-cta-text);
 }
 .form_cta__after {
   margin: 1rem 0 0;
   text-align: center;
   font-style: italic;
-  color: white;
+  color: var(--form-cta-text);
 }
 .form_cta__form {
   margin-top: 1.5rem;
@@ -23660,7 +23662,7 @@ button.search.clear::after {
 .form_cta__form .gform_wrapper .gfield_description,
 .form_cta__form .gform_wrapper .gform_heading,
 .form_cta__form .gform_wrapper .gform_confirmation_message {
-  color: white;
+  color: var(--form-cta-text);
 }
 
 .single-person-photo {

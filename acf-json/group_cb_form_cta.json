@@ -63,6 +63,48 @@
             "placeholder": "",
             "prepend": "",
             "append": ""
+        },
+        {
+            "key": "field_cb_form_cta_background",
+            "label": "Background",
+            "name": "background",
+            "aria-label": "",
+            "type": "editor_palette",
+            "instructions": "Optional. Leave empty for the default green.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "relevanssi_exclude": 0,
+            "default_value": "",
+            "allowed_colors": "",
+            "exclude_colors": "",
+            "return_format": "slug",
+            "allow_in_bindings": 1
+        },
+        {
+            "key": "field_cb_form_cta_text_colour",
+            "label": "Text colour",
+            "name": "text_colour",
+            "aria-label": "",
+            "type": "editor_palette",
+            "instructions": "Optional. Leave empty for the default white.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "relevanssi_exclude": 0,
+            "default_value": "",
+            "allowed_colors": "",
+            "exclude_colors": "",
+            "return_format": "slug",
+            "allow_in_bindings": 1
         }
     ],
     "location": [
@@ -70,7 +112,7 @@
             {
                 "param": "block",
                 "operator": "==",
-                "value": "acf\/cb-form-cta"
+                "value": "acf/cb-form-cta"
             }
         ]
     ],
