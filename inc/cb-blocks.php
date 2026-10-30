@@ -71,6 +71,18 @@ function acf_blocks() {
 
 		acf_register_block_type(
 			array(
+				'name'            => 'cb_hero_illustration_2026',
+				'title'           => __( 'CB Hero Illustration 2026' ),
+				'category'        => 'layout',
+				'icon'            => 'cover-image',
+				'render_template' => 'blocks/cb-hero-illustration-2026.php',
+				'mode'            => 'edit',
+				'supports'        => array( 'mode' => false ),
+			)
+		);
+
+		acf_register_block_type(
+			array(
 				'name'            => 'cb_form_cta',
 				'title'           => __( 'CB Form CTA' ),
 				'category'        => 'layout',
