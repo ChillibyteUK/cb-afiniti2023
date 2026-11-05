@@ -2059,6 +2059,10 @@ progress {
   color: #6c757d;
   opacity: 1;
 }
+.form-control:-ms-input-placeholder, .gform_wrapper.gravity-theme input[type=text]:-ms-input-placeholder, .gform_wrapper.gravity-theme input[type=email]:-ms-input-placeholder, .gform_wrapper.gravity-theme input[type=tel]:-ms-input-placeholder, .gform_wrapper.gravity-theme textarea:-ms-input-placeholder, .widget_categories select:-ms-input-placeholder, .widget_archive select:-ms-input-placeholder {
+  color: #6c757d;
+  opacity: 1;
+}
 .form-control::placeholder, .gform_wrapper.gravity-theme input[type=text]::placeholder,
 .gform_wrapper.gravity-theme input[type=email]::placeholder,
 .gform_wrapper.gravity-theme input[type=tel]::placeholder,
@@ -2525,6 +2529,9 @@ textarea.form-control-lg {
 .form-floating > .form-control::-moz-placeholder, .gform_wrapper.gravity-theme .form-floating > input[type=text]::-moz-placeholder, .gform_wrapper.gravity-theme .form-floating > input[type=email]::-moz-placeholder, .gform_wrapper.gravity-theme .form-floating > input[type=tel]::-moz-placeholder, .gform_wrapper.gravity-theme .form-floating > textarea::-moz-placeholder, .widget_categories .form-floating > select::-moz-placeholder, .widget_archive .form-floating > select::-moz-placeholder {
   color: transparent;
 }
+.form-floating > .form-control:-ms-input-placeholder, .gform_wrapper.gravity-theme .form-floating > input[type=text]:-ms-input-placeholder, .gform_wrapper.gravity-theme .form-floating > input[type=email]:-ms-input-placeholder, .gform_wrapper.gravity-theme .form-floating > input[type=tel]:-ms-input-placeholder, .gform_wrapper.gravity-theme .form-floating > textarea:-ms-input-placeholder, .widget_categories .form-floating > select:-ms-input-placeholder, .widget_archive .form-floating > select:-ms-input-placeholder {
+  color: transparent;
+}
 .form-floating > .form-control::placeholder, .gform_wrapper.gravity-theme .form-floating > input[type=text]::placeholder,
 .gform_wrapper.gravity-theme .form-floating > input[type=email]::placeholder,
 .gform_wrapper.gravity-theme .form-floating > input[type=tel]::placeholder,
@@ -2532,7 +2539,11 @@ textarea.form-control-lg {
 .widget_archive .form-floating > select::placeholder {
   color: transparent;
 }
-.form-floating > .form-control:not(:-moz-placeholder), .gform_wrapper.gravity-theme .form-floating > input[type=text]:not(:-moz-placeholder), .gform_wrapper.gravity-theme .form-floating > input[type=email]:not(:-moz-placeholder), .gform_wrapper.gravity-theme .form-floating > input[type=tel]:not(:-moz-placeholder), .gform_wrapper.gravity-theme .form-floating > textarea:not(:-moz-placeholder), .widget_categories .form-floating > select:not(:-moz-placeholder), .widget_archive .form-floating > select:not(:-moz-placeholder) {
+.form-floating > .form-control:not(:-moz-placeholder-shown), .gform_wrapper.gravity-theme .form-floating > input[type=text]:not(:-moz-placeholder-shown), .gform_wrapper.gravity-theme .form-floating > input[type=email]:not(:-moz-placeholder-shown), .gform_wrapper.gravity-theme .form-floating > input[type=tel]:not(:-moz-placeholder-shown), .gform_wrapper.gravity-theme .form-floating > textarea:not(:-moz-placeholder-shown), .widget_categories .form-floating > select:not(:-moz-placeholder-shown), .widget_archive .form-floating > select:not(:-moz-placeholder-shown) {
+  padding-top: 1.625rem;
+  padding-bottom: 0.625rem;
+}
+.form-floating > .form-control:not(:-ms-input-placeholder), .gform_wrapper.gravity-theme .form-floating > input[type=text]:not(:-ms-input-placeholder), .gform_wrapper.gravity-theme .form-floating > input[type=email]:not(:-ms-input-placeholder), .gform_wrapper.gravity-theme .form-floating > input[type=tel]:not(:-ms-input-placeholder), .gform_wrapper.gravity-theme .form-floating > textarea:not(:-ms-input-placeholder), .widget_categories .form-floating > select:not(:-ms-input-placeholder), .widget_archive .form-floating > select:not(:-ms-input-placeholder) {
   padding-top: 1.625rem;
   padding-bottom: 0.625rem;
 }
@@ -2560,7 +2571,11 @@ textarea.form-control-lg {
   padding-top: 1.625rem;
   padding-bottom: 0.625rem;
 }
-.form-floating > .form-control:not(:-moz-placeholder) ~ label, .gform_wrapper.gravity-theme .form-floating > input[type=text]:not(:-moz-placeholder) ~ label, .gform_wrapper.gravity-theme .form-floating > input[type=email]:not(:-moz-placeholder) ~ label, .gform_wrapper.gravity-theme .form-floating > input[type=tel]:not(:-moz-placeholder) ~ label, .gform_wrapper.gravity-theme .form-floating > textarea:not(:-moz-placeholder) ~ label, .widget_categories .form-floating > select:not(:-moz-placeholder) ~ label, .widget_archive .form-floating > select:not(:-moz-placeholder) ~ label {
+.form-floating > .form-control:not(:-moz-placeholder-shown) ~ label, .gform_wrapper.gravity-theme .form-floating > input[type=text]:not(:-moz-placeholder-shown) ~ label, .gform_wrapper.gravity-theme .form-floating > input[type=email]:not(:-moz-placeholder-shown) ~ label, .gform_wrapper.gravity-theme .form-floating > input[type=tel]:not(:-moz-placeholder-shown) ~ label, .gform_wrapper.gravity-theme .form-floating > textarea:not(:-moz-placeholder-shown) ~ label, .widget_categories .form-floating > select:not(:-moz-placeholder-shown) ~ label, .widget_archive .form-floating > select:not(:-moz-placeholder-shown) ~ label {
+  opacity: 0.65;
+  transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
+}
+.form-floating > .form-control:not(:-ms-input-placeholder) ~ label, .gform_wrapper.gravity-theme .form-floating > input[type=text]:not(:-ms-input-placeholder) ~ label, .gform_wrapper.gravity-theme .form-floating > input[type=email]:not(:-ms-input-placeholder) ~ label, .gform_wrapper.gravity-theme .form-floating > input[type=tel]:not(:-ms-input-placeholder) ~ label, .gform_wrapper.gravity-theme .form-floating > textarea:not(:-ms-input-placeholder) ~ label, .widget_categories .form-floating > select:not(:-ms-input-placeholder) ~ label, .widget_archive .form-floating > select:not(:-ms-input-placeholder) ~ label {
   opacity: 0.65;
   transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
 }
@@ -3022,6 +3037,7 @@ body .gform_wrapper .gform_footer .input-group-sm > button,
   cursor: pointer;
   -webkit-user-select: none;
   -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
   background-color: transparent;
   border: 1px solid transparent;
@@ -5489,6 +5505,7 @@ body .gform_wrapper .gform_footer .btn-group-vertical > .btn-group:not(:first-ch
   pointer-events: none;
   -webkit-user-select: none;
   -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
   opacity: 0.25;
 }
@@ -7927,12 +7944,14 @@ body .gform_wrapper .gform_footer .btn-group-vertical > .btn-group:not(:first-ch
 .user-select-auto {
   -webkit-user-select: auto !important;
   -moz-user-select: auto !important;
+  -ms-user-select: auto !important;
   user-select: auto !important;
 }
 
 .user-select-none {
   -webkit-user-select: none !important;
   -moz-user-select: none !important;
+  -ms-user-select: none !important;
   user-select: none !important;
 }
 
@@ -21115,6 +21134,7 @@ readers do not read off random characters that represent icons */
   box-sizing: border-box;
   -webkit-user-select: none;
   -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
   -webkit-touch-callout: none;
   -khtml-user-select: none;
@@ -23671,7 +23691,7 @@ button.search.clear::after {
 }
 
 .hero_illus {
-  --illus-space: 140px;
+  --illus-space: 1rem;
   position: relative;
   clear: both;
   height: var(--illus-space);
@@ -23687,6 +23707,7 @@ button.search.clear::after {
   --dur: 1s;
   position: absolute;
   bottom: calc(var(--illus-space) - var(--y));
+  translate: 0 var(--hero-illus-shift, 0px);
   height: var(--h);
   width: auto;
   max-width: none;
@@ -23722,14 +23743,6 @@ button.search.clear::after {
   }
 }
 
-.hero_illus--front-ship {
-  --illus-space: 200px;
-}
-@media screen and (max-width: 768px) {
-  .hero_illus--front-ship {
-    --illus-space: 100px;
-  }
-}
 .hero_illus--front-ship .hero_illus__item--birds {
   --h: 80px;
   --y: -100px;
@@ -23764,14 +23777,6 @@ button.search.clear::after {
   }
 }
 
-.hero_illus--business-change {
-  --illus-space: 200px;
-}
-@media screen and (max-width: 768px) {
-  .hero_illus--business-change {
-    --illus-space: 100px;
-  }
-}
 .hero_illus--business-change .hero_illus__item--cloud-1 {
   --h: 50px;
   --y: -150px;
@@ -23837,14 +23842,6 @@ button.search.clear::after {
   }
 }
 
-.hero_illus--change-pillar {
-  --illus-space: 140px;
-}
-@media screen and (max-width: 768px) {
-  .hero_illus--change-pillar {
-    --illus-space: 100px;
-  }
-}
 .hero_illus--change-pillar .hero_illus__item--star-1 {
   --h: 47px;
   --y: -153px;
@@ -23882,9 +23879,6 @@ button.search.clear::after {
   }
 }
 
-.hero_illus--about-us {
-  --illus-space: 60px;
-}
 .hero_illus--about-us .hero_illus__item--star-1 {
   --h: 51px;
   --y: -79px;
@@ -23943,17 +23937,11 @@ button.search.clear::after {
   }
 }
 
-.hero_illus--our-people {
-  --illus-space: 140px;
-}
 .hero_illus--our-people .hero_illus__item--team {
   --h: 380px;
   --y: 130px;
 }
 
-.hero_illus--insights {
-  --illus-space: 140px;
-}
 .hero_illus--insights .hero_illus__item--star-1 {
   --h: 47px;
   --y: -113px;
@@ -24013,14 +24001,6 @@ button.search.clear::after {
   }
 }
 
-.hero_illus--case-studies {
-  --illus-space: 140px;
-}
-@media screen and (max-width: 768px) {
-  .hero_illus--case-studies {
-    --illus-space: 80px;
-  }
-}
 .hero_illus--case-studies .hero_illus__item--lamp {
   --h: 250px;
   --y: 90px;
@@ -24044,39 +24024,22 @@ button.search.clear::after {
   }
 }
 
-.hero_illus--change-readiness {
-  --illus-space: 140px;
-}
 .hero_illus--change-readiness .hero_illus__item--machine {
   --h: 320px;
   --y: 100px;
   transform: translateX(15%);
 }
 
-.hero_illus--pocket-watch {
-  --illus-space: 140px;
-}
 .hero_illus--pocket-watch .hero_illus__item--machine {
   --h: 320px;
   --y: 100px;
 }
 
-.hero_illus--rowers {
-  --illus-space: 140px;
-}
 .hero_illus--rowers .hero_illus__item--machine {
   --h: 260px;
   --y: 70px;
 }
 
-.hero_illus--digital-transformation {
-  --illus-space: 90px;
-}
-@media screen and (max-width: 768px) {
-  .hero_illus--digital-transformation {
-    --illus-space: 100px;
-  }
-}
 .hero_illus--digital-transformation .hero_illus__item--cloud-1 {
   --h: 50px;
   --y: -120px;
@@ -24114,14 +24077,6 @@ button.search.clear::after {
   }
 }
 
-.hero_illus--contact {
-  --illus-space: 140px;
-}
-@media screen and (max-width: 768px) {
-  .hero_illus--contact {
-    --illus-space: 80px;
-  }
-}
 .hero_illus--contact .hero_illus__item--man {
   --h: 250px;
   --y: 90px;
@@ -24147,13 +24102,11 @@ button.search.clear::after {
 }
 
 .hero_illus--bootcamp {
-  --illus-space: 280px;
   --gap: 8px;
   --sherlock-w: 220px;
 }
 @media screen and (max-width: 768px) {
   .hero_illus--bootcamp {
-    --illus-space: 175.4px;
     --gap: 12px;
     --sherlock-w: 110px;
   }
@@ -24167,6 +24120,7 @@ button.search.clear::after {
 .hero_illus--bootcamp .hero_illus__item {
   height: auto;
   animation: none;
+  translate: 0 var(--hero-illus-shift, 0px);
 }
 .hero_illus--bootcamp .hero_illus__item svg {
   display: block;

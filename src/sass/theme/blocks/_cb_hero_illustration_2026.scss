@@ -10,7 +10,10 @@
 // positioned inside its column:
 //
 //   --illus-space   height of the stage, i.e. the space the scene takes up in
-//                   the flow. Independent of how tall the images are.
+//                   the flow. Set by the JS below to however far the scene
+//                   hangs past the top of the stage plus 1rem of clearance,
+//                   so the content underneath never runs under the artwork.
+//                   The 1rem here is the floor, and the no-JS fallback.
 //   --h             image height.
 //   --y             where the image's bottom edge sits, measured down from the
 //                   top of the stage (the bottom of the hero). Negative means
@@ -19,13 +22,26 @@
 //                   column's content edge: its left for --start, its right
 //                   for --end.
 //
+// Each scene is then moved as a whole so that its middle sits on the hero's
+// bottom edge - half of it over the hero, half below - by --hero-illus-shift,
+// which cb_hero_illus_centre() in custom-javascript.js measures and sets on
+// the stage. The scenes' --y values still set the composition - how the parts
+// sit relative to each other - and the shift moves all of them together, so a
+// scene's internal arrangement is unaffected.
 //
-// The numbers in each scene are the legacy scenes' resolved values, so the
-// default render matches them. The breakpoint is the legacy 768px, kept as a
-// literal rather than Bootstrap's mixin (which would stop at 767.98px).
+// The shift is applied with `translate` rather than `transform` on purpose:
+// the entrance animations below animate `transform`, and the two properties
+// compose instead of overwriting one another.
+//
+// Without JS the shift falls back to 0 and each scene renders at its authored
+// offsets, overlapping whatever follows - readable, just not centred.
+//
+// The remaining numbers in each scene are the legacy scenes' resolved values.
+// The breakpoint is the legacy 768px, kept as a literal rather than
+// Bootstrap's mixin (which would stop at 767.98px).
 
 .hero_illus {
-    --illus-space: 140px;
+    --illus-space: 1rem;
 
     position: relative;
     clear: both;
@@ -45,6 +61,7 @@
 
         position: absolute;
         bottom: calc(var(--illus-space) - var(--y));
+        translate: 0 var(--hero-illus-shift, 0px);
         height: var(--h);
         width: auto;
         max-width: none;
@@ -88,11 +105,7 @@
 }
 
 .hero_illus--front-ship {
-    --illus-space: 200px;
 
-    @media screen and (max-width: 768px) {
-        --illus-space: 100px;
-    }
 
     .hero_illus__item--birds {
         --h: 80px;
@@ -129,11 +142,7 @@
 }
 
 .hero_illus--business-change {
-    --illus-space: 200px;
 
-    @media screen and (max-width: 768px) {
-        --illus-space: 100px;
-    }
 
     .hero_illus__item--cloud-1 {
         --h: 50px;
@@ -204,11 +213,7 @@
 }
 
 .hero_illus--change-pillar {
-    --illus-space: 140px;
 
-    @media screen and (max-width: 768px) {
-        --illus-space: 100px;
-    }
 
     .hero_illus__item--star-1 {
         --h: 47px;
@@ -248,7 +253,6 @@
 }
 
 .hero_illus--about-us {
-    --illus-space: 60px;
 
     .hero_illus__item--star-1 {
         --h: 51px;
@@ -309,7 +313,6 @@
 }
 
 .hero_illus--our-people {
-    --illus-space: 140px;
 
     .hero_illus__item--team {
         --h: 380px;
@@ -318,7 +321,6 @@
 }
 
 .hero_illus--insights {
-    --illus-space: 140px;
 
     .hero_illus__item--star-1 {
         --h: 47px;
@@ -380,11 +382,7 @@
 }
 
 .hero_illus--case-studies {
-    --illus-space: 140px;
 
-    @media screen and (max-width: 768px) {
-        --illus-space: 80px;
-    }
 
     .hero_illus__item--lamp {
         --h: 250px;
@@ -410,7 +408,6 @@
 }
 
 .hero_illus--change-readiness {
-    --illus-space: 140px;
 
     .hero_illus__item--machine {
         --h: 320px;
@@ -420,7 +417,6 @@
 }
 
 .hero_illus--pocket-watch {
-    --illus-space: 140px;
 
     .hero_illus__item--machine {
         --h: 320px;
@@ -429,7 +425,6 @@
 }
 
 .hero_illus--rowers {
-    --illus-space: 140px;
 
     .hero_illus__item--machine {
         --h: 260px;
@@ -438,11 +433,7 @@
 }
 
 .hero_illus--digital-transformation {
-    --illus-space: 90px;
 
-    @media screen and (max-width: 768px) {
-        --illus-space: 100px;
-    }
 
     .hero_illus__item--cloud-1 {
         --h: 50px;
@@ -482,11 +473,7 @@
 }
 
 .hero_illus--contact {
-    --illus-space: 140px;
 
-    @media screen and (max-width: 768px) {
-        --illus-space: 80px;
-    }
 
     .hero_illus__item--man {
         --h: 250px;
@@ -520,14 +507,10 @@
 // footsteps fill the rest. --y here is the bottom of the SVG itself; the legacy
 // padding-bottom on the footsteps was only a spacer and is not needed.
 .hero_illus--bootcamp {
-    --illus-space: 280px;
     --gap: 8px;
     --sherlock-w: 220px;
 
     @media screen and (max-width: 768px) {
-        // Legacy was height: auto, which resolves to Sherlock's height at the
-        // fixed 110px width (110 x 435.59 / 273.17).
-        --illus-space: 175.4px;
         --gap: 12px;
         --sherlock-w: 110px;
     }
@@ -542,6 +525,7 @@
     .hero_illus__item {
         height: auto;
         animation: none;
+        translate: 0 var(--hero-illus-shift, 0px);
 
         svg {
             display: block;
