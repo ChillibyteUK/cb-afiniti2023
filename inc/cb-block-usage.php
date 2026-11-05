@@ -7,6 +7,10 @@
  * you can tell at a glance whether a block is safe to remove with
  * rm_block.sh.
  *
+ * Instances counts block comments, not entries: a block used three times on
+ * one page counts three. Where those differ the column reads "3 in 1", and
+ * the entry is tagged with its own multiple in the Used In list.
+ *
  * @package cb-global42026
  */
 
@@ -43,17 +47,28 @@ function cb_global42026_block_usage_table_shortcode() {
 	);
 
 	$usage_map = array_fill_keys( $block_names, array() );
+	$totals    = array_fill_keys( $block_names, 0 );
 
 	foreach ( $posts as $post ) {
+		// Opening and self-closing block comments both start this way; the
+		// closing '<!-- /wp:acf/...' does not, because of the slash before
+		// 'wp'. So one match is one instance.
 		preg_match_all( '/<!-- wp:acf\/([a-z0-9-]+)\s/', $post->post_content, $matches );
 
 		if ( empty( $matches[1] ) ) {
 			continue;
 		}
 
-		foreach ( array_unique( $matches[1] ) as $found_block ) {
+		// array_count_values() rather than array_unique(): the same block can
+		// appear several times in one entry, and that is the number wanted.
+		foreach ( array_count_values( $matches[1] ) as $found_block => $count ) {
 			if ( isset( $usage_map[ $found_block ] ) ) {
-				$usage_map[ $found_block ][] = $post;
+				$usage_map[ $found_block ][] = array(
+					'post'  => $post,
+					'count' => $count,
+				);
+
+				$totals[ $found_block ] += $count;
 			}
 		}
 	}
@@ -68,6 +83,7 @@ function cb_global42026_block_usage_table_shortcode() {
 		<thead>
 			<tr style="border-bottom: 2px solid #ccc;">
 				<th style="text-align: left; padding: 8px; font-weight: bold;">Block Name</th>
+				<th style="text-align: right; padding: 8px; font-weight: bold;">Instances</th>
 				<th style="text-align: left; padding: 8px; font-weight: bold;">Used In</th>
 			</tr>
 		</thead>
@@ -75,17 +91,33 @@ function cb_global42026_block_usage_table_shortcode() {
 			<?php foreach ( $usage_map as $block_name => $posts_using_block ) : ?>
 				<tr style="border-bottom: 1px solid #eee;">
 					<td style="padding: 8px; vertical-align: top;"><?php echo esc_html( $block_name ); ?></td>
+					<td style="padding: 8px; vertical-align: top; text-align: right; white-space: nowrap;">
+						<?php if ( $totals[ $block_name ] ) : ?>
+							<?php echo esc_html( number_format_i18n( $totals[ $block_name ] ) ); ?>
+							<?php if ( count( $posts_using_block ) !== $totals[ $block_name ] ) : ?>
+								<span style="color: #999; font-size: 0.9em;">
+									in <?php echo esc_html( number_format_i18n( count( $posts_using_block ) ) ); ?>
+								</span>
+							<?php endif; ?>
+						<?php else : ?>
+							<span style="color: #999;">0</span>
+						<?php endif; ?>
+					</td>
 					<td style="padding: 8px;">
 						<?php if ( empty( $posts_using_block ) ) : ?>
 							<em style="color: #999;">Not used</em>
 						<?php else : ?>
 							<ul style="margin: 0; padding-left: 20px;">
-								<?php foreach ( $posts_using_block as $post ) : ?>
+								<?php foreach ( $posts_using_block as $use ) : ?>
+									<?php $post = $use['post']; ?>
 									<li>
 										<a href="<?php echo esc_url( get_edit_post_link( $post->ID ) ); ?>" target="_blank">
 											<?php echo esc_html( $post->post_title ); ?>
 										</a>
 										<span style="color: #999; font-size: 0.9em;">(<?php echo esc_html( ucfirst( $post->post_type ) ); ?>)</span>
+										<?php if ( $use['count'] > 1 ) : ?>
+											<strong>&times;<?php echo esc_html( number_format_i18n( $use['count'] ) ); ?></strong>
+										<?php endif; ?>
 									</li>
 								<?php endforeach; ?>
 							</ul>
