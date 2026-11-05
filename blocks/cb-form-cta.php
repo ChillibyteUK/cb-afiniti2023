@@ -14,17 +14,52 @@ $button_label = trim( (string) get_field( 'button_label' ) );
 $form_id      = absint( get_field( 'form_id' ) );
 $after_text   = trim( (string) get_field( 'after_text' ) );
 
-// Palette slugs from the editor palette field. Empty means "use the SCSS
-// defaults", so only emit a custom property when a colour was chosen.
+/**
+ * Palette slugs from the editor palette fields. Empty means "use the SCSS
+ * defaults" - a transparent card and the orange button - so a custom property
+ * is only emitted when a colour was actually chosen.
+ */
+$slug_of = function ( $value ) {
+	$slug = strtolower( (string) $value );
+	return preg_match( '/^[a-z0-9-]+$/', $slug ) ? $slug : '';
+};
+
+$bg_slug   = $slug_of( get_field( 'background' ) );
+$text_slug = $slug_of( get_field( 'text_colour' ) );
+$btn_slug  = $slug_of( get_field( 'button_colour' ) );
+
+/**
+ * Foreground for a chosen palette colour: white, except on white itself, where
+ * it would be invisible. Matches .btn--orange and the rest of the theme's
+ * buttons, which are white-on-colour throughout.
+ */
+$text_on = function ( $slug ) {
+	return 'white' === $slug ? 'var(--col-grey-700)' : '#fff';
+};
+
+$card_vars = array();
+
+if ( '' !== $bg_slug ) {
+	$card_vars['--form-cta-bg'] = 'var(--col-' . $bg_slug . ')';
+}
+
+// An explicit text colour wins. Otherwise a chosen background gets white text,
+// as the card always had. With no background the card is transparent, so the
+// text keeps the page's own colour instead.
+if ( '' !== $text_slug ) {
+	$card_vars['--form-cta-text'] = 'var(--col-' . $text_slug . ')';
+} elseif ( '' !== $bg_slug ) {
+	$card_vars['--form-cta-text'] = $text_on( $bg_slug );
+}
+
+if ( '' !== $btn_slug ) {
+	$card_vars['--form-cta-btn-bg']   = 'var(--col-' . $btn_slug . ')';
+	$card_vars['--form-cta-btn-text'] = $text_on( $btn_slug );
+}
+
 $card_style = '';
-foreach ( array(
-	'--form-cta-bg'   => get_field( 'background' ),
-	'--form-cta-text' => get_field( 'text_colour' ),
-) as $prop => $slug ) {
-	$slug = strtolower( (string) $slug );
-	if ( '' !== $slug && preg_match( '/^[a-z0-9-]+$/', $slug ) ) {
-		$card_style .= $prop . ':var(--col-' . $slug . ');';
-	}
+foreach ( $card_vars as $prop => $value ) {
+	$card_style .= $prop . ':' . $value . ';';
 }
 
 if ( '' === $button_label || ! $form_id ) {

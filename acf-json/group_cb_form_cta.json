@@ -70,11 +70,11 @@
             "name": "background",
             "aria-label": "",
             "type": "editor_palette",
-            "instructions": "Optional. Leave empty for the default green.",
+            "instructions": "Optional. Leave empty for a transparent card, so the page background shows through.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "50",
+                "width": "33",
                 "class": "",
                 "id": ""
             },
@@ -91,11 +91,32 @@
             "name": "text_colour",
             "aria-label": "",
             "type": "editor_palette",
-            "instructions": "Optional. Leave empty for the default white.",
+            "instructions": "Optional. Leave empty for white, which is what the background above expects.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "50",
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "relevanssi_exclude": 0,
+            "default_value": "",
+            "allowed_colors": "",
+            "exclude_colors": "",
+            "return_format": "slug",
+            "allow_in_bindings": 1
+        },
+        {
+            "key": "field_cb_form_cta_button_colour",
+            "label": "Button colour",
+            "name": "button_colour",
+            "aria-label": "",
+            "type": "editor_palette",
+            "instructions": "Optional. Leave empty for the default orange. The label is white, except on a white button.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "34",
                 "class": "",
                 "id": ""
             },

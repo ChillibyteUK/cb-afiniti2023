@@ -2532,7 +2532,7 @@ textarea.form-control-lg {
 .widget_archive .form-floating > select::placeholder {
   color: transparent;
 }
-.form-floating > .form-control:focus, .gform_wrapper.gravity-theme .form-floating > input[type=text]:focus, .gform_wrapper.gravity-theme .form-floating > input[type=email]:focus, .gform_wrapper.gravity-theme .form-floating > input[type=tel]:focus, .gform_wrapper.gravity-theme .form-floating > textarea:focus, .widget_categories .form-floating > select:focus, .widget_archive .form-floating > select:focus, .form-floating > .form-control:not(:-moz-placeholder), .gform_wrapper.gravity-theme .form-floating > input[type=text]:not(:-moz-placeholder), .gform_wrapper.gravity-theme .form-floating > input[type=email]:not(:-moz-placeholder), .gform_wrapper.gravity-theme .form-floating > input[type=tel]:not(:-moz-placeholder), .gform_wrapper.gravity-theme .form-floating > textarea:not(:-moz-placeholder), .widget_categories .form-floating > select:not(:-moz-placeholder), .widget_archive .form-floating > select:not(:-moz-placeholder) {
+.form-floating > .form-control:not(:-moz-placeholder), .gform_wrapper.gravity-theme .form-floating > input[type=text]:not(:-moz-placeholder), .gform_wrapper.gravity-theme .form-floating > input[type=email]:not(:-moz-placeholder), .gform_wrapper.gravity-theme .form-floating > input[type=tel]:not(:-moz-placeholder), .gform_wrapper.gravity-theme .form-floating > textarea:not(:-moz-placeholder), .widget_categories .form-floating > select:not(:-moz-placeholder), .widget_archive .form-floating > select:not(:-moz-placeholder) {
   padding-top: 1.625rem;
   padding-bottom: 0.625rem;
 }
@@ -2560,7 +2560,7 @@ textarea.form-control-lg {
   padding-top: 1.625rem;
   padding-bottom: 0.625rem;
 }
-.form-floating > .form-control:focus ~ label, .gform_wrapper.gravity-theme .form-floating > input[type=text]:focus ~ label, .gform_wrapper.gravity-theme .form-floating > input[type=email]:focus ~ label, .gform_wrapper.gravity-theme .form-floating > input[type=tel]:focus ~ label, .gform_wrapper.gravity-theme .form-floating > textarea:focus ~ label, .widget_categories .form-floating > select:focus ~ label, .widget_archive .form-floating > select:focus ~ label, .form-floating > .form-control:not(:-moz-placeholder) ~ label, .gform_wrapper.gravity-theme .form-floating > input[type=text]:not(:-moz-placeholder) ~ label, .gform_wrapper.gravity-theme .form-floating > input[type=email]:not(:-moz-placeholder) ~ label, .gform_wrapper.gravity-theme .form-floating > input[type=tel]:not(:-moz-placeholder) ~ label, .gform_wrapper.gravity-theme .form-floating > textarea:not(:-moz-placeholder) ~ label, .widget_categories .form-floating > select:not(:-moz-placeholder) ~ label, .widget_archive .form-floating > select:not(:-moz-placeholder) ~ label, .form-floating > .form-select ~ label, .gform_wrapper .form-floating > select ~ label {
+.form-floating > .form-control:not(:-moz-placeholder) ~ label, .gform_wrapper.gravity-theme .form-floating > input[type=text]:not(:-moz-placeholder) ~ label, .gform_wrapper.gravity-theme .form-floating > input[type=email]:not(:-moz-placeholder) ~ label, .gform_wrapper.gravity-theme .form-floating > input[type=tel]:not(:-moz-placeholder) ~ label, .gform_wrapper.gravity-theme .form-floating > textarea:not(:-moz-placeholder) ~ label, .widget_categories .form-floating > select:not(:-moz-placeholder) ~ label, .widget_archive .form-floating > select:not(:-moz-placeholder) ~ label {
   opacity: 0.65;
   transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
 }
@@ -23619,8 +23619,10 @@ button.search.clear::after {
   margin-block: 2rem;
 }
 .form_cta__card {
-  --form-cta-bg: var(--col-green-700);
-  --form-cta-text: white;
+  --form-cta-bg: transparent;
+  --form-cta-text: inherit;
+  --form-cta-btn-bg: var(--col-orange-700);
+  --form-cta-btn-text: #fff;
   width: min(600px, 90vw);
   margin-inline: auto;
   background-color: var(--form-cta-bg);
@@ -23629,14 +23631,15 @@ button.search.clear::after {
   border-radius: 0.5rem;
 }
 .form_cta__button {
-  color: white;
-  background-color: var(--col-orange-700);
-  border-color: var(--col-orange-700);
+  color: var(--form-cta-btn-text);
+  background-color: var(--form-cta-btn-bg);
+  border-color: var(--form-cta-btn-bg);
 }
 .form_cta__button:hover, .form_cta__button:focus-visible, .form_cta__button:active {
-  color: white;
-  background-color: var(--col-orange-700);
-  border-color: var(--form-cta-text);
+  color: var(--form-cta-btn-text);
+  background-color: var(--form-cta-btn-bg);
+  border-color: var(--form-cta-btn-bg);
+  filter: brightness(1.08);
 }
 .form_cta__after {
   margin: 1rem 0 0;
@@ -23649,13 +23652,15 @@ button.search.clear::after {
 }
 .form_cta__form .btn--green, body .gform_wrapper .gform_footer .form_cta__form button,
 .form_cta__form .gform_wrapper .gform_footer button {
-  background-color: var(--col-orange-700);
-  color: white;
+  background-color: var(--form-cta-btn-bg);
+  color: var(--form-cta-btn-text);
 }
 .form_cta__form .btn--green:hover, body .gform_wrapper .gform_footer .form_cta__form button:hover, .form_cta__form .btn--green:focus-visible, body .gform_wrapper .gform_footer .form_cta__form button:focus-visible,
 .form_cta__form .gform_wrapper .gform_footer button:hover,
 .form_cta__form .gform_wrapper .gform_footer button:focus-visible {
-  background-color: var(--col-orange-700);
+  background-color: var(--form-cta-btn-bg);
+  color: var(--form-cta-btn-text);
+  filter: brightness(1.08);
 }
 .form_cta__form .gform_wrapper label,
 .form_cta__form .gform_wrapper legend,

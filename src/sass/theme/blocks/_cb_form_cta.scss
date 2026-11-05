@@ -3,16 +3,24 @@
 // A card holding a button that expands a Gravity Form. Expanding is
 // Bootstrap's collapse; there is no block JS.
 //
-// Card colours come from two custom properties set inline by the template when
-// an editor picks a palette colour. They default to green-700 and white, so a
-// block with nothing chosen looks as it always did.
+// Card and button colours come from custom properties set inline by the
+// template when an editor picks a palette colour. The defaults below are what
+// a block with nothing chosen looks like: a transparent card, so the page
+// background shows through, with the page's own text colour, and the orange
+// button the block has always had.
+//
+// The label colour is set in PHP rather than here: white on every palette
+// colour, as the theme's buttons are throughout, except on white itself where
+// it would be invisible.
 
 .form_cta {
     margin-block: 2rem;
 
     &__card {
-        --form-cta-bg: var(--col-green-700);
-        --form-cta-text: white;
+        --form-cta-bg: transparent;
+        --form-cta-text: inherit;
+        --form-cta-btn-bg: var(--col-orange-700);
+        --form-cta-btn-text: #fff;
 
         width: min(600px, 90vw);
         margin-inline: auto;
@@ -23,16 +31,21 @@
     }
 
     &__button {
-        color: white;
-        background-color: var(--col-orange-700);
-        border-color: var(--col-orange-700);
+        color: var(--form-cta-btn-text);
+        background-color: var(--form-cta-btn-bg);
+        border-color: var(--form-cta-btn-bg);
 
         &:hover,
         &:focus-visible,
         &:active {
-            color: white;
-            background-color: var(--col-orange-700);
-            border-color: var(--form-cta-text);
+            color: var(--form-cta-btn-text);
+            background-color: var(--form-cta-btn-bg);
+            border-color: var(--form-cta-btn-bg);
+
+            // The background is a custom property, so Sass cannot lighten() it
+            // at compile time - brighten the rendered button instead, which
+            // works whichever colour was picked.
+            filter: brightness(1.08);
         }
     }
 
@@ -47,16 +60,18 @@
         margin-top: 1.5rem;
 
         // Scoped to this block, so the form's submit button matches the
-        // orange trigger without changing .btn--green or Gravity Forms
+        // trigger above it without changing .btn--green or Gravity Forms
         // buttons anywhere else on the site.
         .btn--green,
         .gform_wrapper .gform_footer button {
-            background-color: var(--col-orange-700);
-            color: white;
+            background-color: var(--form-cta-btn-bg);
+            color: var(--form-cta-btn-text);
 
             &:hover,
             &:focus-visible {
-                background-color: var(--col-orange-700);
+                background-color: var(--form-cta-btn-bg);
+                color: var(--form-cta-btn-text);
+                filter: brightness(1.08);
             }
         }
 
