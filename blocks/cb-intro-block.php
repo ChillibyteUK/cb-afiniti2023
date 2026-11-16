@@ -20,14 +20,28 @@ $classes = $block['className'] ?? null;
 
 $image = get_field( 'image' ) ? wp_get_attachment_image_url( get_field( 'image' ), 'full' ) : get_stylesheet_directory_uri() . '/img/anim/Flag-bearer.png';
 
+/**
+ * A title counts as empty when nothing but markup or whitespace is left, so a
+ * cleared field does not leave an empty heading behind. The trim list ends in
+ * U+00A0 because a decoded &nbsp; is not stripped by trim()'s defaults.
+ */
+$has_text = function ( $value ) {
+	return '' !== trim( html_entity_decode( wp_strip_all_tags( (string) $value ) ), " \t\n\r\0\x0B\xc2\xa0" );
+};
+
+$left_title  = get_field( 'left_title' );
+$right_title = get_field( 'right_title' );
+
 ?>
 <!-- intro_block -->
 <div class="container-xl intro_block pb-4 <?= esc_attr( $classes ); ?>">
 	<div class="row">
 		<div class="col-lg-5">
+			<?php if ( $has_text( $left_title ) ) { ?>
 			<h2 class="h1 text--<?= esc_attr( $left_theme ); ?> fw-bold">
-				<?= wp_kses_post( get_field( 'left_title' ) ); ?>
+				<?= wp_kses_post( $left_title ); ?>
 			</h2>
+			<?php } ?>
 			<div><?= wp_kses_post( get_field( 'left_content' ) ); ?>
 			</div>
 		</div>
@@ -43,9 +57,11 @@ $image = get_field( 'image' ) ? wp_get_attachment_image_url( get_field( 'image' 
 			</div>
 		</div>
 		<div class="col-lg-5">
+			<?php if ( $has_text( $right_title ) ) { ?>
 			<h2 class="h1 text--<?= esc_attr( $right_theme ); ?> fw-bold">
-				<?= wp_kses_post( get_field( 'right_title' ) ); ?>
+				<?= wp_kses_post( $right_title ); ?>
 			</h2>
+			<?php } ?>
 			<div><?= wp_kses_post( get_field( 'right_content' ) ); ?>
 			</div>
 		</div>

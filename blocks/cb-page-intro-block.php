@@ -19,15 +19,28 @@ if ( '' !== $colour ) {
 
 $l = get_field( 'cta_link' );
 
+/**
+ * A title counts as empty when nothing but markup or whitespace is left, so a
+ * cleared field does not leave an empty heading behind. The trim list ends in
+ * U+00A0 because a decoded &nbsp; is not stripped by trim()'s defaults.
+ */
+$has_text = function ( $value ) {
+	return '' !== trim( html_entity_decode( wp_strip_all_tags( (string) $value ) ), " \t\n\r\0\x0B\xc2\xa0" );
+};
+
+$title = get_field( 'title' );
+
 ?>
 <div class="container-xl pb-4">
 	<div class="row">
 	<div class="col-12 col-lg-8 pb-2">
+		<?php if ( $has_text( $title ) ) { ?>
 		<div class="bg--<?= esc_attr( $colour_name ); ?>-700 p-4">
 		<div class="font-large text-white">
-			<h2><?= wp_kses_post( get_field( 'title' ) ); ?></h2>
+			<h2><?= wp_kses_post( $title ); ?></h2>
 		</div>
 		</div>
+		<?php } ?>
 		<div class="bg--<?= esc_attr( $colour ); ?> text-white p-4">
 		<?= wp_kses_post( get_field( 'content' ) ); ?>
 		</div>
