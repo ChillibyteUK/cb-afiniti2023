@@ -129,7 +129,7 @@ body.page-template-cra-tool {
     }
 
     // Labels are the first thing to go when there is no room; the numbers and
-    // the trail still show where you are. Below this width the step's <h2> is
+    // the trail still show where you are. Below this width the step's heading is
     // the only thing naming the step, which is why the two swap over.
     @media (max-width: 575px) {
         .cra_steps {
@@ -141,14 +141,14 @@ body.page-template-cra-tool {
         }
     }
 
-    // Once the indicator shows its labels, the step's <h2> says the same thing
-    // immediately above it. Hidden visually rather than removed: it still names
-    // the step for assistive tech and keeps the document outline intact.
+    // Once the indicator shows its labels, the step's heading says the same thing
+    // immediately above it, so it is hidden visually. It is a div.h2 rather than
+    // a real heading: one per step is repetitive in the document outline.
     //
     // Scoped to [data-cra-step] deliberately - #form0 is a .stepCard too, and it
     // holds the page's own intro content, headings included.
     @media (min-width: 576px) {
-        [data-cra-step] > h2 {
+        [data-cra-step] > .h2 {
             @include visually-hidden;
         }
     }

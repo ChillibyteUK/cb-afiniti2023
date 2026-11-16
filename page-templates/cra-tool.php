@@ -141,7 +141,7 @@ get_header();
 			?>
 		<section class="stepCard" id="craStep<?php echo (int) $index; ?>" data-cra-step="<?php echo (int) $index; ?>"
 			data-cra-kind="<?php echo esc_attr( $kind ); ?>">
-			<h2>Step <?php echo (int) $index + 1; ?> - <?php echo esc_html( $title ); ?></h2>
+			<div class="h2">Step <?php echo (int) $index + 1; ?> - <?php echo esc_html( $title ); ?></div>
 			<?php // aria-label rather than a heading, so the list is announced as navigation for the assessment. ?>
 			<ol class="cra_steps" aria-label="Assessment progress">
 				<?php

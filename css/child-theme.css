@@ -24415,7 +24415,7 @@ body.page-template-cra-tool .cra_steps__step.is-current .cra_steps__label {
   }
 }
 @media (min-width: 576px) {
-  body.page-template-cra-tool [data-cra-step] > h2, body.page-template-cra-tool [data-cra-step] > .h2 {
+  body.page-template-cra-tool [data-cra-step] > .h2 {
     position: absolute !important;
     width: 1px !important;
     height: 1px !important;
